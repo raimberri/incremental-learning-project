@@ -14,15 +14,6 @@ DRY_RUN="${DRY_RUN:-0}"
 
 cd "$(dirname "$0")/.."
 
-if ! command -v gh >/dev/null 2>&1; then
-  echo "gh is required: https://cli.github.com/" >&2
-  exit 1
-fi
-if ! gh auth status >/dev/null 2>&1; then
-  echo "Not logged in. Run: gh auth login" >&2
-  exit 1
-fi
-
 files=()
 while IFS= read -r -d '' f; do
   files+=("$f")
@@ -40,6 +31,15 @@ printf '  %s\n' "${files[@]}"
 if [ "$DRY_RUN" = "1" ]; then
   echo "DRY_RUN=1: nothing uploaded."
   exit 0
+fi
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "gh is required: https://cli.github.com/" >&2
+  exit 1
+fi
+if ! gh auth status >/dev/null 2>&1; then
+  echo "Not logged in. Run: gh auth login" >&2
+  exit 1
 fi
 
 if ! gh release view "$TAG" >/dev/null 2>&1; then
