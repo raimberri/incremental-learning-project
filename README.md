@@ -30,7 +30,7 @@ courses/                    课程归档：一门课一个目录（见 courses/R
 courseforge/                可复用代码库 + Remotion 模板
 asset-library/              可复用照片 / 主题 / 音乐配方
 skills/incremental-course/  DSH skill（源文件）
-docs/                       架构、Git 媒体策略、发布流程
+docs/                       Git 媒体策略与发布流程
 scripts/                    链接检查、Release 发布等小工具
 AGENT.MD                    教学与交付的硬性要求
 WORKFLOW.md                 七阶段工作流、检查点、失败模式
