@@ -1,0 +1,675 @@
+{
+  "total": 470.246,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "05.0",
+      "zh": "只靠注意力",
+      "en": "ATTENTION ONLY",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "2017 年，八位作者写了一篇论文，标题就是论点。",
+          "en": "In 2017, eight authors published a paper whose title was the argument.",
+          "start": 1.6,
+          "end": 6.294
+        },
+        {
+          "zh": "论文题目直译过来，是你需要的只有注意力。",
+          "en": "Its title translates to: attention is all you need.",
+          "start": 6.794,
+          "end": 10.565
+        },
+        {
+          "zh": "他们把循环整个删掉，一次都没有留下。",
+          "en": "They removed recurrence entirely, leaving not a single loop.",
+          "start": 11.065,
+          "end": 14.228
+        },
+        {
+          "zh": "删掉之后，翻译效果更好，而且训练可以并行。",
+          "en": "The result was better quality, and training could run in parallel.",
+          "start": 14.728,
+          "end": 19.189
+        },
+        {
+          "zh": "这一章拆开这个结构：几个旧零件，一种新组合。",
+          "en": "This chapter takes the structure apart: old parts, new combination.",
+          "start": 19.689,
+          "end": 23.774
+        },
+        {
+          "zh": "拆完你会发现，核心只有一次打分，和一次加权。",
+          "en": "What remains is one scoring step and one weighted sum.",
+          "start": 24.274,
+          "end": 28.477
+        }
+      ],
+      "end": 29.477
+    },
+    {
+      "id": "selfattn",
+      "code": "05.1",
+      "zh": "一句话内部互看",
+      "en": "SELF-ATTENTION",
+      "start": 29.477,
+      "lines": [
+        {
+          "zh": "第 4 章的注意力，是解码器看编码器，跨两条序列。",
+          "en": "Chapter 4's attention had the decoder look at the encoder.",
+          "start": 31.377,
+          "end": 35.96
+        },
+        {
+          "zh": "Transformer 把它改成同一条序列内部互相看。",
+          "en": "The Transformer turns it inward: one sequence looks at itself.",
+          "start": 36.46,
+          "end": 40.111
+        },
+        {
+          "zh": "这叫自注意力：句子里每个词，都去看所有词。",
+          "en": "This is self-attention: every word looks at every word.",
+          "start": 40.611,
+          "end": 44.67
+        },
+        {
+          "zh": "每个词要回答三个问题。第一，我在找什么？",
+          "en": "Each word answers three questions. First: what am I looking for?",
+          "start": 45.17,
+          "end": 49.369
+        },
+        {
+          "zh": "第二，我有什么可以被找到？第三，被找到后我提供什么？",
+          "en": "Second: what can be found in me? Third: what do I hand over?",
+          "start": 49.869,
+          "end": 55.209
+        },
+        {
+          "zh": "对应查询、键、值三个向量，都从同一个词向量变出来。",
+          "en": "Query, key and value all come from the same word vector.",
+          "start": 55.709,
+          "end": 60.526
+        },
+        {
+          "zh": "三个矩阵都是可训练参数，没有一个是手工设定的。",
+          "en": "All three matrices are trained; none is hand-set.",
+          "start": 61.026,
+          "end": 65.402
+        }
+      ],
+      "end": 66.402
+    },
+    {
+      "id": "coref",
+      "code": "05.2",
+      "zh": "它到底指谁",
+      "en": "WHO LOOKS AT WHOM",
+      "start": 66.402,
+      "lines": [
+        {
+          "zh": "小明把书放在桌上，因为它太重了。这个它，指书还是桌子？",
+          "en": "Xiaoming put the book on the table because it was heavy. Which one?",
+          "start": 68.302,
+          "end": 73.924
+        },
+        {
+          "zh": "它这个位置的查询，会去和句子里每个键打分。",
+          "en": "The query at it scores against every key in the sentence.",
+          "start": 74.424,
+          "end": 78.469
+        },
+        {
+          "zh": "如果书的键得分更高，它就会吸收更多书的信息。",
+          "en": "If the book's key scores higher, it absorbs more of the book.",
+          "start": 78.969,
+          "end": 83.059
+        },
+        {
+          "zh": "后面几层据此判断，重说的是书，不是桌子。",
+          "en": "Later layers conclude that heavy is about the book.",
+          "start": 83.559,
+          "end": 87.496
+        },
+        {
+          "zh": "这就是消解指代，在机制层面长出来的样子。",
+          "en": "That is coreference resolution, grown at the mechanism level.",
+          "start": 87.996,
+          "end": 91.701
+        },
+        {
+          "zh": "不是靠语法规则，是靠训练出来的匹配。",
+          "en": "Not by grammar rules, but by learned matching.",
+          "start": 92.201,
+          "end": 95.556
+        },
+        {
+          "zh": "结构没变，只是检索的两端，从两条序列变成了一条。",
+          "en": "Same structure; only the two ends now live in one sequence.",
+          "start": 96.056,
+          "end": 100.913
+        }
+      ],
+      "end": 101.913
+    },
+    {
+      "id": "attnformula",
+      "code": "05.3",
+      "zh": "一行公式",
+      "en": "SCALED DOT-PRODUCT",
+      "start": 101.913,
+      "lines": [
+        {
+          "zh": "把第 4 章那个小型神经网络打分，换成最简单的点积。",
+          "en": "Replace the small scoring network with a plain dot product.",
+          "start": 103.813,
+          "end": 108.606
+        },
+        {
+          "zh": "先拿查询矩阵，乘上键矩阵的转置，得到一张分数表。",
+          "en": "Multiply queries by transposed keys to get a score table.",
+          "start": 109.106,
+          "end": 113.877
+        },
+        {
+          "zh": "这张表是 n 乘 n 的，n 就是序列长度。",
+          "en": "The table is n by n, where n is the sequence length.",
+          "start": 114.377,
+          "end": 117.719
+        },
+        {
+          "zh": "点积衡量方向一致性：两个向量越同向，得分越高。",
+          "en": "A dot product measures alignment: same direction, higher score.",
+          "start": 118.219,
+          "end": 122.804
+        },
+        {
+          "zh": "接着按行做 softmax，每一行变成一组和为 1 的权重。",
+          "en": "Then softmax each row into weights that sum to one.",
+          "start": 123.304,
+          "end": 127.956
+        },
+        {
+          "zh": "最后乘上值矩阵，按权重把每个位置的内容加起来。",
+          "en": "Finally multiply by values and add them up by weight.",
+          "start": 128.456,
+          "end": 133.298
+        },
+        {
+          "zh": "这就是缩放点积注意力，一行公式说完了检索。",
+          "en": "That is scaled dot-product attention: retrieval in one line.",
+          "start": 133.798,
+          "end": 137.688
+        },
+        {
+          "zh": "注意，缩放发生在 softmax 之前，不在之后。",
+          "en": "Note the scaling happens before softmax, not after.",
+          "start": 138.188,
+          "end": 142.253
+        }
+      ],
+      "end": 143.253
+    },
+    {
+      "id": "handcalc",
+      "code": "05.4",
+      "zh": "把 64 代进去",
+      "en": "A HAND CHECK",
+      "start": 143.253,
+      "lines": [
+        {
+          "zh": "那个根号是干什么的？先做一个能手算的假设。",
+          "en": "What is that square root for? Start with a hand-checkable case.",
+          "start": 145.153,
+          "end": 149.169
+        },
+        {
+          "zh": "假设查询和键的每个分量，均值是 0，方差是 1。",
+          "en": "Assume every component of query and key has mean 0, variance 1.",
+          "start": 149.669,
+          "end": 154.058
+        },
+        {
+          "zh": "点积是 64 项相加，方差累加起来就是 64。",
+          "en": "The dot product sums 64 terms, so its variance is 64.",
+          "start": 154.558,
+          "end": 159.033
+        },
+        {
+          "zh": "方差是 64，开根号之后，标准差大约是 8。",
+          "en": "Take the square root: the standard deviation is about 8.",
+          "start": 159.533,
+          "end": 163.676
+        },
+        {
+          "zh": "也就是说，分数会散在正负 24 这个范围里。",
+          "en": "So scores scatter across roughly minus 24 to plus 24.",
+          "start": 164.176,
+          "end": 168.198
+        },
+        {
+          "zh": "这么大的数喂给 softmax，权重会直接贴到 0 和 1。",
+          "en": "Fed such large numbers, softmax pins weights to 0 or 1.",
+          "start": 168.698,
+          "end": 173.374
+        },
+        {
+          "zh": "而 softmax 在饱和区，梯度几乎是 0。",
+          "en": "And in the saturated region its gradient is nearly zero.",
+          "start": 173.874,
+          "end": 177.312
+        }
+      ],
+      "end": 178.312
+    },
+    {
+      "id": "saturation",
+      "code": "05.5",
+      "zh": "尖到没有梯度",
+      "en": "WHY WE SCALE",
+      "start": 178.312,
+      "lines": [
+        {
+          "zh": "梯度没了，参数就学不动。第 4 章的消失问题，又回来了。",
+          "en": "No gradient, no learning: Chapter 4's vanishing problem returns.",
+          "start": 180.212,
+          "end": 185.566
+        },
+        {
+          "zh": "除以根号 dk，就是把方差从 64 拉回 1。",
+          "en": "Dividing by the square root of dk pulls variance back to 1.",
+          "start": 186.066,
+          "end": 189.9
+        },
+        {
+          "zh": "分数回到正常范围，softmax 就待在还有梯度的区域。",
+          "en": "Scores return to a normal range, so softmax keeps its gradient.",
+          "start": 190.4,
+          "end": 194.999
+        },
+        {
+          "zh": "所以缩放不是为了数值稳定，是为了别让 softmax 提前饱和。",
+          "en": "The scaling is not about stability; it keeps softmax unsaturated.",
+          "start": 195.499,
+          "end": 201.002
+        },
+        {
+          "zh": "这是工程细节决定成败的例子：删掉这个根号，训练会明显变差。",
+          "en": "Remove that root and training gets noticeably worse.",
+          "start": 201.502,
+          "end": 207.237
+        },
+        {
+          "zh": "一句话：先缩放，再做 softmax，别让注意力过早锁死。",
+          "en": "Scale first, then softmax; do not let attention lock up early.",
+          "start": 207.737,
+          "end": 212.657
+        }
+      ],
+      "end": 213.657
+    },
+    {
+      "id": "multihead",
+      "code": "05.6",
+      "zh": "同时看几种关系",
+      "en": "MULTI-HEAD",
+      "start": 213.657,
+      "lines": [
+        {
+          "zh": "一组查询、键、值，只能学出一种相关性。",
+          "en": "One set of queries, keys and values learns one kind of relation.",
+          "start": 215.557,
+          "end": 219.444
+        },
+        {
+          "zh": "可语言里的关系很多：主谓、指代、语义相近、位置邻近。",
+          "en": "Language has many: subject-verb, reference, similarity, proximity.",
+          "start": 219.944,
+          "end": 225.183
+        },
+        {
+          "zh": "多头注意力：把 512 维切成 8 份，每份 64 维。",
+          "en": "Multi-head attention splits 512 dimensions into 8 heads of 64.",
+          "start": 225.683,
+          "end": 230.458
+        },
+        {
+          "zh": "每个头独立做一次注意力，各自看一个子空间。",
+          "en": "Each head runs its own attention in its own subspace.",
+          "start": 230.958,
+          "end": 234.722
+        },
+        {
+          "zh": "最后把 8 个头拼起来，再过一个线性层，合成一个向量。",
+          "en": "Concatenate the 8 heads; one linear layer merges them.",
+          "start": 235.222,
+          "end": 239.811
+        },
+        {
+          "zh": "总计算量和一个 512 维的单头差不多，表达能力更强。",
+          "en": "Total compute is about that of one 512-wide head, but richer.",
+          "start": 240.311,
+          "end": 245.353
+        },
+        {
+          "zh": "但分工不是人指定的，是训练完自己长出来的。",
+          "en": "Nobody assigns the roles; they emerge after training.",
+          "start": 245.853,
+          "end": 249.563
+        }
+      ],
+      "end": 250.563
+    },
+    {
+      "id": "mask",
+      "code": "05.7",
+      "zh": "不许看右边",
+      "en": "CAUSAL MASK",
+      "start": 250.563,
+      "lines": [
+        {
+          "zh": "还有一个约束不能忘：语言模型不许看未来。",
+          "en": "One constraint remains: a language model may not see the future.",
+          "start": 252.463,
+          "end": 256.241
+        },
+        {
+          "zh": "位置 3 如果看到位置 4 的词，那就是作弊。",
+          "en": "If position 3 could see position 4, that would be cheating.",
+          "start": 256.741,
+          "end": 260.23
+        },
+        {
+          "zh": "办法是因果掩码：softmax 之前，把右上三角设成负无穷。",
+          "en": "The fix is a causal mask: set the upper triangle to minus infinity.",
+          "start": 260.73,
+          "end": 266.164
+        },
+        {
+          "zh": "这样位置 t 只能注意到小于等于 t 的位置。",
+          "en": "Then position t can only attend to positions up to t.",
+          "start": 266.664,
+          "end": 270.196
+        },
+        {
+          "zh": "于是训练时，一整句话的所有位置可以同时算。",
+          "en": "So in training, all positions of a sentence are computed at once.",
+          "start": 270.696,
+          "end": 274.763
+        },
+        {
+          "zh": "一次前向传播，就得到 n 个位置的预测，和 n 个损失。",
+          "en": "One forward pass gives n predictions and n losses.",
+          "start": 275.263,
+          "end": 279.917
+        },
+        {
+          "zh": "循环网络不行，必须算完第一个状态，才能算第二个。",
+          "en": "An RNN cannot: state two has to wait for state one.",
+          "start": 280.417,
+          "end": 284.81
+        },
+        {
+          "zh": "同样的显卡，它能同时算更多位置。",
+          "en": "The same GPU can work on many positions at once.",
+          "start": 285.31,
+          "end": 288.427
+        }
+      ],
+      "end": 289.427
+    },
+    {
+      "id": "position",
+      "code": "05.8",
+      "zh": "补上顺序",
+      "en": "POSITION, AGAIN",
+      "start": 289.427,
+      "lines": [
+        {
+          "zh": "自注意力还有个数学性质：它对输入顺序是等变的。",
+          "en": "Self-attention is permutation equivariant: order does not enter.",
+          "start": 291.327,
+          "end": 295.732
+        },
+        {
+          "zh": "把句子打乱，每个词对所有词的加权和，本身不会变。",
+          "en": "Shuffle the sentence; the weighted sums themselves do not change.",
+          "start": 296.232,
+          "end": 300.991
+        },
+        {
+          "zh": "因为点积只看向量方向，不知道谁在前、谁在后。",
+          "en": "A dot product sees direction, not who comes first.",
+          "start": 301.491,
+          "end": 305.941
+        },
+        {
+          "zh": "所以位置信息必须显式加进去，第 3 章已经讲过。",
+          "en": "So position must be added explicitly, as Chapter 3 explained.",
+          "start": 306.441,
+          "end": 311.036
+        },
+        {
+          "zh": "原论文把正弦编码，直接加到词向量上，再一起送进网络。",
+          "en": "The paper adds sine-cosine codes to the word vectors.",
+          "start": 311.536,
+          "end": 316.832
+        },
+        {
+          "zh": "这里不重讲，只记住一句：少了它，词序信息就丢了。",
+          "en": "We will not repeat it: without position, word order is gone.",
+          "start": 317.332,
+          "end": 321.945
+        }
+      ],
+      "end": 322.945
+    },
+    {
+      "id": "block",
+      "code": "05.9",
+      "zh": "一个层的流水线",
+      "en": "ONE BLOCK",
+      "start": 322.945,
+      "lines": [
+        {
+          "zh": "现在把零件装起来。一个 Transformer 层，只有两个子层。",
+          "en": "Now assemble. One Transformer layer has just two sublayers.",
+          "start": 324.845,
+          "end": 329.667
+        },
+        {
+          "zh": "第一个子层是多头自注意力，负责位置之间交换信息。",
+          "en": "The first is multi-head attention: exchange across positions.",
+          "start": 330.167,
+          "end": 335.008
+        },
+        {
+          "zh": "第二个子层是前向网络，对每个位置独立变换，不跨位置。",
+          "en": "The second is a feed-forward net, applied per position.",
+          "start": 335.508,
+          "end": 340.664
+        },
+        {
+          "zh": "它先把维度升到四倍，过一层非线性，再降回来。",
+          "en": "It expands to four times the width, then projects back.",
+          "start": 341.164,
+          "end": 345.361
+        },
+        {
+          "zh": "两个子层外面都套着残差：把输入原样加回输出。",
+          "en": "Both sublayers wear a residual: add the input back to the output.",
+          "start": 345.861,
+          "end": 350.306
+        },
+        {
+          "zh": "原论文先做子层，再归一化，这个顺序叫 Post-LN。",
+          "en": "The paper normalizes after each sublayer: Post-LN.",
+          "start": 350.806,
+          "end": 355.568
+        },
+        {
+          "zh": "后来的大模型多半改成 Pre-LN：先归一化，再做子层。",
+          "en": "Later models mostly switch to Pre-LN: normalize first.",
+          "start": 356.068,
+          "end": 361.224
+        },
+        {
+          "zh": "好处是残差路径上没有归一化，梯度能直通底层，深层更稳。",
+          "en": "The residual path stays unnormalized, so deep layers train better.",
+          "start": 361.724,
+          "end": 367.293
+        }
+      ],
+      "end": 368.293
+    },
+    {
+      "id": "cost",
+      "code": "05.10",
+      "zh": "代价是平方",
+      "en": "THE QUADRATIC BILL",
+      "start": 368.293,
+      "lines": [
+        {
+          "zh": "这套结构看起来很规整，但代价也很直接。",
+          "en": "The structure is clean, but the price is explicit.",
+          "start": 370.193,
+          "end": 373.93
+        },
+        {
+          "zh": "注意力要算一张 n 乘 n 的分数表，格数是长度的平方。",
+          "en": "Attention builds an n by n table: entries grow as n squared.",
+          "start": 374.43,
+          "end": 379.083
+        },
+        {
+          "zh": "所以自注意力的计算量，是 n 的平方乘 d。",
+          "en": "So self-attention costs n squared times d.",
+          "start": 379.583,
+          "end": 383.386
+        },
+        {
+          "zh": "序列长度翻倍，计算量和内存都变成 4 倍。",
+          "en": "Double the length and both compute and memory quadruple.",
+          "start": 383.886,
+          "end": 387.881
+        },
+        {
+          "zh": "前向网络是 n 乘 d 的平方，只随长度线性增长。",
+          "en": "The feed-forward net costs n times d squared: linear in length.",
+          "start": 388.381,
+          "end": 392.756
+        },
+        {
+          "zh": "序列很短的时候，前向网络才是主要开销。",
+          "en": "For short sequences, the feed-forward net dominates.",
+          "start": 393.256,
+          "end": 396.828
+        },
+        {
+          "zh": "长序列时，注意力迅速成为瓶颈，长上下文因此很贵。",
+          "en": "For long ones attention is the bottleneck, so long context is costly.",
+          "start": 397.328,
+          "end": 402.504
+        }
+      ],
+      "end": 403.504
+    },
+    {
+      "id": "myths",
+      "code": "05.11",
+      "zh": "两个误解",
+      "en": "TWO TRAPS",
+      "start": 403.504,
+      "lines": [
+        {
+          "zh": "最后澄清两个常见误解，两个都值得记。",
+          "en": "Two common misunderstandings are worth clearing up.",
+          "start": 405.404,
+          "end": 408.742
+        },
+        {
+          "zh": "第一，注意力权重看起来很直观，但它不等于解释。",
+          "en": "First: attention weights look intuitive, but they are not explanation.",
+          "start": 409.242,
+          "end": 413.8
+        },
+        {
+          "zh": "有些头确实学出了句法角色，也有很多头的作用至今说不清。",
+          "en": "Some heads do learn syntax; many others remain unexplained.",
+          "start": 414.3,
+          "end": 419.56
+        },
+        {
+          "zh": "第二，多头不是几个小模型投票的集成。",
+          "en": "Second: multi-head is not an ensemble of models voting.",
+          "start": 420.06,
+          "end": 423.579
+        },
+        {
+          "zh": "它们共享同一份输入，拼接之后再投影，是一个整体。",
+          "en": "They share one input, concatenate, then project: one whole.",
+          "start": 424.079,
+          "end": 428.603
+        },
+        {
+          "zh": "这些分工是训练涌现的，不是谁设计出来的。",
+          "en": "The division of labour emerges in training, it is not designed.",
+          "start": 429.103,
+          "end": 432.783
+        },
+        {
+          "zh": "所以别把一张注意力热图，直接当成解释。",
+          "en": "So do not read an attention heat map as an explanation.",
+          "start": 433.283,
+          "end": 437.082
+        }
+      ],
+      "end": 438.082
+    },
+    {
+      "id": "outro",
+      "code": "05.12",
+      "zh": "下一站：预训练",
+      "en": "NEXT: PRETRAINING",
+      "start": 438.082,
+      "lines": [
+        {
+          "zh": "这一章之后，架构已经有了：注意力、多头、残差、前向网络。",
+          "en": "The architecture is in place: attention, heads, residuals, FFN.",
+          "start": 439.982,
+          "end": 445.64
+        },
+        {
+          "zh": "但它 2017 年刚出来时，只是用来做翻译的。",
+          "en": "But in 2017 it was only a translation model.",
+          "start": 446.14,
+          "end": 449.872
+        },
+        {
+          "zh": "真正让它变成通用底座的，是训练范式的转变。",
+          "en": "What made it a general foundation was a change of paradigm.",
+          "start": 450.372,
+          "end": 454.247
+        },
+        {
+          "zh": "先在海量无标注文本上预训练，再拿去做具体任务。",
+          "en": "Pretrain on huge unlabeled text, then adapt to specific tasks.",
+          "start": 454.747,
+          "end": 459.35
+        },
+        {
+          "zh": "下一章讲预训练：GPT 和 BERT 的故事。",
+          "en": "Next chapter: pretraining, the story of GPT and BERT.",
+          "start": 459.85,
+          "end": 463.304
+        },
+        {
+          "zh": "那是它从翻译模型，变成通用底座的一步。",
+          "en": "That is the step from translation model to general foundation.",
+          "start": 463.804,
+          "end": 467.246
+        }
+      ],
+      "end": 470.246
+    }
+  ]
+}

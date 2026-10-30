@@ -1,0 +1,323 @@
+1
+00:00:01,600 --> 00:00:05,483
+In 2020, OpenAI ran a deliberately dumb experiment.
+
+2
+00:00:05,733 --> 00:00:10,126
+Same architecture, same decoder, same objective.
+
+3
+00:00:10,376 --> 00:00:15,774
+They did one thing: make parameters, data and compute bigger.
+
+4
+00:00:16,024 --> 00:00:20,956
+Parameters grew about a hundredfold, from 1.5B to 175B.
+
+5
+00:00:21,206 --> 00:00:26,261
+The result was not just lower error: it wrote, translated and coded.
+
+6
+00:00:26,511 --> 00:00:30,302
+This chapter asks why size helps, and why it is not enough.
+
+7
+00:00:32,952 --> 00:00:37,206
+GPT-3 has 175 billion parameters and 96 layers.
+
+8
+00:00:37,456 --> 00:00:42,706
+Hidden size 12,288; training data about 300 billion tokens.
+
+9
+00:00:42,956 --> 00:00:46,646
+It was never trained specifically for translation or code.
+
+10
+00:00:46,896 --> 00:00:51,522
+Yet it wrote, translated, coded, and showed one new ability.
+
+11
+00:00:51,772 --> 00:00:55,445
+Give it a few examples in the prompt, and it follows along.
+
+12
+00:00:55,695 --> 00:00:59,418
+Window comes out; not a single parameter was updated.
+
+13
+00:01:02,068 --> 00:01:07,499
+This is in-context learning: examples go into the context.
+
+14
+00:01:07,749 --> 00:01:11,656
+No gradient descent, no fine-tuning, no weight change.
+
+15
+00:01:11,906 --> 00:01:16,156
+Fine-tuning writes what it learns into the weights, permanently.
+
+16
+00:01:16,406 --> 00:01:20,939
+In-context learning keeps examples in activations, gone with the session.
+
+17
+00:01:21,189 --> 00:01:25,449
+So context is temporary memory; weights are long-term memory.
+
+18
+00:01:25,699 --> 00:01:30,165
+Temporary memory is flexible and undoable, but the window bounds it.
+
+19
+00:01:32,815 --> 00:01:37,343
+In 2020, Kaplan and colleagues turned bigger-is-better into a formula.
+
+20
+00:01:37,593 --> 00:01:42,281
+Test cross-entropy falls as a power law in parameter count.
+
+21
+00:01:42,531 --> 00:01:46,620
+The same holds for training tokens and for training compute.
+
+22
+00:01:46,870 --> 00:01:52,003
+The exponents are about 0.076, 0.095 and 0.050.
+
+23
+00:01:52,253 --> 00:01:56,232
+A power law means a straight line once you take logs.
+
+24
+00:01:56,482 --> 00:02:01,894
+Small exponents mean slow decline, yet ten times scale still helps.
+
+25
+00:02:02,144 --> 00:02:06,177
+That line spans seven orders of magnitude, and it extrapolates.
+
+26
+00:02:08,827 --> 00:02:12,675
+A power law drawn on ordinary axes can mislead.
+
+27
+00:02:12,925 --> 00:02:17,540
+From a billion to a hundred billion: steep, then almost flat.
+
+28
+00:02:17,790 --> 00:02:21,732
+Take the log of both axes, and the power law shows its shape.
+
+29
+00:02:21,982 --> 00:02:25,997
+A straight descending line whose slope is the negative exponent.
+
+30
+00:02:26,247 --> 00:02:30,955
+That line makes extrapolation possible: small models predict large ones.
+
+31
+00:02:31,205 --> 00:02:35,679
+So spending on scale becomes an estimate, not a gamble.
+
+32
+00:02:38,329 --> 00:02:43,194
+Why does it matter? It turns a gamble into an engineering estimate.
+
+33
+00:02:43,444 --> 00:02:47,313
+Step one: train a few small models for a few million dollars.
+
+34
+00:02:47,563 --> 00:02:51,676
+Step two: fit those points with a straight line.
+
+35
+00:02:51,926 --> 00:02:56,491
+Step three: extrapolate to the target scale and predict its level.
+
+36
+00:02:56,741 --> 00:03:00,667
+Step four: decide whether the hundred million is worth spending.
+
+37
+00:03:00,917 --> 00:03:05,306
+Methodologically, this is a leap from qualitative to quantitative.
+
+38
+00:03:07,956 --> 00:03:12,225
+One Kaplan conclusion: with fixed compute, add parameters first.
+
+39
+00:03:12,475 --> 00:03:16,482
+In 2022, DeepMind's Chinchilla paper overturned that advice.
+
+40
+00:03:16,732 --> 00:03:20,619
+Hoffmann and colleagues redid the experiments and found a bias.
+
+41
+00:03:20,869 --> 00:03:25,435
+The learning-rate schedule did not scale with run length.
+
+42
+00:03:25,685 --> 00:03:30,160
+Corrected, compute-optimal means about twenty tokens per parameter.
+
+43
+00:03:30,410 --> 00:03:34,421
+Chinchilla has 70 billion parameters and 1.4 trillion tokens.
+
+44
+00:03:34,671 --> 00:03:38,528
+On nearly every benchmark it beat the larger Gopher.
+
+45
+00:03:38,778 --> 00:03:42,610
+It also beat GPT-3 at 175 billion parameters.
+
+46
+00:03:45,260 --> 00:03:48,898
+Let us do that ratio by hand, with numbers from the text.
+
+47
+00:03:49,148 --> 00:03:53,989
+GPT-3 has 175 billion parameters; twenty tokens each.
+
+48
+00:03:54,239 --> 00:03:58,182
+That asks for 3.5 trillion tokens, far more than it saw.
+
+49
+00:03:58,432 --> 00:04:01,590
+In practice it trained on about 300 billion tokens.
+
+50
+00:04:01,840 --> 00:04:06,139
+300 billion over 3.5 trillion is about one twelfth.
+
+51
+00:04:06,389 --> 00:04:11,055
+So models then were parameter-rich and data-poor.
+
+52
+00:04:13,705 --> 00:04:18,570
+Scaling does more than cut errors: some abilities seem to appear.
+
+53
+00:04:18,820 --> 00:04:22,596
+In 2022, Wei and colleagues systematically documented this.
+
+54
+00:04:22,846 --> 00:04:27,786
+On three-digit arithmetic, small models guess: accuracy near zero.
+
+55
+00:04:28,036 --> 00:04:32,025
+Past some size, accuracy suddenly jumps very high.
+
+56
+00:04:32,275 --> 00:04:37,472
+They call these emergent abilities: absent small, present large.
+
+57
+00:04:37,722 --> 00:04:41,884
+It fits intuition, and it looks like a phase transition in physics.
+
+58
+00:04:42,134 --> 00:04:47,122
+Water freezes at zero: continuous micro-parameters, abrupt macro-change.
+
+59
+00:04:49,772 --> 00:04:54,228
+But in 2023, Schaeffer and colleagues pushed back sharply.
+
+60
+00:04:54,478 --> 00:04:59,361
+They argue emergence may be a mirage created by the metric.
+
+61
+00:04:59,611 --> 00:05:04,553
+An all-or-nothing metric makes the curve leap suddenly.
+
+62
+00:05:04,803 --> 00:05:09,415
+Switch to a continuous metric, and the same gain looks smooth.
+
+63
+00:05:09,665 --> 00:05:14,296
+Ability may grow continuously; our ruler has coarse ticks.
+
+64
+00:05:14,546 --> 00:05:18,153
+Re-measure with several metrics, and the emergence vanishes.
+
+65
+00:05:18,403 --> 00:05:23,457
+The safe claim: ability rises smoothly, behaviour may not.
+
+66
+00:05:26,107 --> 00:05:30,158
+First, the data wall: high-quality text is finite.
+
+67
+00:05:30,408 --> 00:05:35,355
+Some estimates say it runs out within years; that is a forecast.
+
+68
+00:05:35,605 --> 00:05:40,511
+Second, compute and power: frontier training costs hundreds of millions.
+
+69
+00:05:40,761 --> 00:05:45,055
+Third, inference cost: bigger models cost more per call.
+
+70
+00:05:45,305 --> 00:05:50,615
+Fourth, diminishing returns: small exponents mean steep prices.
+
+71
+00:05:50,865 --> 00:05:57,022
+So the field split: overtrained small models, sparse activation, synthetic data.
+
+72
+00:05:59,672 --> 00:06:03,741
+Two common mistakes, both about scale.
+
+73
+00:06:03,991 --> 00:06:08,185
+First, many parameters never meant strong ability.
+
+74
+00:06:08,435 --> 00:06:12,747
+Chinchilla at 70 billion beat Gopher at 280 billion.
+
+75
+00:06:12,997 --> 00:06:17,338
+Second, a high benchmark score is not usability in your setting.
+
+76
+00:06:17,588 --> 00:06:22,395
+Benchmarks are fixed sets; high scores say nothing about latency or cost.
+
+77
+00:06:25,045 --> 00:06:28,909
+In one sentence: loss falls as a power law with scale.
+
+78
+00:06:29,159 --> 00:06:33,399
+But the ratio and the ceilings matter as much as parameters.
+
+79
+00:06:33,649 --> 00:06:37,744
+The model is good at continuing text, but not at obeying.
+
+80
+00:06:37,994 --> 00:06:41,529
+Ask for a poem and you may get a paper instead.
+
+81
+00:06:41,779 --> 00:06:45,970
+Next chapter: alignment, turning a predictor into an assistant.

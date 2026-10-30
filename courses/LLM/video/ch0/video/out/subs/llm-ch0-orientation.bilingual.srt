@@ -1,0 +1,344 @@
+1
+00:00:01,600 --> 00:00:07,073
+你大概每天都在和它聊天：问问题、写代码、改文章。
+You probably chat with it every day: asking questions, writing code, editing essays.
+
+2
+00:00:07,323 --> 00:00:11,272
+但你想过吗，它的内部到底在发生什么？
+But have you ever wondered what is actually happening inside it?
+
+3
+00:00:11,522 --> 00:00:15,310
+这是「大语言模型」课程的第零章：导读。
+This is Chapter 0 of the Large Language Model course: the orientation.
+
+4
+00:00:15,560 --> 00:00:20,098
+这一集不讲公式，只做一件事：给你一张地图。
+No formulas today. Just one job: give you a map.
+
+5
+00:00:20,348 --> 00:00:24,309
+一张能装进脑子、也能随时翻回来的地图。
+A map that fits in your head, and that you can come back to.
+
+6
+00:00:26,959 --> 00:00:31,143
+七十年的人工智能研究，能不能压缩成一句话？
+Can seventy years of AI research be squeezed into one sentence?
+
+7
+00:00:31,393 --> 00:00:36,884
+可以。大语言模型，是用海量文本训练出来的程序。
+Yes. A large language model is a program trained on enormous amounts of text.
+
+8
+00:00:37,134 --> 00:00:41,494
+它只擅长一件事：根据上文，猜下一个词。
+It is good at one thing: guessing the next word from the preceding text.
+
+9
+00:00:41,744 --> 00:00:46,158
+你手机的输入法，其实每天都在做类似的事。
+The keyboard on your phone does something similar every day.
+
+10
+00:00:46,408 --> 00:00:50,272
+比如这一句：今天下雨了，出门记得带……
+Take this sentence: It is raining, remember to bring your...
+
+11
+00:00:50,522 --> 00:00:53,001
+下一个词，最可能是「伞」。
+The most likely next word is umbrella.
+
+12
+00:00:53,251 --> 00:00:57,218
+但模型不是查表，它给每个候选词打分。
+But the model does not look up a table; it scores every candidate.
+
+13
+00:00:57,468 --> 00:01:01,850
+挑一个接上，再把新词放回上文，继续猜。
+It picks one, appends it, puts it back into the context, and guesses again.
+
+14
+00:01:02,100 --> 00:01:07,590
+目标很朴素，可当模型大到一定程度，奇怪的事发生了。
+The goal is plain. But once the model gets big enough, something strange happens.
+
+15
+00:01:07,840 --> 00:01:12,217
+翻译、推理、写代码，没有人专门教过它。
+Translation, reasoning, coding: nobody taught it these directly.
+
+16
+00:01:12,467 --> 00:01:16,959
+这些能力，是在预测下一个词的过程中长出来的。
+They grew out of the single task of predicting the next word.
+
+17
+00:01:17,209 --> 00:01:19,637
+我们管它们叫：副产品。
+We call them by-products.
+
+18
+00:01:22,287 --> 00:01:26,243
+不过，这句话里的每个词，都值得怀疑。
+But every word in that sentence deserves suspicion.
+
+19
+00:01:26,493 --> 00:01:30,408
+第一，为什么猜下一个词，能逼出推理？
+First: why would guessing the next word produce reasoning?
+
+20
+00:01:30,658 --> 00:01:33,898
+第二，「大到一定程度」到底是多大？
+Second: how big is big enough?
+
+21
+00:01:34,148 --> 00:01:37,765
+为什么是突然变好，而不是慢慢变好？
+Why does it improve suddenly, instead of gradually?
+
+22
+00:01:38,015 --> 00:01:41,164
+第三，猜得准，就等于理解吗？
+Third: does guessing well mean understanding?
+
+23
+00:01:41,414 --> 00:01:46,371
+第四，如果它只是在猜，为什么会一本正经地胡说？
+Fourth: if it is only guessing, why does it state nonsense so confidently?
+
+24
+00:01:46,621 --> 00:01:50,923
+整门课，就是把这四个问题，一层一层拆开。
+This whole course takes those four questions apart, layer by layer.
+
+25
+00:01:51,173 --> 00:01:56,866
+拆完以后，你能读懂论文摘要，也能判断新闻有没有夸大。
+Afterwards, you can read a paper abstract and judge whether a headline exaggerates.
+
+26
+00:01:59,516 --> 00:02:04,289
+先看地图。左边是目标，右边有五个模块。
+Start with the map. The goal is on the left; five modules are on the right.
+
+27
+00:02:04,539 --> 00:02:09,507
+目标是预测下一个词；五个模块，是支撑它的柱子。
+The goal is predicting the next word; five modules are the pillars beneath it.
+
+28
+00:02:09,757 --> 00:02:12,470
+表示：词怎么变成向量。
+Representation: how words become vectors.
+
+29
+00:02:12,720 --> 00:02:15,820
+架构：Transformer 怎么组织计算。
+Architecture: how a Transformer organises computation.
+
+30
+00:02:16,070 --> 00:02:20,253
+数据：互联网文本，怎么变成训练材料。
+Data: how internet text becomes training material.
+
+31
+00:02:20,503 --> 00:02:24,445
+规模：为什么越大越好，还能讲出规律。
+Scale: why bigger is better, and why the law is predictable.
+
+32
+00:02:24,695 --> 00:02:27,460
+对齐：怎么让它听人类的话。
+Alignment: how to make it follow human intent.
+
+33
+00:02:27,710 --> 00:02:33,441
+如果只记五个词：预测、表示、架构、规模、对齐。
+If you remember only five words: prediction, representation, architecture, scale, alignment.
+
+34
+00:02:36,091 --> 00:02:40,635
+这张地图，画了七十多年，大致分成五个时代。
+This map took over seventy years to draw, and falls into five eras.
+
+35
+00:02:40,885 --> 00:02:47,015
+1948 到 2002：统计时代，靠数数估计下一个词的概率。
+1948 to 2002: the statistical era, estimating next-word probabilities by counting.
+
+36
+00:02:47,265 --> 00:02:54,357
+2003 到 2016：神经时代，神经网络代替数数，词也变成向量。
+2003 to 2016: the neural era, replacing counts with networks and words with vectors.
+
+37
+00:02:54,607 --> 00:03:00,901
+2017 到 2019：Transformer 时代，更并行，也更会看全局。
+2017 to 2019: the Transformer era, more parallel, and aware of the whole context.
+
+38
+00:03:01,151 --> 00:03:07,578
+2020 到 2022：规模时代，越大越好，背后有数学规律。
+2020 to 2022: the scale era, where the rule that bigger is better follows a law.
+
+39
+00:03:07,828 --> 00:03:14,814
+2022 年到现在：对齐与推理时代，从会说话，到听话，再到会想。
+2022 to now: alignment and reasoning, from talking, to following, to thinking.
+
+40
+00:03:15,064 --> 00:03:21,915
+注意，这些年代只是大致边界；五个时代，是同一条主线的五次换挡。
+Note: these dates are rough boundaries; five eras, five gear changes on one road.
+
+41
+00:03:24,565 --> 00:03:28,842
+把五个时代放在一起看，有一个反复出现的模式。
+Put the five eras side by side and a pattern keeps returning.
+
+42
+00:03:29,092 --> 00:03:35,694
+每一次跃迁，都是把一个手工设计的部件，换成从数据里学出来的部件。
+Every leap swaps a hand-designed part for a part learned from data.
+
+43
+00:03:35,944 --> 00:03:41,421
+统计模型的回退规则是人写的，神经网络把它学了出来。
+Back-off rules were written by hand; neural networks learned them.
+
+44
+00:03:41,671 --> 00:03:47,654
+循环网络逐词传递，是架构强加的限制，注意力把它放开了。
+Recurrent nets passed words one at a time; attention removed that limit.
+
+45
+00:03:47,904 --> 00:03:55,193
+有用、无害、诚实，本来是人写的规则，RLHF 改成从比较里学。
+Helpful, harmless, honest were hand-written rules; RLHF learned them from comparisons.
+
+46
+00:03:55,443 --> 00:03:59,957
+然后，再靠规模，把这个新部件推向质变。
+Then scale pushes the new part over a threshold.
+
+47
+00:04:00,207 --> 00:04:06,446
+生物学里管这叫「预适应」：羽毛最初为了保暖，后来用来飞行。
+Biology calls this exaptation: feathers first for warmth, later for flight.
+
+48
+00:04:09,096 --> 00:04:12,492
+说完内容，再说这门课怎么写。
+Now, how is this course written?
+
+49
+00:04:12,742 --> 00:04:19,453
+很多教程，第一章讲 softmax，第四章再讲一遍，第九章又讲一遍。
+Many tutorials explain softmax in chapter one, again in four, again in nine.
+
+50
+00:04:19,703 --> 00:04:23,798
+这门课换了个做法：每个概念只定义一次。
+This course does it differently: each concept is defined once.
+
+51
+00:04:24,048 --> 00:04:30,927
+第一次出现时，给定义、给直觉、给一个例子，然后登记进概念账本。
+When a concept first appears, it gets a definition, an intuition, an example, and a ledger entry.
+
+52
+00:04:31,177 --> 00:04:35,002
+之后再见，只写「见某节」，不再解释。
+Later chapters simply point back to that section.
+
+53
+00:04:35,252 --> 00:04:39,982
+每章开头，还会写清「新增」了什么，「前置」需要什么。
+Every chapter opens with what is new and what is assumed.
+
+54
+00:04:40,232 --> 00:04:43,144
+同一个例子，也绝不用第二次。
+And no example is ever used twice.
+
+55
+00:04:43,394 --> 00:04:48,040
+因为工作记忆很有限，重复会挤掉真正的新东西。
+Working memory is limited; repetition crowds out what is truly new.
+
+56
+00:04:50,690 --> 00:04:53,791
+最后，换一个角度看这些零件。
+Finally, look at these parts from another angle.
+
+57
+00:04:54,041 --> 00:05:00,365
+熵来自热力学，被信息论借走，最后成了训练模型的损失函数。
+Entropy came from thermodynamics, was borrowed by information theory, and became the loss.
+
+58
+00:05:00,615 --> 00:05:05,502
+梯度下降，和细菌朝着养分游动，是同一个算法。
+Gradient descent is the same algorithm as bacteria swimming toward nutrients.
+
+59
+00:05:05,752 --> 00:05:10,905
+混合专家模型，就是亚当·斯密别针工厂里的分工。
+Mixture of experts is the division of labour in Adam Smith's pin factory.
+
+60
+00:05:11,155 --> 00:05:16,687
+生物学里的预适应，也是同一个模式：旧结构，新用途。
+Biology's exaptation is the same pattern: an old structure, a new use.
+
+61
+00:05:16,937 --> 00:05:25,335
+类比是迁移知识的好工具，但也可能是陷阱；所以每个类比，我们都会标出它在哪里失效。
+Analogy is a powerful tool for transfer, and also a trap; so we mark where it breaks down.
+
+62
+00:05:27,985 --> 00:05:31,380
+地图讲完了，但地图不等于地形。
+The map is done. But a map is not the terrain.
+
+63
+00:05:31,630 --> 00:05:34,608
+开始之前，请带上三样东西。
+Before we start, bring three things.
+
+64
+00:05:34,858 --> 00:05:40,942
+一点耐心：第二章的反向传播、第五章的注意力，是两个陡坡。
+Patience: backpropagation in chapter two and attention in chapter five are the steep climbs.
+
+65
+00:05:41,192 --> 00:05:46,859
+一支笔：自测先写答案，再看解析；看懂不等于会做。
+A pen: write your self-test answers before reading mine; understanding is not doing.
+
+66
+00:05:47,109 --> 00:05:52,228
+还有怀疑精神：找不到出处的说法，一律当作待验证。
+And skepticism: any claim without a source counts as unverified.
+
+67
+00:05:52,478 --> 00:05:57,969
+下一章，我们把「猜下一个词」，写成一个可以计算的概率问题。
+Next chapter, we turn guessing the next word into a computable probability problem.
+
+68
+00:05:58,219 --> 00:06:02,892
+顺便解释，为什么衡量猜得好不好，要用到「熵」。
+Along the way, we'll see why judging how well it guesses calls for entropy.
+
+69
+00:06:03,142 --> 00:06:07,182
+第一章，语言的概率论。我们下期见。
+Chapter one: the probability theory of language. See you next time.

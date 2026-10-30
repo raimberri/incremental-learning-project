@@ -1,0 +1,411 @@
+1
+00:00:01,600 --> 00:00:05,252
+Let's start with a thought experiment. I say: I keep a pet...
+
+2
+00:00:05,502 --> 00:00:08,755
+Your mind has probably already jumped to "cat" or "dog".
+
+3
+00:00:09,005 --> 00:00:11,025
+It is almost certainly not "microwave."
+
+4
+00:00:11,275 --> 00:00:17,013
+Why? Because you have read a lot of Chinese, and you know which words tend to appear here.
+
+5
+00:00:17,263 --> 00:00:22,815
+At least part of your grasp of language shows up as an expectation about the next word.
+
+6
+00:00:23,065 --> 00:00:27,509
+In this chapter, we turn that expectation into something computable.
+
+7
+00:00:30,159 --> 00:00:35,130
+Suppose the model's vocabulary has only four words: cat, dog, fish, car.
+
+8
+00:00:35,380 --> 00:00:40,188
+For that sentence, the model does not give an answer. It gives a set of probabilities.
+
+9
+00:00:40,438 --> 00:00:45,706
+Cat 0.60, dog 0.30, fish 0.08, car 0.02.
+
+10
+00:00:45,956 --> 00:00:50,450
+The four numbers add up to one, because they form a probability distribution.
+
+11
+00:00:50,700 --> 00:00:56,603
+That is the whole secret of a language model: text in, a distribution over the vocabulary out.
+
+12
+00:00:56,853 --> 00:01:00,608
+Two details matter, and both will become important later.
+
+13
+00:01:00,858 --> 00:01:07,642
+First, the output is a distribution, not a word. The choice is made by a sampling strategy, covered later.
+
+14
+00:01:07,892 --> 00:01:12,623
+That also explains why the same question asked twice can get different answers.
+
+15
+00:01:12,873 --> 00:01:19,281
+Second, the context can be arbitrarily long. That promise is exactly what the Transformer was built to keep.
+
+16
+00:01:21,931 --> 00:01:26,745
+The model predicts one word at a time. So how do we get the probability of a whole sentence?
+
+17
+00:01:26,995 --> 00:01:32,481
+Use the chain rule of probability: the multiplication rule from high school, applied again and again.
+
+18
+00:01:32,731 --> 00:01:39,173
+The probability of "I keep a cat" is each word's probability given everything before it, multiplied together.
+
+19
+00:01:39,423 --> 00:01:45,017
+In symbols: the product of the conditional probability at every step, from the first word to word T.
+
+20
+00:01:45,267 --> 00:01:51,020
+Generating by feeding your own output back in as the next input is called autoregression.
+
+21
+00:01:51,270 --> 00:01:55,186
+A language model is like a bridge you cross one step at a time.
+
+22
+00:01:55,436 --> 00:01:58,852
+The probability of the sentence is the product of the probability of each step.
+
+23
+00:01:59,102 --> 00:02:04,022
+But multiplying many numbers below one quickly collapses to zero. That is underflow.
+
+24
+00:02:04,272 --> 00:02:08,517
+So in practice we take logarithms, turning the product into a sum.
+
+25
+00:02:08,767 --> 00:02:14,412
+The logarithm is not decoration. Next, you will see that it measures information.
+
+26
+00:02:17,062 --> 00:02:22,284
+So where do these probabilities come from? History offers two generations of answers.
+
+27
+00:02:22,534 --> 00:02:25,495
+The first generation simply counted. These are n-gram models.
+
+28
+00:02:25,745 --> 00:02:32,413
+To estimate the probability of "cat" after "I keep a", count how often that combination appears in a corpus.
+
+29
+00:02:32,663 --> 00:02:38,432
+To avoid histories too long to ever be seen, it looks back only n minus one words.
+
+30
+00:02:38,682 --> 00:02:40,279
+It has two fatal weaknesses.
+
+31
+00:02:40,529 --> 00:02:46,199
+First, sparsity: word combinations are endless, and an unseen combination gets probability zero.
+
+32
+00:02:46,449 --> 00:02:51,745
+Second, no sharing: to an n-gram model, "cat" and "dog" are two unrelated counts.
+
+33
+00:02:51,995 --> 00:02:57,011
+In 2003, Bengio and colleagues changed direction: give every word a vector.
+
+34
+00:02:57,261 --> 00:03:03,167
+Similar words get similar vectors, and a neural network turns them into next-word probabilities.
+
+35
+00:03:03,417 --> 00:03:08,675
+In one line: n-grams memorize combinations; neural language models learn relationships.
+
+36
+00:03:08,925 --> 00:03:13,550
+Having seen "I keep a cat", it naturally gives "I keep a dog" a decent probability too.
+
+37
+00:03:13,800 --> 00:03:19,375
+And that diagram, vectors into a network, is the skeleton of GPT seventeen years later.
+
+38
+00:03:22,025 --> 00:03:26,470
+The model outputs a distribution. How do we judge how well it guessed?
+
+39
+00:03:26,720 --> 00:03:28,338
+Start with surprise.
+
+40
+00:03:28,588 --> 00:03:33,175
+If rain tomorrow has probability 0.99, rain does not surprise you.
+
+41
+00:03:33,425 --> 00:03:37,147
+If the probability is 0.01, rain surprises you a lot.
+
+42
+00:03:37,397 --> 00:03:40,822
+So surprise should decrease as probability increases.
+
+43
+00:03:41,072 --> 00:03:46,471
+And for two independent events, surprise should add up.
+
+44
+00:03:46,721 --> 00:03:51,115
+Essentially one function satisfies both: minus log p.
+
+45
+00:03:51,365 --> 00:03:58,682
+This is information content. Probability one gives zero; probability near zero gives near infinity.
+
+46
+00:03:58,932 --> 00:04:02,838
+Average that surprise over outcomes, weighted by probability, and you get entropy.
+
+47
+00:04:03,088 --> 00:04:07,933
+A fair coin has one bit of entropy. A coin that always lands heads has zero.
+
+48
+00:04:10,583 --> 00:04:12,363
+Now comes the key step.
+
+49
+00:04:12,613 --> 00:04:16,867
+The world has a true distribution p. The model gives a distribution q.
+
+50
+00:04:17,117 --> 00:04:22,465
+Encoding events from p with q gives an average surprise: the cross-entropy.
+
+51
+00:04:22,715 --> 00:04:27,231
+It equals the entropy of p, plus a term called the KL divergence.
+
+52
+00:04:27,481 --> 00:04:31,446
+KL divergence measures the gap between two distributions, and is never negative.
+
+53
+00:04:31,696 --> 00:04:35,770
+The entropy of p belongs to the data, and does not change with the model.
+
+54
+00:04:36,020 --> 00:04:44,006
+So minimizing cross-entropy means minimizing KL divergence: moving the model distribution toward the truth.
+
+55
+00:04:44,256 --> 00:04:48,467
+Almost every language model uses cross-entropy as its loss.
+
+56
+00:04:48,717 --> 00:04:57,096
+Back to the four-word vocabulary: answer cat, model says 0.60, cross-entropy is about 0.51 nats.
+
+57
+00:04:57,346 --> 00:05:03,574
+If the answer is car and the model gives only 0.02, cross-entropy is about 3.91.
+
+58
+00:05:03,824 --> 00:05:06,955
+Being wrong here costs 7.7 times as much as being right.
+
+59
+00:05:07,205 --> 00:05:10,622
+Cross-entropy punishes confident mistakes very heavily.
+
+60
+00:05:10,872 --> 00:05:15,199
+To translate nats into plain language, exponentiate: that gives perplexity.
+
+61
+00:05:15,449 --> 00:05:20,495
+A perplexity of 1.67 means the model hesitates between fewer than two words on average.
+
+62
+00:05:20,745 --> 00:05:25,747
+Guessing uniformly among fifty thousand words gives a perplexity of exactly fifty thousand.
+
+63
+00:05:25,997 --> 00:05:32,850
+Plot cross-entropy: the x-axis is the probability q the model gives the correct answer; the y-axis is −log q.
+
+64
+00:05:33,100 --> 00:05:38,723
+As q approaches zero, the curve gets steeper; KL is the part of cross-entropy above entropy.
+
+65
+00:05:38,973 --> 00:05:45,005
+Cross-entropy equals entropy plus KL. Training squeezes down that KL part.
+
+66
+00:05:47,655 --> 00:05:50,960
+Put it all together, and the training objective writes itself.
+
+67
+00:05:51,210 --> 00:05:57,563
+Tune the parameters so the true next word has the lowest average negative log probability.
+
+68
+00:05:57,813 --> 00:06:01,612
+This expression has a second identity: maximum likelihood estimation.
+
+69
+00:06:01,862 --> 00:06:06,044
+Minimizing negative log-likelihood is the same as maximizing likelihood.
+
+70
+00:06:06,294 --> 00:06:10,843
+In other words, make the training corpus as likely as possible under the model.
+
+71
+00:06:11,093 --> 00:06:17,246
+Information theory calls it minimizing cross-entropy; statistics calls it maximum likelihood.
+
+72
+00:06:17,496 --> 00:06:20,993
+Two languages for one thing, and this pattern runs through the whole course.
+
+73
+00:06:21,243 --> 00:06:24,679
+How to actually tune those parameters is the next chapter.
+
+74
+00:06:27,329 --> 00:06:33,065
+What the model finally emits is not a probability but a set of arbitrary real numbers, called logits.
+
+75
+00:06:33,315 --> 00:06:36,037
+Turn them into probabilities with softmax.
+
+76
+00:06:36,287 --> 00:06:40,573
+Exponentiate each logit, then divide by the sum of all exponentials.
+
+77
+00:06:40,823 --> 00:06:45,144
+The denominator includes a temperature parameter that controls how sharp the distribution is.
+
+78
+00:06:45,394 --> 00:06:50,100
+As temperature approaches zero, almost all mass goes to the largest logit, and output becomes deterministic.
+
+79
+00:06:50,350 --> 00:06:56,576
+At one you get the original distribution. Above one it flattens, giving rare words a chance.
+
+80
+00:06:56,826 --> 00:07:03,901
+This is exactly the Boltzmann distribution: logits are negative energy, temperature is temperature.
+
+81
+00:07:04,151 --> 00:07:09,745
+Take just two candidates: the x-axis is the logit difference, the y-axis is the probability of the higher one.
+
+82
+00:07:09,995 --> 00:07:15,255
+The lower the temperature, the more the curve looks like a step; the higher it is, the flatter the curve.
+
+83
+00:07:15,505 --> 00:07:19,332
+With a distribution in hand, we still choose a word. That step is called decoding.
+
+84
+00:07:19,582 --> 00:07:23,883
+Greedy decoding always takes the top word: deterministic, but prone to repetition.
+
+85
+00:07:24,133 --> 00:07:27,847
+Pure sampling draws by probability: diverse, but sometimes wild.
+
+86
+00:07:28,097 --> 00:07:34,720
+Top-k samples from the k most likely words; top-p from the smallest set whose mass reaches p.
+
+87
+00:07:34,970 --> 00:07:38,748
+All of these are knobs at inference time. They do not change the model itself.
+
+88
+00:07:41,398 --> 00:07:44,794
+Finally, look at the floor and the ceiling of this objective.
+
+89
+00:07:45,044 --> 00:07:51,432
+The floor: in 2003, a model that only predicts the next word could do very little.
+
+90
+00:07:51,682 --> 00:07:57,233
+It needed lots of data, lots of compute, and an architecture that could remember a long context.
+
+91
+00:07:57,483 --> 00:08:00,652
+The ceiling is a question worth returning to.
+
+92
+00:08:00,902 --> 00:08:05,538
+To predict "this integral equals", must the model actually know how to integrate?
+
+93
+00:08:05,788 --> 00:08:10,465
+Or is it enough to remember which numbers tend to follow such problems?
+
+94
+00:08:10,715 --> 00:08:18,003
+The answer: inside the training distribution, memory suffices. Outside it, the model must learn rules.
+
+95
+00:08:18,253 --> 00:08:22,900
+And learning rules happens spontaneously as scale grows.
+
+96
+00:08:23,150 --> 00:08:27,960
+That is why such a plain objective eventually forced reasoning into existence.
+
+97
+00:08:28,210 --> 00:08:34,882
+But do not romanticize it. It optimizes conditional probability over text, not the truth of the world.
+
+98
+00:08:35,132 --> 00:08:38,146
+The gap between the two is where hallucinations come from.
+
+99
+00:08:40,796 --> 00:08:43,280
+This chapter gave us an objective function.
+
+100
+00:08:43,530 --> 00:08:46,743
+But we have not answered how parameters improve by themselves.
+
+101
+00:08:46,993 --> 00:08:50,080
+The next chapter covers gradient descent and backpropagation.
+
+102
+00:08:50,330 --> 00:08:54,618
+The first steep climb of the course, and the engine of all deep learning.
+
+103
+00:08:54,868 --> 00:08:59,002
+Chapter two: gradients and backpropagation. See you next time.

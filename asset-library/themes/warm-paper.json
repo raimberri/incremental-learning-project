@@ -1,0 +1,40 @@
+{
+  "id": "warm-paper",
+  "description": "Warm light explainer used by the LLM course videos.",
+  "colors": {
+    "bg": "#f4f2ee",
+    "card": "#ffffff",
+    "ink": "#1f2430",
+    "soft": "#5d6472",
+    "dim": "#a0a5ae",
+    "line": "rgba(31,36,48,0.09)",
+    "orange": "#e2724a",
+    "blue": "#3f6fe0",
+    "green": "#2f9e6e",
+    "purple": "#7a5af0",
+    "teal": "#1f97a6",
+    "red": "#e0524f",
+    "marker": "#ffe27a",
+    "subtitleBg": "rgba(38,41,49,0.92)"
+  },
+  "fonts": {
+    "latin": "Inter",
+    "mono": "JetBrains Mono",
+    "cjk": "PingFang SC, Hiragino Sans GB, Noto Sans CJK SC"
+  },
+  "layout": {
+    "width": 1920,
+    "height": 1080,
+    "marginX": 120,
+    "headerY": 42,
+    "contentTop": 330,
+    "subtitleBottom": 46,
+    "cardRadius": 22,
+    "sceneFadeFrames": 8
+  },
+  "media": {
+    "photoAspect": "3:2",
+    "photoPixels": [1536, 1024],
+    "musicVolume": 0.2
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 1 章 · 语言的概率论",
+  "scenes": [
+    {"id": "intro", "type": "custom", "component": "IntroScene", "images": ["img/pets.jpg"], "beat": "思想实验：我养了一只……"},
+    {"id": "machine", "type": "custom", "component": "MachineScene", "images": ["img/jars.jpg", "img/coin.jpg"], "beat": "词表分布 / 文本→分布"},
+    {"id": "chain", "type": "custom", "component": "ChainScene", "images": ["img/dominoes.jpg"], "beat": "链式法则 / 自回归 / 对数"},
+    {"id": "generations", "type": "custom", "component": "GenerationsScene", "images": ["img/catalog.jpg"], "beat": "n-gram vs 神经语言模型"},
+    {"id": "surprise", "type": "custom", "component": "SurpriseScene", "images": ["img/rain.jpg", "img/coin.jpg"], "beat": "信息量 −log p 与熵"},
+    {"id": "crossentropy", "type": "custom", "component": "CrossEntropyScene", "images": ["img/jars.jpg", "img/coin.jpg"], "beat": "交叉熵 = 熵 + KL；困惑度"},
+    {"id": "training", "type": "custom", "component": "TrainingScene", "images": ["img/notebook.jpg"], "beat": "负对数似然 / 最大似然"},
+    {"id": "decoding", "type": "custom", "component": "DecodingScene", "images": ["img/mixer.jpg"], "beat": "logit / softmax / 温度 / 解码"},
+    {"id": "limits", "type": "custom", "component": "LimitsScene", "images": ["img/mountain.jpg"], "beat": "记忆 vs 规则 / 幻觉的缝隙"},
+    {"id": "outro", "type": "custom", "component": "OutroScene", "images": ["img/cover.jpg"], "beat": "下一站：梯度与反向传播"}
+  ]
+}

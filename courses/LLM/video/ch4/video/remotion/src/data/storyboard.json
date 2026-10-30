@@ -1,0 +1,333 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 4 章 · 从 RNN 到注意力",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 04 · FROM RNN TO ATTENTION",
+      "title": "读到第五十个词",
+      "highlight": "第五十个词",
+      "subtitle": "记忆如何传递，又如何按需回看",
+      "pills": [
+        "RNN",
+        "LSTM",
+        "seq2seq",
+        "注意力"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 4 章"
+    },
+    {
+      "id": "why",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "WHY NOT ONE SHOT",
+      "title": "逐词处理不够",
+      "highlight": "不够",
+      "items": [
+        {
+          "icon": "①",
+          "title": "长度不固定",
+          "sub": "3 个词与 300 个词，维度不同",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "参数跟着涨",
+          "sub": "句子越长，输入层越大",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "丢了相邻",
+          "sub": "学不到位置五与六相邻",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "rnn",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "RNN · THE LOOP",
+      "title": "记忆变成循环",
+      "highlight": "循环",
+      "formula": "hₜ = tanh(W_h hₜ₋₁ + W_x xₜ + b)",
+      "note": "读作：这一步的状态，由上一步状态与当前词决定。",
+      "bullets": [
+        "同一组权重，所有时间步共享",
+        "参数量不随句子长度增长"
+      ],
+      "stamp": "隐藏状态就是读到这里的摘要"
+    },
+    {
+      "id": "unroll",
+      "type": "photo",
+      "accent": "purple",
+      "kicker": "UNROLLED IN TIME",
+      "title": "展开成深图",
+      "highlight": "深图",
+      "image": "img/steps.jpg",
+      "pills": [
+        "一步一层",
+        "共享参数",
+        "沿时间反传"
+      ],
+      "subtitle": "一层台阶，就是一个时间步。",
+      "bullets": [
+        "句子越长，台阶越多",
+        "梯度要一级一级走下来",
+        "层数等于句子长度"
+      ],
+      "caption": "示意图：台阶不是时间轴"
+    },
+    {
+      "id": "decay",
+      "type": "compare",
+      "accent": "red",
+      "kicker": "TWO FAILURE MODES",
+      "title": "消失与爆炸",
+      "highlight": "爆炸",
+      "center": "vs",
+      "left": {
+        "title": "梯度消失",
+        "sub": "因子长期小于 1",
+        "items": [
+          {
+            "title": "指数衰减",
+            "sub": "越传越小，趋于零"
+          },
+          {
+            "title": "结构上存不住",
+            "sub": "不是记性问题"
+          }
+        ]
+      },
+      "right": {
+        "title": "梯度爆炸",
+        "sub": "因子长期大于 1",
+        "items": [
+          {
+            "title": "指数放大",
+            "sub": "训练直接崩掉"
+          },
+          {
+            "title": "可以裁剪",
+            "sub": "超阈值就缩回去"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lstm",
+      "type": "formula",
+      "accent": "green",
+      "kicker": "LSTM · 1997",
+      "title": "给记忆装门",
+      "highlight": "门",
+      "formula": "cₜ = fₜ ⊙ cₜ₋₁ + iₜ ⊙ c̃ₜ",
+      "note": "遗忘门接近 1 时，cₜ ≈ cₜ₋₁：加法路径几乎无损。",
+      "bullets": [
+        "细胞状态是第二条传送带",
+        "默认保留，选择性修改"
+      ],
+      "stamp": "常数误差传送带"
+    },
+    {
+      "id": "gates",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "THREE GATES",
+      "title": "三门与一条记忆",
+      "highlight": "门",
+      "steps": [
+        {
+          "title": "遗忘门",
+          "sub": "旧记忆保留多少"
+        },
+        {
+          "title": "输入门",
+          "sub": "新信息写入多少"
+        },
+        {
+          "title": "候选记忆",
+          "sub": "这一步想写什么"
+        },
+        {
+          "title": "输出门",
+          "sub": "暴露多少给下一步"
+        }
+      ],
+      "stamp": "σ 把值压到 0 到 1，正好当开关"
+    },
+    {
+      "id": "bottleneck",
+      "type": "compare",
+      "accent": "orange",
+      "kicker": "SEQ2SEQ · 2014",
+      "title": "整句压成一个向量",
+      "highlight": "一个向量",
+      "center": "→",
+      "left": {
+        "title": "编码器",
+        "sub": "读完整句",
+        "items": [
+          {
+            "title": "最后一个状态",
+            "sub": "装着整句的意思"
+          },
+          {
+            "title": "固定维度",
+            "sub": "不随句子变长"
+          }
+        ]
+      },
+      "right": {
+        "title": "解码器",
+        "sub": "一个词一个词吐",
+        "items": [
+          {
+            "title": "从状态出发",
+            "sub": "每步输出一个词"
+          },
+          {
+            "title": "教师强制",
+            "sub": "喂正确的上一个词"
+          }
+        ]
+      }
+    },
+    {
+      "id": "attention",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "BAHDANAU · 2014",
+      "title": "每一步都回看",
+      "highlight": "回看",
+      "steps": [
+        {
+          "title": "打分",
+          "sub": "当前状态比每个位置"
+        },
+        {
+          "title": "归一化",
+          "sub": "softmax 变成权重"
+        },
+        {
+          "title": "加权求和",
+          "sub": "得到上下文向量"
+        },
+        {
+          "title": "再解码",
+          "sub": "和状态一起定下个词"
+        }
+      ],
+      "stamp": "对齐不是教的，是训练长出来的"
+    },
+    {
+      "id": "qkv",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "QUERY · KEY · VALUE",
+      "title": "查询、键、值",
+      "highlight": "键",
+      "formula": "e = vᵀ tanh(W_s sₜ₋₁ + W_h hᵢ)\nα = softmax(e)\ncₜ = Σᵢ αₜ,ᵢ hᵢ",
+      "note": "查询来自解码器；键和值都是编码器的位置。",
+      "bullets": [
+        "分数衡量当前状态与位置多匹配",
+        "权重之和为一，是一种软对齐"
+      ],
+      "stamp": "定义：用相似度加权求和"
+    },
+    {
+      "id": "retrieval",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "A SOFT LOOKUP",
+      "title": "可微的软检索",
+      "highlight": "软检索",
+      "items": [
+        {
+          "icon": "①",
+          "title": "硬匹配",
+          "sub": "键对上才返回，零或一",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "软匹配",
+          "sub": "所有键都有一点权重",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "可导",
+          "sub": "加权平均能反向传播",
+          "color": "green"
+        }
+      ]
+    },
+    {
+      "id": "parallel",
+      "type": "compare",
+      "accent": "red",
+      "kicker": "SERIAL VS PARALLEL",
+      "title": "为什么能并行",
+      "highlight": "并行",
+      "center": "vs",
+      "left": {
+        "title": "RNN 串行",
+        "sub": "必须一步一步",
+        "items": [
+          {
+            "title": "状态必须等",
+            "sub": "前一步算完才行"
+          },
+          {
+            "title": "GPU 干等",
+            "sub": "几千个核用不上"
+          }
+        ]
+      },
+      "right": {
+        "title": "注意力并行",
+        "sub": "一次算完",
+        "items": [
+          {
+            "title": "同时打分",
+            "sub": "位置之间不依赖"
+          },
+          {
+            "title": "一次矩阵乘法",
+            "sub": "能把 GPU 喂满"
+          }
+        ]
+      },
+      "stamp": "这是 Transformer 的前夜"
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 05",
+      "title": "不要循环了",
+      "highlight": "循环",
+      "subtitle": "下一章：Transformer",
+      "next": {
+        "code": "05",
+        "title": "Transformer",
+        "sub": "去掉循环，只留注意力"
+      },
+      "pills": [
+        "第 4 章",
+        "记忆与对齐",
+        "前夜已到"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

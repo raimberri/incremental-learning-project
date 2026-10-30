@@ -1,0 +1,687 @@
+{
+  "total": 490.835,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "02.0",
+      "zh": "看不见地图的下山",
+      "en": "BLIND DESCENT",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "上一章，我们把训练写成了一个目标：让损失尽量小。",
+          "en": "In the last chapter, training became an objective: make the loss as small as possible.",
+          "start": 1.6,
+          "end": 6.137
+        },
+        {
+          "zh": "现在换个看法：参数是地形上的位置，损失是海拔。",
+          "en": "Now picture the parameters as a position on a landscape, and the loss as altitude.",
+          "start": 6.637,
+          "end": 11.26
+        },
+        {
+          "zh": "训练，就是在这片看不见的地形里，找到最低的谷底。",
+          "en": "Training means finding the lowest valley in terrain you cannot see.",
+          "start": 11.76,
+          "end": 16.405
+        },
+        {
+          "zh": "你看不见地图，只能感到脚下这一点的坡度。",
+          "en": "You have no map. You can only feel the slope under your feet.",
+          "start": 16.905,
+          "end": 20.385
+        },
+        {
+          "zh": "那就朝最陡的下坡方向迈一步，再感受，再迈。",
+          "en": "So take a step downhill, feel again, and take another.",
+          "start": 20.885,
+          "end": 24.985
+        },
+        {
+          "zh": "这个笨办法叫梯度下降，是整门课发动机的点火钥匙。",
+          "en": "This crude method is gradient descent, the ignition key of the whole engine.",
+          "start": 25.485,
+          "end": 30.206
+        },
+        {
+          "zh": "这一章只回答两件事：往哪走，以及怎么走得动。",
+          "en": "This chapter answers two things: which way to go, and how to keep moving.",
+          "start": 30.706,
+          "end": 34.709
+        }
+      ],
+      "end": 35.709
+    },
+    {
+      "id": "gradient",
+      "code": "02.1",
+      "zh": "坡度变成向量",
+      "en": "THE GRADIENT",
+      "start": 35.709,
+      "lines": [
+        {
+          "zh": "先把「坡度」变成一个可以算的东西。",
+          "en": "First, turn \"slope\" into something we can compute.",
+          "start": 37.609,
+          "end": 40.3
+        },
+        {
+          "zh": "损失对每个参数的偏导数，排成一个向量，叫梯度。",
+          "en": "The partial derivative of the loss for each parameter, stacked into a vector, is the gradient.",
+          "start": 40.8,
+          "end": 45.353
+        },
+        {
+          "zh": "偏导数的意思：只让这一个参数动一点点，损失变化多快。",
+          "en": "A partial derivative asks: if only this parameter moves a little, how fast does the loss change?",
+          "start": 45.853,
+          "end": 50.93
+        },
+        {
+          "zh": "梯度指向上升最快的方向，所以下山要取它的负号。",
+          "en": "The gradient points uphill. To go down, we take its negative.",
+          "start": 51.43,
+          "end": 56.051
+        },
+        {
+          "zh": "如果把它画成一个箭头，方向是最陡的上坡，长度是坡度有多陡。",
+          "en": "Drawn as an arrow, it points steepest uphill, and its length says how steep.",
+          "start": 56.551,
+          "end": 62.062
+        },
+        {
+          "zh": "更新规则只有一行：θ 减去 η 乘以梯度。",
+          "en": "The update rule is one line: theta minus eta times the gradient.",
+          "start": 62.562,
+          "end": 66.639
+        },
+        {
+          "zh": "θ 是参数，η 是学习率，梯度是这一点的坡度。",
+          "en": "Theta is the parameter, eta is the learning rate, the gradient is the local slope.",
+          "start": 67.139,
+          "end": 71.603
+        },
+        {
+          "zh": "注意，这是一阶信息：它只告诉你方向，不告诉你谷底有多远。",
+          "en": "Note this is first-order information: it gives direction, not the distance to the valley.",
+          "start": 72.103,
+          "end": 77.581
+        },
+        {
+          "zh": "所以沿着它走，每一步都得重新量一次坡度。",
+          "en": "So every step, you have to measure the slope again.",
+          "start": 78.081,
+          "end": 81.684
+        },
+        {
+          "zh": "这就是为什么，后面还需要学习率和更好的优化器。",
+          "en": "That is why we still need a learning rate, and better optimizers.",
+          "start": 82.184,
+          "end": 86.595
+        }
+      ],
+      "end": 87.595
+    },
+    {
+      "id": "learningrate",
+      "code": "02.2",
+      "zh": "一步迈多大",
+      "en": "STEP SIZE",
+      "start": 87.595,
+      "lines": [
+        {
+          "zh": "公式里唯一要人亲手选的数，是学习率 η。",
+          "en": "The only number a human must pick in that formula is the learning rate, eta.",
+          "start": 89.495,
+          "end": 93.075
+        },
+        {
+          "zh": "它决定每一步迈多大，也决定训练能不能收敛。",
+          "en": "It sets the step size, and decides whether training converges at all.",
+          "start": 93.575,
+          "end": 97.417
+        },
+        {
+          "zh": "步子太小，下山太慢，走一万步还在半山腰。",
+          "en": "Too small: the descent crawls, and after ten thousand steps you are still halfway up.",
+          "start": 97.917,
+          "end": 102.129
+        },
+        {
+          "zh": "步子太大，一步跨过谷底，在对岸来回横跳。",
+          "en": "Too large: you leap across the valley and bounce between the two sides.",
+          "start": 102.629,
+          "end": 106.406
+        },
+        {
+          "zh": "再大一点，甚至会越跳越高，这叫发散。",
+          "en": "Larger still, and each bounce grows: that is divergence.",
+          "start": 106.906,
+          "end": 110.418
+        },
+        {
+          "zh": "这个两难，在数值分析里叫稳定性与收敛速度的权衡。",
+          "en": "Numerical analysis calls this the stability versus convergence-speed trade-off.",
+          "start": 110.918,
+          "end": 115.938
+        },
+        {
+          "zh": "它和用欧拉法解微分方程时选步长，是同一个问题。",
+          "en": "It is the same problem as choosing a step size for the Euler method.",
+          "start": 116.438,
+          "end": 120.99
+        },
+        {
+          "zh": "常见做法是先取一个能走动的值，再随着训练慢慢减小。",
+          "en": "A common recipe: start with a value that moves, then shrink it during training.",
+          "start": 121.49,
+          "end": 126.367
+        },
+        {
+          "zh": "学习率不是越小越安全，它是整场训练最敏感的旋钮。",
+          "en": "A smaller learning rate is not automatically safer. It is the most sensitive knob in training.",
+          "start": 126.867,
+          "end": 131.565
+        }
+      ],
+      "end": 132.565
+    },
+    {
+      "id": "sgd",
+      "code": "02.3",
+      "zh": "抽样版的梯度",
+      "en": "NOISY GRADIENT",
+      "start": 132.565,
+      "lines": [
+        {
+          "zh": "但真正的麻烦是：梯度要对整个训练集求平均。",
+          "en": "But the real trouble is that the gradient averages over the whole training set.",
+          "start": 134.465,
+          "end": 138.617
+        },
+        {
+          "zh": "几百万条样本，每条都要前向一次，算不起。",
+          "en": "Millions of examples, each needing a forward pass: that is unaffordable.",
+          "start": 139.117,
+          "end": 143.001
+        },
+        {
+          "zh": "于是每次只抽一小批，比如 32 条，用这一批当估计。",
+          "en": "So we sample a small batch, say thirty-two, and use its gradient as an estimate.",
+          "start": 143.501,
+          "end": 148.45
+        },
+        {
+          "zh": "批量越小，噪声越大；越大，越接近全量梯度。",
+          "en": "A smaller batch means more noise; a larger batch approaches the full gradient.",
+          "start": 148.95,
+          "end": 153.492
+        },
+        {
+          "zh": "这叫随机梯度下降，随机指的是抽样带来的噪声。",
+          "en": "This is stochastic gradient descent. \"Stochastic\" refers to the noise from sampling.",
+          "start": 153.992,
+          "end": 158.306
+        },
+        {
+          "zh": "噪声看着是缺点，其实是优点。",
+          "en": "The noise looks like a defect. It is actually a feature.",
+          "start": 158.806,
+          "end": 161.563
+        },
+        {
+          "zh": "它帮你跳出浅坑，也自带正则化，不让你死记每一条样本。",
+          "en": "It helps you escape shallow pits, and it regularizes, so you cannot memorize every example.",
+          "start": 162.063,
+          "end": 166.871
+        },
+        {
+          "zh": "生物学里早有原型：大肠杆菌的趋化性。",
+          "en": "Biology got there first: the chemotaxis of E. coli.",
+          "start": 167.371,
+          "end": 170.98
+        },
+        {
+          "zh": "它没有地图，只检测周围营养浓度在升还是在降。",
+          "en": "It has no map. It only senses whether nutrient concentration is rising or falling.",
+          "start": 171.48,
+          "end": 176.126
+        },
+        {
+          "zh": "浓度上升就少翻滚、继续直游；下降就多翻滚、换个方向。",
+          "en": "Rising: tumble less, keep swimming straight. Falling: tumble more, pick a new direction.",
+          "start": 176.626,
+          "end": 182.113
+        },
+        {
+          "zh": "一句话：SGD 的噪声，就是细菌的翻滚。",
+          "en": "In one line: the noise in SGD is the bacterium's tumble.",
+          "start": 182.613,
+          "end": 186.321
+        }
+      ],
+      "end": 187.321
+    },
+    {
+      "id": "backprop",
+      "code": "02.4",
+      "zh": "一次反向，全部梯度",
+      "en": "ONE PASS BACK",
+      "start": 187.321,
+      "lines": [
+        {
+          "zh": "接下来是最可怕的问题：几十亿个参数，导数怎么算。",
+          "en": "Now the frightening question: with billions of parameters, how do we get the derivatives?",
+          "start": 189.221,
+          "end": 193.641
+        },
+        {
+          "zh": "最笨的办法叫数值微分：把参数加一点点，看损失变多少。",
+          "en": "The dumb way is numerical differentiation: nudge a parameter, see how the loss moves.",
+          "start": 194.141,
+          "end": 199.609
+        },
+        {
+          "zh": "每个参数都要重跑一次前向，参数一多，计算量直接爆炸。",
+          "en": "That reruns a forward pass per parameter, and the cost explodes.",
+          "start": 200.109,
+          "end": 205.201
+        },
+        {
+          "zh": "所以数值微分是逐个去试，反向传播是一次算清。",
+          "en": "Numerical differentiation tries each parameter; backprop settles all of them at once.",
+          "start": 205.701,
+          "end": 210.267
+        },
+        {
+          "zh": "反向传播只做两次遍历：一次前向，一次反向。",
+          "en": "Backpropagation does two passes: one forward, one backward.",
+          "start": 210.767,
+          "end": 215.161
+        },
+        {
+          "zh": "就能拿到所有参数的梯度，代价和一次前向同一个量级。",
+          "en": "It gets every gradient at a cost on the order of a single forward pass.",
+          "start": 215.661,
+          "end": 220.487
+        },
+        {
+          "zh": "它靠两件事：链式法则，和动态规划。",
+          "en": "It relies on two things: the chain rule, and dynamic programming.",
+          "start": 220.987,
+          "end": 224.523
+        },
+        {
+          "zh": "链式法则说，把责任一层一层往回乘。",
+          "en": "The chain rule says: pass the blame backward, multiplying at each layer.",
+          "start": 225.023,
+          "end": 228.613
+        },
+        {
+          "zh": "网络是 x 到 h，到 ŷ，再到损失 L。",
+          "en": "The network is x to h, to y-hat, to the loss L.",
+          "start": 229.113,
+          "end": 232.838
+        },
+        {
+          "zh": "L 对 x 的导数，就是三段局部导数的乘积。",
+          "en": "The derivative of L with respect to x is the product of three local derivatives.",
+          "start": 233.338,
+          "end": 237.165
+        },
+        {
+          "zh": "中间那一项会被复用：缓存一次，每个节点只做局部乘法。",
+          "en": "The middle term gets reused: cache it once, and each node does only a local multiply.",
+          "start": 237.665,
+          "end": 242.785
+        },
+        {
+          "zh": "这就是动态规划：不重复计算已经算过的子问题。",
+          "en": "That is dynamic programming: never recompute a subproblem you already solved.",
+          "start": 243.285,
+          "end": 247.501
+        },
+        {
+          "zh": "前向存下中间结果，反向把「你对损失的贡献」逐层传回去。",
+          "en": "Store intermediates going forward; coming back, pass each node's contribution to the loss.",
+          "start": 248.001,
+          "end": 253.016
+        }
+      ],
+      "end": 254.016
+    },
+    {
+      "id": "handcalc",
+      "code": "02.5",
+      "zh": "手算一次",
+      "en": "BY HAND",
+      "start": 254.016,
+      "lines": [
+        {
+          "zh": "手算一个例子。ŷ 等于 wx 加 b，损失是预测减目标的平方。",
+          "en": "Let's do one by hand. y-hat equals wx plus b; the loss is the squared error.",
+          "start": 255.916,
+          "end": 262.23
+        },
+        {
+          "zh": "取 x=3，w=2，b=1，目标 y=10。",
+          "en": "Take x equals three, w equals two, b equals one, target y equals ten.",
+          "start": 262.73,
+          "end": 267.698
+        },
+        {
+          "zh": "前向：ŷ=7，误差 −3，损失 9。",
+          "en": "Forward: y-hat is seven, the error is minus three, the loss is nine.",
+          "start": 268.198,
+          "end": 271.968
+        },
+        {
+          "zh": "反向：损失对 ŷ 的导数是 2 倍误差，等于 −6。",
+          "en": "Backward: the derivative of the loss with respect to y-hat is twice the error, minus six.",
+          "start": 272.468,
+          "end": 276.806
+        },
+        {
+          "zh": "对 w 是 −6 乘 3，等于 −18；对 b 是 −6 乘 1，等于 −6。",
+          "en": "For w: minus six times three, minus eighteen. For b: minus six times one, minus six.",
+          "start": 277.306,
+          "end": 283.111
+        },
+        {
+          "zh": "取学习率 0.1：w 变 3.8，b 变 1.6。",
+          "en": "With a learning rate of 0.1, w becomes 3.8 and b becomes 1.6.",
+          "start": 283.611,
+          "end": 288.08
+        },
+        {
+          "zh": "新预测是 13，目标是 10，过头了。",
+          "en": "The new prediction is thirteen. The target is ten. We overshot.",
+          "start": 288.58,
+          "end": 291.942
+        },
+        {
+          "zh": "换成 0.02：w 是 2.36，b 是 1.12，预测 8.2。",
+          "en": "With 0.02: w is 2.36, b is 1.12, and the prediction is 8.2.",
+          "start": 292.442,
+          "end": 298.304
+        },
+        {
+          "zh": "梯度只告诉你方向，学习率决定你信它多少。",
+          "en": "The gradient gives the direction; the learning rate decides how much you trust it.",
+          "start": 298.804,
+          "end": 302.593
+        },
+        {
+          "zh": "这里只有一次乘法，但把它叠一千层，就是深度学习。",
+          "en": "One multiply here. Stack a thousand of these, and you have deep learning.",
+          "start": 303.093,
+          "end": 307.51
+        }
+      ],
+      "end": 308.51
+    },
+    {
+      "id": "aliases",
+      "code": "02.6",
+      "zh": "同一个算法的四个名字",
+      "en": "FOUR NAMES",
+      "start": 308.51,
+      "lines": [
+        {
+          "zh": "反向传播不是深度学习独有的发明。",
+          "en": "Backpropagation is not a deep-learning invention.",
+          "start": 310.41,
+          "end": 313.452
+        },
+        {
+          "zh": "同一个算法，在至少四个学科里被独立发现过。",
+          "en": "The same algorithm was discovered independently in at least four fields.",
+          "start": 313.952,
+          "end": 318.05
+        },
+        {
+          "zh": "最优控制里叫伴随法，算控制量对目标的影响。",
+          "en": "Optimal control calls it the adjoint method: how a control affects the objective.",
+          "start": 318.55,
+          "end": 322.917
+        },
+        {
+          "zh": "气象学里叫 4D-Var，用观测反推大气的初始场。",
+          "en": "Meteorology calls it 4D-Var: infer the atmosphere's initial state from observations.",
+          "start": 323.417,
+          "end": 327.688
+        },
+        {
+          "zh": "自动微分里叫反向模式，PyTorch 的 Autograd 就是它。",
+          "en": "Automatic differentiation calls it reverse mode. PyTorch's Autograd is exactly this.",
+          "start": 328.188,
+          "end": 333.058
+        },
+        {
+          "zh": "经济学里叫影子价格：约束松一格，最优目标改善多少。",
+          "en": "Economics calls it a shadow price: relax a constraint by one unit, how much does the objective gain?",
+          "start": 333.558,
+          "end": 338.667
+        },
+        {
+          "zh": "名字不同，内核相同：一次反向遍历，换所有输入的梯度。",
+          "en": "Different names, same kernel: one backward sweep buys the gradient for every input.",
+          "start": 339.167,
+          "end": 344.394
+        },
+        {
+          "zh": "数学上，它们都在算同一件事：输出对每个输入的敏感度。",
+          "en": "Mathematically, all of them compute the same thing: the output's sensitivity to each input.",
+          "start": 344.894,
+          "end": 349.995
+        },
+        {
+          "zh": "所以 Autograd 并不「懂」神经网络，它只会反向的链式法则。",
+          "en": "So Autograd does not \"understand\" neural networks. It only runs the chain rule in reverse.",
+          "start": 350.495,
+          "end": 355.456
+        }
+      ],
+      "end": 356.456
+    },
+    {
+      "id": "tricks",
+      "code": "02.7",
+      "zh": "让深层网络训得动",
+      "en": "FOUR INVENTIONS",
+      "start": 356.456,
+      "lines": [
+        {
+          "zh": "理论上反向传播能训练任意深度，实践中一深就训不动。",
+          "en": "In theory backprop trains any depth. In practice, deep networks would not train.",
+          "start": 358.356,
+          "end": 363.31
+        },
+        {
+          "zh": "四个工程发明解决了这件事，它们是现代大模型的地基。",
+          "en": "Four engineering inventions fixed that. They are the foundation of modern LLMs.",
+          "start": 363.81,
+          "end": 368.541
+        },
+        {
+          "zh": "2014 年的 Adam：给每个参数维护梯度均值和平方均值。",
+          "en": "Adam, 2014: keep a running mean and a running mean of squared gradients per parameter.",
+          "start": 369.041,
+          "end": 374.211
+        },
+        {
+          "zh": "梯度大的参数自动小步走，梯度小的自动大步走。",
+          "en": "Large gradients take small steps; small gradients take large steps, automatically.",
+          "start": 374.711,
+          "end": 379.073
+        },
+        {
+          "zh": "同年的 Dropout：训练时随机丢掉一部分神经元。",
+          "en": "Dropout, same year: randomly drop some neurons during training.",
+          "start": 379.573,
+          "end": 383.787
+        },
+        {
+          "zh": "网络不能依赖任何一个神经元，只能学出冗余的表示。",
+          "en": "The network cannot rely on any single neuron, so it learns redundant representations.",
+          "start": 384.287,
+          "end": 388.668
+        },
+        {
+          "zh": "2015 年的归一化：把每层输入的尺度压到 1 附近。",
+          "en": "Normalization, 2015: bring each layer's input scale close to one.",
+          "start": 389.168,
+          "end": 393.629
+        },
+        {
+          "zh": "训练更稳，也允许更大的学习率。",
+          "en": "Training gets steadier, and larger learning rates become usable.",
+          "start": 394.129,
+          "end": 396.986
+        },
+        {
+          "zh": "同年 ResNet 的残差连接：输出等于输入加上一个改变量。",
+          "en": "ResNet, same year: make the output the input plus a learned change.",
+          "start": 397.486,
+          "end": 402.496
+        },
+        {
+          "zh": "反向时，梯度可以沿这个加号直接流回去。",
+          "en": "Going backward, the gradient can flow straight through that plus sign.",
+          "start": 402.996,
+          "end": 406.669
+        },
+        {
+          "zh": "一百层的网络因此能训练；Transformer 里它是标配。",
+          "en": "A hundred-layer network becomes trainable, and Transformers use it everywhere.",
+          "start": 407.169,
+          "end": 411.669
+        },
+        {
+          "zh": "这四个里，残差连接是最重要的一个。",
+          "en": "Of the four, the residual connection matters most.",
+          "start": 412.169,
+          "end": 415.189
+        }
+      ],
+      "end": 416.189
+    },
+    {
+      "id": "overfit",
+      "code": "02.8",
+      "zh": "记住，还是理解",
+      "en": "MEMORY OR RULE",
+      "start": 416.189,
+      "lines": [
+        {
+          "zh": "最后，纠正一个很常见的误解。",
+          "en": "Finally, let's correct a common misunderstanding.",
+          "start": 418.089,
+          "end": 420.622
+        },
+        {
+          "zh": "训练不是把知识一条一条写进模型。",
+          "en": "Training is not writing knowledge into the model, one fact at a time.",
+          "start": 421.122,
+          "end": 424.106
+        },
+        {
+          "zh": "它是在调整一个巨大分布的参数，让训练数据上的意外最小。",
+          "en": "It adjusts the parameters of a huge distribution to make the training data least surprising.",
+          "start": 424.606,
+          "end": 429.543
+        },
+        {
+          "zh": "知识是这个过程留下的痕迹，不是被显式存储的条目。",
+          "en": "Knowledge is the trace this process leaves, not an explicitly stored entry.",
+          "start": 430.043,
+          "end": 434.469
+        },
+        {
+          "zh": "所以模型可能记住，而不是理解。",
+          "en": "So a model may memorize instead of understand.",
+          "start": 434.969,
+          "end": 437.988
+        },
+        {
+          "zh": "训练误差可以一直降，验证误差却会先降后升。",
+          "en": "Training error can keep falling, while validation error falls and then rises.",
+          "start": 438.488,
+          "end": 442.878
+        },
+        {
+          "zh": "训练集上极好、新数据上崩掉，这叫过拟合。",
+          "en": "Great on the training set, broken on new data: that is overfitting.",
+          "start": 443.378,
+          "end": 447.467
+        },
+        {
+          "zh": "对抗它的通用手段叫正则化。",
+          "en": "The general antidote is called regularization.",
+          "start": 447.967,
+          "end": 450.495
+        },
+        {
+          "zh": "dropout、权重衰减、数据增强、早停，都是它的形式。",
+          "en": "Dropout, weight decay, data augmentation, early stopping: all its forms.",
+          "start": 450.995,
+          "end": 456.108
+        },
+        {
+          "zh": "共同哲学是限制模型的自由，逼它学规律而不是背答案。",
+          "en": "Their shared philosophy: limit the model's freedom, force it to learn rules, not answers.",
+          "start": 456.608,
+          "end": 461.675
+        },
+        {
+          "zh": "这正是奥卡姆剃刀：如无必要，勿增实体。",
+          "en": "This is Occam's razor: do not multiply entities beyond necessity.",
+          "start": 462.175,
+          "end": 465.994
+        }
+      ],
+      "end": 466.994
+    },
+    {
+      "id": "outro",
+      "code": "02.9",
+      "zh": "下一站",
+      "en": "NEXT",
+      "start": 466.994,
+      "lines": [
+        {
+          "zh": "这一章，我们有了发动机。",
+          "en": "This chapter gave us the engine.",
+          "start": 468.894,
+          "end": 470.961
+        },
+        {
+          "zh": "但还有一个空白：词本身怎么变成数字？",
+          "en": "But one gap remains: how does a word become a number?",
+          "start": 471.461,
+          "end": 474.969
+        },
+        {
+          "zh": "下一章讲表示学习，从 one-hot 到 word2vec。",
+          "en": "Next chapter: representation learning, from one-hot to word2vec.",
+          "start": 475.469,
+          "end": 479.408
+        },
+        {
+          "zh": "还有那句著名的语言学信条：观其伴，知其义。",
+          "en": "And the old linguistic motto: you shall know a word by the company it keeps.",
+          "start": 479.908,
+          "end": 483.919
+        },
+        {
+          "zh": "第三章，表示学习。我们下期见。",
+          "en": "Chapter three: representation learning. See you next time.",
+          "start": 484.419,
+          "end": 487.835
+        }
+      ],
+      "end": 490.835
+    }
+  ]
+}

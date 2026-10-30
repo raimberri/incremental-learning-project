@@ -1,0 +1,434 @@
+1
+00:00:01,600 --> 00:00:06,763
+榜单上的分数年年创新高，实际用起来却还是会出错。
+Scores climb every year, yet real use still goes wrong.
+
+2
+00:00:07,013 --> 00:00:11,866
+这不是模型突然变笨，而是分数和能力之间有一道缝。
+The model did not get dumber. A gap sits between score and ability.
+
+3
+00:00:12,116 --> 00:00:16,508
+这一章要回答：我们到底怎么知道一个模型行不行。
+This chapter asks how we can actually tell whether a model works.
+
+4
+00:00:16,758 --> 00:00:21,586
+先说结论：分数是能力的代理指标，不是能力本身。
+First, the claim: a score is a proxy, not ability itself.
+
+5
+00:00:21,836 --> 00:00:25,689
+记住这句话，后面每一节都在给它加注脚。
+Hold that line. Every section after this adds a footnote to it.
+
+6
+00:00:28,339 --> 00:00:32,544
+我们可以精确测量损失，但损失低不等于好用。
+We can measure loss precisely, but low loss is not usefulness.
+
+7
+00:00:32,794 --> 00:00:36,396
+损失衡量的是对下一个词的预测有多准。
+Loss measures how well the next word is predicted.
+
+8
+00:00:36,646 --> 00:00:40,417
+而人关心的是，它能不能帮我把问题解决掉。
+What people care about is whether it solves the problem.
+
+9
+00:00:40,667 --> 00:00:44,968
+损失降低零点一，普通用户能感知到差别吗。
+Loss drops by 0.1. Does any user feel the difference?
+
+10
+00:00:45,218 --> 00:00:49,437
+MMLU 提高两分，意味着它更会写代码吗。
+MMLU rises two points. Does it write better code?
+
+11
+00:00:49,687 --> 00:00:53,975
+聊天机器人在榜单上很强，用起来为什么还是笨。
+It tops the charts. So why is it still dumb in practice?
+
+12
+00:00:56,625 --> 00:01:01,216
+基准的演化史，就是一场出题人和模型的军备竞赛。
+Benchmark history is an arms race between test writers and models.
+
+13
+00:01:01,466 --> 00:01:05,656
+二零一八年 GLUE 考句子级理解，一共九个任务。
+In 2018 GLUE tested sentence-level understanding with nine tasks.
+
+14
+00:01:05,906 --> 00:01:12,716
+二零二一年 MMLU 用五十七个学科、约一点四万道选择题考世界知识。
+In 2021 MMLU used 57 subjects and about 14,000 multiple-choice questions.
+
+15
+00:01:12,966 --> 00:01:17,751
+同年 GSM8K 考小学应用题，约八千五百道。
+That year GSM8K added grade-school word problems, about 8,500.
+
+16
+00:01:18,001 --> 00:01:22,272
+HumanEval 只有一百六十四道手写 Python 函数题。
+HumanEval had only 164 hand-written Python function tasks.
+
+17
+00:01:22,522 --> 00:01:27,988
+二零二五年 HLE 两千五百题，专家出，号称搜索不到。
+In 2025 HLE arrived: 2,500 expert questions said to be unsearchable.
+
+18
+00:01:28,238 --> 00:01:31,824
+发布时前沿模型的准确率，只有个位数。
+Frontier models scored in the single digits at release.
+
+19
+00:01:32,074 --> 00:01:36,713
+越难越窄：新基准只测旧基准刷不动的那一个尖。
+Harder means narrower: each new test targets the one remaining peak.
+
+20
+00:01:39,363 --> 00:01:43,617
+评测方法大致分三派，每一派都有自己的偏差。
+Evaluation comes in three schools, each with its own bias.
+
+21
+00:01:43,867 --> 00:01:48,176
+第一派是静态基准，选择题，判分完全自动。
+The first is static benchmarks: multiple choice, fully automatic.
+
+22
+00:01:48,426 --> 00:01:52,702
+它便宜、可复现，但可以猜，也可能被污染。
+Cheap and reproducible, but guessable and open to contamination.
+
+23
+00:01:52,952 --> 00:01:57,890
+第二派是人类盲评，Chatbot Arena 让用户匿名二选一。
+The second is human blind rating: Arena shows two anonymous answers.
+
+24
+00:01:58,140 --> 00:02:02,723
+它最接近真实偏好，但它测的是喜欢，不是正确。
+Closest to real preference, but it measures liking, not truth.
+
+25
+00:02:02,973 --> 00:02:07,547
+第三派是 LLM-as-judge，用更强的模型来打分。
+The third is LLM-as-judge: a stronger model hands out the score.
+
+26
+00:02:07,797 --> 00:02:12,169
+它便宜、可扩展，和人类判断的相关性还不错。
+Cheap, scalable, and decently correlated with human judgment.
+
+27
+00:02:14,819 --> 00:02:18,842
+让模型当裁判，先要承认它自己有偏好。
+Let a model judge, and admit it has preferences of its own.
+
+28
+00:02:19,092 --> 00:02:22,722
+它偏爱排在前面的答案，这叫位置偏好。
+It favours the answer placed first: position bias.
+
+29
+00:02:22,972 --> 00:02:26,985
+它也偏爱更长的回答，哪怕信息并没有更多。
+It favours longer answers, even when they carry no more information.
+
+30
+00:02:27,235 --> 00:02:31,610
+它还偏爱同家族模型的输出，和排版漂亮的答案。
+It favours its own family, and answers that look well formatted.
+
+31
+00:02:31,860 --> 00:02:36,507
+解决办法不是换裁判，而是照搬人类的制度设计。
+The fix is not a better judge but human-style institutions.
+
+32
+00:02:36,757 --> 00:02:42,751
+随机交换顺序、隐藏身份、多裁判投票，再用人类标注校准。
+Randomize order, hide identity, poll judges, recalibrate on humans.
+
+33
+00:02:45,401 --> 00:02:50,116
+比偏差更硬的问题，是数据污染，也就是考试泄题。
+Harder than bias is contamination: the exam paper leaked.
+
+34
+00:02:50,366 --> 00:02:55,209
+测试题和答案就在语料里，它不是会做，而是记得。
+Test items and answers sit in the corpus. It remembers, it does not solve.
+
+35
+00:02:55,459 --> 00:03:00,358
+第一种检测是 n-gram 重叠，看题目和语料有没有重合。
+First check: n-gram overlap between test items and corpus.
+
+36
+00:03:00,608 --> 00:03:05,717
+第二种是 canary 字符串，在测试集里埋一个独特标记。
+Second: a canary string, a unique marker planted in the test set.
+
+37
+00:03:05,967 --> 00:03:10,051
+然后看模型会不会把这个标记原样复述出来。
+Then see whether the model repeats that marker verbatim.
+
+38
+00:03:10,301 --> 00:03:15,084
+第三种是扰动测试：改数字、换名字，再问一遍。
+Third: perturbation. Change numbers, swap names, ask again.
+
+39
+00:03:15,334 --> 00:03:20,021
+三种办法都只是间接检查，没人能保证题库干净。
+All three are indirect checks. Nobody can certify a test set is clean.
+
+40
+00:03:20,271 --> 00:03:24,897
+真会做的模型仍然答对，靠记得的模型立刻露馅。
+A model that can solve it still answers; one that memorized fails.
+
+41
+00:03:27,547 --> 00:03:32,047
+心理测量学留下三把尺子，看榜单时都用得上。
+Psychometrics leaves three rulers, all useful on a leaderboard.
+
+42
+00:03:32,297 --> 00:03:36,868
+第一把是信度：同一个模型多测几次，分数稳不稳。
+Reliability: test the same model again. Does the score hold?
+
+43
+00:03:37,118 --> 00:03:41,631
+第二把是效度：这个测试有没有测到它声称的能力。
+Validity: does the test measure the ability it claims to measure?
+
+44
+00:03:41,881 --> 00:03:46,468
+最关键的是构念效度：你说是推理，它考的是记忆。
+Construct validity is the crux: you claim reasoning, it tests recall.
+
+45
+00:03:46,718 --> 00:03:51,824
+第三把是生态效度：实验室任务能不能代表真实使用。
+Ecological validity: does a lab task represent real use?
+
+46
+00:03:52,074 --> 00:03:56,363
+所以看到高分，先问它到底测的是哪一种能力。
+So when you see a high score, first ask which ability it measured.
+
+47
+00:03:56,613 --> 00:04:00,227
+这一问比分数本身有用得多，也更难回答。
+That question is worth more than the score, and harder to answer.
+
+48
+00:04:02,877 --> 00:04:07,093
+幻觉是模型生成看似合理，实则错误的内容。
+A hallucination looks plausible and is wrong or unsupported.
+
+49
+00:04:07,343 --> 00:04:11,869
+第一类是事实性幻觉：它把世界上的事情说错了。
+Factuality errors get the world wrong.
+
+50
+00:04:12,119 --> 00:04:16,480
+比如爱因斯坦 1955 年出生，年份完全错位。
+Einstein was born in 1955? The year is simply off.
+
+51
+00:04:16,730 --> 00:04:20,761
+第二类是忠实性幻觉：它偏离了你给的输入。
+Faithfulness errors drift away from the input you gave.
+
+52
+00:04:21,011 --> 00:04:24,961
+让你总结一篇文章，它加进文章里没有的内容。
+Asked to summarize, it adds material the article never contained.
+
+53
+00:04:25,211 --> 00:04:30,112
+还有一类是自洽性：同一个问题，两次回答互相矛盾。
+A third kind: two answers to one question contradict each other.
+
+54
+00:04:30,362 --> 00:04:35,375
+共同点是，它擅长编故事，却从不标记这是我编的。
+The common thread: it tells stories and never flags them as invented.
+
+55
+00:04:38,025 --> 00:04:42,903
+幻觉不是偶然的故障，而是训练方式的结构性副产品。
+Hallucination is not a random fault. It is structural to training.
+
+56
+00:04:43,153 --> 00:04:47,579
+第一，目标不匹配：训练只奖励预测下一个词。
+First, the objective is mismatched: training rewards the next word.
+
+57
+00:04:47,829 --> 00:04:52,808
+语料里像答案的文本更常见，于是它学会了自信补全。
+Answer-shaped text beats I don't know, so it completes confidently.
+
+58
+00:04:53,058 --> 00:04:57,170
+第二，训练数据本身就有错误和过时的信息。
+Second, the training data itself holds errors and stale facts.
+
+59
+00:04:57,420 --> 00:05:01,431
+第三，采样会选到低概率的词，偶尔就编了。
+Third, sampling sometimes picks a low-probability token and invents.
+
+60
+00:05:01,681 --> 00:05:06,987
+第四，人类评分者偏爱有问必答，模型就少说不知道。
+Fourth, raters prefer an answer to no answer, so it stops saying so.
+
+61
+00:05:07,237 --> 00:05:11,440
+它也没有知识边界的显式表示，不知道自己不知道。
+It also has no explicit representation of where its knowledge ends.
+
+62
+00:05:14,090 --> 00:05:18,456
+校准问的是：它说九成把握，实际就对九成吗。
+Calibration asks: when it says ninety percent, is it right that often?
+
+63
+00:05:18,706 --> 00:05:24,066
+完美校准的模型，置信度和准确率画出来是一条对角线。
+A calibrated model plots confidence against accuracy on the diagonal.
+
+64
+00:05:24,316 --> 00:05:29,322
+实际模型常常过度自信：说九成五，只对七成。
+Real models are overconfident: ninety-five claimed, seventy delivered.
+
+65
+00:05:29,572 --> 00:05:33,524
+ECE 把预测按置信度分桶，桶里比较两个数。
+ECE buckets predictions by confidence and compares two numbers.
+
+66
+00:05:33,774 --> 00:05:38,984
+一个是平均置信度，一个是实际准确率，差距取绝对值。
+Mean confidence versus accuracy, difference in absolute value.
+
+67
+00:05:39,234 --> 00:05:43,139
+再按每个桶的样本量加权平均，就得到 ECE。
+Weight each bucket by its share of samples and average: that is ECE.
+
+68
+00:05:43,389 --> 00:05:48,614
+气象预报早就回答过：关键不是多自信，而是自信可信。
+Weather forecasting learned it: value is not confidence, but trust.
+
+69
+00:05:51,264 --> 00:05:54,032
+这就是 Goodhart 定律的评测版。
+This is the evaluation edition of Goodhart's law.
+
+70
+00:05:54,282 --> 00:05:57,858
+当一个指标成为目标，它就不再是好指标。
+When a measure becomes a target, it stops being a good measure.
+
+71
+00:05:58,108 --> 00:06:03,349
+教育测量早就演过一遍：考试成了目标，教学变成刷题。
+Education ran it: make exams the goal and teaching becomes drilling.
+
+72
+00:06:03,599 --> 00:06:08,230
+基准也一样：刷分成了目标，分数就不再代表能力。
+Benchmarks too: once score-chasing is the goal, scores stop meaning ability.
+
+73
+00:06:08,480 --> 00:06:12,738
+于是模型学会的是考试技巧，而不是真本事。
+So the model learns exam tricks instead of real skill.
+
+74
+00:06:12,988 --> 00:06:17,714
+这不是谁作弊，而是指标一旦可优化，就会被优化。
+Nobody cheats. A metric that can be optimized will be optimized.
+
+75
+00:06:20,364 --> 00:06:24,576
+所以看到超越人类这种标题，先别急着转发。
+So when a headline says it beats humans, do not share it yet.
+
+76
+00:06:24,826 --> 00:06:28,504
+第一问：这个基准测的到底是什么能力。
+Question one: what ability does this benchmark actually test?
+
+77
+00:06:28,754 --> 00:06:32,881
+第二问：题库有没有污染，答案很可能是有的。
+Question two: is the test set contaminated? Very likely yes.
+
+78
+00:06:33,131 --> 00:06:37,341
+第三问：人类基线是多少，又是谁测出来的。
+Question three: what is the human baseline, and who measured it?
+
+79
+00:06:37,591 --> 00:06:44,049
+MMLU 的人类专家约百分之八十九点八，那是一批特定标注者的成绩。
+MMLU human experts sit near 89.8 percent, a specific group of annotators.
+
+80
+00:06:44,299 --> 00:06:48,724
+第四问：分数提高，对应真实场景的什么改善。
+Question four: what real-world improvement does the higher score imply?
+
+81
+00:06:48,974 --> 00:06:52,634
+问完这四个问题，标题通常就缩水一半。
+Ask those four, and most headlines shrink by half.
+
+82
+00:06:55,284 --> 00:06:59,586
+这一章的主线只有一句：分数是代理，不是能力。
+One line holds it together: a score is a proxy, not ability.
+
+83
+00:06:59,836 --> 00:07:04,824
+基准在军备竞赛，污染让分数贬值，幻觉是副产品。
+Arms races, contamination, and hallucination as a by-product.
+
+84
+00:07:05,074 --> 00:07:09,645
+校准和构念效度，是看榜单时要戴的两副眼镜。
+Calibration and construct validity are the lenses for leaderboards.
+
+85
+00:07:09,895 --> 00:07:13,804
+前面十二章，我们一直在外面看模型的行为。
+For twelve chapters we have watched the model from the outside.
+
+86
+00:07:14,054 --> 00:07:17,957
+下一章把模型打开，看它内部到底在算什么。
+Next we open it up and watch what it computes inside.
+
+87
+00:07:18,207 --> 00:07:22,913
+那就是机制可解释性，全课最像神经科学的一章。
+That is mechanistic interpretability, the neuroscience-like chapter.

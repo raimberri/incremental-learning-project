@@ -1,0 +1,52 @@
+# ---- OS / editor ----------------------------------------------------------
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# ---- Python ---------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# ---- Node / Remotion ------------------------------------------------------
+node_modules
+.npm-cache/
+.remotion/
+.cache/
+
+# ---- Generated media (reproducible from source) ---------------------------
+*.mp4
+*.mov
+*.webm
+*.wav
+*.mp3
+*.m4a
+*.flac
+
+# Course delivery: keep poster + SRT, drop the packaged duplicate
+**/video/out/publish/
+**/video/out/*.mp4
+
+# ---- Logs and local reports ----------------------------------------------
+*.log
+**/voice-report.json
+
+# ---- Local secrets / environment -----------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---- Local scratch --------------------------------------------------------
+tmp/

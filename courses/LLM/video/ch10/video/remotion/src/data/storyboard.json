@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 10 章 · RLVR 与推理模型",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 10 · RLVR AND REASONING",
+      "title": "不教，也能会想",
+      "highlight": "会想",
+      "subtitle": "只给对错当奖励，推理自己长出来",
+      "pills": [
+        "RLVR",
+        "R1-Zero",
+        "GRPO",
+        "蒸馏"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 10 章"
+    },
+    {
+      "id": "reward",
+      "type": "compare",
+      "accent": "blue",
+      "kicker": "TWO KINDS OF REWARD",
+      "title": "换一种奖励",
+      "highlight": "奖励",
+      "center": "vs",
+      "left": {
+        "title": "RLHF",
+        "sub": "学出来的奖励模型",
+        "items": [
+          {
+            "title": "会出错",
+            "sub": "奖励模型本身也会错"
+          },
+          {
+            "title": "会被钻空子",
+            "sub": "会讨好，也会奖励黑客"
+          }
+        ]
+      },
+      "right": {
+        "title": "RLVR",
+        "sub": "确定性验证器",
+        "items": [
+          {
+            "title": "可比对",
+            "sub": "答案、测试、格式"
+          },
+          {
+            "title": "稀疏可靠",
+            "sub": "答对 1，答错 0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "verifier",
+      "type": "photo",
+      "accent": "teal",
+      "kicker": "WHY MATH AND CODE FIRST",
+      "title": "验证器不讨好",
+      "highlight": "不讨好",
+      "image": "img/tools.jpg",
+      "pills": [
+        "可验证",
+        "自动打分",
+        "练习册"
+      ],
+      "subtitle": "卡尺只量长度，不夸你聪明。",
+      "bullets": [
+        "数学答案能比对，代码能跑测试",
+        "不是更高级，是更容易打分"
+      ],
+      "caption": "示意图：用量具比喻验证器，非真实训练场景"
+    },
+    {
+      "id": "zero",
+      "type": "steps",
+      "accent": "orange",
+      "kicker": "R1-ZERO · JAN 2025",
+      "title": "几乎不教",
+      "highlight": "不教",
+      "steps": [
+        {
+          "title": "基座模型",
+          "sub": "没做过任何监督微调"
+        },
+        {
+          "title": "两条奖励",
+          "sub": "答案对不对，格式合规吗"
+        },
+        {
+          "title": "不给范例",
+          "sub": "不说要一步步想"
+        }
+      ],
+      "stamp": "结果：长思维链自己长出来"
+    },
+    {
+      "id": "aha",
+      "type": "curve",
+      "accent": "purple",
+      "kicker": "AIME 2024 · PASS@1",
+      "title": "顿悟时刻",
+      "highlight": "顿悟",
+      "formula": "基座 15.6% → Zero 71.0%",
+      "bullets": [
+        "正式版 R1 79.8%，多票 86.7%",
+        "长度从几百 token 涨到几千"
+      ],
+      "stamp": "示意：数值取自论文报告",
+      "chart": {
+        "kind": "bars",
+        "yMax": 100,
+        "xLabel": "AIME 2024 · pass@1（%）",
+        "yLabel": "正确率（%）↑",
+        "bars": [
+          {
+            "label": "基座",
+            "value": 15.6,
+            "color": "orange"
+          },
+          {
+            "label": "R1-Zero",
+            "value": 71.0,
+            "color": "teal"
+          },
+          {
+            "label": "R1",
+            "value": 79.8,
+            "color": "green"
+          },
+          {
+            "label": "Zero 多票",
+            "value": 86.7,
+            "color": "purple"
+          }
+        ]
+      }
+    },
+    {
+      "id": "grpo",
+      "type": "formula",
+      "accent": "green",
+      "kicker": "GRPO · GROUP RELATIVE",
+      "title": "省掉评论家",
+      "highlight": "评论家",
+      "formula": "A_i = (r_i − mean(r)) / std(r)",
+      "note": "r 是组内第 i 个答案的奖励，均值与标准差都按这一组算。",
+      "bullets": [
+        "用组内排名代替训练评论家",
+        "减均值不改变期望，只降方差"
+      ],
+      "stamp": "PPO 的评论家与策略同规模，显存翻倍"
+    },
+    {
+      "id": "recipe",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "R1 PIPELINE",
+      "title": "四阶段配方",
+      "highlight": "配方",
+      "steps": [
+        {
+          "title": "冷启动",
+          "sub": "几千条长思维链，教格式"
+        },
+        {
+          "title": "推理 RL",
+          "sub": "准确性加格式奖励"
+        },
+        {
+          "title": "拒绝采样",
+          "sub": "只留判对的答案做 SFT"
+        },
+        {
+          "title": "全场景 RL",
+          "sub": "加有用性、无害性奖励"
+        }
+      ],
+      "stamp": "目标：能力与可用性兼顾"
+    },
+    {
+      "id": "rejection",
+      "type": "bullets",
+      "accent": "teal",
+      "kicker": "WHY NOT ZERO",
+      "title": "冷启动与拒绝采样",
+      "highlight": "拒绝采样",
+      "items": [
+        {
+          "icon": "①",
+          "title": "Zero 毛病",
+          "sub": "中英混杂，可读性差",
+          "color": "red"
+        },
+        {
+          "icon": "②",
+          "title": "冷启动",
+          "sub": "先固定格式，再谈推理",
+          "color": "orange"
+        },
+        {
+          "icon": "③",
+          "title": "拒绝采样",
+          "sub": "验证器判对才留下",
+          "color": "teal"
+        },
+        {
+          "icon": "④",
+          "title": "自我蒸馏",
+          "sub": "用自己的成功教自己",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "distill",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "DISTILLATION",
+      "title": "把想的能力传下去",
+      "highlight": "传下去",
+      "center": "vs",
+      "left": {
+        "title": "小模型直接 RL",
+        "sub": "自己从零试",
+        "items": [
+          {
+            "title": "效果有限",
+            "sub": "同尺寸下不如蒸馏"
+          },
+          {
+            "title": "成本高",
+            "sub": "探索全靠自己"
+          }
+        ]
+      },
+      "right": {
+        "title": "蒸馏",
+        "sub": "学大模型的轨迹",
+        "items": [
+          {
+            "title": "1.5B–70B",
+            "sub": "R1-Distill 系列"
+          },
+          {
+            "title": "数学基准",
+            "sub": "远超同尺寸原模型"
+          }
+        ]
+      }
+    },
+    {
+      "id": "misread",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "THE AHA MYTH",
+      "title": "不是突然觉醒",
+      "highlight": "觉醒",
+      "items": [
+        {
+          "icon": "①",
+          "title": "先有奖励",
+          "sub": "对错由验证器定义",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "后有规模",
+          "sub": "基座够强才学得动",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "顿悟是表象",
+          "sub": "底层仍是试错累积",
+          "color": "purple"
+        }
+      ],
+      "stamp": "桑代克 1911：效果律"
+    },
+    {
+      "id": "limits",
+      "type": "photo",
+      "accent": "red",
+      "kicker": "COSTS AND LIMITS",
+      "title": "代价与边界",
+      "highlight": "边界",
+      "image": "img/contours.jpg",
+      "pills": [
+        "只在可验证域",
+        "验证器可被 hack",
+        "长度膨胀"
+      ],
+      "subtitle": "等高线之外，没有裁判。",
+      "bullets": [
+        "写小说、做咨询，没有自动验证器",
+        "只看格式，就学会只对格式"
+      ],
+      "caption": "示意图：等高线内是验证器覆盖的范围"
+    },
+    {
+      "id": "routes",
+      "type": "compare",
+      "accent": "orange",
+      "kicker": "THREE ROUTES",
+      "title": "三条路线",
+      "highlight": "三条",
+      "center": "vs",
+      "left": {
+        "title": "训练",
+        "sub": "把策略写进权重",
+        "items": [
+          {
+            "title": "定下限",
+            "sub": "RL 训练决定基本能力"
+          },
+          {
+            "title": "贵在前",
+            "sub": "训练贵，推理便宜"
+          }
+        ]
+      },
+      "right": {
+        "title": "推理时",
+        "sub": "提示与搜索",
+        "items": [
+          {
+            "title": "定上限",
+            "sub": "多条采样、投票、搜索"
+          },
+          {
+            "title": "贵在后",
+            "sub": "算力随用随付"
+          }
+        ]
+      }
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 11",
+      "title": "下一站：效率",
+      "highlight": "效率",
+      "subtitle": "推理很贵，能不能少算一点",
+      "next": {
+        "code": "11",
+        "title": "效率与架构",
+        "sub": "MoE、注意力压缩、线性架构"
+      },
+      "pills": [
+        "第 11 章",
+        "奖励已换",
+        "推理已点燃"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

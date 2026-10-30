@@ -1,0 +1,14 @@
+{
+  "slug": "llm-ch0-orientation",
+  "title": "大语言模型：第 0 章导读",
+  "language": "中文",
+  "created": "2026-10-28",
+  "video": {
+    "composition": "CourseVideo",
+    "thumbnail": "CourseThumbnail",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "musicVolume": 0.2
+  }
+}

@@ -1,0 +1,55 @@
+1
+00:00:01,600 --> 00:00:07,030
+If I ask whether it will rain tomorrow, you already have a vague sense of it.
+
+2
+00:00:07,280 --> 00:00:13,148
+How certain is that sense? This episode measures it with one number: entropy.
+
+3
+00:00:15,798 --> 00:00:19,939
+Start with one sentence: entropy is how surprised a distribution is on average.
+
+4
+00:00:20,189 --> 00:00:25,264
+The first word is uncertainty: the more spread out the outcomes, the harder to guess.
+
+5
+00:00:25,514 --> 00:00:30,676
+The second word is average: not one draw, but the long-run average.
+
+6
+00:00:30,926 --> 00:00:37,699
+The third word is lower bound: the minimum average bits needed to encode an outcome.
+
+7
+00:00:40,349 --> 00:00:42,734
+Write a distribution as probabilities p.
+
+8
+00:00:42,984 --> 00:00:46,940
+Information is negative log p: the smaller the probability, the bigger the surprise.
+
+9
+00:00:47,190 --> 00:00:50,546
+Average it with the probabilities, and you get the entropy formula.
+
+10
+00:00:53,196 --> 00:00:57,474
+Plot it: probability p on the x-axis, negative log p on the y-axis.
+
+11
+00:00:57,724 --> 00:01:03,259
+As p approaches 1, information approaches 0; as p approaches 0, the curve climbs steeply.
+
+12
+00:01:03,509 --> 00:01:07,100
+Average this curve with weights p, and you get entropy.
+
+13
+00:01:09,750 --> 00:01:14,680
+This episode reduced entropy to three words, one formula, and one curve.
+
+14
+00:01:14,930 --> 00:01:19,666
+Next chapter, we use it to measure language models. See you next time.

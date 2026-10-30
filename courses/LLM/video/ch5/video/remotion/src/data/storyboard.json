@@ -1,0 +1,352 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 5 章 · Transformer",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 05 · TRANSFORMER",
+      "title": "只靠注意力",
+      "highlight": "注意力",
+      "subtitle": "2017：删掉循环，只留注意力",
+      "pills": [
+        "自注意力",
+        "多头",
+        "掩码",
+        "残差"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 5 章"
+    },
+    {
+      "id": "selfattn",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "SELF-ATTENTION",
+      "title": "同一句话内部互看",
+      "highlight": "互看",
+      "items": [
+        {
+          "icon": "①",
+          "title": "查询",
+          "sub": "我在找什么",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "键",
+          "sub": "我有什么可被找",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "值",
+          "sub": "被找到时给出什么",
+          "color": "green"
+        }
+      ],
+      "stamp": "三个矩阵都由同一个词向量乘出来"
+    },
+    {
+      "id": "coref",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "WHO LOOKS AT WHOM",
+      "title": "它到底指谁",
+      "highlight": "指谁",
+      "center": "vs",
+      "left": {
+        "title": "书",
+        "sub": "它真正指的东西",
+        "items": [
+          {
+            "title": "键得分更高",
+            "sub": "分到的权重更大"
+          },
+          {
+            "title": "真的更重",
+            "sub": "后续层据此判断"
+          }
+        ]
+      },
+      "right": {
+        "title": "桌子",
+        "sub": "同句里的另一个候选",
+        "items": [
+          {
+            "title": "键得分更低",
+            "sub": "分到的权重很小"
+          },
+          {
+            "title": "同在句子里",
+            "sub": "区别只在匹配度"
+          }
+        ]
+      }
+    },
+    {
+      "id": "attnformula",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "SCALED DOT-PRODUCT",
+      "title": "一行公式",
+      "highlight": "公式",
+      "formula": "Attention(Q, K, V)\n= softmax(QKᵀ/√d_k) · V",
+      "note": "读作：查询和键做点积，softmax 归一化，再对值加权求和。",
+      "bullets": [
+        "QKᵀ 得到 n×n 的分数矩阵",
+        "缩放发生在 softmax 之前"
+      ],
+      "stamp": "n = 序列长度 · d_k = 键的维度"
+    },
+    {
+      "id": "handcalc",
+      "type": "steps",
+      "accent": "orange",
+      "kicker": "A HAND CHECK",
+      "title": "把 64 代进去",
+      "highlight": "64",
+      "steps": [
+        {
+          "title": "分量方差为 1",
+          "sub": "查询和键都是随机数"
+        },
+        {
+          "title": "64 项相加",
+          "sub": "方差累加等于 64"
+        },
+        {
+          "title": "开根号得 8",
+          "sub": "标准差约等于 8"
+        },
+        {
+          "title": "散到正负 24",
+          "sub": "softmax 直接饱和"
+        }
+      ],
+      "stamp": "d_k = 64：原论文取值；8 与 24 为计算值"
+    },
+    {
+      "id": "saturation",
+      "type": "curve",
+      "accent": "red",
+      "kicker": "WHY WE SCALE",
+      "title": "尖到没有梯度",
+      "highlight": "梯度",
+      "formula": "softmax(QKᵀ/√d_k)",
+      "bullets": [
+        "分数太大，权重贴到 0 和 1",
+        "饱和区梯度接近 0"
+      ],
+      "chart": {
+        "kind": "sigmoid",
+        "xRange": [
+          -6,
+          6
+        ],
+        "yMax": 1,
+        "xLabel": "分数差 Δ →",
+        "yLabel": "注意力权重 ↑",
+        "series": [
+          {
+            "label": "τ = 1：不缩放",
+            "tau": 1,
+            "color": "red"
+          },
+          {
+            "label": "τ = 8：除以 √64",
+            "tau": 8,
+            "color": "teal"
+          }
+        ]
+      },
+      "stamp": "示意曲线，非测量数据"
+    },
+    {
+      "id": "multihead",
+      "type": "photo",
+      "accent": "blue",
+      "kicker": "MULTI-HEAD · 8",
+      "title": "同时看几种关系",
+      "highlight": "几种关系",
+      "image": "img/weather-map.jpg",
+      "pills": [
+        "8 个头",
+        "512 维",
+        "每头 64 维"
+      ],
+      "subtitle": "同一份输入，几组不同的看法。",
+      "bullets": [
+        "512 维切成 8 个 64 维的头",
+        "每个头在自己的子空间做注意力",
+        "拼接后过线性层，合成一个整体"
+      ],
+      "caption": "示意图，非真实注意力权重"
+    },
+    {
+      "id": "mask",
+      "type": "compare",
+      "accent": "green",
+      "kicker": "CAUSAL MASK",
+      "title": "不许看右边",
+      "highlight": "右边",
+      "center": "vs",
+      "left": {
+        "title": "不加掩码",
+        "sub": "能看右边就是作弊",
+        "items": [
+          {
+            "title": "看到未来的词",
+            "sub": "等于提前看答案"
+          },
+          {
+            "title": "预测目标失效",
+            "sub": "训练就白做了"
+          }
+        ]
+      },
+      "right": {
+        "title": "因果掩码",
+        "sub": "softmax 前设负无穷",
+        "items": [
+          {
+            "title": "右上三角屏蔽",
+            "sub": "位置 t 只看 ≤ t"
+          },
+          {
+            "title": "整句同时算",
+            "sub": "一次前向得 n 个损失"
+          }
+        ]
+      }
+    },
+    {
+      "id": "position",
+      "type": "bullets",
+      "accent": "teal",
+      "kicker": "POSITION, AGAIN",
+      "title": "补上顺序",
+      "highlight": "顺序",
+      "items": [
+        {
+          "icon": "①",
+          "title": "打乱词序",
+          "sub": "加权和本身不变",
+          "color": "teal"
+        },
+        {
+          "icon": "②",
+          "title": "位置相加",
+          "sub": "加在词向量上，一起进网络",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "细节在第 3 章",
+          "sub": "这里不重讲",
+          "color": "purple"
+        }
+      ],
+      "stamp": "点积不知道谁在前谁在后"
+    },
+    {
+      "id": "block",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "ONE BLOCK",
+      "title": "一个层的流水线",
+      "highlight": "流水线",
+      "steps": [
+        {
+          "title": "归一化 + 注意力",
+          "sub": "跨位置交换信息"
+        },
+        {
+          "title": "加残差",
+          "sub": "x 加上子层输出"
+        },
+        {
+          "title": "归一化 + FFN",
+          "sub": "逐位置升到 4d 再降回"
+        },
+        {
+          "title": "再加残差",
+          "sub": "交给下一层"
+        }
+      ],
+      "stamp": "Pre-LN：残差路径上没有归一化"
+    },
+    {
+      "id": "cost",
+      "type": "photo",
+      "accent": "orange",
+      "kicker": "THE QUADRATIC BILL",
+      "title": "代价是平方",
+      "highlight": "平方",
+      "image": "img/datacenter.jpg",
+      "pills": [
+        "O(n²·d)",
+        "n = 序列长度"
+      ],
+      "subtitle": "长度翻倍，注意力的计算和内存都变成 4 倍。",
+      "bullets": [
+        "FFN 是 O(n·d²)，随长度线性",
+        "短序列：FFN 是主要开销",
+        "长序列：注意力先成瓶颈"
+      ],
+      "caption": "示意图，非真实机房"
+    },
+    {
+      "id": "myths",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "TWO TRAPS",
+      "title": "两个误解",
+      "highlight": "误解",
+      "items": [
+        {
+          "icon": "①",
+          "title": "权重 ≠ 解释",
+          "sub": "很多头的作用说不清",
+          "color": "red"
+        },
+        {
+          "icon": "②",
+          "title": "多头 ≠ 集成",
+          "sub": "共享输入，拼完再投影",
+          "color": "orange"
+        },
+        {
+          "icon": "③",
+          "title": "并行只在训练",
+          "sub": "推理仍要逐词生成",
+          "color": "blue"
+        }
+      ],
+      "stamp": "注意力热图不等于解释"
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 06",
+      "title": "下一站：预训练",
+      "highlight": "预训练",
+      "subtitle": "架构已就位，范式还没换",
+      "next": {
+        "code": "06",
+        "title": "预训练",
+        "sub": "先在海量文本上学，再做具体任务"
+      },
+      "pills": [
+        "第 5 章",
+        "架构完成",
+        "下期见"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

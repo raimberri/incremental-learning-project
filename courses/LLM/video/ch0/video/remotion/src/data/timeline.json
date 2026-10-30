@@ -1,0 +1,509 @@
+{
+  "total": 369.932,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "00",
+      "zh": "开场",
+      "en": "INTRO",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "你大概每天都在和它聊天：问问题、写代码、改文章。",
+          "en": "You probably chat with it every day: asking questions, writing code, editing essays.",
+          "start": 1.6,
+          "end": 6.823
+        },
+        {
+          "zh": "但你想过吗，它的内部到底在发生什么？",
+          "en": "But have you ever wondered what is actually happening inside it?",
+          "start": 7.323,
+          "end": 11.022
+        },
+        {
+          "zh": "这是「大语言模型」课程的第零章：导读。",
+          "en": "This is Chapter 0 of the Large Language Model course: the orientation.",
+          "start": 11.522,
+          "end": 15.06
+        },
+        {
+          "zh": "这一集不讲公式，只做一件事：给你一张地图。",
+          "en": "No formulas today. Just one job: give you a map.",
+          "start": 15.56,
+          "end": 19.848
+        },
+        {
+          "zh": "一张能装进脑子、也能随时翻回来的地图。",
+          "en": "A map that fits in your head, and that you can come back to.",
+          "start": 20.348,
+          "end": 24.059
+        }
+      ],
+      "end": 25.059
+    },
+    {
+      "id": "sentence",
+      "code": "00.1",
+      "zh": "一句话与下一个词",
+      "en": "ONE SENTENCE",
+      "start": 25.059,
+      "lines": [
+        {
+          "zh": "七十年的人工智能研究，能不能压缩成一句话？",
+          "en": "Can seventy years of AI research be squeezed into one sentence?",
+          "start": 26.959,
+          "end": 30.893
+        },
+        {
+          "zh": "可以。大语言模型，是用海量文本训练出来的程序。",
+          "en": "Yes. A large language model is a program trained on enormous amounts of text.",
+          "start": 31.393,
+          "end": 36.634
+        },
+        {
+          "zh": "它只擅长一件事：根据上文，猜下一个词。",
+          "en": "It is good at one thing: guessing the next word from the preceding text.",
+          "start": 37.134,
+          "end": 41.244
+        },
+        {
+          "zh": "你手机的输入法，其实每天都在做类似的事。",
+          "en": "The keyboard on your phone does something similar every day.",
+          "start": 41.744,
+          "end": 45.908
+        },
+        {
+          "zh": "比如这一句：今天下雨了，出门记得带……",
+          "en": "Take this sentence: It is raining, remember to bring your...",
+          "start": 46.408,
+          "end": 50.022
+        },
+        {
+          "zh": "下一个词，最可能是「伞」。",
+          "en": "The most likely next word is umbrella.",
+          "start": 50.522,
+          "end": 52.751
+        },
+        {
+          "zh": "但模型不是查表，它给每个候选词打分。",
+          "en": "But the model does not look up a table; it scores every candidate.",
+          "start": 53.251,
+          "end": 56.968
+        },
+        {
+          "zh": "挑一个接上，再把新词放回上文，继续猜。",
+          "en": "It picks one, appends it, puts it back into the context, and guesses again.",
+          "start": 57.468,
+          "end": 61.6
+        },
+        {
+          "zh": "目标很朴素，可当模型大到一定程度，奇怪的事发生了。",
+          "en": "The goal is plain. But once the model gets big enough, something strange happens.",
+          "start": 62.1,
+          "end": 67.34
+        },
+        {
+          "zh": "翻译、推理、写代码，没有人专门教过它。",
+          "en": "Translation, reasoning, coding: nobody taught it these directly.",
+          "start": 67.84,
+          "end": 71.967
+        },
+        {
+          "zh": "这些能力，是在预测下一个词的过程中长出来的。",
+          "en": "They grew out of the single task of predicting the next word.",
+          "start": 72.467,
+          "end": 76.709
+        },
+        {
+          "zh": "我们管它们叫：副产品。",
+          "en": "We call them by-products.",
+          "start": 77.209,
+          "end": 79.387
+        }
+      ],
+      "end": 80.387
+    },
+    {
+      "id": "whys",
+      "code": "00.2",
+      "zh": "四个为什么",
+      "en": "FOUR WHYS",
+      "start": 80.387,
+      "lines": [
+        {
+          "zh": "不过，这句话里的每个词，都值得怀疑。",
+          "en": "But every word in that sentence deserves suspicion.",
+          "start": 82.287,
+          "end": 85.993
+        },
+        {
+          "zh": "第一，为什么猜下一个词，能逼出推理？",
+          "en": "First: why would guessing the next word produce reasoning?",
+          "start": 86.493,
+          "end": 90.158
+        },
+        {
+          "zh": "第二，「大到一定程度」到底是多大？",
+          "en": "Second: how big is big enough?",
+          "start": 90.658,
+          "end": 93.648
+        },
+        {
+          "zh": "为什么是突然变好，而不是慢慢变好？",
+          "en": "Why does it improve suddenly, instead of gradually?",
+          "start": 94.148,
+          "end": 97.515
+        },
+        {
+          "zh": "第三，猜得准，就等于理解吗？",
+          "en": "Third: does guessing well mean understanding?",
+          "start": 98.015,
+          "end": 100.914
+        },
+        {
+          "zh": "第四，如果它只是在猜，为什么会一本正经地胡说？",
+          "en": "Fourth: if it is only guessing, why does it state nonsense so confidently?",
+          "start": 101.414,
+          "end": 106.121
+        },
+        {
+          "zh": "整门课，就是把这四个问题，一层一层拆开。",
+          "en": "This whole course takes those four questions apart, layer by layer.",
+          "start": 106.621,
+          "end": 110.673
+        },
+        {
+          "zh": "拆完以后，你能读懂论文摘要，也能判断新闻有没有夸大。",
+          "en": "Afterwards, you can read a paper abstract and judge whether a headline exaggerates.",
+          "start": 111.173,
+          "end": 116.616
+        }
+      ],
+      "end": 117.616
+    },
+    {
+      "id": "map",
+      "code": "00.3",
+      "zh": "一张地图",
+      "en": "THE MAP",
+      "start": 117.616,
+      "lines": [
+        {
+          "zh": "先看地图。左边是目标，右边有五个模块。",
+          "en": "Start with the map. The goal is on the left; five modules are on the right.",
+          "start": 119.516,
+          "end": 124.039
+        },
+        {
+          "zh": "目标是预测下一个词；五个模块，是支撑它的柱子。",
+          "en": "The goal is predicting the next word; five modules are the pillars beneath it.",
+          "start": 124.539,
+          "end": 129.257
+        },
+        {
+          "zh": "表示：词怎么变成向量。",
+          "en": "Representation: how words become vectors.",
+          "start": 129.757,
+          "end": 132.22
+        },
+        {
+          "zh": "架构：Transformer 怎么组织计算。",
+          "en": "Architecture: how a Transformer organises computation.",
+          "start": 132.72,
+          "end": 135.57
+        },
+        {
+          "zh": "数据：互联网文本，怎么变成训练材料。",
+          "en": "Data: how internet text becomes training material.",
+          "start": 136.07,
+          "end": 140.003
+        },
+        {
+          "zh": "规模：为什么越大越好，还能讲出规律。",
+          "en": "Scale: why bigger is better, and why the law is predictable.",
+          "start": 140.503,
+          "end": 144.195
+        },
+        {
+          "zh": "对齐：怎么让它听人类的话。",
+          "en": "Alignment: how to make it follow human intent.",
+          "start": 144.695,
+          "end": 147.21
+        },
+        {
+          "zh": "如果只记五个词：预测、表示、架构、规模、对齐。",
+          "en": "If you remember only five words: prediction, representation, architecture, scale, alignment.",
+          "start": 147.71,
+          "end": 153.191
+        }
+      ],
+      "end": 154.191
+    },
+    {
+      "id": "eras",
+      "code": "00.4",
+      "zh": "五个时代",
+      "en": "FIVE ERAS",
+      "start": 154.191,
+      "lines": [
+        {
+          "zh": "这张地图，画了七十多年，大致分成五个时代。",
+          "en": "This map took over seventy years to draw, and falls into five eras.",
+          "start": 156.091,
+          "end": 160.385
+        },
+        {
+          "zh": "1948 到 2002：统计时代，靠数数估计下一个词的概率。",
+          "en": "1948 to 2002: the statistical era, estimating next-word probabilities by counting.",
+          "start": 160.885,
+          "end": 166.765
+        },
+        {
+          "zh": "2003 到 2016：神经时代，神经网络代替数数，词也变成向量。",
+          "en": "2003 to 2016: the neural era, replacing counts with networks and words with vectors.",
+          "start": 167.265,
+          "end": 174.107
+        },
+        {
+          "zh": "2017 到 2019：Transformer 时代，更并行，也更会看全局。",
+          "en": "2017 to 2019: the Transformer era, more parallel, and aware of the whole context.",
+          "start": 174.607,
+          "end": 180.651
+        },
+        {
+          "zh": "2020 到 2022：规模时代，越大越好，背后有数学规律。",
+          "en": "2020 to 2022: the scale era, where the rule that bigger is better follows a law.",
+          "start": 181.151,
+          "end": 187.328
+        },
+        {
+          "zh": "2022 年到现在：对齐与推理时代，从会说话，到听话，再到会想。",
+          "en": "2022 to now: alignment and reasoning, from talking, to following, to thinking.",
+          "start": 187.828,
+          "end": 194.564
+        },
+        {
+          "zh": "注意，这些年代只是大致边界；五个时代，是同一条主线的五次换挡。",
+          "en": "Note: these dates are rough boundaries; five eras, five gear changes on one road.",
+          "start": 195.064,
+          "end": 201.665
+        }
+      ],
+      "end": 202.665
+    },
+    {
+      "id": "pattern",
+      "code": "00.5",
+      "zh": "反复出现的模式",
+      "en": "THE PATTERN",
+      "start": 202.665,
+      "lines": [
+        {
+          "zh": "把五个时代放在一起看，有一个反复出现的模式。",
+          "en": "Put the five eras side by side and a pattern keeps returning.",
+          "start": 204.565,
+          "end": 208.592
+        },
+        {
+          "zh": "每一次跃迁，都是把一个手工设计的部件，换成从数据里学出来的部件。",
+          "en": "Every leap swaps a hand-designed part for a part learned from data.",
+          "start": 209.092,
+          "end": 215.444
+        },
+        {
+          "zh": "统计模型的回退规则是人写的，神经网络把它学了出来。",
+          "en": "Back-off rules were written by hand; neural networks learned them.",
+          "start": 215.944,
+          "end": 221.171
+        },
+        {
+          "zh": "循环网络逐词传递，是架构强加的限制，注意力把它放开了。",
+          "en": "Recurrent nets passed words one at a time; attention removed that limit.",
+          "start": 221.671,
+          "end": 227.404
+        },
+        {
+          "zh": "有用、无害、诚实，本来是人写的规则，RLHF 改成从比较里学。",
+          "en": "Helpful, harmless, honest were hand-written rules; RLHF learned them from comparisons.",
+          "start": 227.904,
+          "end": 234.943
+        },
+        {
+          "zh": "然后，再靠规模，把这个新部件推向质变。",
+          "en": "Then scale pushes the new part over a threshold.",
+          "start": 235.443,
+          "end": 239.707
+        },
+        {
+          "zh": "生物学里管这叫「预适应」：羽毛最初为了保暖，后来用来飞行。",
+          "en": "Biology calls this exaptation: feathers first for warmth, later for flight.",
+          "start": 240.207,
+          "end": 246.196
+        }
+      ],
+      "end": 247.196
+    },
+    {
+      "id": "method",
+      "code": "00.6",
+      "zh": "这门课怎么写",
+      "en": "HOW IT IS WRITTEN",
+      "start": 247.196,
+      "lines": [
+        {
+          "zh": "说完内容，再说这门课怎么写。",
+          "en": "Now, how is this course written?",
+          "start": 249.096,
+          "end": 252.242
+        },
+        {
+          "zh": "很多教程，第一章讲 softmax，第四章再讲一遍，第九章又讲一遍。",
+          "en": "Many tutorials explain softmax in chapter one, again in four, again in nine.",
+          "start": 252.742,
+          "end": 259.203
+        },
+        {
+          "zh": "这门课换了个做法：每个概念只定义一次。",
+          "en": "This course does it differently: each concept is defined once.",
+          "start": 259.703,
+          "end": 263.548
+        },
+        {
+          "zh": "第一次出现时，给定义、给直觉、给一个例子，然后登记进概念账本。",
+          "en": "When a concept first appears, it gets a definition, an intuition, an example, and a ledger entry.",
+          "start": 264.048,
+          "end": 270.677
+        },
+        {
+          "zh": "之后再见，只写「见某节」，不再解释。",
+          "en": "Later chapters simply point back to that section.",
+          "start": 271.177,
+          "end": 274.752
+        },
+        {
+          "zh": "每章开头，还会写清「新增」了什么，「前置」需要什么。",
+          "en": "Every chapter opens with what is new and what is assumed.",
+          "start": 275.252,
+          "end": 279.732
+        },
+        {
+          "zh": "同一个例子，也绝不用第二次。",
+          "en": "And no example is ever used twice.",
+          "start": 280.232,
+          "end": 282.894
+        },
+        {
+          "zh": "因为工作记忆很有限，重复会挤掉真正的新东西。",
+          "en": "Working memory is limited; repetition crowds out what is truly new.",
+          "start": 283.394,
+          "end": 287.79
+        }
+      ],
+      "end": 288.79
+    },
+    {
+      "id": "bridges",
+      "code": "00.7",
+      "zh": "跨学科视角",
+      "en": "CROSS-DOMAIN",
+      "start": 288.79,
+      "lines": [
+        {
+          "zh": "最后，换一个角度看这些零件。",
+          "en": "Finally, look at these parts from another angle.",
+          "start": 290.69,
+          "end": 293.541
+        },
+        {
+          "zh": "熵来自热力学，被信息论借走，最后成了训练模型的损失函数。",
+          "en": "Entropy came from thermodynamics, was borrowed by information theory, and became the loss.",
+          "start": 294.041,
+          "end": 300.115
+        },
+        {
+          "zh": "梯度下降，和细菌朝着养分游动，是同一个算法。",
+          "en": "Gradient descent is the same algorithm as bacteria swimming toward nutrients.",
+          "start": 300.615,
+          "end": 305.252
+        },
+        {
+          "zh": "混合专家模型，就是亚当·斯密别针工厂里的分工。",
+          "en": "Mixture of experts is the division of labour in Adam Smith's pin factory.",
+          "start": 305.752,
+          "end": 310.655
+        },
+        {
+          "zh": "生物学里的预适应，也是同一个模式：旧结构，新用途。",
+          "en": "Biology's exaptation is the same pattern: an old structure, a new use.",
+          "start": 311.155,
+          "end": 316.437
+        },
+        {
+          "zh": "类比是迁移知识的好工具，但也可能是陷阱；所以每个类比，我们都会标出它在哪里失效。",
+          "en": "Analogy is a powerful tool for transfer, and also a trap; so we mark where it breaks down.",
+          "start": 316.937,
+          "end": 325.085
+        }
+      ],
+      "end": 326.085
+    },
+    {
+      "id": "outro",
+      "code": "00.8",
+      "zh": "下一站",
+      "en": "NEXT",
+      "start": 326.085,
+      "lines": [
+        {
+          "zh": "地图讲完了，但地图不等于地形。",
+          "en": "The map is done. But a map is not the terrain.",
+          "start": 327.985,
+          "end": 331.13
+        },
+        {
+          "zh": "开始之前，请带上三样东西。",
+          "en": "Before we start, bring three things.",
+          "start": 331.63,
+          "end": 334.358
+        },
+        {
+          "zh": "一点耐心：第二章的反向传播、第五章的注意力，是两个陡坡。",
+          "en": "Patience: backpropagation in chapter two and attention in chapter five are the steep climbs.",
+          "start": 334.858,
+          "end": 340.692
+        },
+        {
+          "zh": "一支笔：自测先写答案，再看解析；看懂不等于会做。",
+          "en": "A pen: write your self-test answers before reading mine; understanding is not doing.",
+          "start": 341.192,
+          "end": 346.609
+        },
+        {
+          "zh": "还有怀疑精神：找不到出处的说法，一律当作待验证。",
+          "en": "And skepticism: any claim without a source counts as unverified.",
+          "start": 347.109,
+          "end": 351.978
+        },
+        {
+          "zh": "下一章，我们把「猜下一个词」，写成一个可以计算的概率问题。",
+          "en": "Next chapter, we turn guessing the next word into a computable probability problem.",
+          "start": 352.478,
+          "end": 357.719
+        },
+        {
+          "zh": "顺便解释，为什么衡量猜得好不好，要用到「熵」。",
+          "en": "Along the way, we'll see why judging how well it guesses calls for entropy.",
+          "start": 358.219,
+          "end": 362.642
+        },
+        {
+          "zh": "第一章，语言的概率论。我们下期见。",
+          "en": "Chapter one: the probability theory of language. See you next time.",
+          "start": 363.142,
+          "end": 366.932
+        }
+      ],
+      "end": 369.932
+    }
+  ]
+}

@@ -1,0 +1,617 @@
+{
+  "total": 416.788,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "16.0",
+      "zh": "山顶上的图",
+      "en": "THE VIEW FROM THE TOP",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "十七章走完，这一集不引入新论文，只做收束。",
+          "en": "Seventeen chapters done. This finale adds no new papers.",
+          "start": 1.6,
+          "end": 5.77
+        },
+        {
+          "zh": "先用一张图，把前面所有章节串成一条链。",
+          "en": "First, one map that strings every chapter into a chain.",
+          "start": 6.27,
+          "end": 10.127
+        },
+        {
+          "zh": "再用十条定律，讲清这条链上反复出现的模式。",
+          "en": "Then ten laws that keep recurring along that chain.",
+          "start": 10.627,
+          "end": 14.706
+        },
+        {
+          "zh": "最后是下一步：读什么，做什么，还有什么没答案。",
+          "en": "Then what to read, what to build, what stays open.",
+          "start": 15.206,
+          "end": 19.424
+        },
+        {
+          "zh": "这一章没有新知识，只有重新排列过的旧知识。",
+          "en": "No new knowledge here, only old knowledge rearranged.",
+          "start": 19.924,
+          "end": 23.646
+        },
+        {
+          "zh": "如果只记一句话：能力来自规模，可用性来自对齐，边界来自评测与可解释性。",
+          "en": "One sentence: ability from scale, usability from alignment, limits from testing.",
+          "start": 24.146,
+          "end": 31.438
+        }
+      ],
+      "end": 32.438
+    },
+    {
+      "id": "map",
+      "code": "16.1",
+      "zh": "从词到智能体",
+      "en": "ONE CHAIN",
+      "start": 32.438,
+      "lines": [
+        {
+          "zh": "整门课只有一个目标：给定上下文，预测下一个词。",
+          "en": "The whole course has one goal: predict the next token.",
+          "start": 34.338,
+          "end": 38.671
+        },
+        {
+          "zh": "手段也只有一个：梯度下降加反向传播，把损失压下去。",
+          "en": "One method: gradient descent plus backprop, pushing loss down.",
+          "start": 39.171,
+          "end": 44.343
+        },
+        {
+          "zh": "围绕这个目标，长出三根支柱：表示、架构、数据。",
+          "en": "Three pillars grow around it: representation, architecture, data.",
+          "start": 44.843,
+          "end": 49.549
+        },
+        {
+          "zh": "表示把词变成向量，架构用注意力，数据来自互联网。",
+          "en": "Vectors, attention, and text from the internet.",
+          "start": 50.049,
+          "end": 55.238
+        },
+        {
+          "zh": "三根支柱合起来，才有规模化：损失按幂律下降。",
+          "en": "Together they scale: loss falls as a power law.",
+          "start": 55.738,
+          "end": 60.13
+        },
+        {
+          "zh": "规模之后分出三个方向：对齐、推理、效率。",
+          "en": "Then three branches: alignment, reasoning, efficiency.",
+          "start": 60.63,
+          "end": 65.007
+        },
+        {
+          "zh": "对齐让它可用，推理让它多想几步，效率让它跑得起。",
+          "en": "Alignment makes it usable; reasoning makes it think longer.",
+          "start": 65.507,
+          "end": 70.041
+        },
+        {
+          "zh": "最后接到外部世界：检索、工具、评测，直到智能体。",
+          "en": "Finally it meets the world: retrieval, tools, evaluation, agents.",
+          "start": 70.541,
+          "end": 75.661
+        }
+      ],
+      "end": 76.661
+    },
+    {
+      "id": "laws-a",
+      "code": "16.2",
+      "zh": "定律一二三",
+      "en": "LAWS ONE TO THREE",
+      "start": 76.661,
+      "lines": [
+        {
+          "zh": "十条定律不是物理定律，而是贯穿全课的模式。",
+          "en": "These are not physics laws, but patterns that recur.",
+          "start": 78.561,
+          "end": 82.755
+        },
+        {
+          "zh": "第一条：目标越简单，就越容易规模化。",
+          "en": "Law one: the simpler the target, the easier to scale.",
+          "start": 83.255,
+          "end": 86.653
+        },
+        {
+          "zh": "简单目标加海量数据，胜过精巧目标加少量数据。",
+          "en": "Simple targets with massive data beat clever targets with little data.",
+          "start": 87.153,
+          "end": 91.692
+        },
+        {
+          "zh": "第二条：表示决定上限，模型学不到表示之外。",
+          "en": "Law two: representation sets the ceiling.",
+          "start": 92.192,
+          "end": 96.381
+        },
+        {
+          "zh": "只给词编号学不到相似，静态词向量学不到语境。",
+          "en": "Raw IDs cannot see similarity; static vectors cannot see context.",
+          "start": 96.881,
+          "end": 101.414
+        },
+        {
+          "zh": "所以每次架构革命，本质上都是一次表示革命。",
+          "en": "Every architecture revolution was a representation revolution.",
+          "start": 101.914,
+          "end": 106.257
+        },
+        {
+          "zh": "第三条：注意力是可微检索，深度是串行计算。",
+          "en": "Law three: attention is differentiable retrieval, depth is serial compute.",
+          "start": 106.757,
+          "end": 111.041
+        },
+        {
+          "zh": "自回归把时间变成计算，三件事拼成会思考的近似。",
+          "en": "Autoregression turns time into compute: an engineering approximation of thought.",
+          "start": 111.541,
+          "end": 116.276
+        }
+      ],
+      "end": 117.276
+    },
+    {
+      "id": "laws-b",
+      "code": "16.3",
+      "zh": "定律四五六",
+      "en": "LAWS FOUR TO SIX",
+      "start": 117.276,
+      "lines": [
+        {
+          "zh": "第四条：规模有定律，但定律也有边界。",
+          "en": "Law four: scaling has laws, and the laws have limits.",
+          "start": 119.176,
+          "end": 122.82
+        },
+        {
+          "zh": "损失随规模按幂律下降，可预测，也可规划。",
+          "en": "Loss falls as a power law, predictable and plannable.",
+          "start": 123.32,
+          "end": 127.529
+        },
+        {
+          "zh": "但数据会枯竭，推理成本上升，收益递减。",
+          "en": "But data runs dry, inference costs rise, returns diminish.",
+          "start": 128.029,
+          "end": 131.993
+        },
+        {
+          "zh": "第五条：对齐是分布偏移，不是知识注入。",
+          "en": "Law five: alignment shifts a distribution, it does not inject knowledge.",
+          "start": 132.493,
+          "end": 136.307
+        },
+        {
+          "zh": "它只把概率质量，从人类不喜欢挪到人类喜欢。",
+          "en": "It moves probability mass from disliked to liked.",
+          "start": 136.807,
+          "end": 140.987
+        },
+        {
+          "zh": "所以对齐改得了风格行为，改不了知识边界。",
+          "en": "So alignment changes style and behavior, not the knowledge boundary.",
+          "start": 141.487,
+          "end": 145.358
+        },
+        {
+          "zh": "第六条：推理可以写进权重，也可以花在推理时。",
+          "en": "Law six: reasoning can live in weights, or be spent at inference.",
+          "start": 145.858,
+          "end": 150.098
+        },
+        {
+          "zh": "给定预算，要在训练更久和想更久之间分配。",
+          "en": "Given a budget, choose between training longer and thinking longer.",
+          "start": 150.598,
+          "end": 154.636
+        }
+      ],
+      "end": 155.636
+    },
+    {
+      "id": "laws-c",
+      "code": "16.4",
+      "zh": "定律七八九",
+      "en": "LAWS SEVEN TO NINE",
+      "start": 155.636,
+      "lines": [
+        {
+          "zh": "第七条：稀疏是效率问题最通用的解法。",
+          "en": "Law seven: sparsity is the general answer for efficiency.",
+          "start": 157.536,
+          "end": 161.169
+        },
+        {
+          "zh": "混合专家、稀疏缓存、稀疏特征，大脑也稀疏放电。",
+          "en": "Mixture of experts, sparse caches, sparse features, even neurons.",
+          "start": 161.669,
+          "end": 166.531
+        },
+        {
+          "zh": "用结构化的稀疏，逼近稠密计算的效果。",
+          "en": "Structured sparsity approximates dense compute.",
+          "start": 167.031,
+          "end": 170.52
+        },
+        {
+          "zh": "第八条：记忆必须分层，而且要分得清楚。",
+          "en": "Law eight: memory must be layered.",
+          "start": 171.02,
+          "end": 174.792
+        },
+        {
+          "zh": "权重是长期，上下文是短期，外部库无限可溯源。",
+          "en": "Weights are long-term, context is short-term, external stores are unbounded.",
+          "start": 175.292,
+          "end": 180.004
+        },
+        {
+          "zh": "第九条：评测是能力的代理，代理会被优化。",
+          "en": "Law nine: evaluation is a proxy, and proxies get optimized.",
+          "start": 180.504,
+          "end": 184.521
+        },
+        {
+          "zh": "基准会污染，评审会带偏见，榜单会谄媚。",
+          "en": "Benchmarks leak, judges are biased, leaderboards flatter.",
+          "start": 185.021,
+          "end": 189.003
+        },
+        {
+          "zh": "唯一可靠的评测，是持续更新题目、多指标、真实任务。",
+          "en": "Only refreshed tasks, many metrics, and real work stay honest.",
+          "start": 189.503,
+          "end": 194.468
+        }
+      ],
+      "end": 195.468
+    },
+    {
+      "id": "law-ten",
+      "code": "16.5",
+      "zh": "可靠性是乘法",
+      "en": "RELIABILITY IS A PRODUCT",
+      "start": 195.468,
+      "lines": [
+        {
+          "zh": "第十条：可靠性等于单步可靠，乘上步数。",
+          "en": "Law ten: reliability is single-step reliability times steps.",
+          "start": 197.368,
+          "end": 201.247
+        },
+        {
+          "zh": "单步零点九五，走二十步，只剩约百分之三十六。",
+          "en": "0.95 per step, twenty steps, about 36 percent left.",
+          "start": 201.747,
+          "end": 206.014
+        },
+        {
+          "zh": "长链条的可靠性，由最弱环节和长度共同决定。",
+          "en": "Long chains fail at the weakest link and the length.",
+          "start": 206.514,
+          "end": 210.75
+        },
+        {
+          "zh": "不要追求永不犯错，要设计成错了能发现。",
+          "en": "Do not aim for never wrong; design for detection.",
+          "start": 211.25,
+          "end": 214.81
+        },
+        {
+          "zh": "发现之后，还要能回滚到一个安全的状态。",
+          "en": "Detection, and rollback.",
+          "start": 215.31,
+          "end": 218.658
+        }
+      ],
+      "end": 219.658
+    },
+    {
+      "id": "three",
+      "code": "16.6",
+      "zh": "只记三件事",
+      "en": "IF YOU KEEP THREE",
+      "start": 219.658,
+      "lines": [
+        {
+          "zh": "如果十条定律还是太重，那就只记三件事。",
+          "en": "If ten laws are still too much, keep three things.",
+          "start": 221.558,
+          "end": 225.245
+        },
+        {
+          "zh": "第一，它是一个概率模型，不是一个知识库。",
+          "en": "One: it is a probability model, not a knowledge base.",
+          "start": 225.745,
+          "end": 229.344
+        },
+        {
+          "zh": "它的能力与缺陷，都来自根据上文预测下一个词。",
+          "en": "Its powers and flaws come from predicting the next token.",
+          "start": 229.844,
+          "end": 233.815
+        },
+        {
+          "zh": "第二，能力来自规模，可用性来自对齐。",
+          "en": "Two: capability from scale, usability from alignment.",
+          "start": 234.315,
+          "end": 237.932
+        },
+        {
+          "zh": "产品化的关键，常是把任务拆对，把上下文给对。",
+          "en": "Ship by splitting tasks well and feeding context well.",
+          "start": 238.432,
+          "end": 242.726
+        },
+        {
+          "zh": "第三，它没有理解的保证，只有表现的证据。",
+          "en": "Three: no guarantee of understanding, only evidence of behavior.",
+          "start": 243.226,
+          "end": 246.943
+        },
+        {
+          "zh": "思维链可能不忠实，注意力图可能不解释，要验证。",
+          "en": "Chains of thought may be unfaithful; verify, do not trust.",
+          "start": 247.443,
+          "end": 252.048
+        }
+      ],
+      "end": 253.048
+    },
+    {
+      "id": "read",
+      "code": "16.7",
+      "zh": "入门五篇",
+      "en": "FIVE PAPERS",
+      "start": 253.048,
+      "lines": [
+        {
+          "zh": "想读论文，从入门五篇开始，按这个顺序。",
+          "en": "To read papers, start with five, in this order.",
+          "start": 254.948,
+          "end": 258.733
+        },
+        {
+          "zh": "二零一七年 Transformer 架构，二零二零年 GPT-3 规模。",
+          "en": "2017, Transformer, architecture; 2020, GPT-3, scale.",
+          "start": 259.233,
+          "end": 264.441
+        },
+        {
+          "zh": "二零二二年有两篇：一篇讲对齐，一篇讲思维链。",
+          "en": "2022 brought two: alignment, and chain of thought.",
+          "start": 264.941,
+          "end": 269.248
+        },
+        {
+          "zh": "二零二五年的 DeepSeek-R1，讲用强化学习换推理。",
+          "en": "2025, DeepSeek-R1, trading reinforcement learning for reasoning.",
+          "start": 269.748,
+          "end": 273.957
+        },
+        {
+          "zh": "读法是先摘要、图一、结论，再方法，最后实验。",
+          "en": "Read abstract, figure one, conclusion; then method; then experiments.",
+          "start": 274.457,
+          "end": 279.148
+        },
+        {
+          "zh": "不要从头读到尾，那是审稿人的读法，不是学习者的。",
+          "en": "Not cover to cover. That is a reviewer's habit, not a learner's.",
+          "start": 279.648,
+          "end": 284.008
+        }
+      ],
+      "end": 285.008
+    },
+    {
+      "id": "build",
+      "code": "16.8",
+      "zh": "动手五件事",
+      "en": "FIVE EXERCISES",
+      "start": 285.008,
+      "lines": [
+        {
+          "zh": "想动手的话，有五件事，都从小模型开始。",
+          "en": "To build, five exercises, all on small models.",
+          "start": 286.908,
+          "end": 290.654
+        },
+        {
+          "zh": "先用十亿参数以下的模型，跑通分词、前向、采样。",
+          "en": "First, run tokenize, forward, sample under one billion parameters.",
+          "start": 291.154,
+          "end": 295.931
+        },
+        {
+          "zh": "再写二十行最小的注意力，确认缩放点积。",
+          "en": "Then write twenty lines of attention and check the scaled dot product.",
+          "start": 296.431,
+          "end": 300.0
+        },
+        {
+          "zh": "用 LoRA 微调一个分类任务，感受预训练加微调。",
+          "en": "Fine-tune a classifier with LoRA to feel pretraining plus tuning.",
+          "start": 300.5,
+          "end": 304.582
+        },
+        {
+          "zh": "搭一个最小 RAG：切块、嵌入、检索、拼提示。",
+          "en": "Build a minimal RAG: chunk, embed, retrieve, prompt.",
+          "start": 305.082,
+          "end": 309.556
+        },
+        {
+          "zh": "最后用 ReAct 写个会查天气的智能体，看它怎么失败。",
+          "en": "Then a ReAct agent that checks weather, and watch it fail.",
+          "start": 310.056,
+          "end": 314.561
+        }
+      ],
+      "end": 315.561
+    },
+    {
+      "id": "openq",
+      "code": "16.9",
+      "zh": "还没有答案",
+      "en": "OPEN QUESTIONS",
+      "start": 315.561,
+      "lines": [
+        {
+          "zh": "最后是开放问题，它们目前都没有答案。",
+          "en": "Finally, open questions, all without answers.",
+          "start": 317.461,
+          "end": 320.631
+        },
+        {
+          "zh": "第一，规模还会继续有效吗，数据墙之后靠什么。",
+          "en": "One: does scale keep working after the data wall?",
+          "start": 321.131,
+          "end": 325.414
+        },
+        {
+          "zh": "第二，推理的本质是什么，思维链是真的在想吗。",
+          "en": "Two: what is reasoning, and is a chain of thought really thinking?",
+          "start": 325.914,
+          "end": 329.95
+        },
+        {
+          "zh": "第三，如何保证对齐，模型能假装对齐怎么办。",
+          "en": "Three: how to ensure alignment when a model can fake it?",
+          "start": 330.45,
+          "end": 334.916
+        },
+        {
+          "zh": "第四，智能体可靠吗，复合误差能不能压下去。",
+          "en": "Four: are agents reliable, can compound error be pressed down?",
+          "start": 335.416,
+          "end": 339.535
+        },
+        {
+          "zh": "还有理解与预测的边界，以及能源与算力的极限。",
+          "en": "Also the boundary of understanding, and the limits of energy and compute.",
+          "start": 340.035,
+          "end": 344.107
+        },
+        {
+          "zh": "历史上，我们总是先有工程近似，再用它定义问题。",
+          "en": "History shows we build an approximation, then let it define the question.",
+          "start": 344.607,
+          "end": 349.189
+        },
+        {
+          "zh": "模型可能不是智能的答案，但它是目前最好的探针。",
+          "en": "A model may not be the answer to intelligence, but it is the best probe.",
+          "start": 349.689,
+          "end": 353.977
+        }
+      ],
+      "end": 354.977
+    },
+    {
+      "id": "closing",
+      "code": "16.10",
+      "zh": "同一件事",
+      "en": "THE SAME THING",
+      "start": 354.977,
+      "lines": [
+        {
+          "zh": "回到第 1 章那个四词表：猫零点六，狗零点三。",
+          "en": "Back to chapter one: cat 0.6, dog 0.3.",
+          "start": 356.877,
+          "end": 361.027
+        },
+        {
+          "zh": "它和今天几千亿参数的模型，在数学上是同一件事。",
+          "en": "Today's hundred-billion-parameter models do the same math.",
+          "start": 361.527,
+          "end": 366.101
+        },
+        {
+          "zh": "说到底，就是先给一个分布，然后再采样。",
+          "en": "Give a distribution, then sample.",
+          "start": 366.601,
+          "end": 370.112
+        },
+        {
+          "zh": "差别只在规模、数据、对齐，和我们围绕它建的工程。",
+          "en": "Only scale, data, alignment, and the engineering around it differ.",
+          "start": 370.612,
+          "end": 375.636
+        },
+        {
+          "zh": "一个简单到能写进一行的目标，长出了没人能完全解释的能力。",
+          "en": "A target one line long grew abilities nobody fully explains.",
+          "start": 376.136,
+          "end": 381.148
+        },
+        {
+          "zh": "理解它这件事，不需要膜拜，也不需要恐惧。",
+          "en": "Understanding it needs neither worship nor fear.",
+          "start": 381.648,
+          "end": 385.314
+        },
+        {
+          "zh": "你只需要一层层拆开，再一层层装回去。",
+          "en": "Just take it apart layer by layer, and put it back.",
+          "start": 385.814,
+          "end": 389.166
+        }
+      ],
+      "end": 390.166
+    },
+    {
+      "id": "outro",
+      "code": "16.11",
+      "zh": "现在，轮到你了",
+      "en": "YOUR TURN",
+      "start": 390.166,
+      "lines": [
+        {
+          "zh": "这门课讲到这里，就真的走到最后一页了。",
+          "en": "This course ends here.",
+          "start": 392.066,
+          "end": 395.684
+        },
+        {
+          "zh": "你带走的不该是结论，而是一套拆装的工具。",
+          "en": "What you take is not conclusions, but a set of tools.",
+          "start": 396.184,
+          "end": 400.158
+        },
+        {
+          "zh": "下一步：读一篇论文，跑一次前向，写一个智能体。",
+          "en": "Next: read a paper, run a forward pass, build an agent.",
+          "start": 400.658,
+          "end": 405.126
+        },
+        {
+          "zh": "保持怀疑：分数是代理，解释是证据，不是保证。",
+          "en": "Stay skeptical: scores are proxies, explanations are evidence, not guarantees.",
+          "start": 405.626,
+          "end": 410.148
+        },
+        {
+          "zh": "剩下的那些问题，就是你自己的问题了。",
+          "en": "The rest is your own question now.",
+          "start": 410.648,
+          "end": 413.788
+        }
+      ],
+      "end": 416.788
+    }
+  ]
+}

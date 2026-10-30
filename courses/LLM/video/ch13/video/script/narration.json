@@ -1,0 +1,458 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "13.0",
+      "zh": "评测与幻觉",
+      "en": "EVALUATION AND HALLUCINATION",
+      "lines": [
+        [
+          "榜单上的分数年年创新高，实际用起来却还是会出错。",
+          "Scores climb every year, yet real use still goes wrong."
+        ],
+        [
+          "这不是模型突然变笨，而是分数和能力之间有一道缝。",
+          "The model did not get dumber. A gap sits between score and ability."
+        ],
+        [
+          "这一章要回答：我们到底怎么知道一个模型行不行。",
+          "This chapter asks how we can actually tell whether a model works."
+        ],
+        [
+          "先说结论：分数是能力的代理指标，不是能力本身。",
+          "First, the claim: a score is a proxy, not ability itself."
+        ],
+        [
+          "记住这句话，后面每一节都在给它加注脚。",
+          "Hold that line. Every section after this adds a footnote to it."
+        ]
+      ]
+    },
+    {
+      "id": "scoregap",
+      "code": "13.1",
+      "zh": "分数的鸿沟",
+      "en": "THE GAP",
+      "lines": [
+        [
+          "我们可以精确测量损失，但损失低不等于好用。",
+          "We can measure loss precisely, but low loss is not usefulness."
+        ],
+        [
+          "损失衡量的是对下一个词的预测有多准。",
+          "Loss measures how well the next word is predicted."
+        ],
+        [
+          "而人关心的是，它能不能帮我把问题解决掉。",
+          "What people care about is whether it solves the problem."
+        ],
+        [
+          "损失降低零点一，普通用户能感知到差别吗。",
+          "Loss drops by 0.1. Does any user feel the difference?"
+        ],
+        [
+          "MMLU 提高两分，意味着它更会写代码吗。",
+          "MMLU rises two points. Does it write better code?"
+        ],
+        [
+          "聊天机器人在榜单上很强，用起来为什么还是笨。",
+          "It tops the charts. So why is it still dumb in practice?"
+        ]
+      ]
+    },
+    {
+      "id": "benchmark",
+      "code": "13.2",
+      "zh": "基准的军备竞赛",
+      "en": "BENCHMARK ARMS RACE",
+      "lines": [
+        [
+          "基准的演化史，就是一场出题人和模型的军备竞赛。",
+          "Benchmark history is an arms race between test writers and models."
+        ],
+        [
+          "二零一八年 GLUE 考句子级理解，一共九个任务。",
+          "In 2018 GLUE tested sentence-level understanding with nine tasks."
+        ],
+        [
+          "二零二一年 MMLU 用五十七个学科、约一点四万道选择题考世界知识。",
+          "In 2021 MMLU used 57 subjects and about 14,000 multiple-choice questions."
+        ],
+        [
+          "同年 GSM8K 考小学应用题，约八千五百道。",
+          "That year GSM8K added grade-school word problems, about 8,500."
+        ],
+        [
+          "HumanEval 只有一百六十四道手写 Python 函数题。",
+          "HumanEval had only 164 hand-written Python function tasks."
+        ],
+        [
+          "二零二五年 HLE 两千五百题，专家出，号称搜索不到。",
+          "In 2025 HLE arrived: 2,500 expert questions said to be unsearchable."
+        ],
+        [
+          "发布时前沿模型的准确率，只有个位数。",
+          "Frontier models scored in the single digits at release."
+        ],
+        [
+          "越难越窄：新基准只测旧基准刷不动的那一个尖。",
+          "Harder means narrower: each new test targets the one remaining peak."
+        ]
+      ]
+    },
+    {
+      "id": "threeways",
+      "code": "13.3",
+      "zh": "三种评测范式",
+      "en": "THREE PARADIGMS",
+      "lines": [
+        [
+          "评测方法大致分三派，每一派都有自己的偏差。",
+          "Evaluation comes in three schools, each with its own bias."
+        ],
+        [
+          "第一派是静态基准，选择题，判分完全自动。",
+          "The first is static benchmarks: multiple choice, fully automatic."
+        ],
+        [
+          "它便宜、可复现，但可以猜，也可能被污染。",
+          "Cheap and reproducible, but guessable and open to contamination."
+        ],
+        [
+          "第二派是人类盲评，Chatbot Arena 让用户匿名二选一。",
+          "The second is human blind rating: Arena shows two anonymous answers."
+        ],
+        [
+          "它最接近真实偏好，但它测的是喜欢，不是正确。",
+          "Closest to real preference, but it measures liking, not truth."
+        ],
+        [
+          "第三派是 LLM-as-judge，用更强的模型来打分。",
+          "The third is LLM-as-judge: a stronger model hands out the score."
+        ],
+        [
+          "它便宜、可扩展，和人类判断的相关性还不错。",
+          "Cheap, scalable, and decently correlated with human judgment."
+        ]
+      ]
+    },
+    {
+      "id": "judge",
+      "code": "13.4",
+      "zh": "裁判也有偏好",
+      "en": "THE JUDGE HAS BIASES",
+      "lines": [
+        [
+          "让模型当裁判，先要承认它自己有偏好。",
+          "Let a model judge, and admit it has preferences of its own."
+        ],
+        [
+          "它偏爱排在前面的答案，这叫位置偏好。",
+          "It favours the answer placed first: position bias."
+        ],
+        [
+          "它也偏爱更长的回答，哪怕信息并没有更多。",
+          "It favours longer answers, even when they carry no more information."
+        ],
+        [
+          "它还偏爱同家族模型的输出，和排版漂亮的答案。",
+          "It favours its own family, and answers that look well formatted."
+        ],
+        [
+          "解决办法不是换裁判，而是照搬人类的制度设计。",
+          "The fix is not a better judge but human-style institutions."
+        ],
+        [
+          "随机交换顺序、隐藏身份、多裁判投票，再用人类标注校准。",
+          "Randomize order, hide identity, poll judges, recalibrate on humans."
+        ]
+      ]
+    },
+    {
+      "id": "contamination",
+      "code": "13.5",
+      "zh": "考试泄题",
+      "en": "THE LEAKED EXAM",
+      "lines": [
+        [
+          "比偏差更硬的问题，是数据污染，也就是考试泄题。",
+          "Harder than bias is contamination: the exam paper leaked."
+        ],
+        [
+          "测试题和答案就在语料里，它不是会做，而是记得。",
+          "Test items and answers sit in the corpus. It remembers, it does not solve."
+        ],
+        [
+          "第一种检测是 n-gram 重叠，看题目和语料有没有重合。",
+          "First check: n-gram overlap between test items and corpus."
+        ],
+        [
+          "第二种是 canary 字符串，在测试集里埋一个独特标记。",
+          "Second: a canary string, a unique marker planted in the test set."
+        ],
+        [
+          "然后看模型会不会把这个标记原样复述出来。",
+          "Then see whether the model repeats that marker verbatim."
+        ],
+        [
+          "第三种是扰动测试：改数字、换名字，再问一遍。",
+          "Third: perturbation. Change numbers, swap names, ask again."
+        ],
+        [
+          "三种办法都只是间接检查，没人能保证题库干净。",
+          "All three are indirect checks. Nobody can certify a test set is clean."
+        ],
+        [
+          "真会做的模型仍然答对，靠记得的模型立刻露馅。",
+          "A model that can solve it still answers; one that memorized fails."
+        ]
+      ]
+    },
+    {
+      "id": "construct",
+      "code": "13.6",
+      "zh": "构念效度",
+      "en": "CONSTRUCT VALIDITY",
+      "lines": [
+        [
+          "心理测量学留下三把尺子，看榜单时都用得上。",
+          "Psychometrics leaves three rulers, all useful on a leaderboard."
+        ],
+        [
+          "第一把是信度：同一个模型多测几次，分数稳不稳。",
+          "Reliability: test the same model again. Does the score hold?"
+        ],
+        [
+          "第二把是效度：这个测试有没有测到它声称的能力。",
+          "Validity: does the test measure the ability it claims to measure?"
+        ],
+        [
+          "最关键的是构念效度：你说是推理，它考的是记忆。",
+          "Construct validity is the crux: you claim reasoning, it tests recall."
+        ],
+        [
+          "第三把是生态效度：实验室任务能不能代表真实使用。",
+          "Ecological validity: does a lab task represent real use?"
+        ],
+        [
+          "所以看到高分，先问它到底测的是哪一种能力。",
+          "So when you see a high score, first ask which ability it measured."
+        ],
+        [
+          "这一问比分数本身有用得多，也更难回答。",
+          "That question is worth more than the score, and harder to answer."
+        ]
+      ]
+    },
+    {
+      "id": "halluc",
+      "code": "13.7",
+      "zh": "一本正经地胡说",
+      "en": "CONFIDENT NONSENSE",
+      "lines": [
+        [
+          "幻觉是模型生成看似合理，实则错误的内容。",
+          "A hallucination looks plausible and is wrong or unsupported."
+        ],
+        [
+          "第一类是事实性幻觉：它把世界上的事情说错了。",
+          "Factuality errors get the world wrong."
+        ],
+        [
+          "比如爱因斯坦 1955 年出生，年份完全错位。",
+          "Einstein was born in 1955? The year is simply off."
+        ],
+        [
+          "第二类是忠实性幻觉：它偏离了你给的输入。",
+          "Faithfulness errors drift away from the input you gave."
+        ],
+        [
+          "让你总结一篇文章，它加进文章里没有的内容。",
+          "Asked to summarize, it adds material the article never contained."
+        ],
+        [
+          "还有一类是自洽性：同一个问题，两次回答互相矛盾。",
+          "A third kind: two answers to one question contradict each other."
+        ],
+        [
+          "共同点是，它擅长编故事，却从不标记这是我编的。",
+          "The common thread: it tells stories and never flags them as invented."
+        ]
+      ]
+    },
+    {
+      "id": "causes",
+      "code": "13.8",
+      "zh": "为什么会编",
+      "en": "WHY IT FABRICATES",
+      "lines": [
+        [
+          "幻觉不是偶然的故障，而是训练方式的结构性副产品。",
+          "Hallucination is not a random fault. It is structural to training."
+        ],
+        [
+          "第一，目标不匹配：训练只奖励预测下一个词。",
+          "First, the objective is mismatched: training rewards the next word."
+        ],
+        [
+          "语料里像答案的文本更常见，于是它学会了自信补全。",
+          "Answer-shaped text beats I don't know, so it completes confidently."
+        ],
+        [
+          "第二，训练数据本身就有错误和过时的信息。",
+          "Second, the training data itself holds errors and stale facts."
+        ],
+        [
+          "第三，采样会选到低概率的词，偶尔就编了。",
+          "Third, sampling sometimes picks a low-probability token and invents."
+        ],
+        [
+          "第四，人类评分者偏爱有问必答，模型就少说不知道。",
+          "Fourth, raters prefer an answer to no answer, so it stops saying so."
+        ],
+        [
+          "它也没有知识边界的显式表示，不知道自己不知道。",
+          "It also has no explicit representation of where its knowledge ends."
+        ]
+      ]
+    },
+    {
+      "id": "calibrate",
+      "code": "13.9",
+      "zh": "自信是否可信",
+      "en": "TRUST THE CONFIDENCE",
+      "lines": [
+        [
+          "校准问的是：它说九成把握，实际就对九成吗。",
+          "Calibration asks: when it says ninety percent, is it right that often?"
+        ],
+        [
+          "完美校准的模型，置信度和准确率画出来是一条对角线。",
+          "A calibrated model plots confidence against accuracy on the diagonal."
+        ],
+        [
+          "实际模型常常过度自信：说九成五，只对七成。",
+          "Real models are overconfident: ninety-five claimed, seventy delivered."
+        ],
+        [
+          "ECE 把预测按置信度分桶，桶里比较两个数。",
+          "ECE buckets predictions by confidence and compares two numbers."
+        ],
+        [
+          "一个是平均置信度，一个是实际准确率，差距取绝对值。",
+          "Mean confidence versus accuracy, difference in absolute value."
+        ],
+        [
+          "再按每个桶的样本量加权平均，就得到 ECE。",
+          "Weight each bucket by its share of samples and average: that is ECE."
+        ],
+        [
+          "气象预报早就回答过：关键不是多自信，而是自信可信。",
+          "Weather forecasting learned it: value is not confidence, but trust."
+        ]
+      ]
+    },
+    {
+      "id": "goodhart",
+      "code": "13.10",
+      "zh": "指标成了目标",
+      "en": "GOODHART'S LAW",
+      "lines": [
+        [
+          "这就是 Goodhart 定律的评测版。",
+          "This is the evaluation edition of Goodhart's law."
+        ],
+        [
+          "当一个指标成为目标，它就不再是好指标。",
+          "When a measure becomes a target, it stops being a good measure."
+        ],
+        [
+          "教育测量早就演过一遍：考试成了目标，教学变成刷题。",
+          "Education ran it: make exams the goal and teaching becomes drilling."
+        ],
+        [
+          "基准也一样：刷分成了目标，分数就不再代表能力。",
+          "Benchmarks too: once score-chasing is the goal, scores stop meaning ability."
+        ],
+        [
+          "于是模型学会的是考试技巧，而不是真本事。",
+          "So the model learns exam tricks instead of real skill."
+        ],
+        [
+          "这不是谁作弊，而是指标一旦可优化，就会被优化。",
+          "Nobody cheats. A metric that can be optimized will be optimized."
+        ]
+      ]
+    },
+    {
+      "id": "newscheck",
+      "code": "13.11",
+      "zh": "四问一条新闻",
+      "en": "FOUR QUESTIONS",
+      "lines": [
+        [
+          "所以看到超越人类这种标题，先别急着转发。",
+          "So when a headline says it beats humans, do not share it yet."
+        ],
+        [
+          "第一问：这个基准测的到底是什么能力。",
+          "Question one: what ability does this benchmark actually test?"
+        ],
+        [
+          "第二问：题库有没有污染，答案很可能是有的。",
+          "Question two: is the test set contaminated? Very likely yes."
+        ],
+        [
+          "第三问：人类基线是多少，又是谁测出来的。",
+          "Question three: what is the human baseline, and who measured it?"
+        ],
+        [
+          "MMLU 的人类专家约百分之八十九点八，那是一批特定标注者的成绩。",
+          "MMLU human experts sit near 89.8 percent, a specific group of annotators."
+        ],
+        [
+          "第四问：分数提高，对应真实场景的什么改善。",
+          "Question four: what real-world improvement does the higher score imply?"
+        ],
+        [
+          "问完这四个问题，标题通常就缩水一半。",
+          "Ask those four, and most headlines shrink by half."
+        ]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "13.12",
+      "zh": "下一站：打开模型",
+      "en": "NEXT: OPEN THE MODEL",
+      "lines": [
+        [
+          "这一章的主线只有一句：分数是代理，不是能力。",
+          "One line holds it together: a score is a proxy, not ability."
+        ],
+        [
+          "基准在军备竞赛，污染让分数贬值，幻觉是副产品。",
+          "Arms races, contamination, and hallucination as a by-product."
+        ],
+        [
+          "校准和构念效度，是看榜单时要戴的两副眼镜。",
+          "Calibration and construct validity are the lenses for leaderboards."
+        ],
+        [
+          "前面十二章，我们一直在外面看模型的行为。",
+          "For twelve chapters we have watched the model from the outside."
+        ],
+        [
+          "下一章把模型打开，看它内部到底在算什么。",
+          "Next we open it up and watch what it computes inside."
+        ],
+        [
+          "那就是机制可解释性，全课最像神经科学的一章。",
+          "That is mechanistic interpretability, the neuroscience-like chapter."
+        ]
+      ]
+    }
+  ]
+}

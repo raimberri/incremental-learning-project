@@ -1,0 +1,627 @@
+{
+  "total": 388.029,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "03.0",
+      "zh": "词的数字分身",
+      "en": "A NUMBER FOR EVERY WORD",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "计算机不认识猫这个字，它只认识数字。",
+          "en": "A computer does not know the word cat. It only knows numbers.",
+          "start": 1.6,
+          "end": 5.026
+        },
+        {
+          "zh": "所以表示学习的第一步，是给每个词一个数字分身。",
+          "en": "So the first step in representation learning is a numeric stand-in for every word.",
+          "start": 5.526,
+          "end": 9.858
+        },
+        {
+          "zh": "最直接的做法：给词表里的每个词编一个号。",
+          "en": "The simplest approach: assign an index to every word in the vocabulary.",
+          "start": 10.358,
+          "end": 13.879
+        },
+        {
+          "zh": "编号展开成向量，就是 one-hot 编码。",
+          "en": "Unfold that index into a vector and you have one-hot encoding.",
+          "start": 14.379,
+          "end": 17.464
+        },
+        {
+          "zh": "这一章讲：词怎么变成向量，又从静态走向动态。",
+          "en": "This chapter covers how words become vectors, and how vectors became dynamic.",
+          "start": 17.964,
+          "end": 22.353
+        },
+        {
+          "zh": "它决定了大模型第一层能看到什么。",
+          "en": "It decides what the first layer of a large model can see.",
+          "start": 22.853,
+          "end": 25.986
+        }
+      ],
+      "end": 26.986
+    },
+    {
+      "id": "onehot",
+      "code": "03.1",
+      "zh": "编号的代价",
+      "en": "THE COST OF IDS",
+      "start": 26.986,
+      "lines": [
+        {
+          "zh": "先看最笨的办法：五万个词，就编五万个号。",
+          "en": "Start with the dumbest method: fifty thousand words, fifty thousand IDs.",
+          "start": 28.886,
+          "end": 32.636
+        },
+        {
+          "zh": "每个词是一个五万维向量，只有一位是一。",
+          "en": "Each word becomes a fifty-thousand-dimensional vector with a single one.",
+          "start": 33.136,
+          "end": 36.587
+        },
+        {
+          "zh": "第一个毛病：维度爆炸，几乎全是零。",
+          "en": "Problem one: the dimension explodes, and almost every entry is zero.",
+          "start": 37.087,
+          "end": 40.395
+        },
+        {
+          "zh": "第二个毛病更致命：任意两个词的内积都是零。",
+          "en": "Problem two is worse: the dot product of any two words is zero.",
+          "start": 40.895,
+          "end": 44.671
+        },
+        {
+          "zh": "在模型眼里，猫和狗的差距，等于猫和车的差距。",
+          "en": "To the model, cat-to-dog equals cat-to-car.",
+          "start": 45.171,
+          "end": 49.496
+        },
+        {
+          "zh": "第 1 章的 n-gram 就死在这里：它表达不了相似。",
+          "en": "The n-grams of Chapter 1 died here: they cannot express similarity.",
+          "start": 49.996,
+          "end": 53.902
+        }
+      ],
+      "end": 54.902
+    },
+    {
+      "id": "firth",
+      "code": "03.2",
+      "zh": "观其伴，知其义",
+      "en": "THE COMPANY IT KEEPS",
+      "start": 54.902,
+      "lines": [
+        {
+          "zh": "那怎么定义意义？语言学家弗斯给了一句座右铭。",
+          "en": "So how do we define meaning? The linguist Firth left a motto.",
+          "start": 56.802,
+          "end": 61.221
+        },
+        {
+          "zh": "观其伴，知其义：看它常和谁一起出现。",
+          "en": "You shall know a word by the company it keeps.",
+          "start": 61.721,
+          "end": 65.406
+        },
+        {
+          "zh": "猫常和喵、鱼、毛一起出现，车常和油、轮胎一起出现。",
+          "en": "Cat appears with meow, fish and fur; car with fuel and tires.",
+          "start": 65.906,
+          "end": 71.209
+        },
+        {
+          "zh": "没有词典，只看朋友圈，也能猜个八九不离十。",
+          "en": "Without a dictionary, its circle of companions gives it away.",
+          "start": 71.709,
+          "end": 75.746
+        },
+        {
+          "zh": "更早的说法是分布式假设：上下文相似，意义相似。",
+          "en": "The earlier claim is the distributional hypothesis: similar contexts, similar meaning.",
+          "start": 76.246,
+          "end": 81.08
+        },
+        {
+          "zh": "注意这只是统计倾向，不是定义。",
+          "en": "This is a statistical tendency, not a definition.",
+          "start": 81.58,
+          "end": 84.59
+        }
+      ],
+      "end": 85.59
+    },
+    {
+      "id": "word2vec",
+      "code": "03.3",
+      "zh": "让模型猜上下文",
+      "en": "PREDICT THE NEIGHBORS",
+      "start": 85.59,
+      "lines": [
+        {
+          "zh": "既然意义等于上下文，就训练模型去预测上下文。",
+          "en": "If meaning equals context, train a model to predict context.",
+          "start": 87.49,
+          "end": 91.795
+        },
+        {
+          "zh": "2013 年，米科洛夫等人在谷歌提出 word2vec。",
+          "en": "In 2013, Mikolov and colleagues at Google proposed word2vec.",
+          "start": 92.295,
+          "end": 96.782
+        },
+        {
+          "zh": "两种玩法：CBOW 看周围猜中间，Skip-gram 反过来。",
+          "en": "Two variants: CBOW predicts the center, Skip-gram goes the other way.",
+          "start": 97.282,
+          "end": 102.289
+        },
+        {
+          "zh": "训练完成后，中间那层词向量，就是词义。",
+          "en": "After training, the vectors in the middle layer are the meanings.",
+          "start": 102.789,
+          "end": 106.706
+        },
+        {
+          "zh": "目标函数让窗口内邻居的对数概率之和最大。",
+          "en": "The objective maximizes the log probability of neighbors in the window.",
+          "start": 107.206,
+          "end": 111.092
+        },
+        {
+          "zh": "每个词最后得到一个一百到三百维的稠密向量。",
+          "en": "Each word ends up with a dense vector of one to three hundred dimensions.",
+          "start": 111.592,
+          "end": 115.336
+        },
+        {
+          "zh": "比五万维稀疏向量，小了两个数量级。",
+          "en": "That is two orders of magnitude smaller than a fifty-thousand-dimensional vector.",
+          "start": 115.836,
+          "end": 119.015
+        }
+      ],
+      "end": 120.015
+    },
+    {
+      "id": "vector",
+      "code": "03.4",
+      "zh": "语义变成位移",
+      "en": "MEANING AS MOTION",
+      "start": 120.015,
+      "lines": [
+        {
+          "zh": "训练好之后，神奇的事发生了。",
+          "en": "After training, something remarkable happens.",
+          "start": 121.915,
+          "end": 124.498
+        },
+        {
+          "zh": "国王减去男人，加上女人，最接近女王。",
+          "en": "King minus man plus woman lands closest to queen.",
+          "start": 124.998,
+          "end": 128.387
+        },
+        {
+          "zh": "巴黎减法国加意大利，最接近罗马。",
+          "en": "Paris minus France plus Italy lands closest to Rome.",
+          "start": 128.887,
+          "end": 132.109
+        },
+        {
+          "zh": "性别是一个方向，国别是另一个方向。",
+          "en": "Gender is one direction; nationality is another.",
+          "start": 132.609,
+          "end": 135.647
+        },
+        {
+          "zh": "语义关系，变成了向量空间里的位移。",
+          "en": "Semantic relations become displacements in vector space.",
+          "start": 136.147,
+          "end": 139.203
+        },
+        {
+          "zh": "但这是近似，不是定律，依赖训练细节。",
+          "en": "But this is approximate, not a law, and it depends on training details.",
+          "start": 139.703,
+          "end": 143.269
+        }
+      ],
+      "end": 144.269
+    },
+    {
+      "id": "negative",
+      "code": "03.5",
+      "zh": "把多分类改成二分类",
+      "en": "NEGATIVE SAMPLING",
+      "start": 144.269,
+      "lines": [
+        {
+          "zh": "可 softmax 要对整个词表求和，太慢了。",
+          "en": "But softmax sums over the whole vocabulary, which is far too slow.",
+          "start": 146.169,
+          "end": 149.678
+        },
+        {
+          "zh": "负采样把多分类，改成二分类。",
+          "en": "Negative sampling turns the multiclass problem into binary classification.",
+          "start": 150.178,
+          "end": 152.867
+        },
+        {
+          "zh": "正样本是真实出现的词对，标签一。",
+          "en": "Positive pairs really co-occurred; they get label one.",
+          "start": 153.367,
+          "end": 156.402
+        },
+        {
+          "zh": "负样本是随机抽的词，标签零。",
+          "en": "Negatives are random words; they get label zero.",
+          "start": 156.902,
+          "end": 159.723
+        },
+        {
+          "zh": "计算量从词表大小 V，降到采样数 k。",
+          "en": "Compute drops from vocabulary size V to k samples.",
+          "start": 160.223,
+          "end": 163.59
+        },
+        {
+          "zh": "不追求精确，追求足够好，再加上十倍速度。",
+          "en": "Not exact, just good enough, at ten times the speed.",
+          "start": 164.09,
+          "end": 168.028
+        }
+      ],
+      "end": 169.028
+    },
+    {
+      "id": "why",
+      "code": "03.6",
+      "zh": "语义为什么长出来",
+      "en": "WHY IT WORKS",
+      "start": 169.028,
+      "lines": [
+        {
+          "zh": "为什么预测上下文，能学到语义？",
+          "en": "Why does predicting context teach meaning?",
+          "start": 170.928,
+          "end": 173.583
+        },
+        {
+          "zh": "把它想成一个约束系统。",
+          "en": "Picture it as a constraint system.",
+          "start": 174.083,
+          "end": 175.901
+        },
+        {
+          "zh": "猫和狗的上下文高度重叠，模型必须给相似的向量。",
+          "en": "Cat and dog share contexts, so their vectors must be close.",
+          "start": 176.401,
+          "end": 181.008
+        },
+        {
+          "zh": "否则同一套参数没法预测相似上下文，损失会变大。",
+          "en": "Otherwise one parameter set cannot predict both, and the loss grows.",
+          "start": 181.508,
+          "end": 186.313
+        },
+        {
+          "zh": "于是梯度下降，把上下文相似压成了向量相近。",
+          "en": "Gradient descent compresses similar contexts into nearby vectors.",
+          "start": 186.813,
+          "end": 191.148
+        },
+        {
+          "zh": "没人告诉模型猫和狗是动物，结构是自己长出来的。",
+          "en": "Nobody told the model that cats and dogs are animals; the structure grew.",
+          "start": 191.648,
+          "end": 196.015
+        },
+        {
+          "zh": "这就是表示学习：不手工设计特征，让模型自己学。",
+          "en": "That is representation learning: no hand-built features, the model learns.",
+          "start": 196.515,
+          "end": 200.956
+        }
+      ],
+      "end": 201.956
+    },
+    {
+      "id": "bpe",
+      "code": "03.7",
+      "zh": "词怎么切",
+      "en": "CUTTING WORDS",
+      "start": 201.956,
+      "lines": [
+        {
+          "zh": "还有个前置问题：词到底是谁定的？",
+          "en": "One prerequisite remains: who decides what a word is?",
+          "start": 203.856,
+          "end": 206.85
+        },
+        {
+          "zh": "按空格切？中文没空格，英文一个词变几种形式。",
+          "en": "Split on spaces? Chinese has none, and English inflects one word many ways.",
+          "start": 207.35,
+          "end": 212.086
+        },
+        {
+          "zh": "现代方案是子词：把词切成更小的片段。",
+          "en": "The modern answer is subwords: cut words into smaller pieces.",
+          "start": 212.586,
+          "end": 216.18
+        },
+        {
+          "zh": "BPE 像压缩：初始拆成字符，反复合并最高频的相邻对。",
+          "en": "BPE works like compression: start from characters, merge the most frequent pair.",
+          "start": 216.68,
+          "end": 222.062
+        },
+        {
+          "zh": "合并到目标词表大小，比如五万或十二万八千。",
+          "en": "Keep merging until the vocabulary hits a target, say fifty thousand or 128k.",
+          "start": 222.562,
+          "end": 226.8
+        },
+        {
+          "zh": "高频片段早早成为 token，罕见词被拆成几段。",
+          "en": "Frequent chunks become tokens early; rare words split into common pieces.",
+          "start": 227.3,
+          "end": 231.692
+        },
+        {
+          "zh": "字节级 BPE 以字节为单位，永不 OOV。",
+          "en": "Byte-level BPE uses bytes, so any text encodes and nothing is OOV.",
+          "start": 232.192,
+          "end": 236.28
+        }
+      ],
+      "end": 237.28
+    },
+    {
+      "id": "contextual",
+      "code": "03.8",
+      "zh": "一个词，几个意思？",
+      "en": "ONE WORD, ONE VECTOR?",
+      "start": 237.28,
+      "lines": [
+        {
+          "zh": "word2vec 有个根本局限：每个词只有一个向量。",
+          "en": "word2vec has a fundamental limit: one vector per word.",
+          "start": 239.18,
+          "end": 243.252
+        },
+        {
+          "zh": "吃苹果和苹果发布会，苹果的意思不同。",
+          "en": "Apple the fruit and Apple the company are different meanings.",
+          "start": 243.752,
+          "end": 247.147
+        },
+        {
+          "zh": "bank 在河岸和银行里，也是两个意思。",
+          "en": "Bank by a river and bank for money are two senses as well.",
+          "start": 247.647,
+          "end": 250.731
+        },
+        {
+          "zh": "静态向量只能取折中，把两个意思平均掉。",
+          "en": "A static vector can only compromise and average them.",
+          "start": 251.231,
+          "end": 254.89
+        },
+        {
+          "zh": "上下文相关表示，让整个句子过一遍网络。",
+          "en": "Contextual representations pass the whole sentence through a network.",
+          "start": 255.39,
+          "end": 259.023
+        },
+        {
+          "zh": "2018 年 ELMo 用双向 LSTM，BERT 用 Transformer。",
+          "en": "ELMo used a bidirectional LSTM in 2018; BERT used a Transformer.",
+          "start": 259.523,
+          "end": 264.528
+        },
+        {
+          "zh": "表示不再是从词典查出来的，而是算出来的。",
+          "en": "Representation is no longer looked up. It is computed.",
+          "start": 265.028,
+          "end": 268.626
+        }
+      ],
+      "end": 269.626
+    },
+    {
+      "id": "embedding",
+      "code": "03.9",
+      "zh": "嵌入就是一个矩阵",
+      "en": "THE LOOKUP TABLE",
+      "start": 269.626,
+      "lines": [
+        {
+          "zh": "工程上，嵌入就是一个矩阵。",
+          "en": "In engineering, an embedding is just a matrix.",
+          "start": 271.526,
+          "end": 273.942
+        },
+        {
+          "zh": "每一行是一个 token 的向量，查表就是取一行。",
+          "en": "One row per token; lookup takes a row.",
+          "start": 274.442,
+          "end": 278.236
+        },
+        {
+          "zh": "V 是词表大小，d 是隐藏维度，矩阵是可训练参数。",
+          "en": "V is vocabulary size, d is hidden size, and the matrix is trained.",
+          "start": 278.736,
+          "end": 283.7
+        },
+        {
+          "zh": "很多模型让输入嵌入和输出层共享权重。",
+          "en": "Many models tie the input embedding to the output layer.",
+          "start": 284.2,
+          "end": 287.98
+        },
+        {
+          "zh": "GPT-3 的 d 是一万二千二百八十八，约六点二亿参数。",
+          "en": "GPT-3 uses d equal to 12,288, about 620 million parameters.",
+          "start": 288.48,
+          "end": 293.483
+        },
+        {
+          "zh": "光查字典这一层，就比 2012 年的整个 AlexNet 大。",
+          "en": "This lookup layer alone is bigger than all of AlexNet in 2012.",
+          "start": 293.983,
+          "end": 298.494
+        }
+      ],
+      "end": 299.494
+    },
+    {
+      "id": "position",
+      "code": "03.10",
+      "zh": "缺了顺序",
+      "en": "MISSING ORDER",
+      "start": 299.494,
+      "lines": [
+        {
+          "zh": "还有一维被词袋丢掉了：顺序。",
+          "en": "One dimension is still missing from the bag of words: order.",
+          "start": 301.394,
+          "end": 304.114
+        },
+        {
+          "zh": "猫追狗和狗追猫，词一样，意思相反。",
+          "en": "Cat chases dog and dog chases cat use the same words, opposite meaning.",
+          "start": 304.614,
+          "end": 308.055
+        },
+        {
+          "zh": "把词向量求平均，两句话的表示完全相同。",
+          "en": "Average the word vectors and both sentences become identical.",
+          "start": 308.555,
+          "end": 312.368
+        },
+        {
+          "zh": "解决办法是位置编码：把第几个词也变成向量。",
+          "en": "The fix is positional encoding: turn the position into a vector too.",
+          "start": 312.868,
+          "end": 317.33
+        },
+        {
+          "zh": "最早用不同频率的正弦、余弦函数生成。",
+          "en": "The earliest version used sine and cosine functions of different frequencies.",
+          "start": 317.83,
+          "end": 321.413
+        },
+        {
+          "zh": "好处是相对位置能算出来，模型能学会往右看三个词。",
+          "en": "Relative positions become computable, so the model can look three words right.",
+          "start": 321.913,
+          "end": 326.803
+        },
+        {
+          "zh": "后来有可学习位置和 RoPE，细节留到第 5 章。",
+          "en": "Later came learned positions and RoPE; details wait for Chapter 5.",
+          "start": 327.303,
+          "end": 331.189
+        }
+      ],
+      "end": 332.189
+    },
+    {
+      "id": "pitfalls",
+      "code": "03.11",
+      "zh": "遗产与陷阱",
+      "en": "LEGACY AND TRAPS",
+      "start": 332.189,
+      "lines": [
+        {
+          "zh": "表示学习留下了遗产，也留下了陷阱。",
+          "en": "Representation learning left a legacy, and also traps.",
+          "start": 334.089,
+          "end": 337.515
+        },
+        {
+          "zh": "第一，相似不等于同义：医生和护士向量近，角色不同。",
+          "en": "First, similar is not synonymous: doctor and nurse are close but different.",
+          "start": 338.015,
+          "end": 343.136
+        },
+        {
+          "zh": "第二，偏见会被编码：语料的性别倾向会被继承和放大。",
+          "en": "Second, bias gets encoded and amplified from the corpus.",
+          "start": 343.636,
+          "end": 348.793
+        },
+        {
+          "zh": "第三，各向异性：真实向量挤在锥形区域，余弦不可靠。",
+          "en": "Third, anisotropy: real vectors crowd a cone, so cosine similarity misleads.",
+          "start": 349.293,
+          "end": 354.568
+        },
+        {
+          "zh": "第四，静态和动态要分清：查表向量不是某一层的激活。",
+          "en": "Fourth, keep static and dynamic apart: a lookup vector is not an activation.",
+          "start": 355.068,
+          "end": 360.298
+        },
+        {
+          "zh": "所以看到词向量三个字，先问：哪一种？",
+          "en": "So when you see the word vector, first ask: which kind?",
+          "start": 360.798,
+          "end": 364.509
+        }
+      ],
+      "end": 365.509
+    },
+    {
+      "id": "outro",
+      "code": "03.12",
+      "zh": "下一站：注意力",
+      "en": "NEXT: ATTENTION",
+      "start": 365.509,
+      "lines": [
+        {
+          "zh": "这一章之后，词已经是向量，还带上了位置。",
+          "en": "After this chapter, words are vectors, and they carry position.",
+          "start": 367.409,
+          "end": 371.149
+        },
+        {
+          "zh": "但向量之间，还没有互相看的关系。",
+          "en": "But the vectors still do not look at each other.",
+          "start": 371.649,
+          "end": 374.513
+        },
+        {
+          "zh": "下一章从循环网络讲到注意力。",
+          "en": "Next: from recurrent networks to attention.",
+          "start": 375.013,
+          "end": 377.732
+        },
+        {
+          "zh": "模型怎么记住前文，又怎么挑重点。",
+          "en": "How a model remembers context and chooses what matters.",
+          "start": 378.232,
+          "end": 381.093
+        },
+        {
+          "zh": "那是 Transformer 之前必须跨过的一道坎。",
+          "en": "That is the step you must cross before the Transformer.",
+          "start": 381.593,
+          "end": 385.029
+        }
+      ],
+      "end": 388.029
+    }
+  ]
+}

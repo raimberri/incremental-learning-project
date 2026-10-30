@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 9 章 · 思维链与推理时计算",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 09 · CHAIN OF THOUGHT",
+      "title": "让模型慢下来想",
+      "highlight": "慢下来",
+      "subtitle": "思维链，与推理时计算",
+      "pills": ["固定深度", "草稿纸", "投票", "测试时计算"],
+      "image": "img/cover.jpg",
+      "stamp": "第 9 章"
+    },
+    {
+      "id": "fixed",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "FIXED COMPUTE PER TOKEN",
+      "title": "深度是固定的",
+      "highlight": "固定",
+      "items": [
+        {"icon": "①", "title": "token 同价", "sub": "都要穿过 L 层", "color": "orange"},
+        {"icon": "②", "title": "难题不多算", "sub": "一加一与黎曼猜想同价", "color": "blue"},
+        {"icon": "③", "title": "多写就多算", "sub": "多一个 token，多一次前向", "color": "green"}
+      ]
+    },
+    {
+      "id": "cot",
+      "type": "photo",
+      "accent": "orange",
+      "kicker": "CHAIN OF THOUGHT · 2022",
+      "title": "把草稿纸给模型",
+      "highlight": "草稿纸",
+      "image": "img/notebook-desk.jpg",
+      "pills": ["5 − 2 = 3", "3 + 3 = 6", "步骤 + 答案"],
+      "subtitle": "先写中间步骤，再给最终答案。",
+      "bullets": [
+        "中间结果变成额外的 token",
+        "Wei 等人 2022 年在 PaLM 540B 上验证",
+        "模型学会格式后，新题也照做"
+      ],
+      "caption": "示意图：草稿纸上的演算，非真实模型输出"
+    },
+    {
+      "id": "why",
+      "type": "steps",
+      "accent": "teal",
+      "kicker": "WHY IT WORKS",
+      "title": "多写几步为什么准",
+      "highlight": "准",
+      "steps": [
+        {"title": "计算", "sub": "每个中间 token 是一次前向"},
+        {"title": "表示", "sub": "中间结果写进上下文"},
+        {"title": "分布", "sub": "解题文本本就是步骤加答案"}
+      ],
+      "stamp": "涌现：模型够大，效果才显著"
+    },
+    {
+      "id": "zeroshot",
+      "type": "formula",
+      "accent": "purple",
+      "kicker": "ZERO-SHOT COT · 2022",
+      "title": "一句话点火",
+      "highlight": "一句话",
+      "formula": "Let's think step by step.",
+      "note": "读作：让我们一步步思考。只加在问题后面，不给任何例子。",
+      "bullets": ["零样本：一个示范都不给", "模型自己把推理步骤展开"],
+      "stamp": "Kojima et al. 2022"
+    },
+    {
+      "id": "vote",
+      "type": "compare",
+      "accent": "green",
+      "kicker": "SELF-CONSISTENCY · 2022",
+      "title": "多问几遍，投票",
+      "highlight": "投票",
+      "center": "vs",
+      "left": {
+        "title": "单条思维链",
+        "sub": "一次采样，一条路径",
+        "items": [
+          {"title": "路径可能走错", "sub": "错了也回不了头"},
+          {"title": "答案只有一个", "sub": "没有纠错机会"}
+        ]
+      },
+      "right": {
+        "title": "自洽性",
+        "sub": "多条路径，答案投票",
+        "items": [
+          {"title": "采样 k 条", "sub": "高温，路径各异"},
+          {"title": "投票取多数", "sub": "GSM8K 上 +17.9 点"}
+        ]
+      }
+    },
+    {
+      "id": "tot",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "TREE OF THOUGHTS · 2023",
+      "title": "从一条链到一棵树",
+      "highlight": "一棵树",
+      "steps": [
+        {"title": "生成候选", "sub": "每一步想几个方向"},
+        {"title": "评估打分", "sub": "给每个想法评分"},
+        {"title": "保留展开", "sub": "只留最好的几个"},
+        {"title": "必要时回溯", "sub": "退回上一个分叉"}
+      ],
+      "stamp": "节点数 O(b^d)；示意 b=3、d=3 → 27"
+    },
+    {
+      "id": "react",
+      "type": "photo",
+      "accent": "blue",
+      "kicker": "REACT · 2023",
+      "title": "会想，也会动手",
+      "highlight": "动手",
+      "image": "img/steps.jpg",
+      "pills": ["Thought", "Action", "Observation"],
+      "subtitle": "推理一步，行动一步，看一眼再继续。",
+      "bullets": [
+        "观察结果写回上下文",
+        "下一轮推理据此修正",
+        "这是智能体的雏形"
+      ],
+      "caption": "示意图：一步一停，如同工具调用的循环"
+    },
+    {
+      "id": "toolformer",
+      "type": "bullets",
+      "accent": "orange",
+      "kicker": "TOOLFORMER · 2023",
+      "title": "自己学会用工具",
+      "highlight": "自己",
+      "items": [
+        {"icon": "①", "title": "试插", "sub": "在文本各处插入 API 调用", "color": "orange"},
+        {"icon": "②", "title": "执行", "sub": "真跑一遍，把结果填回去", "color": "blue"},
+        {"icon": "③", "title": "筛选", "sub": "只留让预测变好的调用", "color": "green"},
+        {"icon": "④", "title": "微调", "sub": "用这些数据训练模型", "color": "purple"}
+      ]
+    },
+    {
+      "id": "testtime",
+      "type": "compare",
+      "accent": "teal",
+      "kicker": "TEST-TIME COMPUTE · 2024",
+      "title": "把算力花在想上",
+      "highlight": "想",
+      "center": "vs",
+      "left": {
+        "title": "训练更大",
+        "sub": "一次投入，永久变强",
+        "items": [
+          {"title": "更多参数", "sub": "成本压在训练时"},
+          {"title": "新模型更强", "sub": "但要重新训练"}
+        ]
+      },
+      "right": {
+        "title": "推理更久",
+        "sub": "每次任务临时加算力",
+        "items": [
+          {"title": "多次采样", "sub": "best-of-N 挑最好"},
+          {"title": "更长链与搜索", "sub": "曾胜过 14 倍模型"}
+        ]
+      }
+    },
+    {
+      "id": "prm",
+      "type": "steps",
+      "accent": "green",
+      "kicker": "PROCESS REWARD · 2024",
+      "title": "每一步都打分",
+      "highlight": "每一步",
+      "steps": [
+        {"title": "结果奖励", "sub": "只看答案对不对"},
+        {"title": "过程奖励", "sub": "每一步都打分"},
+        {"title": "重排验证", "sub": "挑出更好的解"}
+      ],
+      "stamp": "MATH 子集约 78%；PRM800K 约 80 万步"
+    },
+    {
+      "id": "faithful",
+      "type": "compare",
+      "accent": "red",
+      "kicker": "THE WARNING",
+      "title": "写的不等于想的",
+      "highlight": "不等于",
+      "center": "≠",
+      "left": {
+        "title": "写出来的步骤",
+        "sub": "看起来合理",
+        "items": [
+          {"title": "事后编造", "sub": "理由在答案之后"},
+          {"title": "换个提示", "sub": "推理变，答案不变"}
+        ]
+      },
+      "right": {
+        "title": "真实的决策",
+        "sub": "由别的因素驱动",
+        "items": [
+          {"title": "可能被隐藏", "sub": "偏见不写进链里"},
+          {"title": "不是证据", "sub": "要看外部可验证"}
+        ]
+      }
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 10",
+      "title": "下一站：RLVR",
+      "highlight": "RLVR",
+      "subtitle": "不用教怎么想，只奖励答对",
+      "next": {"code": "10", "title": "RLVR 与推理模型", "sub": "奖励答对，让推理自己长出来"},
+      "pills": ["第 10 章", "多写 = 多算", "工具，不是证据"],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

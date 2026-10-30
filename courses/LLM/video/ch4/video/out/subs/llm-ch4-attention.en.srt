@@ -1,0 +1,327 @@
+1
+00:00:01,600 --> 00:00:05,999
+When the model reaches word fifty, is word one still there?
+
+2
+00:00:06,249 --> 00:00:10,453
+The answer is not about memory quality, but how signal travels through time.
+
+3
+00:00:10,703 --> 00:00:16,020
+Chapter three gave words vectors, but vectors have no order and no memory.
+
+4
+00:00:16,270 --> 00:00:20,981
+This chapter covers remembering, failing to remember, and looking back.
+
+5
+00:00:21,231 --> 00:00:24,958
+We start from recurrent networks and end at the door of attention.
+
+6
+00:00:25,208 --> 00:00:28,717
+It is the step you must cross before the Transformer.
+
+7
+00:00:31,367 --> 00:00:36,703
+The obvious idea: concatenate every word vector and feed a dense network.
+
+8
+00:00:36,953 --> 00:00:42,213
+But sentence length varies, so the input dimension varies too.
+
+9
+00:00:42,463 --> 00:00:46,504
+The parameter count explodes with length; the model cannot hold it.
+
+10
+00:00:46,754 --> 00:00:51,196
+Worse, it cannot learn that position five sits next to position six.
+
+11
+00:00:51,446 --> 00:00:56,294
+We need a function with state: read one word, update the state.
+
+12
+00:00:56,544 --> 00:01:00,307
+The state holds what has been read so far.
+
+13
+00:01:02,957 --> 00:01:07,891
+A recurrent network updates its hidden state at every step.
+
+14
+00:01:08,141 --> 00:01:12,527
+The new state depends on the old state and the current word.
+
+15
+00:01:12,777 --> 00:01:19,043
+In one line: old state plus current word, pushed through a squash function.
+
+16
+00:01:19,293 --> 00:01:23,746
+The key is that both weight matrices are shared across all steps.
+
+17
+00:01:23,996 --> 00:01:28,834
+Sharing buys two things: any length, and no growth in parameters.
+
+18
+00:01:29,084 --> 00:01:34,090
+The price: the same path is walked again and again, one step at a time.
+
+19
+00:01:34,340 --> 00:01:38,444
+That sentence is light, but it plants every problem that follows.
+
+20
+00:01:41,094 --> 00:01:45,094
+Unrolled over time, the loop becomes a very deep graph.
+
+21
+00:01:45,344 --> 00:01:49,068
+One layer per time step, so the depth equals the sentence length.
+
+22
+00:01:49,318 --> 00:01:53,292
+Fifty words means a fifty-layer network.
+
+23
+00:01:53,542 --> 00:01:57,821
+Training sends the error from the last step all the way back to the first.
+
+24
+00:01:58,071 --> 00:02:02,116
+Each step multiplies by a weight matrix and by the tanh derivative.
+
+25
+00:02:02,366 --> 00:02:06,293
+That path is long, and every problem lives on it.
+
+26
+00:02:08,943 --> 00:02:13,688
+Every step multiplies by a factor; that is the root of both failures.
+
+27
+00:02:13,938 --> 00:02:19,050
+Factors below one shrink the gradient exponentially: vanishing.
+
+28
+00:02:19,300 --> 00:02:24,395
+Factors above one blow it up exponentially: exploding.
+
+29
+00:02:24,645 --> 00:02:30,115
+Exploding is easy: clip the gradient back when it passes a threshold.
+
+30
+00:02:30,365 --> 00:02:35,724
+Vanishing is hard: the information has nowhere structural to stay.
+
+31
+00:02:35,974 --> 00:02:40,549
+So it is not bad memory; bad memory is the symptom, not the cause.
+
+32
+00:02:40,799 --> 00:02:45,638
+Even losing just ten percent a step leaves half a percent after fifty.
+
+33
+00:02:48,288 --> 00:02:52,491
+In 1997, Hochreiter and Schmidhuber proposed the LSTM.
+
+34
+00:02:52,741 --> 00:02:57,907
+Its key move: a cell state running beside the hidden state.
+
+35
+00:02:58,157 --> 00:03:03,280
+Information enters and leaves through gates, instead of being rewritten.
+
+36
+00:03:03,530 --> 00:03:09,891
+Read the update: old cell times the forget gate, plus new content times the input gate.
+
+37
+00:03:10,141 --> 00:03:14,296
+When the forget gate sits near one, the cell state passes through almost unchanged.
+
+38
+00:03:14,546 --> 00:03:18,637
+The gradient travels that additive path with almost no decay.
+
+39
+00:03:18,887 --> 00:03:23,398
+The paper calls it the constant error carousel: a highway for memory.
+
+40
+00:03:26,048 --> 00:03:30,330
+Each gate is a sigmoid that squeezes values between zero and one.
+
+41
+00:03:30,580 --> 00:03:35,504
+Zero is closed, one is open, and everything between is a dimmer.
+
+42
+00:03:35,754 --> 00:03:41,108
+The forget gate keeps old memory; the input gate writes new information.
+
+43
+00:03:41,358 --> 00:03:46,813
+A candidate holds what to write, and the two are added into the cell state.
+
+44
+00:03:47,063 --> 00:03:51,141
+The output gate decides how much to expose to the next step.
+
+45
+00:03:51,391 --> 00:03:56,487
+The GRU is a simplified version: fewer gates, fewer parameters, lighter.
+
+46
+00:03:59,137 --> 00:04:04,019
+In 2014, Sutskever and colleagues split understanding from generation.
+
+47
+00:04:04,269 --> 00:04:08,428
+The encoder reads the whole sentence and keeps one final state.
+
+48
+00:04:08,678 --> 00:04:13,033
+The decoder starts from that state and emits English word by word.
+
+49
+00:04:13,283 --> 00:04:14,935
+Training uses teacher forcing: feed the correct previous word, not the guess.
+
+50
+00:04:15,185 --> 00:04:19,665
+The problem: the entire sentence is squeezed into one fixed-length vector.
+
+51
+00:04:19,915 --> 00:04:25,196
+On a long sentence that vector is a bottleneck, like a book in an envelope.
+
+52
+00:04:25,446 --> 00:04:29,146
+The longer the sentence, the more falls outside the envelope.
+
+53
+00:04:31,796 --> 00:04:37,016
+In 2014, Bahdanau and colleagues stopped compressing and started looking back.
+
+54
+00:04:37,266 --> 00:04:42,256
+To output power, the decoder only needs to look at the source word for power.
+
+55
+00:04:42,506 --> 00:04:47,698
+At every step it scores the current state against every encoder position.
+
+56
+00:04:47,948 --> 00:04:54,071
+Scores become weights through softmax; a weighted sum gives the context vector.
+
+57
+00:04:54,321 --> 00:04:58,530
+That vector, with the current state, decides the next output word.
+
+58
+00:04:58,780 --> 00:05:03,938
+Nobody told it that power aligns with the word for power; it emerged.
+
+59
+00:05:04,188 --> 00:05:09,494
+Do not overread it: a high weight is a high score, not proof of reliance.
+
+60
+00:05:12,144 --> 00:05:17,335
+Abstract the operation and only three roles remain: query, key, value.
+
+61
+00:05:17,585 --> 00:05:23,003
+The query is the decoder state; keys and values are encoder positions.
+
+62
+00:05:23,253 --> 00:05:28,246
+The query is scored against every key; a higher score deserves a look.
+
+63
+00:05:28,496 --> 00:05:32,751
+Scores become weights, and the weights average all the values.
+
+64
+00:05:33,001 --> 00:05:38,151
+So attention is similarity used as weight, averaging the values.
+
+65
+00:05:38,401 --> 00:05:42,328
+That is the Query, Key, Value form you will meet everywhere.
+
+66
+00:05:44,978 --> 00:05:49,176
+Strip the jargon and attention is a soft dictionary lookup.
+
+67
+00:05:49,426 --> 00:05:54,005
+A database matches a key exactly and returns one record.
+
+68
+00:05:54,255 --> 00:05:59,520
+Attention scores the query against every key and averages every value.
+
+69
+00:05:59,770 --> 00:06:04,721
+Hard matching is zero or one; soft matching is a weight in between.
+
+70
+00:06:04,971 --> 00:06:09,527
+The point is differentiability: picking the third item has no gradient.
+
+71
+00:06:09,777 --> 00:06:14,990
+But it is an average, not a fact lookup; weights are not truth.
+
+72
+00:06:17,640 --> 00:06:23,848
+The LSTM ruled sequence modelling for nearly twenty years.
+
+73
+00:06:24,098 --> 00:06:29,102
+It carries three structural limits: serial, bottlenecked, still fading.
+
+74
+00:06:29,352 --> 00:06:34,585
+The hidden state must wait, so thousands of GPU cores sit idle.
+
+75
+00:06:34,835 --> 00:06:38,802
+Attention does not wait: every position scores every position at once.
+
+76
+00:06:39,052 --> 00:06:42,484
+Recurrence cannot: it must pass the state on, step by step.
+
+77
+00:06:42,734 --> 00:06:47,997
+In 2017 someone asked: if attention works, why keep the RNN?
+
+78
+00:06:50,647 --> 00:06:54,356
+The through-line is memory moving from recurrence to looking back.
+
+79
+00:06:54,606 --> 00:06:58,656
+The loop packs history into a state; attention fetches on demand.
+
+80
+00:06:58,906 --> 00:07:02,912
+The bottleneck is gone: no more squeezing the sentence into one vector.
+
+81
+00:07:03,162 --> 00:07:06,975
+But attention still rides on a loop, still decoding one step at a time.
+
+82
+00:07:07,225 --> 00:07:10,459
+Next chapter: the Transformer drops the loop entirely.

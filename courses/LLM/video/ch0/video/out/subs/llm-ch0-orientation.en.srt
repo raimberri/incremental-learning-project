@@ -1,0 +1,275 @@
+1
+00:00:01,600 --> 00:00:07,073
+You probably chat with it every day: asking questions, writing code, editing essays.
+
+2
+00:00:07,323 --> 00:00:11,272
+But have you ever wondered what is actually happening inside it?
+
+3
+00:00:11,522 --> 00:00:15,310
+This is Chapter 0 of the Large Language Model course: the orientation.
+
+4
+00:00:15,560 --> 00:00:20,098
+No formulas today. Just one job: give you a map.
+
+5
+00:00:20,348 --> 00:00:24,309
+A map that fits in your head, and that you can come back to.
+
+6
+00:00:26,959 --> 00:00:31,143
+Can seventy years of AI research be squeezed into one sentence?
+
+7
+00:00:31,393 --> 00:00:36,884
+Yes. A large language model is a program trained on enormous amounts of text.
+
+8
+00:00:37,134 --> 00:00:41,494
+It is good at one thing: guessing the next word from the preceding text.
+
+9
+00:00:41,744 --> 00:00:46,158
+The keyboard on your phone does something similar every day.
+
+10
+00:00:46,408 --> 00:00:50,272
+Take this sentence: It is raining, remember to bring your...
+
+11
+00:00:50,522 --> 00:00:53,001
+The most likely next word is umbrella.
+
+12
+00:00:53,251 --> 00:00:57,218
+But the model does not look up a table; it scores every candidate.
+
+13
+00:00:57,468 --> 00:01:01,850
+It picks one, appends it, puts it back into the context, and guesses again.
+
+14
+00:01:02,100 --> 00:01:07,590
+The goal is plain. But once the model gets big enough, something strange happens.
+
+15
+00:01:07,840 --> 00:01:12,217
+Translation, reasoning, coding: nobody taught it these directly.
+
+16
+00:01:12,467 --> 00:01:16,959
+They grew out of the single task of predicting the next word.
+
+17
+00:01:17,209 --> 00:01:19,637
+We call them by-products.
+
+18
+00:01:22,287 --> 00:01:26,243
+But every word in that sentence deserves suspicion.
+
+19
+00:01:26,493 --> 00:01:30,408
+First: why would guessing the next word produce reasoning?
+
+20
+00:01:30,658 --> 00:01:33,898
+Second: how big is big enough?
+
+21
+00:01:34,148 --> 00:01:37,765
+Why does it improve suddenly, instead of gradually?
+
+22
+00:01:38,015 --> 00:01:41,164
+Third: does guessing well mean understanding?
+
+23
+00:01:41,414 --> 00:01:46,371
+Fourth: if it is only guessing, why does it state nonsense so confidently?
+
+24
+00:01:46,621 --> 00:01:50,923
+This whole course takes those four questions apart, layer by layer.
+
+25
+00:01:51,173 --> 00:01:56,866
+Afterwards, you can read a paper abstract and judge whether a headline exaggerates.
+
+26
+00:01:59,516 --> 00:02:04,289
+Start with the map. The goal is on the left; five modules are on the right.
+
+27
+00:02:04,539 --> 00:02:09,507
+The goal is predicting the next word; five modules are the pillars beneath it.
+
+28
+00:02:09,757 --> 00:02:12,470
+Representation: how words become vectors.
+
+29
+00:02:12,720 --> 00:02:15,820
+Architecture: how a Transformer organises computation.
+
+30
+00:02:16,070 --> 00:02:20,253
+Data: how internet text becomes training material.
+
+31
+00:02:20,503 --> 00:02:24,445
+Scale: why bigger is better, and why the law is predictable.
+
+32
+00:02:24,695 --> 00:02:27,460
+Alignment: how to make it follow human intent.
+
+33
+00:02:27,710 --> 00:02:33,441
+If you remember only five words: prediction, representation, architecture, scale, alignment.
+
+34
+00:02:36,091 --> 00:02:40,635
+This map took over seventy years to draw, and falls into five eras.
+
+35
+00:02:40,885 --> 00:02:47,015
+1948 to 2002: the statistical era, estimating next-word probabilities by counting.
+
+36
+00:02:47,265 --> 00:02:54,357
+2003 to 2016: the neural era, replacing counts with networks and words with vectors.
+
+37
+00:02:54,607 --> 00:03:00,901
+2017 to 2019: the Transformer era, more parallel, and aware of the whole context.
+
+38
+00:03:01,151 --> 00:03:07,578
+2020 to 2022: the scale era, where the rule that bigger is better follows a law.
+
+39
+00:03:07,828 --> 00:03:14,814
+2022 to now: alignment and reasoning, from talking, to following, to thinking.
+
+40
+00:03:15,064 --> 00:03:21,915
+Note: these dates are rough boundaries; five eras, five gear changes on one road.
+
+41
+00:03:24,565 --> 00:03:28,842
+Put the five eras side by side and a pattern keeps returning.
+
+42
+00:03:29,092 --> 00:03:35,694
+Every leap swaps a hand-designed part for a part learned from data.
+
+43
+00:03:35,944 --> 00:03:41,421
+Back-off rules were written by hand; neural networks learned them.
+
+44
+00:03:41,671 --> 00:03:47,654
+Recurrent nets passed words one at a time; attention removed that limit.
+
+45
+00:03:47,904 --> 00:03:55,193
+Helpful, harmless, honest were hand-written rules; RLHF learned them from comparisons.
+
+46
+00:03:55,443 --> 00:03:59,957
+Then scale pushes the new part over a threshold.
+
+47
+00:04:00,207 --> 00:04:06,446
+Biology calls this exaptation: feathers first for warmth, later for flight.
+
+48
+00:04:09,096 --> 00:04:12,492
+Now, how is this course written?
+
+49
+00:04:12,742 --> 00:04:19,453
+Many tutorials explain softmax in chapter one, again in four, again in nine.
+
+50
+00:04:19,703 --> 00:04:23,798
+This course does it differently: each concept is defined once.
+
+51
+00:04:24,048 --> 00:04:30,927
+When a concept first appears, it gets a definition, an intuition, an example, and a ledger entry.
+
+52
+00:04:31,177 --> 00:04:35,002
+Later chapters simply point back to that section.
+
+53
+00:04:35,252 --> 00:04:39,982
+Every chapter opens with what is new and what is assumed.
+
+54
+00:04:40,232 --> 00:04:43,144
+And no example is ever used twice.
+
+55
+00:04:43,394 --> 00:04:48,040
+Working memory is limited; repetition crowds out what is truly new.
+
+56
+00:04:50,690 --> 00:04:53,791
+Finally, look at these parts from another angle.
+
+57
+00:04:54,041 --> 00:05:00,365
+Entropy came from thermodynamics, was borrowed by information theory, and became the loss.
+
+58
+00:05:00,615 --> 00:05:05,502
+Gradient descent is the same algorithm as bacteria swimming toward nutrients.
+
+59
+00:05:05,752 --> 00:05:10,905
+Mixture of experts is the division of labour in Adam Smith's pin factory.
+
+60
+00:05:11,155 --> 00:05:16,687
+Biology's exaptation is the same pattern: an old structure, a new use.
+
+61
+00:05:16,937 --> 00:05:25,335
+Analogy is a powerful tool for transfer, and also a trap; so we mark where it breaks down.
+
+62
+00:05:27,985 --> 00:05:31,380
+The map is done. But a map is not the terrain.
+
+63
+00:05:31,630 --> 00:05:34,608
+Before we start, bring three things.
+
+64
+00:05:34,858 --> 00:05:40,942
+Patience: backpropagation in chapter two and attention in chapter five are the steep climbs.
+
+65
+00:05:41,192 --> 00:05:46,859
+A pen: write your self-test answers before reading mine; understanding is not doing.
+
+66
+00:05:47,109 --> 00:05:52,228
+And skepticism: any claim without a source counts as unverified.
+
+67
+00:05:52,478 --> 00:05:57,969
+Next chapter, we turn guessing the next word into a computable probability problem.
+
+68
+00:05:58,219 --> 00:06:02,892
+Along the way, we'll see why judging how well it guesses calls for entropy.
+
+69
+00:06:03,142 --> 00:06:07,182
+Chapter one: the probability theory of language. See you next time.

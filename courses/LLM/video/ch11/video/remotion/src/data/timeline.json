@@ -1,0 +1,669 @@
+{
+  "total": 470.979,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "11.0",
+      "zh": "更便宜地变大",
+      "en": "CHEAPER, BIGGER",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "这一章只回答一个问题：模型怎么变得更便宜。",
+          "en": "This chapter asks one question: how do models get cheaper?",
+          "start": 1.6,
+          "end": 5.42
+        },
+        {
+          "zh": "过去几年参数越堆越大，账单也跟着越堆越大。",
+          "en": "Parameters kept growing, and so did the bill.",
+          "start": 5.92,
+          "end": 10.118
+        },
+        {
+          "zh": "但大这个字，其实混了三种完全不同的成本。",
+          "en": "But big mixes three very different kinds of cost.",
+          "start": 10.618,
+          "end": 14.236
+        },
+        {
+          "zh": "它们分别卡在算力、延迟和显存上，解法完全不同。",
+          "en": "Each is limited by compute, latency or memory, with different fixes.",
+          "start": 14.736,
+          "end": 19.329
+        },
+        {
+          "zh": "这一章讲混合专家、注意力压缩和 FlashAttention。",
+          "en": "We cover mixture of experts, attention compression and FlashAttention.",
+          "start": 19.829,
+          "end": 24.133
+        },
+        {
+          "zh": "主线只有一条：把稠密计算换成结构化的稀疏。",
+          "en": "One thread runs through it all: dense compute becomes structured sparsity.",
+          "start": 24.633,
+          "end": 28.784
+        }
+      ],
+      "end": 29.784
+    },
+    {
+      "id": "costs",
+      "code": "11.1",
+      "zh": "三个不同的成本",
+      "en": "THREE DIFFERENT BILLS",
+      "start": 29.784,
+      "lines": [
+        {
+          "zh": "先把成本拆成三份，不然优化会打错靶子。",
+          "en": "Split the costs first, or you optimise the wrong thing.",
+          "start": 31.684,
+          "end": 35.487
+        },
+        {
+          "zh": "训练成本是一次性的，卡在算力、数据和电力上。",
+          "en": "Training is paid once, limited by compute, data and power.",
+          "start": 35.987,
+          "end": 40.347
+        },
+        {
+          "zh": "推理成本每次调用都要付，卡在算力和延迟上。",
+          "en": "Inference is paid on every call, limited by compute and latency.",
+          "start": 40.847,
+          "end": 44.955
+        },
+        {
+          "zh": "显存成本训练和推理都要付，装参数、激活和缓存。",
+          "en": "Memory is paid in both, holding weights, activations and caches.",
+          "start": 45.455,
+          "end": 50.473
+        },
+        {
+          "zh": "第 7 章讲的是训练，这一章讲推理和显存。",
+          "en": "Chapter 7 covered training; this chapter covers inference and memory.",
+          "start": 50.973,
+          "end": 54.733
+        },
+        {
+          "zh": "因为模型变成产品后，推理成本会远远超过训练成本。",
+          "en": "Once a model ships, inference cost far exceeds training cost.",
+          "start": 55.233,
+          "end": 60.042
+        },
+        {
+          "zh": "模型训练一次，可能要被调用几十亿次。",
+          "en": "Train once, then serve it billions of times.",
+          "start": 60.542,
+          "end": 63.866
+        }
+      ],
+      "end": 64.866
+    },
+    {
+      "id": "moe",
+      "code": "11.2",
+      "zh": "只唤醒需要的专家",
+      "en": "WAKE ONLY WHAT YOU NEED",
+      "start": 64.866,
+      "lines": [
+        {
+          "zh": "先看参数花在哪：每个 block 里 FFN 占了大头。",
+          "en": "Where do the weights go? Inside each block, the FFN takes most.",
+          "start": 66.766,
+          "end": 71.132
+        },
+        {
+          "zh": "前馈网络的参数量，是四倍 d 平方的量级。",
+          "en": "Its parameter count is on the order of four d squared.",
+          "start": 71.632,
+          "end": 75.331
+        },
+        {
+          "zh": "混合专家的做法，是把它拆成 E 个小专家。",
+          "en": "Mixture of experts splits it into E smaller experts.",
+          "start": 75.831,
+          "end": 79.284
+        },
+        {
+          "zh": "每个 token 只走其中 k 个，其余完全不参与计算。",
+          "en": "Each token visits only k of them; the rest never compute.",
+          "start": 79.784,
+          "end": 83.927
+        },
+        {
+          "zh": "router 先给每个专家打分，再取分数最高的 top-k。",
+          "en": "A router scores every expert, then keeps the top k.",
+          "start": 84.427,
+          "end": 88.708
+        },
+        {
+          "zh": "输出是这几个专家的加权和，其余权重都是零。",
+          "en": "The output is a weighted sum over those few; all other weights are zero.",
+          "start": 89.208,
+          "end": 93.346
+        },
+        {
+          "zh": "于是总参数可以很大，但激活参数只有 top-k 个。",
+          "en": "So total parameters can be huge while active parameters stay tiny.",
+          "start": 93.846,
+          "end": 98.369
+        }
+      ],
+      "end": 99.369
+    },
+    {
+      "id": "scale",
+      "code": "11.3",
+      "zh": "存大，算小",
+      "en": "BIG TO STORE, SMALL TO RUN",
+      "start": 99.369,
+      "lines": [
+        {
+          "zh": "这不是纸上谈兵，两个模型能说明差距。",
+          "en": "This is not theory; two models show the gap.",
+          "start": 101.269,
+          "end": 104.74
+        },
+        {
+          "zh": "Switch Transformer 让每个 token 只走一个专家。",
+          "en": "Switch Transformer sends each token to exactly one expert.",
+          "start": 105.24,
+          "end": 108.713
+        },
+        {
+          "zh": "它把模型扩到一点六万亿参数，同算力下预训练快约七倍。",
+          "en": "It reached 1.6 trillion parameters, training about 7x faster at equal compute.",
+          "start": 109.213,
+          "end": 114.578
+        },
+        {
+          "zh": "DeepSeek-V3 总参数六千七百一十亿。",
+          "en": "DeepSeek-V3 holds 671 billion parameters in total.",
+          "start": 115.078,
+          "end": 118.339
+        },
+        {
+          "zh": "但每个 token 只激活三百七十亿，不到总量的百分之六。",
+          "en": "Yet each token activates only 37 billion, under six percent.",
+          "start": 118.839,
+          "end": 123.36
+        },
+        {
+          "zh": "它用十四点八万亿 token 训练，耗约二百七十八点八万 H800 小时。",
+          "en": "It trained on 14.8 trillion tokens, using about 2.788 million H800 hours.",
+          "start": 123.86,
+          "end": 129.739
+        },
+        {
+          "zh": "存的是大模型，算的是小模型，这就是稀疏激活的红利。",
+          "en": "A big model stored, a small model computed: that is the payoff.",
+          "start": 130.239,
+          "end": 134.999
+        }
+      ],
+      "end": 135.999
+    },
+    {
+      "id": "routing",
+      "code": "11.4",
+      "zh": "路由的麻烦",
+      "en": "THE ROUTER'S TROUBLE",
+      "start": 135.999,
+      "lines": [
+        {
+          "zh": "MoE 有一个工程难题，藏在 router 里。",
+          "en": "MoE has an engineering problem hidden in the router.",
+          "start": 137.899,
+          "end": 140.714
+        },
+        {
+          "zh": "如果 router 总把 token 送给同一个专家，其他专家就会饿死。",
+          "en": "If the router always picks one expert, the others starve.",
+          "start": 141.214,
+          "end": 146.285
+        },
+        {
+          "zh": "参数白存，模型容量浪费，这种失衡叫专家坍塌。",
+          "en": "Stored weights go unused; this imbalance is expert collapse.",
+          "start": 146.785,
+          "end": 151.66
+        },
+        {
+          "zh": "所以训练时要额外加一条负载均衡损失。",
+          "en": "So training adds a load balancing loss.",
+          "start": 152.16,
+          "end": 155.877
+        },
+        {
+          "zh": "它惩罚专家使用率过于不均，相当于给 router 一条 KPI。",
+          "en": "It penalises uneven usage, like a KPI on the router.",
+          "start": 156.377,
+          "end": 161.248
+        },
+        {
+          "zh": "你不仅要选对，还要让所有专家都有活干。",
+          "en": "Pick well, but also keep every expert busy.",
+          "start": 161.748,
+          "end": 165.065
+        },
+        {
+          "zh": "这和第 8 章的对齐一样，优化目标总要防止被极端化。",
+          "en": "As with alignment in Chapter 8, an objective must not be pushed to extremes.",
+          "start": 165.565,
+          "end": 170.274
+        }
+      ],
+      "end": 171.274
+    },
+    {
+      "id": "kv",
+      "code": "11.5",
+      "zh": "长上下文贵在显存",
+      "en": "LONG CONTEXT COSTS MEMORY",
+      "start": 171.274,
+      "lines": [
+        {
+          "zh": "再看推理时最贵的一块内存：KV 缓存。",
+          "en": "Now the most expensive memory in inference: the KV cache.",
+          "start": 173.174,
+          "end": 176.786
+        },
+        {
+          "zh": "自回归生成时，每出一个新 token 都要看之前所有 token。",
+          "en": "Autoregressive decoding looks back at every earlier token.",
+          "start": 177.286,
+          "end": 182.016
+        },
+        {
+          "zh": "为了不重复计算，之前所有 Key 和 Value 会被存下来。",
+          "en": "To avoid recomputing, all past Keys and Values are kept.",
+          "start": 182.516,
+          "end": 187.056
+        },
+        {
+          "zh": "它的显存占用，正比于层数、头数、每头维度和序列长度。",
+          "en": "Its size scales with layers, heads, head width and sequence length.",
+          "start": 187.556,
+          "end": 192.977
+        },
+        {
+          "zh": "公式里还有一个因子二，因为 Key 和 Value 各存一份。",
+          "en": "There is a factor of two, since Keys and Values are stored separately.",
+          "start": 193.477,
+          "end": 197.961
+        },
+        {
+          "zh": "序列长度翻倍，KV 缓存就翻倍，批量大小也一样。",
+          "en": "Double the sequence and the cache doubles, and so does the batch.",
+          "start": 198.461,
+          "end": 202.981
+        },
+        {
+          "zh": "所以长上下文的主要成本不是计算，而是显存。",
+          "en": "So long context costs memory, not mainly compute.",
+          "start": 203.481,
+          "end": 207.896
+        }
+      ],
+      "end": 208.896
+    },
+    {
+      "id": "attn",
+      "code": "11.6",
+      "zh": "三种省法",
+      "en": "THREE WAYS TO SHARE",
+      "start": 208.896,
+      "lines": [
+        {
+          "zh": "既然每个头都存一份 Key 和 Value 太贵，那就让它们共享。",
+          "en": "If every head keeps its own Keys and Values, share them instead.",
+          "start": 210.796,
+          "end": 215.503
+        },
+        {
+          "zh": "MQA 让所有头共用一组，缓存直接除以头数。",
+          "en": "MQA shares one set across all heads, cutting the cache by the head count.",
+          "start": 216.003,
+          "end": 220.169
+        },
+        {
+          "zh": "GQA 是折中，每 g 个头共用一组 Key 和 Value。",
+          "en": "GQA sits in between: each group of g heads shares one set.",
+          "start": 220.669,
+          "end": 224.863
+        },
+        {
+          "zh": "GQA 论文报告，升级已有模型只要原预训练算力的约百分之五。",
+          "en": "The GQA paper reports about 5% of the original pretraining compute.",
+          "start": 225.363,
+          "end": 231.151
+        },
+        {
+          "zh": "今天的开源模型，Llama、Mistral、Qwen 大多用 GQA。",
+          "en": "Today's open models, Llama, Mistral and Qwen, mostly use GQA.",
+          "start": 231.651,
+          "end": 236.618
+        },
+        {
+          "zh": "MLA 走另一条路，把 Key 和 Value 投影成低维潜在向量。",
+          "en": "MLA takes another route, projecting Keys and Values into a low-rank latent.",
+          "start": 237.118,
+          "end": 242.181
+        },
+        {
+          "zh": "DeepSeek-V2 报告缓存减少百分之九十三点三，吞吐提升五点七六倍。",
+          "en": "DeepSeek-V2 reports 93.3% less KV cache and 5.76x throughput.",
+          "start": 242.681,
+          "end": 248.732
+        }
+      ],
+      "end": 249.732
+    },
+    {
+      "id": "flash",
+      "code": "11.7",
+      "zh": "少搬，不是少算",
+      "en": "LESS TRAFFIC, SAME MATH",
+      "start": 249.732,
+      "lines": [
+        {
+          "zh": "FlashAttention 解决的是另一个瓶颈：搬数据。",
+          "en": "FlashAttention attacks a different bottleneck: moving data.",
+          "start": 251.632,
+          "end": 255.294
+        },
+        {
+          "zh": "GPU 算一个数很快，把数从显存搬到芯片上却很慢。",
+          "en": "A GPU computes fast but moves numbers from memory slowly.",
+          "start": 255.794,
+          "end": 260.587
+        },
+        {
+          "zh": "算力增长远快于显存带宽，这个差距叫内存墙。",
+          "en": "Compute outgrew memory bandwidth; the gap is the memory wall.",
+          "start": 261.087,
+          "end": 265.545
+        },
+        {
+          "zh": "标准注意力要把 n 乘 n 的分数矩阵写回显存，再读出来。",
+          "en": "Standard attention writes the n by n score matrix to memory, then rereads it.",
+          "start": 266.045,
+          "end": 271.067
+        },
+        {
+          "zh": "序列一长，这些来回搬运比计算本身还贵。",
+          "en": "On long sequences, that traffic costs more than the maths.",
+          "start": 271.567,
+          "end": 275.486
+        },
+        {
+          "zh": "它把 Q、K、V 切成小块，在高速缓存里用分块和在线 softmax 算完。",
+          "en": "It tiles Q, K and V, finishing each tile on chip with online softmax.",
+          "start": 275.986,
+          "end": 282.774
+        },
+        {
+          "zh": "整个过程不把中间大矩阵写回显存，所以它是精确的。",
+          "en": "The big intermediate never returns to memory, and the result stays exact.",
+          "start": 283.274,
+          "end": 288.314
+        },
+        {
+          "zh": "BERT-large 端到端快约一成半，GPT-2 上约三倍，长序列更明显。",
+          "en": "About 15% faster end to end on BERT-large, about 3x on GPT-2, more on long sequences.",
+          "start": 288.814,
+          "end": 294.8
+        }
+      ],
+      "end": 295.8
+    },
+    {
+      "id": "mamba",
+      "code": "11.8",
+      "zh": "回看，还是记笔记",
+      "en": "REPLAY OR TAKE NOTES",
+      "start": 295.8,
+      "lines": [
+        {
+          "zh": "注意力像全程录音，任何时刻都能回放任意片段。",
+          "en": "Attention is a full recording: replay any moment, any time.",
+          "start": 297.7,
+          "end": 301.979
+        },
+        {
+          "zh": "代价是存储随长度增长，计算量随长度平方增长。",
+          "en": "The price: storage grows with length, compute with its square.",
+          "start": 302.479,
+          "end": 307.3
+        },
+        {
+          "zh": "状态空间模型像边听边记笔记，只保留摘要。",
+          "en": "A state space model takes notes instead, keeping only a summary.",
+          "start": 307.8,
+          "end": 311.942
+        },
+        {
+          "zh": "它维护一个固定大小的状态，每读一个 token 就更新一次。",
+          "en": "It holds one fixed-size state and updates it per token.",
+          "start": 312.442,
+          "end": 317.139
+        },
+        {
+          "zh": "复杂度是线性的，存储恒定，但细节会丢。",
+          "en": "Linear time, constant memory, at the cost of detail.",
+          "start": 317.639,
+          "end": 321.477
+        },
+        {
+          "zh": "Mamba 让 A、B、C 依赖输入，模型学会选择性记忆。",
+          "en": "Mamba makes A, B and C input-dependent, so memory becomes selective.",
+          "start": 321.977,
+          "end": 326.76
+        },
+        {
+          "zh": "论文报告吞吐约为同规模的五倍，3B 可匹敌两倍大小。",
+          "en": "The paper reports about 5x throughput, matching a model twice its size.",
+          "start": 327.26,
+          "end": 332.517
+        },
+        {
+          "zh": "所以前沿是混合架构：多数层压缩，少数层做精确检索。",
+          "en": "So the frontier is hybrid: most layers compress, a few retrieve exactly.",
+          "start": 333.017,
+          "end": 338.536
+        }
+      ],
+      "end": 339.536
+    },
+    {
+      "id": "lora",
+      "code": "11.9",
+      "zh": "只学一个小补丁",
+      "en": "A SMALL PATCH",
+      "start": 339.536,
+      "lines": [
+        {
+          "zh": "不改架构也能省，先看微调这一步有多贵。",
+          "en": "You can also save without changing the architecture: look at fine-tuning.",
+          "start": 341.436,
+          "end": 344.925
+        },
+        {
+          "zh": "微调七百亿参数的模型，要更新全部参数，显存吃不消。",
+          "en": "Fine-tuning 70 billion parameters means updating all of them; memory cannot cope.",
+          "start": 345.425,
+          "end": 350.429
+        },
+        {
+          "zh": "LoRA 冻结原权重，只学一个低秩增量。",
+          "en": "LoRA freezes the original weights and learns only a low-rank delta.",
+          "start": 350.929,
+          "end": 354.215
+        },
+        {
+          "zh": "增量写成两个小矩阵的乘积，秩 r 远小于维度 d。",
+          "en": "The delta is a product of two small matrices, with rank r far below d.",
+          "start": 354.715,
+          "end": 359.055
+        },
+        {
+          "zh": "可训练参数减少约一万倍，显存减少约三倍。",
+          "en": "Trainable parameters drop about 10,000x, memory about 3x.",
+          "start": 359.555,
+          "end": 363.851
+        },
+        {
+          "zh": "效果接近全量微调，因为它假设任务带来的改变是低秩的。",
+          "en": "Quality nears full fine-tuning, assuming the task's change is low-rank.",
+          "start": 364.351,
+          "end": 369.513
+        },
+        {
+          "zh": "这个假设是否成立，是 LoRA 有效性的核心争议点。",
+          "en": "Whether that assumption holds is the core dispute over LoRA.",
+          "start": 370.013,
+          "end": 374.183
+        }
+      ],
+      "end": 375.183
+    },
+    {
+      "id": "quant",
+      "code": "11.10",
+      "zh": "用更少的位存数",
+      "en": "FEWER BITS PER NUMBER",
+      "start": 375.183,
+      "lines": [
+        {
+          "zh": "另一条路更直接：把每个数存得更小一点。",
+          "en": "Another route is blunter: store every number smaller.",
+          "start": 377.083,
+          "end": 380.492
+        },
+        {
+          "zh": "把 FP16 的权重压成 INT8、INT4，甚至 FP8。",
+          "en": "Squeeze FP16 weights into INT8, INT4 or even FP8.",
+          "start": 380.992,
+          "end": 386.066
+        },
+        {
+          "zh": "DeepSeek-V3 的一个工程亮点，是用 FP8 做训练，不只是推理。",
+          "en": "A highlight of DeepSeek-V3 is FP8 in training, not just inference.",
+          "start": 386.566,
+          "end": 391.985
+        },
+        {
+          "zh": "代价是精度损失，但神经网络对噪声有天然的鲁棒性。",
+          "en": "The cost is precision, yet networks are naturally robust to noise.",
+          "start": 392.485,
+          "end": 397.456
+        },
+        {
+          "zh": "就像 Dropout，适度的量化几乎不影响效果。",
+          "en": "Like Dropout, moderate quantisation barely changes results.",
+          "start": 397.956,
+          "end": 401.702
+        },
+        {
+          "zh": "但够用的标准取决于下游任务，量化后必须重新评测。",
+          "en": "Good enough depends on the task, so re-evaluate after quantising.",
+          "start": 402.202,
+          "end": 407.276
+        }
+      ],
+      "end": 408.276
+    },
+    {
+      "id": "mainline",
+      "code": "11.11",
+      "zh": "一条主线：稀疏",
+      "en": "ONE THREAD: SPARSITY",
+      "start": 408.276,
+      "lines": [
+        {
+          "zh": "把这一章的技术排在一起，方向其实只有一条。",
+          "en": "Line up this chapter's techniques and one direction appears.",
+          "start": 410.176,
+          "end": 414.013
+        },
+        {
+          "zh": "参数从全部激活，变成只激活 top-k 专家。",
+          "en": "Parameters go from all active to top-k active.",
+          "start": 414.513,
+          "end": 418.378
+        },
+        {
+          "zh": "注意力从每个头独立，变成共享或压缩。",
+          "en": "Attention goes from per-head storage to sharing or compression.",
+          "start": 418.878,
+          "end": 422.353
+        },
+        {
+          "zh": "计算顺序从大矩阵往返显存，变成本地分块。",
+          "en": "Compute goes from memory round-trips to on-chip tiles.",
+          "start": 422.853,
+          "end": 426.988
+        },
+        {
+          "zh": "共同的数学主题，是用结构化的稀疏性逼近稠密计算。",
+          "en": "The shared theme: structured sparsity approximating dense compute.",
+          "start": 427.488,
+          "end": 432.213
+        },
+        {
+          "zh": "但稀疏不是免费午餐，每一种省法都标好了价码。",
+          "en": "But sparsity is not free; every saving has a price tag.",
+          "start": 432.713,
+          "end": 437.096
+        },
+        {
+          "zh": "路由会失衡，共享有失真，状态会忘事，量化会掉精度。",
+          "en": "Routing can collapse, sharing distorts, state forgets, quantisation loses precision.",
+          "start": 437.596,
+          "end": 442.842
+        }
+      ],
+      "end": 443.842
+    },
+    {
+      "id": "outro",
+      "code": "11.12",
+      "zh": "下一站：查资料",
+      "en": "NEXT: LOOKING THINGS UP",
+      "start": 443.842,
+      "lines": [
+        {
+          "zh": "这一章的主线，是从稠密计算走向稀疏。",
+          "en": "The thread of this chapter: from dense to sparse.",
+          "start": 445.742,
+          "end": 449.322
+        },
+        {
+          "zh": "MoE 省计算，GQA 和 MLA 省缓存，分块省搬运。",
+          "en": "MoE saves compute, GQA and MLA save cache, FlashAttention saves traffic.",
+          "start": 449.822,
+          "end": 454.658
+        },
+        {
+          "zh": "Mamba 省掉回看，LoRA 和量化省掉显存。",
+          "en": "Mamba drops look-back; LoRA and quantisation drop memory.",
+          "start": 455.158,
+          "end": 458.716
+        },
+        {
+          "zh": "每一种省法都标好了价码，稀疏不是免费午餐。",
+          "en": "Every saving carries a price; sparsity is not free.",
+          "start": 459.216,
+          "end": 463.373
+        },
+        {
+          "zh": "下一章讲怎么让模型查资料：RAG 与长上下文。",
+          "en": "Next: how models look things up, RAG and long context.",
+          "start": 463.873,
+          "end": 467.979
+        }
+      ],
+      "end": 470.979
+    }
+  ]
+}

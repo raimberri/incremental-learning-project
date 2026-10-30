@@ -1,0 +1,361 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 6 章 · 预训练",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 06 · PRE-TRAINING",
+      "title": "先读万卷书",
+      "highlight": "万卷书",
+      "subtitle": "把读书和做题，拆成两步",
+      "pills": [
+        "标注瓶颈",
+        "自监督",
+        "GPT / BERT",
+        "零样本"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 6 章"
+    },
+    {
+      "id": "bottleneck",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THE LABEL BOTTLENECK",
+      "title": "瓶颈在数据",
+      "highlight": "数据",
+      "items": [
+        {
+          "icon": "①",
+          "title": "标注太贵",
+          "sub": "一条要人读、人判、人填",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "任务太窄",
+          "sub": "一份数据只够一个任务",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "知识不复用",
+          "sub": "换任务就重训，语感带不走",
+          "color": "purple"
+        }
+      ],
+      "stamp": "几万亿 token 无人标注，本身就是答案"
+    },
+    {
+      "id": "selfsup",
+      "type": "steps",
+      "accent": "teal",
+      "kicker": "SELF-SUPERVISED",
+      "title": "让文本自己出题",
+      "highlight": "自己出题",
+      "steps": [
+        {
+          "title": "挖掉一块",
+          "sub": "从原文里遮住一部分"
+        },
+        {
+          "title": "让模型补",
+          "sub": "原文就是标准答案"
+        },
+        {
+          "title": "不用标注",
+          "sub": "一个标注工都不请"
+        }
+      ],
+      "stamp": "两个版本：自回归 / 掩码"
+    },
+    {
+      "id": "paths",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "TWO ROUTES",
+      "title": "两条路线",
+      "highlight": "路线",
+      "center": "vs",
+      "left": {
+        "title": "自回归",
+        "sub": "GPT 路线",
+        "items": [
+          {
+            "title": "只看左边",
+            "sub": "天然逐词续写"
+          },
+          {
+            "title": "每位置都预测",
+            "sub": "全句都有信号"
+          },
+          {
+            "title": "能生成",
+            "sub": "写文章、对话"
+          }
+        ]
+      },
+      "right": {
+        "title": "掩码",
+        "sub": "BERT 路线",
+        "items": [
+          {
+            "title": "左右都看",
+            "sub": "完形填空式训练"
+          },
+          {
+            "title": "只填 15%",
+            "sub": "信号稀疏"
+          },
+          {
+            "title": "不能直接生成",
+            "sub": "擅长分类抽取"
+          }
+        ]
+      }
+    },
+    {
+      "id": "gpt1",
+      "type": "steps",
+      "accent": "orange",
+      "kicker": "GPT-1 · 2018.06",
+      "title": "先预训练，再微调",
+      "highlight": "微调",
+      "steps": [
+        {
+          "title": "生成式预训练",
+          "sub": "12 层解码器，1.17 亿参数"
+        },
+        {
+          "title": "判别式微调",
+          "sub": "加分类头，少量标注"
+        },
+        {
+          "title": "任务上见效",
+          "sub": "12 个任务 9 个刷新"
+        }
+      ],
+      "stamp": "7000 本未出版的书，只做下一词预测"
+    },
+    {
+      "id": "bert",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "BERT · 2018.10",
+      "title": "BERT 的配方",
+      "highlight": "配方",
+      "items": [
+        {
+          "icon": "①",
+          "title": "编码器",
+          "sub": "没有因果掩码，看全句",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "两个目标",
+          "sub": "挖 15% 填词，判断连句",
+          "color": "purple"
+        },
+        {
+          "icon": "③",
+          "title": "33 亿词",
+          "sub": "书籍语料加英文维基",
+          "color": "teal"
+        },
+        {
+          "icon": "④",
+          "title": "两个尺寸",
+          "sub": "1.1 亿与 3.4 亿参数",
+          "color": "blue"
+        }
+      ],
+      "stamp": "11 个任务全面刷新 SOTA"
+    },
+    {
+      "id": "bidir",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "MASKED LANGUAGE MODEL",
+      "title": "双向的强与弱",
+      "highlight": "强与弱",
+      "formula": "L = −Σ log p(wᵢ | 左右上下文)",
+      "note": "读作：只对被挖掉的位置算损失，左右两边都进条件。",
+      "bullets": [
+        "双向让 bank 的河岸与银行更好分",
+        "它擅长填空，不擅长从头写文章"
+      ],
+      "stamp": "目标与生成不匹配"
+    },
+    {
+      "id": "gpt2",
+      "type": "photo",
+      "accent": "green",
+      "kicker": "GPT-2 · 2019.02",
+      "title": "只写提示",
+      "highlight": "提示",
+      "image": "img/keyboard.jpg",
+      "pills": [
+        "15 亿参数",
+        "40 GB 网页文本",
+        "零样本"
+      ],
+      "subtitle": "把任务写成提示，让它接着写下去。",
+      "bullets": [
+        "训练数据里本来就有翻译、问答",
+        "不改架构，也不加任务头",
+        "续写一个接口吃掉所有任务"
+      ],
+      "caption": "示意图：提示与续写"
+    },
+    {
+      "id": "paradigm",
+      "type": "compare",
+      "accent": "orange",
+      "kicker": "LIBERAL ARTS VS VOCATIONAL",
+      "title": "通识与职业培训",
+      "highlight": "职业培训",
+      "center": "vs",
+      "left": {
+        "title": "预训练",
+        "sub": "通识教育",
+        "items": [
+          {
+            "title": "海量无标注",
+            "sub": "便宜、取之不尽"
+          },
+          {
+            "title": "学世界规律",
+            "sub": "语言的一般规律"
+          }
+        ]
+      },
+      "right": {
+        "title": "微调",
+        "sub": "职业培训",
+        "items": [
+          {
+            "title": "少量有标注",
+            "sub": "贵、只够窄任务"
+          },
+          {
+            "title": "学岗位格式",
+            "sub": "输入输出怎么接"
+          }
+        ]
+      },
+      "stamp": "模型足够大时，提示能现学，微调被跳过"
+    },
+    {
+      "id": "whyautoregressive",
+      "type": "steps",
+      "accent": "green",
+      "kicker": "WHY AUTOREGRESSION",
+      "title": "为什么是自回归",
+      "highlight": "自回归",
+      "steps": [
+        {
+          "title": "接口统一",
+          "sub": "任何任务都是给上文续写"
+        },
+        {
+          "title": "可扩展",
+          "sub": "每位置都有信号，差近 7 倍"
+        },
+        {
+          "title": "越大越占优",
+          "sub": "通用目标逼出任务能力"
+        }
+      ],
+      "stamp": "2020 年起，天平倒向自回归"
+    },
+    {
+      "id": "cost",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "THE PRICE",
+      "title": "范式的代价",
+      "highlight": "代价",
+      "items": [
+        {
+          "icon": "①",
+          "title": "数据截止",
+          "sub": "只知截止日前的世界",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "分布偏移",
+          "sub": "平均语料，窄领域吃亏",
+          "color": "red"
+        },
+        {
+          "icon": "③",
+          "title": "无法追溯",
+          "sub": "不知事实来自哪段文本",
+          "color": "purple"
+        }
+      ],
+      "stamp": "既是版权问题，也是可解释性问题"
+    },
+    {
+      "id": "summary",
+      "type": "timeline",
+      "accent": "teal",
+      "kicker": "2018 – 2019",
+      "title": "一个转向",
+      "highlight": "转向",
+      "events": [
+        {
+          "year": "2018.06",
+          "title": "GPT-1",
+          "sub": "预训练接上微调",
+          "color": "orange"
+        },
+        {
+          "year": "2018.10",
+          "title": "BERT",
+          "sub": "双向掩码，理解领先",
+          "color": "purple"
+        },
+        {
+          "year": "2019.02",
+          "title": "GPT-2",
+          "sub": "押注零样本",
+          "color": "blue"
+        },
+        {
+          "year": "2020",
+          "title": "自回归胜出",
+          "sub": "接口统一，更好扩展",
+          "color": "green"
+        }
+      ],
+      "stamp": "胜负手：谁更容易规模化"
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 07",
+      "title": "下一站：规模定律",
+      "highlight": "规模定律",
+      "subtitle": "把同样的配方，放大约一百倍",
+      "next": {
+        "code": "07",
+        "title": "规模定律",
+        "sub": "能外推的直线，也会撞墙"
+      },
+      "pills": [
+        "第 7 章",
+        "预训练已完成",
+        "下一次：规模"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

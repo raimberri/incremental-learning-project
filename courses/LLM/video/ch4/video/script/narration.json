@@ -1,0 +1,438 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "04.0",
+      "zh": "读到第五十个词",
+      "en": "THE FIFTIETH WORD",
+      "lines": [
+        [
+          "读到第五十个词时，第一个词还留在模型脑子里吗？",
+          "When the model reaches word fifty, is word one still there?"
+        ],
+        [
+          "答案不在记性好不好，而在信息怎么沿时间传。",
+          "The answer is not about memory quality, but how signal travels through time."
+        ],
+        [
+          "第 3 章给了词向量，但词向量本身没有顺序，也没有记忆。",
+          "Chapter three gave words vectors, but vectors have no order and no memory."
+        ],
+        [
+          "这一章讲三件事：怎么记、记不住怎么办、怎么回看。",
+          "This chapter covers remembering, failing to remember, and looking back."
+        ],
+        [
+          "从循环网络出发，一路走到注意力的门口。",
+          "We start from recurrent networks and end at the door of attention."
+        ],
+        [
+          "它是 Transformer 之前，必须跨过的一道坎。",
+          "It is the step you must cross before the Transformer."
+        ]
+      ]
+    },
+    {
+      "id": "why",
+      "code": "04.1",
+      "zh": "逐词处理不够",
+      "en": "WHY NOT ONE SHOT",
+      "lines": [
+        [
+          "最直接的想法：把整句的词向量拼起来，喂给全连接网络。",
+          "The obvious idea: concatenate every word vector and feed a dense network."
+        ],
+        [
+          "但句子长度不固定，三个词和三百个词，输入维度就不同。",
+          "But sentence length varies, so the input dimension varies too."
+        ],
+        [
+          "参数量还会随长度爆炸，模型根本撑不住。",
+          "The parameter count explodes with length; the model cannot hold it."
+        ],
+        [
+          "更麻烦的是，它学不到位置五和位置六是相邻的。",
+          "Worse, it cannot learn that position five sits next to position six."
+        ],
+        [
+          "我们需要一个带状态的函数：每读一个词，更新一次状态。",
+          "We need a function with state: read one word, update the state."
+        ],
+        [
+          "状态里装着的，是到目前为止读到了什么。",
+          "The state holds what has been read so far."
+        ]
+      ]
+    },
+    {
+      "id": "rnn",
+      "code": "04.2",
+      "zh": "记忆变成循环",
+      "en": "THE LOOP",
+      "lines": [
+        [
+          "循环网络的做法是：每读一步，就更新一次隐藏状态。",
+          "A recurrent network updates its hidden state at every step."
+        ],
+        [
+          "新的状态，由旧状态和当前这个词共同决定。",
+          "The new state depends on the old state and the current word."
+        ],
+        [
+          "把它写成一行：新状态等于旧状态和当前词，再经过一个压缩函数。",
+          "In one line: old state plus current word, pushed through a squash function."
+        ],
+        [
+          "关键是这两组权重，所有时间步共享同一份。",
+          "The key is that both weight matrices are shared across all steps."
+        ],
+        [
+          "共享带来两个好处：能处理任意长度，参数量还不涨。",
+          "Sharing buys two things: any length, and no growth in parameters."
+        ],
+        [
+          "代价是同一条路要反复走，信息只能一步一步往前传。",
+          "The price: the same path is walked again and again, one step at a time."
+        ],
+        [
+          "这句话很轻，但它埋下了后面所有麻烦的种子。",
+          "That sentence is light, but it plants every problem that follows."
+        ]
+      ]
+    },
+    {
+      "id": "unroll",
+      "code": "04.3",
+      "zh": "展开成深图",
+      "en": "UNROLLED IN TIME",
+      "lines": [
+        [
+          "把循环按时间展开，就是一张很深的计算图。",
+          "Unrolled over time, the loop becomes a very deep graph."
+        ],
+        [
+          "一层就是一个时间步，层数等于句子长度。",
+          "One layer per time step, so the depth equals the sentence length."
+        ],
+        [
+          "假设一句话有五十个词，它就是五十层的网络。",
+          "Fifty words means a fifty-layer network."
+        ],
+        [
+          "训练时，误差要从最后一步，一路传回第一步。",
+          "Training sends the error from the last step all the way back to the first."
+        ],
+        [
+          "每经过一个时间步，都要再乘一次权重和导数。",
+          "Each step multiplies by a weight matrix and by the tanh derivative."
+        ],
+        [
+          "这条路很长，后面所有的麻烦都出在路上。",
+          "That path is long, and every problem lives on it."
+        ]
+      ]
+    },
+    {
+      "id": "decay",
+      "code": "04.4",
+      "zh": "消失与爆炸",
+      "en": "TWO FAILURES",
+      "lines": [
+        [
+          "每传一步都要乘一个因子，这是两个失败模式的根源。",
+          "Every step multiplies by a factor; that is the root of both failures."
+        ],
+        [
+          "因子长期小于一，梯度就指数级衰减，这叫梯度消失。",
+          "Factors below one shrink the gradient exponentially: vanishing."
+        ],
+        [
+          "因子长期大于一，梯度就指数级放大，这叫梯度爆炸。",
+          "Factors above one blow it up exponentially: exploding."
+        ],
+        [
+          "爆炸好办：梯度超过阈值，就按比例缩回去，叫梯度裁剪。",
+          "Exploding is easy: clip the gradient back when it passes a threshold."
+        ],
+        [
+          "消失难办，因为它不是数值问题，是信息在结构上存不住。",
+          "Vanishing is hard: the information has nowhere structural to stay."
+        ],
+        [
+          "所以别把它说成记性差，那是结果，不是原因。",
+          "So it is not bad memory; bad memory is the symptom, not the cause."
+        ],
+        [
+          "就算每步只丢一成，五十步后也只剩百分之零点五。",
+          "Even losing just ten percent a step leaves half a percent after fifty."
+        ]
+      ]
+    },
+    {
+      "id": "lstm",
+      "code": "04.5",
+      "zh": "给记忆装门",
+      "en": "THE CELL STATE",
+      "lines": [
+        [
+          "一九九七年，Hochreiter 等人提出了 LSTM。",
+          "In 1997, Hochreiter and Schmidhuber proposed the LSTM."
+        ],
+        [
+          "它的核心创新，是在隐藏状态之外，再加一条细胞状态。",
+          "Its key move: a cell state running beside the hidden state."
+        ],
+        [
+          "所有信息通过门，有控制地进出，而不是每步全部重写。",
+          "Information enters and leaves through gates, instead of being rewritten."
+        ],
+        [
+          "看更新式：细胞状态等于遗忘门乘旧状态，加上输入门乘新内容。",
+          "Read the update: old cell times the forget gate, plus new content times the input gate."
+        ],
+        [
+          "如果遗忘门接近一，细胞状态几乎原样保留。",
+          "When the forget gate sits near one, the cell state passes through almost unchanged."
+        ],
+        [
+          "梯度沿着这条加法路径往回走，几乎不衰减。",
+          "The gradient travels that additive path with almost no decay."
+        ],
+        [
+          "原文把这叫常数误差传送带，一条记忆的高速路。",
+          "The paper calls it the constant error carousel: a highway for memory."
+        ]
+      ]
+    },
+    {
+      "id": "gates",
+      "code": "04.6",
+      "zh": "三门与一条记忆",
+      "en": "THREE GATES",
+      "lines": [
+        [
+          "每个门就是一个 sigmoid，把值压到零到一之间。",
+          "Each gate is a sigmoid that squeezes values between zero and one."
+        ],
+        [
+          "零就是关，一就是开，中间是半开，正好当开关用。",
+          "Zero is closed, one is open, and everything between is a dimmer."
+        ],
+        [
+          "遗忘门决定旧记忆保留多少，输入门决定新信息写入多少。",
+          "The forget gate keeps old memory; the input gate writes new information."
+        ],
+        [
+          "候选记忆是这一步想写的内容，两者相加，更新细胞状态。",
+          "A candidate holds what to write, and the two are added into the cell state."
+        ],
+        [
+          "输出门决定这一步暴露多少，给下一个时间步看。",
+          "The output gate decides how much to expose to the next step."
+        ],
+        [
+          "GRU 是简化版：门更少，参数更少，结构更轻。",
+          "The GRU is a simplified version: fewer gates, fewer parameters, lighter."
+        ]
+      ]
+    },
+    {
+      "id": "bottleneck",
+      "code": "04.7",
+      "zh": "整句压成一个向量",
+      "en": "ONE VECTOR",
+      "lines": [
+        [
+          "二零一四年，Sutskever 等人把理解和生成拆成两半。",
+          "In 2014, Sutskever and colleagues split understanding from generation."
+        ],
+        [
+          "编码器读完整句中文，只留下最后一个状态。",
+          "The encoder reads the whole sentence and keeps one final state."
+        ],
+        [
+          "解码器从这个状态出发，一个词一个词吐出英文。",
+          "The decoder starts from that state and emits English word by word."
+        ],
+        [
+          "训练时用教师强制：喂正确的上一个词，而不是模型自己猜的。",
+          "Training uses teacher forcing: feed the correct previous word, not the guess."
+        ],
+        [
+          "问题在于：整句信息被压进一个固定长度的向量。",
+          "The problem: the entire sentence is squeezed into one fixed-length vector."
+        ],
+        [
+          "句子一长，这个向量就是瓶颈，像把一本书塞进一个信封。",
+          "On a long sentence that vector is a bottleneck, like a book in an envelope."
+        ],
+        [
+          "句子越长，塞不进这个信封的东西就越多。",
+          "The longer the sentence, the more falls outside the envelope."
+        ]
+      ]
+    },
+    {
+      "id": "attention",
+      "code": "04.8",
+      "zh": "每一步都回看",
+      "en": "LOOKING BACK",
+      "lines": [
+        [
+          "二零一四年，Bahdanau 等人换了个思路：不压缩，按需回看。",
+          "In 2014, Bahdanau and colleagues stopped compressing and started looking back."
+        ],
+        [
+          "翻译知识就是力量时，输出 power 那一刻，只需要看力量。",
+          "To output power, the decoder only needs to look at the source word for power."
+        ],
+        [
+          "解码器每一步，都拿当前状态去和编码器每个位置打分。",
+          "At every step it scores the current state against every encoder position."
+        ],
+        [
+          "分数过一遍 softmax 变成权重，再加权求和，得到上下文向量。",
+          "Scores become weights through softmax; a weighted sum gives the context vector."
+        ],
+        [
+          "这个向量和当前状态一起，决定下一个输出词。",
+          "That vector, with the current state, decides the next output word."
+        ],
+        [
+          "没人告诉它 power 该对齐力量，对齐是训练自己长出来的。",
+          "Nobody told it that power aligns with the word for power; it emerged."
+        ],
+        [
+          "但别过度解读：权重高，只说明分数高，不等于真的依赖。",
+          "Do not overread it: a high weight is a high score, not proof of reliance."
+        ]
+      ]
+    },
+    {
+      "id": "qkv",
+      "code": "04.9",
+      "zh": "查询、键、值",
+      "en": "QUERY KEY VALUE",
+      "lines": [
+        [
+          "把这件事抽象出来，只需要三个角色：查询、键、值。",
+          "Abstract the operation and only three roles remain: query, key, value."
+        ],
+        [
+          "查询是解码器当前状态，键和值都是编码器的各个位置。",
+          "The query is the decoder state; keys and values are encoder positions."
+        ],
+        [
+          "查询和每个键算一个匹配分数，分数越高，越值得看。",
+          "The query is scored against every key; a higher score deserves a look."
+        ],
+        [
+          "分数归一化成权重，再对所有值加权求和。",
+          "Scores become weights, and the weights average all the values."
+        ],
+        [
+          "所以注意力就是：用相似度当权重，对值做加权平均。",
+          "So attention is similarity used as weight, averaging the values."
+        ],
+        [
+          "这套写法，后来就叫 Query、Key、Value。",
+          "That is the Query, Key, Value form you will meet everywhere."
+        ]
+      ]
+    },
+    {
+      "id": "retrieval",
+      "code": "04.10",
+      "zh": "可微的软检索",
+      "en": "A SOFT LOOKUP",
+      "lines": [
+        [
+          "剥掉术语，注意力就是一个软版本的字典查询。",
+          "Strip the jargon and attention is a soft dictionary lookup."
+        ],
+        [
+          "数据库用键精确查找，命中就返回唯一一条记录。",
+          "A database matches a key exactly and returns one record."
+        ],
+        [
+          "注意力用查询和所有键算相似度，返回所有值的加权平均。",
+          "Attention scores the query against every key and averages every value."
+        ],
+        [
+          "硬匹配是零或一，软匹配是零到一之间的连续权重。",
+          "Hard matching is zero or one; soft matching is a weight in between."
+        ],
+        [
+          "关键在于可导：只选第三个，这个操作没有梯度。",
+          "The point is differentiability: picking the third item has no gradient."
+        ],
+        [
+          "但它是加权平均，不是检索到事实，别把权重当成真相。",
+          "But it is an average, not a fact lookup; weights are not truth."
+        ]
+      ]
+    },
+    {
+      "id": "parallel",
+      "code": "04.11",
+      "zh": "为什么能并行",
+      "en": "SERIAL VS PARALLEL",
+      "lines": [
+        [
+          "LSTM 统治序列建模近二十年，到二零一七年仍是翻译主流。",
+          "The LSTM ruled sequence modelling for nearly twenty years."
+        ],
+        [
+          "但它有三个结构性局限：串行、瓶颈、仍然会衰减。",
+          "It carries three structural limits: serial, bottlenecked, still fading."
+        ],
+        [
+          "隐藏状态必须等上一步算完，GPU 几千个核只能干等。",
+          "The hidden state must wait, so thousands of GPU cores sit idle."
+        ],
+        [
+          "注意力本身不用等：所有位置可以同时打分。",
+          "Attention does not wait: every position scores every position at once."
+        ],
+        [
+          "循环网络不能，它必须一步一步往下传。",
+          "Recurrence cannot: it must pass the state on, step by step."
+        ],
+        [
+          "二零一七年，有人问：既然注意力这么好用，还要 RNN 吗？",
+          "In 2017 someone asked: if attention works, why keep the RNN?"
+        ]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "04.12",
+      "zh": "不要循环了",
+      "en": "DROP THE LOOP",
+      "lines": [
+        [
+          "这一章的主线，是记忆从循环走向回看。",
+          "The through-line is memory moving from recurrence to looking back."
+        ],
+        [
+          "循环把历史压进一个状态，注意力按需去取。",
+          "The loop packs history into a state; attention fetches on demand."
+        ],
+        [
+          "瓶颈被拆掉了：不用再把整句压成一个向量。",
+          "The bottleneck is gone: no more squeezing the sentence into one vector."
+        ],
+        [
+          "但注意力还挂在循环上，还得一步一步解码。",
+          "But attention still rides on a loop, still decoding one step at a time."
+        ],
+        [
+          "下一章，Transformer 把循环也去掉。",
+          "Next chapter: the Transformer drops the loop entirely."
+        ]
+      ]
+    }
+  ]
+}

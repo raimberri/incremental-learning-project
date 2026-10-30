@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 11 章 · 更便宜地变大",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 11 · EFFICIENCY",
+      "title": "更便宜地变大",
+      "highlight": "便宜",
+      "subtitle": "三种成本，一条稀疏主线",
+      "pills": [
+        "混合专家",
+        "KV 缓存",
+        "FlashAttention",
+        "LoRA"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 11 章"
+    },
+    {
+      "id": "costs",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THREE DIFFERENT BILLS",
+      "title": "三个不同的成本",
+      "highlight": "三个",
+      "items": [
+        {"icon": "①", "title": "训练成本", "sub": "一次性：算力、数据、电力", "color": "orange"},
+        {"icon": "②", "title": "推理成本", "sub": "每次调用：算力与延迟", "color": "blue"},
+        {"icon": "③", "title": "显存成本", "sub": "参数、激活、KV 缓存", "color": "purple"}
+      ]
+    },
+    {
+      "id": "moe",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "MIXTURE OF EXPERTS",
+      "title": "只唤醒需要的专家",
+      "highlight": "唤醒",
+      "steps": [
+        {"title": "打分", "sub": "router 给每个专家打分"},
+        {"title": "取前 k 个", "sub": "top-k 之外的直接跳过"},
+        {"title": "加权求和", "sub": "只有被选中的权重非零"},
+        {"title": "大而少算", "sub": "总参数大，激活参数小"}
+      ],
+      "stamp": "FFN 占了参数的大头"
+    },
+    {
+      "id": "scale",
+      "type": "photo",
+      "accent": "teal",
+      "kicker": "SPARSE BY THE NUMBERS",
+      "title": "存大，算小",
+      "highlight": "算小",
+      "image": "img/datacenter.jpg",
+      "pills": [
+        "1.6 万亿",
+        "6710 亿 / 370 亿",
+        "278.8 万 GPU 时"
+      ],
+      "subtitle": "总参数可以很大，每个 token 只算一小部分。",
+      "bullets": ["Switch：同算力预训练约 7 倍", "DeepSeek-V3：激活不到 6%"],
+      "caption": "示意图，非真实机房统计"
+    },
+    {
+      "id": "routing",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "LOAD BALANCING",
+      "title": "路由的麻烦",
+      "highlight": "麻烦",
+      "items": [
+        {"icon": "①", "title": "专家饿死", "sub": "token 全挤向同一个专家", "color": "red"},
+        {"icon": "②", "title": "参数白存", "sub": "容量浪费，叫专家坍塌", "color": "orange"},
+        {"icon": "③", "title": "均衡损失", "sub": "惩罚使用率过于不均", "color": "blue"},
+        {"icon": "④", "title": "一条 KPI", "sub": "选对，还要人人有活干", "color": "purple"}
+      ]
+    },
+    {
+      "id": "kv",
+      "type": "formula",
+      "accent": "blue",
+      "kicker": "KV CACHE",
+      "title": "长上下文贵在显存",
+      "highlight": "显存",
+      "formula": "KV ∝ 2 × L × H × d_head\n× seq_len × batch",
+      "note": "L 层数，H 头数，d_head 每头维度；Key 与 Value 各存一份。",
+      "bullets": ["序列翻倍，缓存翻倍，批量同理", "主要成本是显存，不是计算"],
+      "stamp": "自回归生成"
+    },
+    {
+      "id": "attn",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "MQA · GQA · MLA",
+      "title": "三种省法",
+      "highlight": "省法",
+      "center": "vs",
+      "left": {
+        "title": "每个头各存",
+        "sub": "MHA：KV 缓存最大",
+        "items": [
+          {"title": "独立缓存", "sub": "每个头一份 K 和 V"},
+          {"title": "显存线性涨", "sub": "长上下文最先撞墙"}
+        ]
+      },
+      "right": {
+        "title": "共享或压缩",
+        "sub": "三种做法，一个目的",
+        "items": [
+          {"title": "MQA", "sub": "所有头共用一组"},
+          {"title": "GQA", "sub": "每 g 个头共用一组"},
+          {"title": "MLA", "sub": "压成低维潜在向量"}
+        ]
+      }
+    },
+    {
+      "id": "flash",
+      "type": "steps",
+      "accent": "teal",
+      "kicker": "FLASHATTENTION",
+      "title": "少搬，不是少算",
+      "highlight": "少搬",
+      "steps": [
+        {"title": "内存墙", "sub": "算力涨得比带宽快"},
+        {"title": "切成小块", "sub": "Q、K、V 分块进 SRAM"},
+        {"title": "分块算法", "sub": "在线 softmax，不回写"},
+        {"title": "精确结果", "sub": "不是近似，只换顺序"}
+      ],
+      "stamp": "BERT-large +15%，GPT-2 约 3×"
+    },
+    {
+      "id": "mamba",
+      "type": "compare",
+      "accent": "green",
+      "kicker": "MAMBA · STATE SPACE",
+      "title": "回看，还是记笔记",
+      "highlight": "记笔记",
+      "center": "vs",
+      "left": {
+        "title": "注意力：全程录音",
+        "sub": "复杂度随长度平方",
+        "items": [
+          {"title": "保留全部历史", "sub": "任何片段都能回放"},
+          {"title": "KV 缓存增长", "sub": "存储随长度线性涨"}
+        ]
+      },
+      "right": {
+        "title": "状态空间：记笔记",
+        "sub": "固定状态，线性复杂度",
+        "items": [
+          {"title": "一个固定状态", "sub": "每读一个 token 更新"},
+          {"title": "只留摘要", "sub": "细节会丢，回忆变弱"}
+        ]
+      }
+    },
+    {
+      "id": "lora",
+      "type": "formula",
+      "accent": "orange",
+      "kicker": "LoRA · 2021",
+      "title": "只学一个小补丁",
+      "highlight": "小补丁",
+      "formula": "W′ = W + ΔW\nΔW = B A,  r ≪ d",
+      "note": "A ∈ ℝ^(r×d)，B ∈ ℝ^(d×r)，秩 r 远小于维度 d。",
+      "bullets": ["冻结原权重，只训练增量", "参数约少一万倍，显存约少三倍"],
+      "stamp": "效果接近全量微调"
+    },
+    {
+      "id": "quant",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "QUANTIZATION",
+      "title": "用更少的位存数",
+      "highlight": "位",
+      "items": [
+        {"icon": "①", "title": "压到 8 位", "sub": "FP16 压成 INT8，显存减半", "color": "blue"},
+        {"icon": "②", "title": "再压到 4 位", "sub": "INT4，带宽也跟着降", "color": "teal"},
+        {"icon": "③", "title": "FP8 训练", "sub": "DeepSeek-V3 的工程亮点", "color": "orange"},
+        {"icon": "④", "title": "精度换速度", "sub": "够不够用，看下游任务", "color": "purple"}
+      ]
+    },
+    {
+      "id": "mainline",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "DENSE → SPARSE",
+      "title": "一条主线：稀疏",
+      "highlight": "稀疏",
+      "center": "→",
+      "left": {
+        "title": "早期：稠密",
+        "sub": "全部激活，全部计算",
+        "items": [
+          {"title": "参数", "sub": "每个 token 走全部 FFN"},
+          {"title": "注意力", "sub": "每个头各存一份"},
+          {"title": "数值", "sub": "FP32 一统"}
+        ]
+      },
+      "right": {
+        "title": "现在：结构化稀疏",
+        "sub": "省，但不是免费午餐",
+        "items": [
+          {"title": "参数", "sub": "MoE 只激活 top-k"},
+          {"title": "注意力", "sub": "共享、压缩、分块"},
+          {"title": "数值", "sub": "FP16 / FP8 / INT4"}
+        ]
+      }
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 12",
+      "title": "下一站：查资料",
+      "highlight": "查资料",
+      "subtitle": "从稠密到稀疏，再到检索",
+      "next": {"code": "12", "title": "RAG 与长上下文", "sub": "知识冻结在训练数据里，怎么办"},
+      "pills": [
+        "第 12 章",
+        "稀疏已讲完",
+        "推理已变便宜"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

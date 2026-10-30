@@ -1,0 +1,14 @@
+{
+  "slug": "llm-ch16-finale",
+  "title": "大语言模型：第 16 章 结课",
+  "language": "中文",
+  "created": "2026-10-29",
+  "video": {
+    "composition": "CourseVideo",
+    "thumbnail": "CourseThumbnail",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "musicVolume": 0.2
+  }
+}

@@ -1,0 +1,351 @@
+1
+00:00:01,600 --> 00:00:06,342
+One plus one and the Riemann hypothesis cost the model the same.
+
+2
+00:00:06,592 --> 00:00:10,660
+Every token it emits passes through the same number of layers.
+
+3
+00:00:10,910 --> 00:00:16,224
+Humans are different: to multiply 347 by 829, you reach for paper.
+
+4
+00:00:16,474 --> 00:00:20,479
+Hard problems need more steps. That is basic to intelligence.
+
+5
+00:00:20,729 --> 00:00:24,260
+So how do we make a fixed-depth network think longer?
+
+6
+00:00:24,510 --> 00:00:28,522
+This chapter: chain of thought, and spending compute at inference.
+
+7
+00:00:31,172 --> 00:00:35,458
+One token costs roughly L layers of matrix multiplies.
+
+8
+00:00:35,708 --> 00:00:40,119
+L is fixed at training time; inference cannot change it.
+
+9
+00:00:40,369 --> 00:00:45,651
+So thinking depth is fixed, however hard the question.
+
+10
+00:00:45,901 --> 00:00:49,511
+The only way to think more is to write more.
+
+11
+00:00:49,761 --> 00:00:54,476
+Each extra token is another forward pass, another L layers.
+
+12
+00:00:54,726 --> 00:00:59,725
+Autoregression turns time into compute. That is the first key.
+
+13
+00:01:02,375 --> 00:01:07,345
+In 2022, Wei and colleagues saw this on PaLM 540B.
+
+14
+00:01:07,595 --> 00:01:12,923
+Showing a few worked examples sharply raised math accuracy.
+
+15
+00:01:13,173 --> 00:01:17,484
+For example: five apples, eat two, then buy three more.
+
+16
+00:01:17,734 --> 00:01:22,108
+The model writes five minus two is three, then three plus three is six.
+
+17
+00:01:22,358 --> 00:01:25,964
+Write the middle steps, and the final answer follows.
+
+18
+00:01:26,214 --> 00:01:30,060
+On a new problem, it writes steps first, then answers.
+
+19
+00:01:30,310 --> 00:01:34,610
+This format is chain of thought: handing the model scratch paper.
+
+20
+00:01:37,260 --> 00:01:41,143
+Why does writing more steps help? Three reasons.
+
+21
+00:01:41,393 --> 00:01:46,121
+First, compute: every middle token is a full forward pass.
+
+22
+00:01:46,371 --> 00:01:50,515
+A hundred tokens means about a hundred forward passes.
+
+23
+00:01:50,765 --> 00:01:55,877
+Second, representation: middle results enter the context.
+
+24
+00:01:56,127 --> 00:01:59,976
+Working memory is externalized, not held in hidden states.
+
+25
+00:02:00,226 --> 00:02:05,128
+Third, distribution: web solutions already look like steps plus answers.
+
+26
+00:02:05,378 --> 00:02:09,765
+But this is emergent: small models write steps and still fail.
+
+27
+00:02:12,415 --> 00:02:16,655
+The same year, Kojima and colleagues dropped the examples.
+
+28
+00:02:16,905 --> 00:02:20,537
+Just add: let's think step by step.
+
+29
+00:02:20,787 --> 00:02:24,769
+The model unfolds its own reasoning, with no demonstration.
+
+30
+00:02:25,019 --> 00:02:28,743
+This is zero-shot chain of thought: one sentence is enough.
+
+31
+00:02:28,993 --> 00:02:32,678
+But it is still a straight line. A wrong step cannot be undone.
+
+32
+00:02:35,328 --> 00:02:40,223
+Chain of thought is sampled, so each run may take a different path.
+
+33
+00:02:40,473 --> 00:02:45,562
+Some paths are right, some wrong. So sample more and vote.
+
+34
+00:02:45,812 --> 00:02:50,813
+Three steps: sample hot, extract answers, take the majority.
+
+35
+00:02:51,063 --> 00:02:57,267
+On GSM8K, self-consistency beats single CoT by about 17.9 points.
+
+36
+00:02:57,517 --> 00:03:01,936
+Why does voting work? Errors scatter; correct answers converge.
+
+37
+00:03:02,186 --> 00:03:06,968
+Wrong paths take many forms; the right path takes few.
+
+38
+00:03:07,218 --> 00:03:12,694
+But it needs voters above fifty percent, with independent errors.
+
+39
+00:03:12,944 --> 00:03:18,279
+Samples share one model. A systematic error survives any vote.
+
+40
+00:03:18,529 --> 00:03:22,950
+The cost is direct: k samples means k times the generation compute.
+
+41
+00:03:25,600 --> 00:03:29,390
+Chain of thought is a line: a wrong step cannot be undone.
+
+42
+00:03:29,640 --> 00:03:34,351
+Tree of thoughts turns it into search: propose several ideas per step.
+
+43
+00:03:34,601 --> 00:03:39,511
+An evaluator scores each idea; only the best few expand.
+
+44
+00:03:39,761 --> 00:03:43,667
+When needed, it backtracks to another branch.
+
+45
+00:03:43,917 --> 00:03:48,107
+Like chess: look a few moves ahead, then commit.
+
+46
+00:03:48,357 --> 00:03:54,686
+The cost explodes: branching b and depth d give b to the d nodes.
+
+47
+00:03:54,936 --> 00:03:59,017
+So tree search pays off only on a few high-value tasks.
+
+48
+00:04:01,667 --> 00:04:05,724
+So far, the model reasons only inside its own head.
+
+49
+00:04:05,974 --> 00:04:11,743
+But many questions need outside information: weather, APIs, files.
+
+50
+00:04:11,993 --> 00:04:17,534
+ReAct alternates three kinds of output: thought, action, observation.
+
+51
+00:04:17,784 --> 00:04:22,164
+Thought is internal reasoning; action calls a search or calculator.
+
+52
+00:04:22,414 --> 00:04:26,446
+Observation is the tool's result, written back into context.
+
+53
+00:04:26,696 --> 00:04:31,133
+The next round of reasoning can see the last round's reality.
+
+54
+00:04:31,383 --> 00:04:36,261
+So the model corrects itself against the world. This is the agent prototype.
+
+55
+00:04:38,911 --> 00:04:43,597
+In ReAct, tool use is prompted: the format sits in the prompt.
+
+56
+00:04:43,847 --> 00:04:47,980
+A more radical approach trains the model to decide when to call.
+
+57
+00:04:48,230 --> 00:04:53,292
+Toolformer tries inserting API calls throughout a large corpus.
+
+58
+00:04:53,542 --> 00:04:58,214
+It executes them, fills in results, and checks the next-token prediction.
+
+59
+00:04:58,464 --> 00:05:02,962
+Only calls that improve prediction are kept, then used to fine-tune.
+
+60
+00:05:03,212 --> 00:05:08,145
+So it learns where to call, which tool, and when it helps.
+
+61
+00:05:10,795 --> 00:05:14,162
+Here a natural question appears.
+
+62
+00:05:14,412 --> 00:05:19,671
+Given a fixed budget, train a bigger model or let it think longer?
+
+63
+00:05:19,921 --> 00:05:25,378
+In 2024, Snell and colleagues answered: test-time compute can pay off more.
+
+64
+00:05:25,628 --> 00:05:31,257
+At fixed compute, a small model thinking longer can beat one 14 times larger.
+
+65
+00:05:31,507 --> 00:05:36,390
+That compute can go to many samples, with a verifier picking the best.
+
+66
+00:05:36,640 --> 00:05:41,409
+Or to longer chains, tree search, or self-correction.
+
+67
+00:05:41,659 --> 00:05:45,437
+No universal answer, only the best split for a given budget.
+
+68
+00:05:48,087 --> 00:05:52,126
+Training a model on math offers two kinds of reward.
+
+69
+00:05:52,376 --> 00:05:57,665
+Outcome reward checks the final answer; process reward scores each step.
+
+70
+00:05:57,915 --> 00:06:02,194
+In 2024, a paper from OpenAI compared the two approaches.
+
+71
+00:06:02,444 --> 00:06:08,237
+On a MATH subset, reranking with a process reward reached about 78 percent.
+
+72
+00:06:08,487 --> 00:06:13,501
+They also released PRM800K: about 800,000 human step labels.
+
+73
+00:06:13,751 --> 00:06:19,000
+Process reward has denser signal: one answer, but ten reasoning steps.
+
+74
+00:06:19,250 --> 00:06:23,201
+It can locate the bad step, and it is harder to guess past.
+
+75
+00:06:23,451 --> 00:06:27,260
+The price is annotation: every step needs a human.
+
+76
+00:06:29,910 --> 00:06:34,450
+One warning you must know: chain of thought is not always faithful.
+
+77
+00:06:34,700 --> 00:06:39,114
+We treat it as the model's real thinking. It may not be.
+
+78
+00:06:39,364 --> 00:06:43,481
+The steps given are sometimes reasons invented after the fact.
+
+79
+00:06:43,731 --> 00:06:48,239
+The real decision may come from elsewhere; the explanation is patched on.
+
+80
+00:06:48,489 --> 00:06:53,621
+Change an irrelevant prompt and the reasoning changes, the answer does not.
+
+81
+00:06:53,871 --> 00:06:59,027
+So CoT is a tool for accuracy, not evidence of motive.
+
+82
+00:06:59,277 --> 00:07:03,952
+To judge trust, check whether the output is verifiable in the world.
+
+83
+00:07:06,602 --> 00:07:11,074
+The through line is one sentence: writing more is computing more.
+
+84
+00:07:11,324 --> 00:07:16,422
+CoT, self-consistency, tree search, ReAct: all are variants.
+
+85
+00:07:16,672 --> 00:07:20,690
+One side is prompting; the other is compute at inference time.
+
+86
+00:07:20,940 --> 00:07:24,953
+Chain of thought is, after all, reasoning induced by prompting.
+
+87
+00:07:25,203 --> 00:07:29,268
+Next, Chapter 10: RLVR and reasoning models.
+
+88
+00:07:29,518 --> 00:07:33,904
+Do not teach it how to think; reward correct answers and let it grow.

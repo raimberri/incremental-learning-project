@@ -1,0 +1,651 @@
+{
+  "total": 474.918,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "12.0",
+      "zh": "开卷与长记忆",
+      "en": "OPEN BOOK, LONG MEMORY",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "先问一句：你公司昨天更新的那份文档，模型知道吗？",
+          "en": "First question: does the model know the doc your company updated yesterday?",
+          "start": 1.6,
+          "end": 6.139
+        },
+        {
+          "zh": "它答不上来。不是它笨，是它的知识在某个日期冻住了。",
+          "en": "No. Not because it is slow, but because its knowledge froze on one date.",
+          "start": 6.639,
+          "end": 11.889
+        },
+        {
+          "zh": "大语言模型有三个盲区：新知识、私有数据、还有来源。",
+          "en": "LLMs have three blind spots: new knowledge, private data, and sources.",
+          "start": 12.389,
+          "end": 17.703
+        },
+        {
+          "zh": "这一章讲两条路：检索增强生成，和长上下文。",
+          "en": "This chapter covers two paths: retrieval-augmented generation, and long context.",
+          "start": 18.203,
+          "end": 22.68
+        },
+        {
+          "zh": "两条路都值得懂，因为它们的代价和坑不一样。",
+          "en": "Both are worth knowing, because their costs and traps differ.",
+          "start": 23.18,
+          "end": 26.864
+        }
+      ],
+      "end": 27.864
+    },
+    {
+      "id": "blind",
+      "code": "12.1",
+      "zh": "模型不知道的",
+      "en": "THREE BLIND SPOTS",
+      "start": 27.864,
+      "lines": [
+        {
+          "zh": "第一个盲区：它不知道昨天发生了什么，训练数据有截止日期。",
+          "en": "Blind spot one: it cannot know yesterday. Training data has a cutoff.",
+          "start": 29.764,
+          "end": 35.007
+        },
+        {
+          "zh": "第二个盲区：你公司的文档、笔记和代码库，它都没读过。",
+          "en": "Two: it has never read your company docs, notes, or codebase.",
+          "start": 35.507,
+          "end": 40.367
+        },
+        {
+          "zh": "第三个盲区更隐蔽：它不知道自己错在哪。",
+          "en": "Three is subtler: it does not know where it is wrong.",
+          "start": 40.867,
+          "end": 44.254
+        },
+        {
+          "zh": "编造一个不存在的事实时，它不会去查证，只会接着说下去。",
+          "en": "When it invents a fact, it never checks. It just keeps talking.",
+          "start": 44.754,
+          "end": 49.746
+        },
+        {
+          "zh": "前两个是信息缺失，第三个是不可溯源。",
+          "en": "The first two are missing information. The third is no traceability.",
+          "start": 50.246,
+          "end": 53.783
+        },
+        {
+          "zh": "三个盲区指向同一个解法：别让它记住，让它查。",
+          "en": "All three point to one fix: stop making it remember; make it look up.",
+          "start": 54.283,
+          "end": 58.516
+        }
+      ],
+      "end": 59.516
+    },
+    {
+      "id": "memory",
+      "code": "12.2",
+      "zh": "两种记忆",
+      "en": "TWO KINDS OF MEMORY",
+      "start": 59.516,
+      "lines": [
+        {
+          "zh": "2020 年，刘易斯等人提出检索增强生成，简称 RAG。",
+          "en": "In 2020, Lewis and colleagues proposed RAG: retrieval-augmented generation.",
+          "start": 61.416,
+          "end": 66.452
+        },
+        {
+          "zh": "思路是把知识分成两半：参数记忆和非参数记忆。",
+          "en": "The idea splits knowledge in two: parametric and non-parametric memory.",
+          "start": 66.952,
+          "end": 71.78
+        },
+        {
+          "zh": "参数记忆在权重里，写进去要靠训练，慢而且贵。",
+          "en": "Parametric memory lives in the weights; writing it means training: slow and costly.",
+          "start": 72.28,
+          "end": 76.701
+        },
+        {
+          "zh": "非参数记忆在外部文档库里，增删改查很快，还能实时更新。",
+          "en": "Non-parametric memory lives in an external store: fast edits, always current.",
+          "start": 77.201,
+          "end": 82.829
+        },
+        {
+          "zh": "可溯源性也不同：权重说不出来源，外部库能给出段落。",
+          "en": "Traceability differs too: weights cite nothing; an external store gives the passage.",
+          "start": 83.329,
+          "end": 88.276
+        },
+        {
+          "zh": "容量更是差得远：一个受参数量限制，一个几乎无限。",
+          "en": "Capacity too: one is bounded by parameters, the other is nearly unbounded.",
+          "start": 88.776,
+          "end": 93.454
+        },
+        {
+          "zh": "论文报告，在三个开放域问答任务上，RAG 刷新了最好成绩。",
+          "en": "On three open-domain QA tasks, the paper reported a new state of the art.",
+          "start": 93.954,
+          "end": 99.067
+        }
+      ],
+      "end": 100.067
+    },
+    {
+      "id": "openbook",
+      "code": "12.3",
+      "zh": "开卷与闭卷",
+      "en": "OPEN VERSUS CLOSED BOOK",
+      "start": 100.067,
+      "lines": [
+        {
+          "zh": "打个比方，这是开卷考试和闭卷考试的区别。",
+          "en": "Think of it as open-book versus closed-book exams.",
+          "start": 101.967,
+          "end": 106.04
+        },
+        {
+          "zh": "闭卷考的是你记住了多少，开卷考的是你会不会查。",
+          "en": "Closed book tests memory; open book tests whether you can look things up.",
+          "start": 106.54,
+          "end": 111.232
+        },
+        {
+          "zh": "人类早就学会把记忆外置：结绳、泥板、竹简、纸张。",
+          "en": "Humans long ago moved memory outside the head: knots, clay, bamboo, paper.",
+          "start": 111.732,
+          "end": 116.906
+        },
+        {
+          "zh": "1945 年，布什在《诚如所思》里描绘了一个装置，叫 Memex。",
+          "en": "In 1945, Vannevar Bush described a device called the Memex.",
+          "start": 117.406,
+          "end": 122.773
+        },
+        {
+          "zh": "它能存下一个人所有的书和记录，并按关联路径检索。",
+          "en": "It could store all of one person's books and records, searched by trails.",
+          "start": 123.273,
+          "end": 127.772
+        },
+        {
+          "zh": "八十年前的愿景，今天叫检索增强生成。",
+          "en": "That eighty-year-old vision is now called retrieval-augmented generation.",
+          "start": 128.272,
+          "end": 131.878
+        }
+      ],
+      "end": 132.878
+    },
+    {
+      "id": "flow",
+      "code": "12.4",
+      "zh": "六个步骤",
+      "en": "THE PIPELINE",
+      "start": 132.878,
+      "lines": [
+        {
+          "zh": "RAG 的流程可以拆成六步：四步检索，两步生成。",
+          "en": "The RAG pipeline has six steps: four to retrieve, two to generate.",
+          "start": 134.778,
+          "end": 139.243
+        },
+        {
+          "zh": "第一步切块：长文档切成小段，每段几百个 token。",
+          "en": "Step one, chunking: cut long documents into passages of a few hundred tokens.",
+          "start": 139.743,
+          "end": 143.992
+        },
+        {
+          "zh": "第二步嵌入：每段变成一个向量，存进向量数据库。",
+          "en": "Step two, embedding: turn each passage into a vector and store it.",
+          "start": 144.492,
+          "end": 149.234
+        },
+        {
+          "zh": "第三步检索：问题也变成向量，找出最相近的 K 段。",
+          "en": "Step three, retrieval: embed the question and fetch the top K passages.",
+          "start": 149.734,
+          "end": 154.361
+        },
+        {
+          "zh": "第四步重排：把候选段落按相关性重新排一遍。",
+          "en": "Step four, reranking: reorder those candidates by true relevance.",
+          "start": 154.861,
+          "end": 159.174
+        },
+        {
+          "zh": "第五步拼接：把问题和这些段落一起塞进提示词。",
+          "en": "Step five, assembly: put the question and passages into one prompt.",
+          "start": 159.674,
+          "end": 164.21
+        },
+        {
+          "zh": "第六步生成：模型只基于给定材料作答。",
+          "en": "Step six, generation: the model answers from the given material only.",
+          "start": 164.71,
+          "end": 168.397
+        }
+      ],
+      "end": 169.397
+    },
+    {
+      "id": "chunk",
+      "code": "12.5",
+      "zh": "切块像摘录",
+      "en": "CHUNKING IS EXCERPTING",
+      "start": 169.397,
+      "lines": [
+        {
+          "zh": "先看第一步切块，它比听起来要讲究得多。",
+          "en": "Start with chunking. It is far fussier than it sounds.",
+          "start": 171.297,
+          "end": 174.706
+        },
+        {
+          "zh": "文档太长，不能整篇塞进上下文，必须切开。",
+          "en": "A document is too long to paste whole, so it must be cut.",
+          "start": 175.206,
+          "end": 179.358
+        },
+        {
+          "zh": "常见做法是每块五百到一千个 token，块间留一点重叠。",
+          "en": "A common choice is 500 to 1,000 tokens per chunk, with a little overlap.",
+          "start": 179.858,
+          "end": 184.641
+        },
+        {
+          "zh": "留重叠，是为了避免把一句话从中间切断。",
+          "en": "The overlap keeps a sentence from being cut in half.",
+          "start": 185.141,
+          "end": 188.825
+        },
+        {
+          "zh": "块太大，检索精度下降；块太小，上下文不足。",
+          "en": "Too large, and precision drops; too small, and context runs out.",
+          "start": 189.325,
+          "end": 193.798
+        },
+        {
+          "zh": "这一步没有标准答案，只有权衡，像编辑做摘录。",
+          "en": "There is no right answer here, only tradeoffs, like an editor taking notes.",
+          "start": 194.298,
+          "end": 198.425
+        }
+      ],
+      "end": 199.425
+    },
+    {
+      "id": "cosine",
+      "code": "12.6",
+      "zh": "比一比夹角",
+      "en": "COSINE SIMILARITY",
+      "start": 199.425,
+      "lines": [
+        {
+          "zh": "第二步是嵌入，第 3 章讲过向量，这里只借用结论。",
+          "en": "Step two is embedding. Chapter 3 covered vectors, so we only borrow the result.",
+          "start": 201.325,
+          "end": 205.898
+        },
+        {
+          "zh": "每个块被句向量模型编码成一个稠密向量。",
+          "en": "A sentence-embedding model encodes each chunk as a dense vector.",
+          "start": 206.398,
+          "end": 210.108
+        },
+        {
+          "zh": "查询的时候，问题也编码成向量，然后比相似度。",
+          "en": "At query time the question is encoded too, then compared.",
+          "start": 210.608,
+          "end": 214.971
+        },
+        {
+          "zh": "最常用的是余弦相似度，看两个向量的夹角。",
+          "en": "The usual measure is cosine similarity: the angle between two vectors.",
+          "start": 215.471,
+          "end": 219.414
+        },
+        {
+          "zh": "公式就是点积，除以两个向量长度的乘积。",
+          "en": "Dot product divided by the product of the two vector lengths.",
+          "start": 219.914,
+          "end": 223.516
+        },
+        {
+          "zh": "注意，这里用的不是静态词向量，而是句向量模型。",
+          "en": "Note this is not a static word vector, but a sentence-embedding model.",
+          "start": 224.016,
+          "end": 228.577
+        },
+        {
+          "zh": "大规模检索用近似最近邻，比如 HNSW，拿一点召回换速度。",
+          "en": "At scale we use approximate nearest neighbours, such as HNSW, trading recall for speed.",
+          "start": 229.077,
+          "end": 235.332
+        }
+      ],
+      "end": 236.332
+    },
+    {
+      "id": "rerank",
+      "code": "12.7",
+      "zh": "为什么还要重排",
+      "en": "WHY RERANK",
+      "start": 236.332,
+      "lines": [
+        {
+          "zh": "但纯向量检索有个弱点：擅长语义，不擅长精确匹配。",
+          "en": "But pure vector search has a weakness: semantic yes, exact match no.",
+          "start": 238.232,
+          "end": 243.049
+        },
+        {
+          "zh": "搜一串具体的错误码，它可能给出一堆权限错误的文档。",
+          "en": "Search a specific error code and you may get pages about permission errors.",
+          "start": 243.549,
+          "end": 248.119
+        },
+        {
+          "zh": "真正写着这串错误码的那一页，反而被漏掉了。",
+          "en": "The one page that really contains that code gets missed.",
+          "start": 248.619,
+          "end": 252.416
+        },
+        {
+          "zh": "所以实践中常用混合检索：关键词加向量，两路一起召回。",
+          "en": "So practice uses hybrid retrieval: keywords plus vectors, recalled together.",
+          "start": 252.916,
+          "end": 258.636
+        },
+        {
+          "zh": "关键词那一路常用 BM25，专治专有名词、代码和数字。",
+          "en": "The keyword side often uses BM25, strong on names, code and numbers.",
+          "start": 259.136,
+          "end": 264.82
+        },
+        {
+          "zh": "两路结果合并之后，再交给重排器精排一遍。",
+          "en": "The two result sets are merged, then a reranker refines them.",
+          "start": 265.32,
+          "end": 269.232
+        },
+        {
+          "zh": "重排器通常是交叉编码器，把问题和段落放在一起逐对打分。",
+          "en": "A reranker is often a cross-encoder that scores question and passage as a pair.",
+          "start": 269.732,
+          "end": 275.688
+        },
+        {
+          "zh": "这就是为什么需要重排：召回求全，重排求准。",
+          "en": "That is why reranking matters: recall casts wide, reranking aims true.",
+          "start": 276.188,
+          "end": 280.43
+        }
+      ],
+      "end": 281.43
+    },
+    {
+      "id": "longctx",
+      "code": "12.8",
+      "zh": "把窗口开大",
+      "en": "WIDEN THE WINDOW",
+      "start": 281.43,
+      "lines": [
+        {
+          "zh": "另一条路更直接：把上下文窗口开大，让注意力自己去找。",
+          "en": "The other path is direct: widen the window and let attention search.",
+          "start": 283.33,
+          "end": 288.404
+        },
+        {
+          "zh": "窗口从 GPT-3 的两千零四十八个 token，一路涨到十几万。",
+          "en": "Windows grew from GPT-3's 2,048 tokens to well over a hundred thousand.",
+          "start": 288.904,
+          "end": 294.357
+        },
+        {
+          "zh": "比如 Llama 3.1，就把窗口开到了十二万八千个 token。",
+          "en": "Llama 3.1, for instance, opens the window to 128K tokens.",
+          "start": 294.857,
+          "end": 299.627
+        },
+        {
+          "zh": "技术上靠位置外推：把没见过的长位置，压回见过的范围。",
+          "en": "One pillar is position extrapolation: compress unseen positions into the seen range.",
+          "start": 300.127,
+          "end": 305.235
+        },
+        {
+          "zh": "还要靠注意力效率：FlashAttention、GQA 和稀疏注意力。",
+          "en": "Another is attention efficiency: FlashAttention, GQA, sparse attention.",
+          "start": 305.735,
+          "end": 310.543
+        },
+        {
+          "zh": "最后得有长文本训练数据，光改位置编码是不够的。",
+          "en": "Finally you need long training documents; changing encodings is not enough.",
+          "start": 311.043,
+          "end": 315.39
+        }
+      ],
+      "end": 316.39
+    },
+    {
+      "id": "lost",
+      "code": "12.9",
+      "zh": "中间最容易丢",
+      "en": "LOST IN THE MIDDLE",
+      "start": 316.39,
+      "lines": [
+        {
+          "zh": "但装得下，不等于用得好，这是关键的一句。",
+          "en": "But fitting it in is not the same as using it well.",
+          "start": 318.29,
+          "end": 321.878
+        },
+        {
+          "zh": "2023 年，刘等人的实验揭示了一个反直觉的现象。",
+          "en": "In 2023, Liu and colleagues reported a counter-intuitive finding.",
+          "start": 322.378,
+          "end": 326.804
+        },
+        {
+          "zh": "关键信息放在长文档开头或结尾，模型基本能找到。",
+          "en": "Put the key fact near the start or the end and the model finds it.",
+          "start": 327.304,
+          "end": 331.993
+        },
+        {
+          "zh": "放到中间，准确率明显下降，画出来是一条 U 形曲线。",
+          "en": "Put it in the middle and accuracy drops, tracing a U-shaped curve.",
+          "start": 332.493,
+          "end": 337.391
+        },
+        {
+          "zh": "模型不是均匀地使用上下文，它偏向两端。",
+          "en": "Models do not use context evenly. They lean toward both ends.",
+          "start": 337.891,
+          "end": 341.57
+        },
+        {
+          "zh": "心理学里这叫序列位置效应：开头和结尾记得牢，中间最差。",
+          "en": "Psychology calls this the serial position effect: ends stick, middles fade.",
+          "start": 342.07,
+          "end": 347.728
+        },
+        {
+          "zh": "所以，一百万 token 的窗口，不等于能用好一百万 token。",
+          "en": "So a one-million-token window is not the same as using one million tokens.",
+          "start": 348.228,
+          "end": 353.016
+        }
+      ],
+      "end": 354.016
+    },
+    {
+      "id": "ragvsctx",
+      "code": "12.10",
+      "zh": "成本结构不同",
+      "en": "TWO COST STRUCTURES",
+      "start": 354.016,
+      "lines": [
+        {
+          "zh": "那到底该用 RAG，还是用长上下文？答案不是二选一。",
+          "en": "So RAG or long context? The answer is not either-or.",
+          "start": 355.916,
+          "end": 360.774
+        },
+        {
+          "zh": "RAG 适合知识库大、更新频繁、又要求可审计的场景。",
+          "en": "RAG suits large, fast-changing knowledge bases that need auditability.",
+          "start": 361.274,
+          "end": 366.206
+        },
+        {
+          "zh": "长上下文适合一次读整本书，或者整个代码库。",
+          "en": "Long context suits reading a whole book, or a whole codebase, at once.",
+          "start": 366.706,
+          "end": 371.1
+        },
+        {
+          "zh": "这是两种成本结构：检索便宜、提示词短；长上下文要付 KV 缓存。",
+          "en": "Two cost structures: cheap search and short prompts, versus paying for KV cache.",
+          "start": 371.6,
+          "end": 378.323
+        },
+        {
+          "zh": "延迟也不同：RAG 多一次检索，长上下文首个 token 更慢。",
+          "en": "Latency too: RAG adds a search step; long context slows the first token.",
+          "start": 378.823,
+          "end": 383.832
+        },
+        {
+          "zh": "更新更不同：RAG 改文档就行，长上下文得重新喂一遍。",
+          "en": "Updates differ: change a document for RAG; refeed everything for long context.",
+          "start": 384.332,
+          "end": 389.17
+        },
+        {
+          "zh": "常见组合是先 RAG 粗筛，再把筛出的内容放进长上下文精读。",
+          "en": "A common mix: RAG narrows the field, then long context reads it closely.",
+          "start": 389.67,
+          "end": 395.485
+        },
+        {
+          "zh": "2025 年流行一个词，上下文工程：为任务设计最合适的信息架构。",
+          "en": "By 2025 the word is context engineering: designing the right information structure.",
+          "start": 395.985,
+          "end": 401.924
+        }
+      ],
+      "end": 402.924
+    },
+    {
+      "id": "traps",
+      "code": "12.11",
+      "zh": "工程四个坑",
+      "en": "FOUR ENGINEERING TRAPS",
+      "start": 402.924,
+      "lines": [
+        {
+          "zh": "最后说工程陷阱，RAG 看起来简单，落地时坑很多。",
+          "en": "Now the traps. RAG looks simple, but implementation is full of holes.",
+          "start": 404.824,
+          "end": 409.354
+        },
+        {
+          "zh": "检索错，生成一定错，这就是垃圾进垃圾出。",
+          "en": "Wrong retrieval means wrong generation: garbage in, garbage out.",
+          "start": 409.854,
+          "end": 414.098
+        },
+        {
+          "zh": "第一个坑，切块边界：答案横跨两块，两块都不完整。",
+          "en": "Trap one, chunk boundaries: the answer spans two chunks, each incomplete.",
+          "start": 414.598,
+          "end": 419.261
+        },
+        {
+          "zh": "第二个坑，检索到了，模型却不用，提示约束不是硬保证。",
+          "en": "Trap two: the passage is retrieved and then ignored; prompts are not guarantees.",
+          "start": 419.761,
+          "end": 424.906
+        },
+        {
+          "zh": "第三个坑，引用错位：编号看着很像，指向的却不是那一段。",
+          "en": "Trap three, citation drift: a plausible number points to the wrong passage.",
+          "start": 425.406,
+          "end": 430.687
+        },
+        {
+          "zh": "第四个坑，上下文污染：两份矛盾文档，模型可能各信一半。",
+          "en": "Trap four, context pollution: two conflicting documents, half-believed each.",
+          "start": 431.187,
+          "end": 436.702
+        },
+        {
+          "zh": "多跳问题还要查两次，单轮检索不够，得迭代检索。",
+          "en": "Multi-hop questions need two lookups; single-pass retrieval is not enough.",
+          "start": 437.202,
+          "end": 441.811
+        },
+        {
+          "zh": "法律和医学检索早就有规范：记录策略、保留证据链、标注不确定性。",
+          "en": "Legal and medical search already require logged strategy, evidence trails, uncertainty.",
+          "start": 442.311,
+          "end": 448.817
+        }
+      ],
+      "end": 449.817
+    },
+    {
+      "id": "outro",
+      "code": "12.12",
+      "zh": "下一章：评测",
+      "en": "NEXT: EVALUATION",
+      "start": 449.817,
+      "lines": [
+        {
+          "zh": "这一章留下两个关键词：检索，和上下文。",
+          "en": "Two words remain from this chapter: retrieval, and context.",
+          "start": 451.717,
+          "end": 455.535
+        },
+        {
+          "zh": "它不知道的，让它去查；它装不下的，帮它挑。",
+          "en": "What it does not know, let it look up; what will not fit, help it choose.",
+          "start": 456.035,
+          "end": 460.084
+        },
+        {
+          "zh": "可它查回来的那些材料，到底用对了没有？",
+          "en": "But did it use those retrieved materials correctly?",
+          "start": 460.584,
+          "end": 463.917
+        },
+        {
+          "zh": "下一章讲评测与幻觉：怎么知道它真的行。",
+          "en": "Next chapter: evaluation and hallucination, and how we know it works.",
+          "start": 464.417,
+          "end": 467.945
+        },
+        {
+          "zh": "考试分数和真实能力之间，还有一道鸿沟。",
+          "en": "Between a test score and real ability there is still a gap.",
+          "start": 468.445,
+          "end": 471.918
+        }
+      ],
+      "end": 474.918
+    }
+  ]
+}

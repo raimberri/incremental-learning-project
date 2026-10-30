@@ -1,0 +1,404 @@
+1
+00:00:01,600 --> 00:00:05,483
+2020 年，OpenAI 做了一个很笨的实验。
+In 2020, OpenAI ran a deliberately dumb experiment.
+
+2
+00:00:05,733 --> 00:00:10,126
+架构没换，还是 Transformer 解码器，目标也没换。
+Same architecture, same decoder, same objective.
+
+3
+00:00:10,376 --> 00:00:15,774
+他们几乎只做一件事：把参数、数据、算力一起加大。
+They did one thing: make parameters, data and compute bigger.
+
+4
+00:00:16,024 --> 00:00:20,956
+参数扩大约一百倍，从十五亿加到一千七百五十亿。
+Parameters grew about a hundredfold, from 1.5B to 175B.
+
+5
+00:00:21,206 --> 00:00:26,261
+结果不只是错误率降低，它会写文章、翻译、写代码。
+The result was not just lower error: it wrote, translated and coded.
+
+6
+00:00:26,511 --> 00:00:30,302
+这一章要问：大为什么有用，又为什么不够。
+This chapter asks why size helps, and why it is not enough.
+
+7
+00:00:32,952 --> 00:00:37,206
+GPT-3 有一千七百五十亿参数，九十六层。
+GPT-3 has 175 billion parameters and 96 layers.
+
+8
+00:00:37,456 --> 00:00:42,706
+隐藏维度一万二千二百八十八，训练数据约三千亿 token。
+Hidden size 12,288; training data about 300 billion tokens.
+
+9
+00:00:42,956 --> 00:00:46,646
+它从来没有专门为翻译或写代码训练过。
+It was never trained specifically for translation or code.
+
+10
+00:00:46,896 --> 00:00:51,522
+但它能写文章、翻译、写代码，还多出一种能力。
+Yet it wrote, translated, coded, and showed one new ability.
+
+11
+00:00:51,772 --> 00:00:55,445
+只要在提示里给几个例子，它就能照着做。
+Give it a few examples in the prompt, and it follows along.
+
+12
+00:00:55,695 --> 00:00:59,418
+窗对应 window，模型一个参数都没更新。
+Window comes out; not a single parameter was updated.
+
+13
+00:01:02,068 --> 00:01:07,499
+这种做法叫上下文学习，例子放进上下文，模型照着做。
+This is in-context learning: examples go into the context.
+
+14
+00:01:07,749 --> 00:01:11,656
+没有梯度下降，没有微调，参数一个都没变。
+No gradient descent, no fine-tuning, no weight change.
+
+15
+00:01:11,906 --> 00:01:16,156
+传统微调把学到的东西写进权重，是永久的。
+Fine-tuning writes what it learns into the weights, permanently.
+
+16
+00:01:16,406 --> 00:01:20,939
+上下文学习把例子放在激活里，会话结束就没了。
+In-context learning keeps examples in activations, gone with the session.
+
+17
+00:01:21,189 --> 00:01:25,449
+所以上下文是临时记忆，权重是长期记忆。
+So context is temporary memory; weights are long-term memory.
+
+18
+00:01:25,699 --> 00:01:30,165
+临时记忆灵活、可撤销，但容量受窗口限制。
+Temporary memory is flexible and undoable, but the window bounds it.
+
+19
+00:01:32,815 --> 00:01:37,343
+2020 年，Kaplan 等人把更大更好写成了公式。
+In 2020, Kaplan and colleagues turned bigger-is-better into a formula.
+
+20
+00:01:37,593 --> 00:01:42,281
+测试集上的交叉熵损失，随参数量呈幂律下降。
+Test cross-entropy falls as a power law in parameter count.
+
+21
+00:01:42,531 --> 00:01:46,620
+随训练 token 数、随训练算力，也都是幂律。
+The same holds for training tokens and for training compute.
+
+22
+00:01:46,870 --> 00:01:52,003
+三个指数分别约零点零七六、零点零九五、零点零五。
+The exponents are about 0.076, 0.095 and 0.050.
+
+23
+00:01:52,253 --> 00:01:56,232
+幂律的意思是，取对数之后，它是一条直线。
+A power law means a straight line once you take logs.
+
+24
+00:01:56,482 --> 00:02:01,894
+指数很小，损失下降得慢，但十倍规模带来可观改善。
+Small exponents mean slow decline, yet ten times scale still helps.
+
+25
+00:02:02,144 --> 00:02:06,177
+这条直线跨越了七个数量级，还能继续外推。
+That line spans seven orders of magnitude, and it extrapolates.
+
+26
+00:02:08,827 --> 00:02:12,675
+幂律直接画在普通坐标上，形状会骗人。
+A power law drawn on ordinary axes can mislead.
+
+27
+00:02:12,925 --> 00:02:17,540
+横轴从十亿到千亿，前段很陡，后段几乎压平。
+From a billion to a hundred billion: steep, then almost flat.
+
+28
+00:02:17,790 --> 00:02:21,732
+把横轴和纵轴都取对数，幂律才露出原形。
+Take the log of both axes, and the power law shows its shape.
+
+29
+00:02:21,982 --> 00:02:25,997
+一条笔直的下降线，斜率就是负的幂指数。
+A straight descending line whose slope is the negative exponent.
+
+30
+00:02:26,247 --> 00:02:30,955
+这条线让外推成为可能：小模型能预测大模型。
+That line makes extrapolation possible: small models predict large ones.
+
+31
+00:02:31,205 --> 00:02:35,679
+所以往规模里投钱，才谈得上是估算，不是赌博。
+So spending on scale becomes an estimate, not a gamble.
+
+32
+00:02:38,329 --> 00:02:43,194
+这条线为什么重要？它把一次豪赌变成了工程估算。
+Why does it matter? It turns a gamble into an engineering estimate.
+
+33
+00:02:43,444 --> 00:02:47,313
+第一步，先用几百万美元，训几个小模型。
+Step one: train a few small models for a few million dollars.
+
+34
+00:02:47,563 --> 00:02:51,676
+第二步，把这些小模型的点，拟合成一条直线。
+Step two: fit those points with a straight line.
+
+35
+00:02:51,926 --> 00:02:56,491
+第三步，外推到目标规模，预测它能到什么水平。
+Step three: extrapolate to the target scale and predict its level.
+
+36
+00:02:56,741 --> 00:03:00,667
+第四步，再决定这一亿美元到底要不要投。
+Step four: decide whether the hundred million is worth spending.
+
+37
+00:03:00,917 --> 00:03:05,306
+在科学方法上，这是一次从定性到定量的跃迁。
+Methodologically, this is a leap from qualitative to quantitative.
+
+38
+00:03:07,956 --> 00:03:12,225
+Kaplan 的结论之一是，给定算力，优先加参数。
+One Kaplan conclusion: with fixed compute, add parameters first.
+
+39
+00:03:12,475 --> 00:03:16,482
+2022 年，DeepMind 的 Chinchilla 论文推翻了它。
+In 2022, DeepMind's Chinchilla paper overturned that advice.
+
+40
+00:03:16,732 --> 00:03:20,619
+Hoffmann 等人重做实验，发现原设定有偏差。
+Hoffmann and colleagues redid the experiments and found a bias.
+
+41
+00:03:20,869 --> 00:03:25,435
+学习率调度没有随训练长度调整，结论因此偏了。
+The learning-rate schedule did not scale with run length.
+
+42
+00:03:25,685 --> 00:03:30,160
+修正后，计算最优是每个参数配二十个 token。
+Corrected, compute-optimal means about twenty tokens per parameter.
+
+43
+00:03:30,410 --> 00:03:34,421
+七百亿参数的 Chinchilla，配一点四万亿 token。
+Chinchilla has 70 billion parameters and 1.4 trillion tokens.
+
+44
+00:03:34,671 --> 00:03:38,528
+在几乎所有基准上，它超过了更大的 Gopher。
+On nearly every benchmark it beat the larger Gopher.
+
+45
+00:03:38,778 --> 00:03:42,610
+也超过了一千七百五十亿参数的 GPT-3。
+It also beat GPT-3 at 175 billion parameters.
+
+46
+00:03:45,260 --> 00:03:48,898
+就用正文里的数字，把这个配比手算一遍。
+Let us do that ratio by hand, with numbers from the text.
+
+47
+00:03:49,148 --> 00:03:53,989
+GPT-3 有一千七百五十亿参数，按二十倍配数据。
+GPT-3 has 175 billion parameters; twenty tokens each.
+
+48
+00:03:54,239 --> 00:03:58,182
+需要三点五万亿个 token，比实际数据多得多。
+That asks for 3.5 trillion tokens, far more than it saw.
+
+49
+00:03:58,432 --> 00:04:01,590
+它实际只训练了约三千亿个 token。
+In practice it trained on about 300 billion tokens.
+
+50
+00:04:01,840 --> 00:04:06,139
+三千亿除以三点五万亿，大约是十二分之一。
+300 billion over 3.5 trillion is about one twelfth.
+
+51
+00:04:06,389 --> 00:04:11,055
+所以当时的大模型，普遍参数过剩、数据不足。
+So models then were parameter-rich and data-poor.
+
+52
+00:04:13,705 --> 00:04:18,570
+规模变大，不只是错误率降低，有些能力像突然出现。
+Scaling does more than cut errors: some abilities seem to appear.
+
+53
+00:04:18,820 --> 00:04:22,596
+2022 年，Wei 等人系统记录了这类现象。
+In 2022, Wei and colleagues systematically documented this.
+
+54
+00:04:22,846 --> 00:04:27,786
+三位数加减法，小模型几乎靠猜，准确率接近零。
+On three-digit arithmetic, small models guess: accuracy near zero.
+
+55
+00:04:28,036 --> 00:04:32,025
+模型大到某个规模，准确率突然跳到很高。
+Past some size, accuracy suddenly jumps very high.
+
+56
+00:04:32,275 --> 00:04:37,472
+他们把这种能力叫涌现能力，小模型没有，大模型才有。
+They call these emergent abilities: absent small, present large.
+
+57
+00:04:37,722 --> 00:04:41,884
+这个说法很符合直觉，也很像物理学里的相变。
+It fits intuition, and it looks like a phase transition in physics.
+
+58
+00:04:42,134 --> 00:04:47,122
+水到零度突然结冰，微观参数连续，宏观性质突变。
+Water freezes at zero: continuous micro-parameters, abrupt macro-change.
+
+59
+00:04:49,772 --> 00:04:54,228
+但 2023 年，Schaeffer 等人提出了一个尖锐的反驳。
+But in 2023, Schaeffer and colleagues pushed back sharply.
+
+60
+00:04:54,478 --> 00:04:59,361
+他们指出，所谓涌现，很可能是指标选择造成的假象。
+They argue emergence may be a mirage created by the metric.
+
+61
+00:04:59,611 --> 00:05:04,553
+用完全答对才算对的不连续指标，曲线就会突然跃起。
+An all-or-nothing metric makes the curve leap suddenly.
+
+62
+00:05:04,803 --> 00:05:09,415
+换成对数概率这种连续指标，同一次提升是平滑的。
+Switch to a continuous metric, and the same gain looks smooth.
+
+63
+00:05:09,665 --> 00:05:14,296
+能力可能一直在连续增长，只是我们的尺子刻度跳跃。
+Ability may grow continuously; our ruler has coarse ticks.
+
+64
+00:05:14,546 --> 00:05:18,153
+他们换了几种指标重测，涌现就消失了。
+Re-measure with several metrics, and the emergence vanishes.
+
+65
+00:05:18,403 --> 00:05:23,457
+稳妥的说法是，能力连续提升，外部表现可能非线性。
+The safe claim: ability rises smoothly, behaviour may not.
+
+66
+00:05:26,107 --> 00:05:30,158
+第一是数据墙，公开的高质量文本是有限的。
+First, the data wall: high-quality text is finite.
+
+67
+00:05:30,408 --> 00:05:35,355
+有估算认为它可能在几年内用尽，这是预测不是定论。
+Some estimates say it runs out within years; that is a forecast.
+
+68
+00:05:35,605 --> 00:05:40,511
+第二是算力与电力，前沿模型成本已达数亿美元量级。
+Second, compute and power: frontier training costs hundreds of millions.
+
+69
+00:05:40,761 --> 00:05:45,055
+第三是推理成本，模型越大，每次调用越贵。
+Third, inference cost: bigger models cost more per call.
+
+70
+00:05:45,305 --> 00:05:50,615
+第四是收益递减，指数很小，再提升要付指数级代价。
+Fourth, diminishing returns: small exponents mean steep prices.
+
+71
+00:05:50,865 --> 00:05:57,022
+于是行业分流，小模型超额训练，或者稀疏激活，还有合成数据。
+So the field split: overtrained small models, sparse activation, synthetic data.
+
+72
+00:05:59,672 --> 00:06:03,741
+最后说两个大家常踩的误解，都跟规模有关。
+Two common mistakes, both about scale.
+
+73
+00:06:03,991 --> 00:06:08,185
+第一，参数量大，绝不等于这个模型能力就强。
+First, many parameters never meant strong ability.
+
+74
+00:06:08,435 --> 00:06:12,747
+Chinchilla 用七百亿，超过了二千八百亿的 Gopher。
+Chinchilla at 70 billion beat Gopher at 280 billion.
+
+75
+00:06:12,997 --> 00:06:17,338
+第二，榜单分数高，也不等于在你的场景里可用。
+Second, a high benchmark score is not usability in your setting.
+
+76
+00:06:17,588 --> 00:06:22,395
+榜单是固定题集，分数高不代表延迟低、成本低。
+Benchmarks are fixed sets; high scores say nothing about latency or cost.
+
+77
+00:06:25,045 --> 00:06:28,909
+这一章的一句话：损失随规模按幂律下降。
+In one sentence: loss falls as a power law with scale.
+
+78
+00:06:29,159 --> 00:06:33,399
+但配比怎么定、天花板在哪，和参数一样重要。
+But the ratio and the ceilings matter as much as parameters.
+
+79
+00:06:33,649 --> 00:06:37,744
+模型现在很会接着往下写，却还不太听话。
+The model is good at continuing text, but not at obeying.
+
+80
+00:06:37,994 --> 00:06:41,529
+你让它写一首诗，它可能给你写一篇论文。
+Ask for a poem and you may get a paper instead.
+
+81
+00:06:41,779 --> 00:06:45,970
+下一章讲对齐，怎么把文本预测器变成助手。
+Next chapter: alignment, turning a predictor into an assistant.

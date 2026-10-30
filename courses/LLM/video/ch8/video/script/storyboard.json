@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 8 章 · RLHF 与对齐",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 08 · ALIGNMENT",
+      "title": "会写不等于听话",
+      "highlight": "听话",
+      "subtitle": "从续写器，到助手",
+      "pills": ["偏好数据", "奖励模型", "RLHF", "DPO"],
+      "image": "img/cover.jpg",
+      "stamp": "第 8 章"
+    },
+    {
+      "id": "gap",
+      "type": "compare",
+      "accent": "teal",
+      "kicker": "TWO DIFFERENT GOALS",
+      "title": "两个不同的目标",
+      "highlight": "目标",
+      "center": "vs",
+      "left": {
+        "title": "预训练目标",
+        "sub": "互联网上最可能的下一段",
+        "items": [
+          {"title": "续写得像", "sub": "模仿语料风格"},
+          {"title": "覆盖所有风格", "sub": "什么都写"},
+          {"title": "不拒绝文本", "sub": "给什么就续什么"}
+        ]
+      },
+      "right": {
+        "title": "人类想要的",
+        "sub": "有用、诚实、无害",
+        "items": [
+          {"title": "回答得对", "sub": "不只是像"},
+          {"title": "只给有用的一种", "sub": "不要五种语言"},
+          {"title": "该拒绝就拒绝", "sub": "不确定就说不知道"}
+        ]
+      }
+    },
+    {
+      "id": "cannotteach",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "WHY NOT JUST TEACH IT",
+      "title": "为什么不能直接教",
+      "highlight": "直接教",
+      "items": [
+        {"icon": "①", "title": "好没有唯一答案", "sub": "同一个问题，十种都不错", "color": "orange"},
+        {"icon": "②", "title": "写答案很贵", "sub": "比比较贵一个数量级", "color": "blue"},
+        {"icon": "③", "title": "标准说不清", "sub": "简洁自然，写不成规则", "color": "purple"},
+        {"icon": "④", "title": "改为让人选", "sub": "不示范，只做比较", "color": "green"}
+      ]
+    },
+    {
+      "id": "prefer",
+      "type": "photo",
+      "accent": "green",
+      "kicker": "PREFERENCE DATA",
+      "title": "让人类做选择",
+      "highlight": "选择",
+      "image": "img/notebook-desk.jpg",
+      "pills": ["同一个问题", "两个回答", "点一下哪个更好"],
+      "subtitle": "人做判断很容易，把标准写成规则很难。",
+      "bullets": ["偏好便宜，也更容易一致", "人对相对差异，比绝对打分稳"],
+      "caption": "示意图，非真实标注界面"
+    },
+    {
+      "id": "bt",
+      "type": "curve",
+      "accent": "purple",
+      "kicker": "BRADLEY–TERRY · PAIRWISE",
+      "title": "把比较变成概率",
+      "highlight": "概率",
+      "formula": "P(y_w ≻ y_l) = σ(r_w − r_l)",
+      "bullets": ["分差为零时，概率正好一半", "分差变大，概率逼近一但不越过"],
+      "chart": {
+        "kind": "sigmoid",
+        "xRange": [-6, 6],
+        "yMax": 1,
+        "xLabel": "分差 r_w − r_l →",
+        "yLabel": "人选前者概率 ↑",
+        "series": [{"label": "σ(分差)", "tau": 1, "color": "purple"}]
+      },
+      "stamp": "奖励模型：给回答打分"
+    },
+    {
+      "id": "rlhf",
+      "type": "steps",
+      "accent": "orange",
+      "kicker": "RLHF · INSTRUCTGPT 2022",
+      "title": "RLHF 三步走",
+      "highlight": "三步",
+      "steps": [
+        {"title": "SFT", "sub": "人工写的好回答，做监督微调"},
+        {"title": "奖励模型", "sub": "用人类两两比较训练"},
+        {"title": "PPO", "sub": "按奖励优化，带 KL 惩罚"}
+      ],
+      "stamp": "顺序不能换：先会对话，再学偏好"
+    },
+    {
+      "id": "kl",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "THE OBJECTIVE",
+      "title": "缰绳：KL 惩罚",
+      "highlight": "KL 惩罚",
+      "formula": "max E[ r(x,y) ]\n− β · D_KL(π_θ ‖ π_ref)",
+      "note": "读作：奖励减去 KL 惩罚；β 决定能走多远。",
+      "bullets": ["π_ref 是没对齐过的原始模型", "β 越大，越不敢离开原模型"],
+      "stamp": "奖励模型只是代理"
+    },
+    {
+      "id": "hack",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "REWARD HACKING · GOODHART",
+      "title": "奖励黑客",
+      "highlight": "黑客",
+      "items": [
+        {"icon": "①", "title": "迎合分数", "sub": "学的是骗奖励，不是变好", "color": "orange"},
+        {"icon": "②", "title": "古德哈特定律", "sub": "指标成了目标就失效", "color": "red"},
+        {"icon": "③", "title": "缰绳与裁剪", "sub": "每次只改一点，别走崩", "color": "blue"}
+      ]
+    },
+    {
+      "id": "result",
+      "type": "compare",
+      "accent": "green",
+      "kicker": "INSTRUCTGPT · 2022",
+      "title": "小模型赢了大模型",
+      "highlight": "赢了",
+      "center": ">",
+      "left": {
+        "title": "GPT-3",
+        "sub": "1750 亿参数",
+        "items": [
+          {"title": "续写很强", "sub": "预训练目标"},
+          {"title": "不听指令", "sub": "没有对齐"}
+        ]
+      },
+      "right": {
+        "title": "InstructGPT",
+        "sub": "13 亿参数",
+        "items": [
+          {"title": "人类更偏好", "sub": "评估中胜出"},
+          {"title": "小得多", "sub": "约 1/135 大小"}
+        ]
+      }
+    },
+    {
+      "id": "dpo",
+      "type": "formula",
+      "accent": "purple",
+      "kicker": "DPO · 2023",
+      "title": "直接偏好优化",
+      "highlight": "直接",
+      "formula": "L = −log σ(Δ_w − Δ_l)\nΔ = β · log(π_θ / π_ref)",
+      "note": "Δ 是同一回答在策略与参考模型下的对数概率比，乘 β。",
+      "bullets": ["只含策略，不再需要奖励模型", "代价：离线数据，缺少在线纠错"],
+      "stamp": "把强化学习从流程里删掉"
+    },
+    {
+      "id": "cai",
+      "type": "steps",
+      "accent": "teal",
+      "kicker": "CONSTITUTIONAL AI · 2022",
+      "title": "宪法 AI",
+      "highlight": "宪法",
+      "steps": [
+        {"title": "立宪法", "sub": "一组自然语言原则"},
+        {"title": "自我批评", "sub": "按原则改写自己的回答"},
+        {"title": "监督学习", "sub": "用改后的回答训练"},
+        {"title": "AI 偏好", "sub": "AI 判断，训练奖励模型"}
+      ],
+      "stamp": "RLAIF：用 AI 反馈替代部分人工"
+    },
+    {
+      "id": "hard",
+      "type": "bullets",
+      "accent": "purple",
+      "kicker": "THREE DEEP FAILURES",
+      "title": "对齐的深层困难",
+      "highlight": "困难",
+      "items": [
+        {"icon": "①", "title": "谄媚", "sub": "附和用户，哪怕用户错了", "color": "orange"},
+        {"icon": "②", "title": "奖励黑客", "sub": "迎合分数，不是真实目标", "color": "red"},
+        {"icon": "③", "title": "对齐伪装", "sub": "假装遵守，保护原偏好", "color": "blue"},
+        {"icon": "④", "title": "委托代理", "sub": "要设计激励相容的机制", "color": "purple"}
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 09",
+      "title": "下一站：思维链",
+      "highlight": "思维链",
+      "subtitle": "从听话，到会推理",
+      "next": {"code": "09", "title": "思维链与推理时计算", "sub": "让它把思考过程写出来"},
+      "pills": ["第 8 章", "对齐已讲", "下一章：推理时计算"],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

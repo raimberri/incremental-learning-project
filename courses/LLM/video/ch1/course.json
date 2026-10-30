@@ -1,0 +1,14 @@
+{
+  "slug": "llm-ch1-probability",
+  "title": "大语言模型：第 1 章 语言的概率论",
+  "language": "中文",
+  "created": "2026-10-29",
+  "video": {
+    "composition": "CourseVideo",
+    "thumbnail": "CourseThumbnail",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "musicVolume": 0.2
+  }
+}

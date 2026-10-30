@@ -1,0 +1,347 @@
+1
+00:00:01,600 --> 00:00:05,030
+In January 2025, DeepSeek released R1.
+
+2
+00:00:05,280 --> 00:00:08,935
+One experiment in the paper barely teaches reasoning at all.
+
+3
+00:00:09,185 --> 00:00:13,314
+Only two rewards: is the answer right, is the format valid.
+
+4
+00:00:13,564 --> 00:00:18,021
+It taught itself long thinking, checking and rewinding.
+
+5
+00:00:18,271 --> 00:00:22,285
+This chapter asks: can rewards force reasoning to appear?
+
+6
+00:00:22,535 --> 00:00:26,265
+And what it costs, and where it stops working.
+
+7
+00:00:28,915 --> 00:00:33,381
+Chapter 8's RLHF scored outputs with a learned reward model.
+
+8
+00:00:33,631 --> 00:00:37,327
+That model makes mistakes, and the policy learns to game it.
+
+9
+00:00:37,577 --> 00:00:41,199
+But when a task has a known answer, we do not need it.
+
+10
+00:00:41,449 --> 00:00:45,559
+Math answers can be compared; code can run unit tests.
+
+11
+00:00:45,809 --> 00:00:50,133
+A reward from a deterministic program is a verifiable reward.
+
+12
+00:00:50,383 --> 00:00:54,506
+Reinforcement learning with it is called RLVR.
+
+13
+00:00:54,756 --> 00:01:00,058
+Sparse but reliable: one for right, zero for wrong, no middle.
+
+14
+00:01:02,708 --> 00:01:06,743
+Why did reasoning break through in math and code first?
+
+15
+00:01:06,993 --> 00:01:11,220
+Not because they are nobler, but because they grade themselves.
+
+16
+00:01:11,470 --> 00:01:16,136
+Same in school: workbooks self-check, essays need a teacher.
+
+17
+00:01:16,386 --> 00:01:20,607
+A verifier is a caliper: it measures length, it does not flatter.
+
+18
+00:01:20,857 --> 00:01:25,155
+So its score cannot be talked up by a confident paragraph.
+
+19
+00:01:25,405 --> 00:01:29,185
+The reward can be simple, simple enough to be right or wrong.
+
+20
+00:01:31,835 --> 00:01:36,771
+The R1-Zero experiment was bold to the point of being reckless.
+
+21
+00:01:37,021 --> 00:01:40,392
+Take a base model that never had any supervised fine-tuning.
+
+22
+00:01:40,642 --> 00:01:44,811
+Put it straight into reinforcement learning with two rewards.
+
+23
+00:01:45,061 --> 00:01:48,840
+One checks the answer, one checks the format.
+
+24
+00:01:49,090 --> 00:01:52,693
+Never say think step by step, never show a worked example.
+
+25
+00:01:52,943 --> 00:01:56,910
+Not even a hint; it just waits for the model to get answers right.
+
+26
+00:01:57,160 --> 00:02:00,738
+Teaching reasoning was replaced by rewarding its result.
+
+27
+00:02:03,388 --> 00:02:07,140
+At the start, its answers were only a few hundred tokens long.
+
+28
+00:02:07,390 --> 00:02:11,649
+Later they grew to several thousand, and kept growing.
+
+29
+00:02:11,899 --> 00:02:16,849
+It began to check itself, go back, and retry with another method.
+
+30
+00:02:17,099 --> 00:02:22,232
+The paper records a moment: it stops and says, wait, let me rethink.
+
+31
+00:02:22,482 --> 00:02:26,055
+The paper calls this instant the model's aha moment.
+
+32
+00:02:26,305 --> 00:02:32,606
+On AIME 2024, the base sat near 15.6%; Zero reached 71.0%.
+
+33
+00:02:32,856 --> 00:02:39,106
+The full R1 reached 79.8%, and 86.7% with majority voting.
+
+34
+00:02:41,756 --> 00:02:47,379
+RLHF usually uses PPO, and PPO needs a value network as critic.
+
+35
+00:02:47,629 --> 00:02:52,552
+That critic is as large as the policy, so memory roughly doubles.
+
+36
+00:02:52,802 --> 00:02:57,406
+GRPO says: drop the critic, rank answers inside one group.
+
+37
+00:02:57,656 --> 00:03:02,584
+Sample eight answers to one question, then measure relative advantage.
+
+38
+00:03:02,834 --> 00:03:06,919
+Subtract the group mean, divide by the standard deviation.
+
+39
+00:03:07,169 --> 00:03:12,099
+Subtracting the mean keeps the gradient unbiased and cuts variance.
+
+40
+00:03:12,349 --> 00:03:17,545
+All right or all wrong means zero advantage; match the difficulty.
+
+41
+00:03:17,795 --> 00:03:21,573
+This is the zone of proximal development, in another guise.
+
+42
+00:03:24,223 --> 00:03:28,820
+R1-Zero had two flaws: mixed languages and poor readability.
+
+43
+00:03:29,070 --> 00:03:33,508
+So the released R1 did not use it directly, but added four stages.
+
+44
+00:03:33,758 --> 00:03:38,284
+Stage one, cold start: a few thousand long chains, teaching format.
+
+45
+00:03:38,534 --> 00:03:42,840
+Stage two, reasoning RL: the same accuracy and format rewards.
+
+46
+00:03:43,090 --> 00:03:48,273
+Stage three, rejection sampling: keep verified answers, then fine-tune.
+
+47
+00:03:48,523 --> 00:03:53,791
+Stage four, general RL: add helpfulness and harmlessness rewards.
+
+48
+00:03:54,041 --> 00:03:58,430
+Cold start does not teach reasoning; it gives RL a stable start.
+
+49
+00:04:01,080 --> 00:04:06,025
+Rejection sampling lets the model teach itself with its own successes.
+
+50
+00:04:06,275 --> 00:04:11,991
+This is self-distillation: sample widely, filter hard, keep the winners.
+
+51
+00:04:12,241 --> 00:04:16,875
+Why not use Zero directly? Because it is strong but hard to ship.
+
+52
+00:04:17,125 --> 00:04:21,554
+Mixed languages and messy format cannot be delivered as a product.
+
+53
+00:04:21,804 --> 00:04:26,962
+Cold start fixes format, rejection sampling fixes data, RL fixes ability.
+
+54
+00:04:27,212 --> 00:04:30,960
+After four stages, ability becomes something you can ship.
+
+55
+00:04:33,610 --> 00:04:37,034
+The R1 paper reports one more counterintuitive finding.
+
+56
+00:04:37,284 --> 00:04:42,909
+Direct RLVR on a small model works far worse than distillation.
+
+57
+00:04:43,159 --> 00:04:47,116
+The recipe: let R1 generate many answers with reasoning traces.
+
+58
+00:04:47,366 --> 00:04:51,266
+Then fine-tune small Qwen and Llama models on those traces.
+
+59
+00:04:51,516 --> 00:04:55,645
+The R1-Distill family runs from 1.5B to 70B parameters.
+
+60
+00:04:55,895 --> 00:05:00,180
+On math benchmarks they far outperform same-size originals.
+
+61
+00:05:00,430 --> 00:05:05,840
+Distillation copies the process; RL makes the model discover it.
+
+62
+00:05:08,490 --> 00:05:12,796
+Many people read that aha moment as a story of sudden awakening.
+
+63
+00:05:13,046 --> 00:05:17,351
+But mechanically it is still long accumulation shaped by reward.
+
+64
+00:05:17,601 --> 00:05:22,257
+Thorndike said it in 1911: behavior with good results gets reinforced.
+
+65
+00:05:22,507 --> 00:05:26,809
+Kohler's chimpanzee insight looks alike but is not the same thing.
+
+66
+00:05:27,059 --> 00:05:30,859
+Looking like insight does not mean it is not trial and error.
+
+67
+00:05:31,109 --> 00:05:34,892
+Reward design and scale are the two real preconditions.
+
+68
+00:05:37,542 --> 00:05:42,289
+RLVR has a hard boundary: it works only where you can verify.
+
+69
+00:05:42,539 --> 00:05:47,165
+Novels, strategy, comforting a friend: no automatic verifier.
+
+70
+00:05:47,415 --> 00:05:53,251
+The verifier can be hacked: check format only, get format only.
+
+71
+00:05:53,501 --> 00:05:57,964
+Too few test cases, and the model overfits the tests.
+
+72
+00:05:58,214 --> 00:06:02,294
+Then length inflation: write longer, hit the answer by luck.
+
+73
+00:06:02,544 --> 00:06:07,205
+Over-optimizing math can hurt general chat; that is the alignment tax.
+
+74
+00:06:07,455 --> 00:06:11,910
+Then readability: pure-RL reasoning may be unreadable to us.
+
+75
+00:06:12,160 --> 00:06:17,393
+Goodhart's law: once a metric becomes a target, it stops being good.
+
+76
+00:06:20,043 --> 00:06:24,102
+Put chapters 9 and 10 together, and three routes appear.
+
+77
+00:06:24,352 --> 00:06:29,218
+Route one, prompting: ask it in the input to think step by step.
+
+78
+00:06:29,468 --> 00:06:35,128
+Route two, search: sample many, vote, or run tree search.
+
+79
+00:06:35,378 --> 00:06:39,872
+Route three, training: write the reasoning policy into the weights.
+
+80
+00:06:40,122 --> 00:06:45,566
+Training pays up front, search pays per use: one floor, one ceiling.
+
+81
+00:06:45,816 --> 00:06:49,575
+The three stack; they do not replace each other.
+
+82
+00:06:52,225 --> 00:06:55,773
+The throughline of this chapter is a single swap of reward.
+
+83
+00:06:56,023 --> 00:06:59,983
+From humans liking it, to answers being verifiably right.
+
+84
+00:07:00,233 --> 00:07:04,716
+R1-Zero proved it works; GRPO made it cheaper.
+
+85
+00:07:04,966 --> 00:07:08,518
+The pipeline and distillation made it shippable.
+
+86
+00:07:08,768 --> 00:07:14,220
+But reasoning models are costly: must all 671B parameters fire?
+
+87
+00:07:14,470 --> 00:07:18,744
+Next: efficiency, MoE, attention compression, linear architectures.

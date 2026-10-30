@@ -1,0 +1,669 @@
+{
+  "total": 439.134,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "14.0",
+      "zh": "它做对了，然后呢",
+      "en": "RIGHT, BUT WHY?",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "一个模型答对了题，你就真的理解它了吗？",
+          "en": "A model gets the answer right. Do you understand it?",
+          "start": 1.6,
+          "end": 4.699
+        },
+        {
+          "zh": "它可能真会算，也可能只是背过这道题的答案。",
+          "en": "It may truly compute, or it may have memorized the answer.",
+          "start": 5.199,
+          "end": 9.047
+        },
+        {
+          "zh": "行为评测告诉你它做对了，却不告诉你为什么。",
+          "en": "Behaviour tests tell you it worked, not why it worked.",
+          "start": 9.547,
+          "end": 13.694
+        },
+        {
+          "zh": "机制可解释性想做的，是把网络反向工程成算法。",
+          "en": "Mechanistic interpretability reverse-engineers the network into an algorithm.",
+          "start": 14.194,
+          "end": 18.66
+        },
+        {
+          "zh": "不是问哪个输入重要，而是问内部执行了什么计算。",
+          "en": "Not which input mattered, but what computation ran inside.",
+          "start": 19.16,
+          "end": 23.578
+        },
+        {
+          "zh": "这一章，我们试着把这只黑箱打开一条缝。",
+          "en": "This chapter tries to crack the black box open, just a little.",
+          "start": 24.078,
+          "end": 27.891
+        }
+      ],
+      "end": 28.891
+    },
+    {
+      "id": "behaviour",
+      "code": "14.1",
+      "zh": "做对不等于看懂",
+      "en": "BEHAVIOUR VS MECHANISM",
+      "start": 28.891,
+      "lines": [
+        {
+          "zh": "第 13 章教我们从外部判断模型行不行。",
+          "en": "Chapter 13 judged models from the outside.",
+          "start": 30.791,
+          "end": 34.486
+        },
+        {
+          "zh": "但外部行为有个根本局限：不知道它何时会错。",
+          "en": "But behaviour has a blind spot: you cannot see when it will fail.",
+          "start": 34.986,
+          "end": 39.04
+        },
+        {
+          "zh": "同样的正确答案，可能来自计算，也可能来自记忆。",
+          "en": "The same right answer can come from computation or memory.",
+          "start": 39.54,
+          "end": 43.873
+        },
+        {
+          "zh": "在安全攸关的场景，这个区别至关重要。",
+          "en": "In safety-critical settings, that difference matters.",
+          "start": 44.373,
+          "end": 47.837
+        },
+        {
+          "zh": "行为评测给你分数，机制理解给你计算过程。",
+          "en": "Evaluation gives a score; mechanistic insight gives the computation.",
+          "start": 48.337,
+          "end": 52.235
+        },
+        {
+          "zh": "一个问它做对没有，一个问它究竟怎么做的。",
+          "en": "One asks whether it worked; the other asks how.",
+          "start": 52.735,
+          "end": 56.398
+        }
+      ],
+      "end": 57.398
+    },
+    {
+      "id": "levels",
+      "code": "14.2",
+      "zh": "三个层次",
+      "en": "THREE LEVELS",
+      "start": 57.398,
+      "lines": [
+        {
+          "zh": "那从哪里看起？最朴素的想法是看单个神经元。",
+          "en": "Where do we look? The simplest idea is a single neuron.",
+          "start": 59.298,
+          "end": 63.797
+        },
+        {
+          "zh": "层次一：神经元，一个神经元对一个概念。",
+          "en": "Level one: a neuron, one concept per neuron.",
+          "start": 64.297,
+          "end": 68.221
+        },
+        {
+          "zh": "层次二：特征，它是激活空间里的一个方向。",
+          "en": "Level two: a feature, a direction in activation space.",
+          "start": 68.721,
+          "end": 72.53
+        },
+        {
+          "zh": "特征可以是法律文本，也可以是名词，粒度可粗可细。",
+          "en": "A feature can be legal text or a noun, coarse or fine.",
+          "start": 73.03,
+          "end": 77.692
+        },
+        {
+          "zh": "线性表示假设认为，概念大致对应方向。",
+          "en": "The linear representation hypothesis says concepts map to directions.",
+          "start": 78.192,
+          "end": 81.759
+        },
+        {
+          "zh": "层次三：电路，是特征与注意力头连成的子程序。",
+          "en": "Level three: a circuit, features and heads wired into a subroutine.",
+          "start": 82.259,
+          "end": 86.741
+        },
+        {
+          "zh": "可解释性的圣杯，是把模型拆成可命名的子程序。",
+          "en": "The holy grail: break the model into nameable subroutines.",
+          "start": 87.241,
+          "end": 91.61
+        }
+      ],
+      "end": 92.61
+    },
+    {
+      "id": "polysemantic",
+      "code": "14.3",
+      "zh": "多义神经元",
+      "en": "POLYSEMANTIC NEURONS",
+      "start": 92.61,
+      "lines": [
+        {
+          "zh": "但把神经元当成概念，很快就出了问题。",
+          "en": "But treating a neuron as a concept soon breaks down.",
+          "start": 94.51,
+          "end": 97.802
+        },
+        {
+          "zh": "同一个神经元，会对猫、Python 代码、韩文都响应。",
+          "en": "One neuron responds to cats, Python code and Korean.",
+          "start": 98.302,
+          "end": 102.635
+        },
+        {
+          "zh": "这种神经元叫多义神经元，它不是例外，而是常态。",
+          "en": "This is a polysemantic neuron, the rule rather than the exception.",
+          "start": 103.135,
+          "end": 107.901
+        },
+        {
+          "zh": "原因不是混乱，而是下一节要讲的叠加。",
+          "en": "The cause is not chaos but superposition.",
+          "start": 108.401,
+          "end": 111.794
+        },
+        {
+          "zh": "一个神经元被很多特征共用，读它自然读不准。",
+          "en": "Many features share one neuron, so reading it is unreliable.",
+          "start": 112.294,
+          "end": 116.472
+        },
+        {
+          "zh": "所以更好的单位不是神经元，而是方向。",
+          "en": "So the better unit is a direction, not a neuron.",
+          "start": 116.972,
+          "end": 120.714
+        }
+      ],
+      "end": 121.714
+    },
+    {
+      "id": "superposition",
+      "code": "14.4",
+      "zh": "叠加",
+      "en": "SUPERPOSITION",
+      "start": 121.714,
+      "lines": [
+        {
+          "zh": "模型的激活空间只有 d 维，比如四千零九十六维。",
+          "en": "The activation space has only d dimensions, say 4,096.",
+          "start": 123.614,
+          "end": 127.952
+        },
+        {
+          "zh": "但它要表示的特征，可能有几万、几十万个。",
+          "en": "But the features it must represent may number in the tens of thousands.",
+          "start": 128.452,
+          "end": 132.286
+        },
+        {
+          "zh": "d 维空间里，最多只有 d 个互相正交的方向。",
+          "en": "A d-dimensional space holds at most d orthogonal directions.",
+          "start": 132.786,
+          "end": 136.382
+        },
+        {
+          "zh": "那多出来的那些特征，到底要往哪里放呢？",
+          "en": "So where do the extra features go?",
+          "start": 136.882,
+          "end": 140.181
+        },
+        {
+          "zh": "答案是允许轻微干扰，只要特征足够稀疏。",
+          "en": "The answer: allow slight interference, as long as features are sparse.",
+          "start": 140.681,
+          "end": 144.578
+        },
+        {
+          "zh": "每个输入只激活少数特征，就能塞进近似正交的方向。",
+          "en": "Each input activates few features, so near-orthogonal directions fit.",
+          "start": 145.078,
+          "end": 149.755
+        },
+        {
+          "zh": "代价是特征互相干扰，这也解释了模型的一些怪错。",
+          "en": "The price is interference, which explains some odd model errors.",
+          "start": 150.255,
+          "end": 154.759
+        },
+        {
+          "zh": "2022 年的玩具模型实验，还看到了突然的相变。",
+          "en": "A 2022 toy-model experiment also showed a sudden phase transition.",
+          "start": 155.259,
+          "end": 159.304
+        }
+      ],
+      "end": 160.304
+    },
+    {
+      "id": "sae",
+      "code": "14.5",
+      "zh": "稀疏自编码器",
+      "en": "SPARSE AUTOENCODER",
+      "start": 160.304,
+      "lines": [
+        {
+          "zh": "如果激活是多个特征的叠加，就需要一个解混器。",
+          "en": "If activations are superposed features, we need a demixer.",
+          "start": 162.204,
+          "end": 165.996
+        },
+        {
+          "zh": "稀疏自编码器就是干这个的：先把激活编码到更高维。",
+          "en": "A sparse autoencoder does this: encode to a higher dimension first.",
+          "start": 166.496,
+          "end": 171.289
+        },
+        {
+          "zh": "得到一组稀疏特征，再解码重建原来的激活。",
+          "en": "It yields sparse features, then decodes to reconstruct the activation.",
+          "start": 171.789,
+          "end": 175.593
+        },
+        {
+          "zh": "训练目标有两项：重建误差要小，特征要尽量稀疏。",
+          "en": "Training has two goals: small reconstruction error, sparse features.",
+          "start": 176.093,
+          "end": 181.012
+        },
+        {
+          "zh": "写成公式，就是重建误差加上 L1 正则。",
+          "en": "In a formula: reconstruction error plus an L1 penalty.",
+          "start": 181.512,
+          "end": 185.434
+        },
+        {
+          "zh": "L1 会惩罚非零特征，逼着模型只留少数几个。",
+          "en": "L1 punishes non-zero features, forcing the model to keep few.",
+          "start": 185.934,
+          "end": 190.408
+        },
+        {
+          "zh": "维度升高，特征变稀，混合物就被拆开了。",
+          "en": "Higher dimension, sparser features: the mixture comes apart.",
+          "start": 190.908,
+          "end": 194.713
+        }
+      ],
+      "end": 195.713
+    },
+    {
+      "id": "toymodel",
+      "code": "14.6",
+      "zh": "玩具模型上的实验",
+      "en": "512 NEURONS",
+      "start": 195.713,
+      "lines": [
+        {
+          "zh": "2023 年，Bricken 等人在一个玩具模型上试了这件事。",
+          "en": "In 2023, Bricken and colleagues tried this on a toy model.",
+          "start": 197.613,
+          "end": 202.443
+        },
+        {
+          "zh": "那个模型只有 512 个神经元，是单层 Transformer。",
+          "en": "That model had just 512 neurons and one Transformer layer.",
+          "start": 202.943,
+          "end": 207.556
+        },
+        {
+          "zh": "训练出的 SAE，得到了数千个可解释特征。",
+          "en": "The trained SAE produced thousands of interpretable features.",
+          "start": 208.056,
+          "end": 211.769
+        },
+        {
+          "zh": "DNA 序列、希伯来文、HTTP 请求、数学符号，都有。",
+          "en": "DNA sequences, Hebrew, HTTP requests, math symbols.",
+          "start": 212.269,
+          "end": 217.706
+        },
+        {
+          "zh": "关键是，这些特征比原始神经元单义得多。",
+          "en": "Crucially, these features are far more monosemantic than neurons.",
+          "start": 218.206,
+          "end": 221.955
+        },
+        {
+          "zh": "这像色谱分析：让激活过柱子，把成分按稀疏性分开。",
+          "en": "Like chromatography: pass activations through a column and separate them.",
+          "start": 222.455,
+          "end": 227.336
+        }
+      ],
+      "end": 228.336
+    },
+    {
+      "id": "induction",
+      "code": "14.7",
+      "zh": "照抄前文的电路",
+      "en": "INDUCTION HEAD",
+      "start": 228.336,
+      "lines": [
+        {
+          "zh": "可解释性最漂亮的成果之一，是归纳头，它解释了上下文学习的一部分机制。",
+          "en": "A prettiest result: the induction head, explaining part of in-context learning.",
+          "start": 230.236,
+          "end": 236.638
+        },
+        {
+          "zh": "任务很简单：给模型一个重复序列，让它续写。",
+          "en": "The task is simple: give the model a repeated sequence to continue.",
+          "start": 237.138,
+          "end": 241.127
+        },
+        {
+          "zh": "前面出现过四个字母，后面又重复了前三个。",
+          "en": "Four letters appeared before, then the first three repeat.",
+          "start": 241.627,
+          "end": 245.496
+        },
+        {
+          "zh": "模型该预测第四个，机制是两个注意力头的组合。",
+          "en": "The model should predict the fourth; two attention heads do it.",
+          "start": 245.996,
+          "end": 250.24
+        },
+        {
+          "zh": "第一个是前一个 token 头，它记住我前面是什么。",
+          "en": "The first is the previous-token head: it records what came before.",
+          "start": 250.74,
+          "end": 254.318
+        },
+        {
+          "zh": "第二个是归纳头，拿这个信息去匹配历史位置。",
+          "en": "The second is the induction head; it matches that against history.",
+          "start": 254.818,
+          "end": 258.817
+        },
+        {
+          "zh": "匹配到之后，就把那个位置后面的内容取过来。",
+          "en": "Once matched, it copies what followed that earlier position.",
+          "start": 259.317,
+          "end": 262.949
+        },
+        {
+          "zh": "两个头一组合，就实现了照抄前文的模式。",
+          "en": "Together the two heads implement copying the earlier pattern.",
+          "start": 263.449,
+          "end": 267.011
+        },
+        {
+          "zh": "这个电路是涌现的，它的形成与损失突然下降高度相关。",
+          "en": "The circuit is emergent, and its birth tracks a sudden loss drop.",
+          "start": 267.511,
+          "end": 272.432
+        }
+      ],
+      "end": 273.432
+    },
+    {
+      "id": "toolbox",
+      "code": "14.8",
+      "zh": "三件常用工具",
+      "en": "THE TOOLBOX",
+      "start": 273.432,
+      "lines": [
+        {
+          "zh": "除了 SAE 与电路分析，还有三件常用工具。",
+          "en": "Beyond SAEs and circuits, three tools are common.",
+          "start": 275.332,
+          "end": 279.217
+        },
+        {
+          "zh": "第一件是线性探针，在某一层激活上训一个分类器。",
+          "en": "First, a linear probe: train a classifier on one layer's activations.",
+          "start": 279.717,
+          "end": 284.074
+        },
+        {
+          "zh": "能解码，说明信息在那里，但不能说明模型用了它。",
+          "en": "If it decodes, the information is there, but not necessarily used.",
+          "start": 284.574,
+          "end": 289.225
+        },
+        {
+          "zh": "第二件是激活修补，把一段输入的激活换成另一段。",
+          "en": "Second, activation patching: swap one input's activations for another's.",
+          "start": 289.725,
+          "end": 294.045
+        },
+        {
+          "zh": "这是因果证据，而不只是统计上的相关关系。",
+          "en": "That is causal evidence, not mere correlation.",
+          "start": 294.545,
+          "end": 298.308
+        },
+        {
+          "zh": "第三件是 logit lens，把中间层激活直接投影到词表。",
+          "en": "Third, the logit lens: project mid-layer activations onto the vocabulary.",
+          "start": 298.808,
+          "end": 303.681
+        },
+        {
+          "zh": "它让你看到，模型的预测是逐层细化的。",
+          "en": "It shows the prediction being refined layer by layer.",
+          "start": 304.181,
+          "end": 307.652
+        }
+      ],
+      "end": 308.652
+    },
+    {
+      "id": "rome",
+      "code": "14.9",
+      "zh": "改一个事实",
+      "en": "ROME",
+      "start": 308.652,
+      "lines": [
+        {
+          "zh": "ROME 把激活修补，用成了一次精准手术。",
+          "en": "ROME turns activation patching into precise surgery.",
+          "start": 310.552,
+          "end": 313.832
+        },
+        {
+          "zh": "它先定位事实关联存在哪些 MLP 层。",
+          "en": "It first locates which MLP layers hold a factual association.",
+          "start": 314.332,
+          "end": 317.91
+        },
+        {
+          "zh": "找到位置之后，就直接编辑那一层的权重。",
+          "en": "Then it edits the weights of that layer directly.",
+          "start": 318.41,
+          "end": 321.734
+        },
+        {
+          "zh": "比如把埃菲尔铁塔在巴黎，改成在罗马。",
+          "en": "For example, moving the Eiffel Tower from Paris to Rome.",
+          "start": 322.234,
+          "end": 325.628
+        },
+        {
+          "zh": "模型会照着你改的答案回答，看起来很像成功。",
+          "en": "The model answers as edited, and it looks like success.",
+          "start": 326.128,
+          "end": 330.203
+        },
+        {
+          "zh": "但能改对一个事实，不等于改对了推理。",
+          "en": "But editing one fact is not editing the reasoning.",
+          "start": 330.703,
+          "end": 333.873
+        },
+        {
+          "zh": "编辑有边界，知道它在算什么，也不等于能改对它。",
+          "en": "Editing has limits: knowing the computation is not controlling it.",
+          "start": 334.373,
+          "end": 338.633
+        }
+      ],
+      "end": 339.633
+    },
+    {
+      "id": "limits",
+      "code": "14.10",
+      "zh": "黑箱只开了条缝",
+      "en": "LIMITS",
+      "start": 339.633,
+      "lines": [
+        {
+          "zh": "机制可解释性很迷人，但离完全理解还很远。",
+          "en": "Mechanistic interpretability is fascinating, but far from full understanding.",
+          "start": 341.533,
+          "end": 345.46
+        },
+        {
+          "zh": "第一是规模：SAE 在 512 个神经元的玩具上有效。",
+          "en": "First, scale: SAEs work on a toy model with 512 neurons.",
+          "start": 345.96,
+          "end": 350.598
+        },
+        {
+          "zh": "到了几千亿参数的模型，特征数量与成本都爆炸。",
+          "en": "At hundreds of billions of parameters, features and costs explode.",
+          "start": 351.098,
+          "end": 355.281
+        },
+        {
+          "zh": "第二是特征不完备：SAE 找到的只是可解释的部分。",
+          "en": "Second, features are incomplete: SAEs find the interpretable part.",
+          "start": 355.781,
+          "end": 360.24
+        },
+        {
+          "zh": "第三是电路组合爆炸：特征之间的连接是稠密图。",
+          "en": "Third, circuits explode combinatorially; connections form a dense graph.",
+          "start": 360.74,
+          "end": 365.333
+        },
+        {
+          "zh": "不是所有电路都能命名，很多计算还没有名字。",
+          "en": "Not every circuit can be named; much computation has no name yet.",
+          "start": 365.833,
+          "end": 369.604
+        },
+        {
+          "zh": "第四是叙事偏差：看起来合理，不等于机制正确。",
+          "en": "Fourth, narrative bias: plausible is not the same as correct.",
+          "start": 370.104,
+          "end": 374.449
+        },
+        {
+          "zh": "这和思维链不忠实，其实是同一类风险。",
+          "en": "This is the same risk as unfaithful chain-of-thought.",
+          "start": 374.949,
+          "end": 378.382
+        }
+      ],
+      "end": 379.382
+    },
+    {
+      "id": "safety",
+      "code": "14.11",
+      "zh": "能替代评测吗",
+      "en": "SAFETY",
+      "start": 379.382,
+      "lines": [
+        {
+          "zh": "最后一个问题：可解释性能替代评测与对齐吗？",
+          "en": "One last question: can interpretability replace evaluation and alignment?",
+          "start": 381.282,
+          "end": 385.409
+        },
+        {
+          "zh": "不能，它能提供的是证据，而不是保证。",
+          "en": "No. It offers evidence, not a guarantee.",
+          "start": 385.909,
+          "end": 389.332
+        },
+        {
+          "zh": "评测告诉你行为边界，对齐告诉你该怎么训练。",
+          "en": "Evaluation maps behaviour; alignment decides how to train.",
+          "start": 389.832,
+          "end": 393.908
+        },
+        {
+          "zh": "可解释性告诉你内部在算什么，三件事不能互相替代。",
+          "en": "Interpretability shows the computation; the three cannot replace each other.",
+          "start": 394.408,
+          "end": 398.994
+        },
+        {
+          "zh": "而且一段解释可读，并不等于因果上完整。",
+          "en": "And readable explanations are not causally complete.",
+          "start": 399.494,
+          "end": 403.259
+        },
+        {
+          "zh": "一段漂亮的叙事，可能只是看起来像机制。",
+          "en": "A tidy story may only look like a mechanism.",
+          "start": 403.759,
+          "end": 407.188
+        }
+      ],
+      "end": 408.188
+    },
+    {
+      "id": "outro",
+      "code": "14.12",
+      "zh": "下一站：智能体",
+      "en": "NEXT: AGENTS",
+      "start": 408.188,
+      "lines": [
+        {
+          "zh": "这一章的一句话：把网络反向工程成算法。",
+          "en": "In one sentence: reverse-engineer the network into an algorithm.",
+          "start": 410.088,
+          "end": 413.758
+        },
+        {
+          "zh": "神经元不可靠，特征更像单位，电路才是子程序。",
+          "en": "Neurons mislead, features are better units, circuits are subroutines.",
+          "start": 414.258,
+          "end": 418.897
+        },
+        {
+          "zh": "叠加解释了多义，SAE 试着解混，归纳头给出了实例。",
+          "en": "Superposition explains polysemanticity; SAEs demix; induction heads show a circuit.",
+          "start": 419.397,
+          "end": 424.357
+        },
+        {
+          "zh": "但黑箱只打开了一条缝，远没有完全打开。",
+          "en": "But the box is only slightly open, far from fully open.",
+          "start": 424.857,
+          "end": 428.346
+        },
+        {
+          "zh": "下一章，我们把这些零件组装成智能体。",
+          "en": "Next, we assemble these parts into agents.",
+          "start": 428.846,
+          "end": 432.515
+        },
+        {
+          "zh": "看看它们能做什么，以及前沿又在哪里。",
+          "en": "What they can do, and where the frontier lies.",
+          "start": 433.015,
+          "end": 436.134
+        }
+      ],
+      "end": 439.134
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "00",
+      "zh": "开场",
+      "en": "INTRO",
+      "lines": [
+        ["你有没有想过，{{TITLE}} 到底在解决什么问题？", "Have you ever wondered what {{TITLE}} is really for?"],
+        ["这一期，我们从一个问题出发，把它拆成可以理解的三步。", "This episode starts from one question and splits it into three understandable steps."]
+      ]
+    },
+    {
+      "id": "idea",
+      "code": "01",
+      "zh": "核心直觉",
+      "en": "THE IDEA",
+      "lines": [
+        ["先记住一句话：{{ONE_LINE}}", "Start with one sentence: {{ONE_LINE_EN}}"],
+        ["这句话有三个关键词。", "That sentence has three key words."],
+        ["第一个关键词是 {{KEY1}}。", "The first key word is {{KEY1_EN}}."],
+        ["第二个关键词是 {{KEY2}}。", "The second key word is {{KEY2_EN}}."],
+        ["第三个关键词是 {{KEY3}}。", "The third key word is {{KEY3_EN}}."]
+      ]
+    },
+    {
+      "id": "math",
+      "code": "02",
+      "zh": "写成公式",
+      "en": "THE FORMULA",
+      "lines": [
+        ["把直觉写成公式，只需要三样东西。", "Turning the intuition into a formula takes three things."],
+        ["左边是我们要算的量，右边是已知条件。", "The left side is what we compute; the right side is what we know."],
+        ["中间这个符号，就是把两者联系起来的桥。", "The symbol in the middle is the bridge between them."]
+      ]
+    },
+    {
+      "id": "steps",
+      "code": "03",
+      "zh": "怎么用",
+      "en": "HOW TO USE",
+      "lines": [
+        ["实际使用时，可以按三步走。", "In practice, use three steps."],
+        ["第一步，先把问题写成可计算的形式。", "First, write the problem in a computable form."],
+        ["第二步，代入已知条件，算出结果。", "Second, plug in what you know and compute."],
+        ["第三步，检查结果是否合理。", "Third, check whether the result makes sense."]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "04",
+      "zh": "下一站",
+      "en": "NEXT",
+      "lines": [
+        ["这一期，我们把 {{TITLE}} 拆成了一句话、一个公式、三个步骤。", "This episode reduced {{TITLE}} to one sentence, one formula, and three steps."],
+        ["下一章，我们继续往深处走。我们下期见。", "Next chapter, we go one level deeper. See you next time."]
+      ]
+    }
+  ]
+}

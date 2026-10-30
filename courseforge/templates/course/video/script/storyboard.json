@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "{{TITLE}} 教程",
+  "chapterLabel": "第 1 章 · {{TITLE}}",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "COURSE 01",
+      "title": "{{TITLE}}",
+      "highlight": "{{HIGHLIGHT}}",
+      "subtitle": "{{ONE_LINE}}",
+      "pills": ["一句话", "一个公式", "三个步骤"]
+    },
+    {
+      "id": "idea",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THE IDEA",
+      "title": "先记住一句话",
+      "items": [
+        {"icon": "①", "title": "{{KEY1}}", "sub": "{{KEY1_SUB}}", "color": "orange"},
+        {"icon": "②", "title": "{{KEY2}}", "sub": "{{KEY2_SUB}}", "color": "blue"},
+        {"icon": "③", "title": "{{KEY3}}", "sub": "{{KEY3_SUB}}", "color": "green"}
+      ]
+    },
+    {
+      "id": "math",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "THE FORMULA",
+      "title": "把直觉写成公式",
+      "formula": "{{FORMULA}}",
+      "note": "{{FORMULA_NOTE}}",
+      "bullets": ["左边：要算的量", "右边：已知条件", "中间：把两者连起来"]
+    },
+    {
+      "id": "steps",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "HOW TO USE",
+      "title": "实际使用时，按三步走",
+      "steps": [
+        {"title": "写成可计算的形式", "sub": "定义输入与输出"},
+        {"title": "代入并计算", "sub": "只用已知条件"},
+        {"title": "检查结果", "sub": "量纲、范围、直觉"}
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT",
+      "title": "下一章，继续往深处走",
+      "subtitle": "一句话 · 一个公式 · 三个步骤",
+      "pills": ["下期见", "See you next time"]
+    }
+  ]
+}

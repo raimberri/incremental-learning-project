@@ -1,0 +1,355 @@
+1
+00:00:01,600 --> 00:00:05,670
+This chapter asks one question: how do models get cheaper?
+
+2
+00:00:05,920 --> 00:00:10,368
+Parameters kept growing, and so did the bill.
+
+3
+00:00:10,618 --> 00:00:14,486
+But big mixes three very different kinds of cost.
+
+4
+00:00:14,736 --> 00:00:19,579
+Each is limited by compute, latency or memory, with different fixes.
+
+5
+00:00:19,829 --> 00:00:24,383
+We cover mixture of experts, attention compression and FlashAttention.
+
+6
+00:00:24,633 --> 00:00:29,034
+One thread runs through it all: dense compute becomes structured sparsity.
+
+7
+00:00:31,684 --> 00:00:35,737
+Split the costs first, or you optimise the wrong thing.
+
+8
+00:00:35,987 --> 00:00:40,597
+Training is paid once, limited by compute, data and power.
+
+9
+00:00:40,847 --> 00:00:45,205
+Inference is paid on every call, limited by compute and latency.
+
+10
+00:00:45,455 --> 00:00:50,723
+Memory is paid in both, holding weights, activations and caches.
+
+11
+00:00:50,973 --> 00:00:54,983
+Chapter 7 covered training; this chapter covers inference and memory.
+
+12
+00:00:55,233 --> 00:01:00,292
+Once a model ships, inference cost far exceeds training cost.
+
+13
+00:01:00,542 --> 00:01:04,116
+Train once, then serve it billions of times.
+
+14
+00:01:06,766 --> 00:01:11,382
+Where do the weights go? Inside each block, the FFN takes most.
+
+15
+00:01:11,632 --> 00:01:15,581
+Its parameter count is on the order of four d squared.
+
+16
+00:01:15,831 --> 00:01:19,534
+Mixture of experts splits it into E smaller experts.
+
+17
+00:01:19,784 --> 00:01:24,177
+Each token visits only k of them; the rest never compute.
+
+18
+00:01:24,427 --> 00:01:28,958
+A router scores every expert, then keeps the top k.
+
+19
+00:01:29,208 --> 00:01:33,596
+The output is a weighted sum over those few; all other weights are zero.
+
+20
+00:01:33,846 --> 00:01:38,619
+So total parameters can be huge while active parameters stay tiny.
+
+21
+00:01:41,269 --> 00:01:44,990
+This is not theory; two models show the gap.
+
+22
+00:01:45,240 --> 00:01:48,963
+Switch Transformer sends each token to exactly one expert.
+
+23
+00:01:49,213 --> 00:01:54,828
+It reached 1.6 trillion parameters, training about 7x faster at equal compute.
+
+24
+00:01:55,078 --> 00:01:58,589
+DeepSeek-V3 holds 671 billion parameters in total.
+
+25
+00:01:58,839 --> 00:02:03,610
+Yet each token activates only 37 billion, under six percent.
+
+26
+00:02:03,860 --> 00:02:09,989
+It trained on 14.8 trillion tokens, using about 2.788 million H800 hours.
+
+27
+00:02:10,239 --> 00:02:15,249
+A big model stored, a small model computed: that is the payoff.
+
+28
+00:02:17,899 --> 00:02:20,964
+MoE has an engineering problem hidden in the router.
+
+29
+00:02:21,214 --> 00:02:26,535
+If the router always picks one expert, the others starve.
+
+30
+00:02:26,785 --> 00:02:31,910
+Stored weights go unused; this imbalance is expert collapse.
+
+31
+00:02:32,160 --> 00:02:36,127
+So training adds a load balancing loss.
+
+32
+00:02:36,377 --> 00:02:41,498
+It penalises uneven usage, like a KPI on the router.
+
+33
+00:02:41,748 --> 00:02:45,315
+Pick well, but also keep every expert busy.
+
+34
+00:02:45,565 --> 00:02:50,524
+As with alignment in Chapter 8, an objective must not be pushed to extremes.
+
+35
+00:02:53,174 --> 00:02:57,036
+Now the most expensive memory in inference: the KV cache.
+
+36
+00:02:57,286 --> 00:03:02,266
+Autoregressive decoding looks back at every earlier token.
+
+37
+00:03:02,516 --> 00:03:07,306
+To avoid recomputing, all past Keys and Values are kept.
+
+38
+00:03:07,556 --> 00:03:13,227
+Its size scales with layers, heads, head width and sequence length.
+
+39
+00:03:13,477 --> 00:03:18,211
+There is a factor of two, since Keys and Values are stored separately.
+
+40
+00:03:18,461 --> 00:03:23,231
+Double the sequence and the cache doubles, and so does the batch.
+
+41
+00:03:23,481 --> 00:03:28,146
+So long context costs memory, not mainly compute.
+
+42
+00:03:30,796 --> 00:03:35,753
+If every head keeps its own Keys and Values, share them instead.
+
+43
+00:03:36,003 --> 00:03:40,419
+MQA shares one set across all heads, cutting the cache by the head count.
+
+44
+00:03:40,669 --> 00:03:45,113
+GQA sits in between: each group of g heads shares one set.
+
+45
+00:03:45,363 --> 00:03:51,401
+The GQA paper reports about 5% of the original pretraining compute.
+
+46
+00:03:51,651 --> 00:03:56,868
+Today's open models, Llama, Mistral and Qwen, mostly use GQA.
+
+47
+00:03:57,118 --> 00:04:02,431
+MLA takes another route, projecting Keys and Values into a low-rank latent.
+
+48
+00:04:02,681 --> 00:04:08,982
+DeepSeek-V2 reports 93.3% less KV cache and 5.76x throughput.
+
+49
+00:04:11,632 --> 00:04:15,544
+FlashAttention attacks a different bottleneck: moving data.
+
+50
+00:04:15,794 --> 00:04:20,837
+A GPU computes fast but moves numbers from memory slowly.
+
+51
+00:04:21,087 --> 00:04:25,795
+Compute outgrew memory bandwidth; the gap is the memory wall.
+
+52
+00:04:26,045 --> 00:04:31,317
+Standard attention writes the n by n score matrix to memory, then rereads it.
+
+53
+00:04:31,567 --> 00:04:35,736
+On long sequences, that traffic costs more than the maths.
+
+54
+00:04:35,986 --> 00:04:43,024
+It tiles Q, K and V, finishing each tile on chip with online softmax.
+
+55
+00:04:43,274 --> 00:04:48,564
+The big intermediate never returns to memory, and the result stays exact.
+
+56
+00:04:48,814 --> 00:04:55,050
+About 15% faster end to end on BERT-large, about 3x on GPT-2, more on long sequences.
+
+57
+00:04:57,700 --> 00:05:02,229
+Attention is a full recording: replay any moment, any time.
+
+58
+00:05:02,479 --> 00:05:07,550
+The price: storage grows with length, compute with its square.
+
+59
+00:05:07,800 --> 00:05:12,192
+A state space model takes notes instead, keeping only a summary.
+
+60
+00:05:12,442 --> 00:05:17,389
+It holds one fixed-size state and updates it per token.
+
+61
+00:05:17,639 --> 00:05:21,727
+Linear time, constant memory, at the cost of detail.
+
+62
+00:05:21,977 --> 00:05:27,010
+Mamba makes A, B and C input-dependent, so memory becomes selective.
+
+63
+00:05:27,260 --> 00:05:32,767
+The paper reports about 5x throughput, matching a model twice its size.
+
+64
+00:05:33,017 --> 00:05:38,786
+So the frontier is hybrid: most layers compress, a few retrieve exactly.
+
+65
+00:05:41,436 --> 00:05:45,175
+You can also save without changing the architecture: look at fine-tuning.
+
+66
+00:05:45,425 --> 00:05:50,679
+Fine-tuning 70 billion parameters means updating all of them; memory cannot cope.
+
+67
+00:05:50,929 --> 00:05:54,465
+LoRA freezes the original weights and learns only a low-rank delta.
+
+68
+00:05:54,715 --> 00:05:59,305
+The delta is a product of two small matrices, with rank r far below d.
+
+69
+00:05:59,555 --> 00:06:04,101
+Trainable parameters drop about 10,000x, memory about 3x.
+
+70
+00:06:04,351 --> 00:06:09,763
+Quality nears full fine-tuning, assuming the task's change is low-rank.
+
+71
+00:06:10,013 --> 00:06:14,433
+Whether that assumption holds is the core dispute over LoRA.
+
+72
+00:06:17,083 --> 00:06:20,742
+Another route is blunter: store every number smaller.
+
+73
+00:06:20,992 --> 00:06:26,316
+Squeeze FP16 weights into INT8, INT4 or even FP8.
+
+74
+00:06:26,566 --> 00:06:32,235
+A highlight of DeepSeek-V3 is FP8 in training, not just inference.
+
+75
+00:06:32,485 --> 00:06:37,706
+The cost is precision, yet networks are naturally robust to noise.
+
+76
+00:06:37,956 --> 00:06:41,952
+Like Dropout, moderate quantisation barely changes results.
+
+77
+00:06:42,202 --> 00:06:47,526
+Good enough depends on the task, so re-evaluate after quantising.
+
+78
+00:06:50,176 --> 00:06:54,263
+Line up this chapter's techniques and one direction appears.
+
+79
+00:06:54,513 --> 00:06:58,628
+Parameters go from all active to top-k active.
+
+80
+00:06:58,878 --> 00:07:02,603
+Attention goes from per-head storage to sharing or compression.
+
+81
+00:07:02,853 --> 00:07:07,238
+Compute goes from memory round-trips to on-chip tiles.
+
+82
+00:07:07,488 --> 00:07:12,463
+The shared theme: structured sparsity approximating dense compute.
+
+83
+00:07:12,713 --> 00:07:17,346
+But sparsity is not free; every saving has a price tag.
+
+84
+00:07:17,596 --> 00:07:23,092
+Routing can collapse, sharing distorts, state forgets, quantisation loses precision.
+
+85
+00:07:25,742 --> 00:07:29,572
+The thread of this chapter: from dense to sparse.
+
+86
+00:07:29,822 --> 00:07:34,908
+MoE saves compute, GQA and MLA save cache, FlashAttention saves traffic.
+
+87
+00:07:35,158 --> 00:07:38,966
+Mamba drops look-back; LoRA and quantisation drop memory.
+
+88
+00:07:39,216 --> 00:07:43,623
+Every saving carries a price; sparsity is not free.
+
+89
+00:07:43,873 --> 00:07:48,229
+Next: how models look things up, RAG and long context.

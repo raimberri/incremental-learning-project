@@ -1,0 +1,340 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 14 章 · 机制可解释性",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 14 · INTERPRETABILITY",
+      "title": "它做对了，然后呢",
+      "highlight": "然后呢",
+      "subtitle": "从行为，到内部计算",
+      "pills": [
+        "行为评测",
+        "反向工程",
+        "神经元",
+        "电路"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 14 章"
+    },
+    {
+      "id": "behaviour",
+      "type": "compare",
+      "accent": "blue",
+      "kicker": "BEHAVIOUR VS MECHANISM",
+      "title": "做对不等于看懂",
+      "highlight": "看懂",
+      "center": "vs",
+      "left": {
+        "title": "行为评测",
+        "sub": "从外面看结果",
+        "items": [
+          {
+            "title": "分数",
+            "sub": "只告诉你对错"
+          },
+          {
+            "title": "盲区",
+            "sub": "看不出何时会错"
+          },
+          {
+            "title": "归因",
+            "sub": "计算还是背诵"
+          }
+        ]
+      },
+      "right": {
+        "title": "机制理解",
+        "sub": "打开内部计算",
+        "items": [
+          {
+            "title": "算法",
+            "sub": "反向工程成程序"
+          },
+          {
+            "title": "计算",
+            "sub": "内部执行了什么"
+          },
+          {
+            "title": "因果",
+            "sub": "不只哪个输入重要"
+          }
+        ]
+      }
+    },
+    {
+      "id": "levels",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "THREE LEVELS",
+      "title": "三个层次",
+      "highlight": "层次",
+      "steps": [
+        {
+          "title": "神经元",
+          "sub": "一个单元对一个概念"
+        },
+        {
+          "title": "特征",
+          "sub": "激活空间里的一个方向"
+        },
+        {
+          "title": "电路",
+          "sub": "特征与头连成子程序"
+        }
+      ],
+      "stamp": "圣杯：拆成可命名的子程序"
+    },
+    {
+      "id": "polysemantic",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "POLYSEMANTIC NEURONS",
+      "title": "多义神经元",
+      "highlight": "多义",
+      "items": [
+        {
+          "icon": "①",
+          "title": "猫、代码、韩文",
+          "sub": "同一个神经元都响应",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "不是例外",
+          "sub": "多义是常态，不是混乱",
+          "color": "red"
+        },
+        {
+          "icon": "③",
+          "title": "叠加所致",
+          "sub": "特征共用同一个方向",
+          "color": "purple"
+        }
+      ],
+      "stamp": "所以单位要从神经元换成方向"
+    },
+    {
+      "id": "superposition",
+      "type": "formula",
+      "accent": "orange",
+      "kicker": "SUPERPOSITION",
+      "title": "把特征挤进去",
+      "highlight": "挤",
+      "formula": "d 维空间 → 最多 d 个正交方向\n特征数 ≫ d → 靠近似正交扩容",
+      "note": "d = 4096 是举例；干扰是代价。",
+      "bullets": [
+        "稀疏：每个输入只激活少数特征",
+        "代价：特征互相串味"
+      ],
+      "stamp": "2022 玩具模型：相变"
+    },
+    {
+      "id": "sae",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "SPARSE AUTOENCODER",
+      "title": "把叠加拆开",
+      "highlight": "拆开",
+      "formula": "L = ‖x − x̂‖² + λ‖f‖₁",
+      "note": "x 是 d 维激活，f 是 m 维稀疏特征，m ≫ d。",
+      "bullets": [
+        "编码器升维，解码器重建",
+        "L1 正则逼出稀疏"
+      ],
+      "stamp": "解混器 demixer"
+    },
+    {
+      "id": "toymodel",
+      "type": "steps",
+      "accent": "green",
+      "kicker": "2023 · MONOSEMANTICITY",
+      "title": "玩具模型上的实验",
+      "highlight": "实验",
+      "steps": [
+        {
+          "title": "512 个神经元",
+          "sub": "单层 Transformer"
+        },
+        {
+          "title": "数千特征",
+          "sub": "DNA、希伯来文、HTTP"
+        },
+        {
+          "title": "更单义",
+          "sub": "比原始神经元好读得多"
+        }
+      ],
+      "stamp": "像色谱：让激活过柱子"
+    },
+    {
+      "id": "induction",
+      "type": "photo",
+      "accent": "purple",
+      "kicker": "INDUCTION HEAD",
+      "title": "照抄前文的电路",
+      "highlight": "照抄",
+      "image": "img/gears.jpg",
+      "pills": [
+        "两个注意力头",
+        "前一个 token 头",
+        "归纳头"
+      ],
+      "subtitle": "两个头咬合，就实现了复制与续写。",
+      "bullets": [
+        "前一个 token 头：记住前一个词",
+        "归纳头：去历史里匹配模式",
+        "组合：照抄模式后面的内容"
+      ],
+      "caption": "示意图，非真实注意力图"
+    },
+    {
+      "id": "toolbox",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THE TOOLBOX",
+      "title": "三件常用工具",
+      "highlight": "工具",
+      "items": [
+        {
+          "icon": "①",
+          "title": "线性探针",
+          "sub": "能解码，不等于被使用",
+          "color": "blue"
+        },
+        {
+          "icon": "②",
+          "title": "激活修补",
+          "sub": "替换激活，看输出变化",
+          "color": "orange"
+        },
+        {
+          "icon": "③",
+          "title": "logit 透镜",
+          "sub": "中间层直接投影到词表",
+          "color": "purple"
+        }
+      ],
+      "stamp": "探针给相关，修补给因果"
+    },
+    {
+      "id": "rome",
+      "type": "steps",
+      "accent": "red",
+      "kicker": "ROME · 2022",
+      "title": "改一个事实",
+      "highlight": "事实",
+      "steps": [
+        {
+          "title": "定位",
+          "sub": "找出存储事实的 MLP 层"
+        },
+        {
+          "title": "编辑",
+          "sub": "直接改那一层的权重"
+        },
+        {
+          "title": "验证",
+          "sub": "巴黎改成罗马"
+        }
+      ],
+      "stamp": "能改事实，不等于改对推理"
+    },
+    {
+      "id": "limits",
+      "type": "bullets",
+      "accent": "teal",
+      "kicker": "LIMITS",
+      "title": "黑箱只开了条缝",
+      "highlight": "条缝",
+      "items": [
+        {
+          "icon": "①",
+          "title": "规模",
+          "sub": "512 神经元到几千亿参数",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "不完备",
+          "sub": "SAE 只找到可解释的部分",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "组合爆炸",
+          "sub": "特征连接是稠密图",
+          "color": "purple"
+        },
+        {
+          "icon": "④",
+          "title": "叙事偏差",
+          "sub": "合理，不等于机制正确",
+          "color": "red"
+        }
+      ],
+      "stamp": "可解释不等于可控"
+    },
+    {
+      "id": "safety",
+      "type": "compare",
+      "accent": "red",
+      "kicker": "SAFETY",
+      "title": "能替代评测吗",
+      "highlight": "替代",
+      "center": "≠",
+      "left": {
+        "title": "可解释性",
+        "sub": "内部在算什么",
+        "items": [
+          {
+            "title": "证据",
+            "sub": "不是保证"
+          },
+          {
+            "title": "可读",
+            "sub": "不等于因果完整"
+          }
+        ]
+      },
+      "right": {
+        "title": "评测与对齐",
+        "sub": "外部与训练",
+        "items": [
+          {
+            "title": "评测",
+            "sub": "行为边界"
+          },
+          {
+            "title": "对齐",
+            "sub": "该怎么训练"
+          }
+        ]
+      }
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 15",
+      "title": "下一站：智能体",
+      "highlight": "智能体",
+      "subtitle": "从看懂零件，到组装系统",
+      "next": {
+        "code": "15",
+        "title": "智能体与前沿",
+        "sub": "把零件组装起来，看看前沿"
+      },
+      "pills": [
+        "第 14 章",
+        "机制已讲完",
+        "接下来：组装"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

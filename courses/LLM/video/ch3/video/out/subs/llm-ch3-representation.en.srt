@@ -1,0 +1,327 @@
+1
+00:00:01,600 --> 00:00:05,276
+A computer does not know the word cat. It only knows numbers.
+
+2
+00:00:05,526 --> 00:00:10,108
+So the first step in representation learning is a numeric stand-in for every word.
+
+3
+00:00:10,358 --> 00:00:14,129
+The simplest approach: assign an index to every word in the vocabulary.
+
+4
+00:00:14,379 --> 00:00:17,714
+Unfold that index into a vector and you have one-hot encoding.
+
+5
+00:00:17,964 --> 00:00:22,603
+This chapter covers how words become vectors, and how vectors became dynamic.
+
+6
+00:00:22,853 --> 00:00:26,236
+It decides what the first layer of a large model can see.
+
+7
+00:00:28,886 --> 00:00:32,886
+Start with the dumbest method: fifty thousand words, fifty thousand IDs.
+
+8
+00:00:33,136 --> 00:00:36,837
+Each word becomes a fifty-thousand-dimensional vector with a single one.
+
+9
+00:00:37,087 --> 00:00:40,645
+Problem one: the dimension explodes, and almost every entry is zero.
+
+10
+00:00:40,895 --> 00:00:44,921
+Problem two is worse: the dot product of any two words is zero.
+
+11
+00:00:45,171 --> 00:00:49,746
+To the model, cat-to-dog equals cat-to-car.
+
+12
+00:00:49,996 --> 00:00:54,152
+The n-grams of Chapter 1 died here: they cannot express similarity.
+
+13
+00:00:56,802 --> 00:01:01,471
+So how do we define meaning? The linguist Firth left a motto.
+
+14
+00:01:01,721 --> 00:01:05,656
+You shall know a word by the company it keeps.
+
+15
+00:01:05,906 --> 00:01:11,459
+Cat appears with meow, fish and fur; car with fuel and tires.
+
+16
+00:01:11,709 --> 00:01:15,996
+Without a dictionary, its circle of companions gives it away.
+
+17
+00:01:16,246 --> 00:01:21,330
+The earlier claim is the distributional hypothesis: similar contexts, similar meaning.
+
+18
+00:01:21,580 --> 00:01:24,840
+This is a statistical tendency, not a definition.
+
+19
+00:01:27,490 --> 00:01:32,045
+If meaning equals context, train a model to predict context.
+
+20
+00:01:32,295 --> 00:01:37,032
+In 2013, Mikolov and colleagues at Google proposed word2vec.
+
+21
+00:01:37,282 --> 00:01:42,539
+Two variants: CBOW predicts the center, Skip-gram goes the other way.
+
+22
+00:01:42,789 --> 00:01:46,956
+After training, the vectors in the middle layer are the meanings.
+
+23
+00:01:47,206 --> 00:01:51,342
+The objective maximizes the log probability of neighbors in the window.
+
+24
+00:01:51,592 --> 00:01:55,586
+Each word ends up with a dense vector of one to three hundred dimensions.
+
+25
+00:01:55,836 --> 00:01:59,265
+That is two orders of magnitude smaller than a fifty-thousand-dimensional vector.
+
+26
+00:02:01,915 --> 00:02:04,748
+After training, something remarkable happens.
+
+27
+00:02:04,998 --> 00:02:08,637
+King minus man plus woman lands closest to queen.
+
+28
+00:02:08,887 --> 00:02:12,359
+Paris minus France plus Italy lands closest to Rome.
+
+29
+00:02:12,609 --> 00:02:15,897
+Gender is one direction; nationality is another.
+
+30
+00:02:16,147 --> 00:02:19,453
+Semantic relations become displacements in vector space.
+
+31
+00:02:19,703 --> 00:02:23,519
+But this is approximate, not a law, and it depends on training details.
+
+32
+00:02:26,169 --> 00:02:29,928
+But softmax sums over the whole vocabulary, which is far too slow.
+
+33
+00:02:30,178 --> 00:02:33,117
+Negative sampling turns the multiclass problem into binary classification.
+
+34
+00:02:33,367 --> 00:02:36,652
+Positive pairs really co-occurred; they get label one.
+
+35
+00:02:36,902 --> 00:02:39,973
+Negatives are random words; they get label zero.
+
+36
+00:02:40,223 --> 00:02:43,840
+Compute drops from vocabulary size V to k samples.
+
+37
+00:02:44,090 --> 00:02:48,278
+Not exact, just good enough, at ten times the speed.
+
+38
+00:02:50,928 --> 00:02:53,833
+Why does predicting context teach meaning?
+
+39
+00:02:54,083 --> 00:02:56,151
+Picture it as a constraint system.
+
+40
+00:02:56,401 --> 00:03:01,258
+Cat and dog share contexts, so their vectors must be close.
+
+41
+00:03:01,508 --> 00:03:06,563
+Otherwise one parameter set cannot predict both, and the loss grows.
+
+42
+00:03:06,813 --> 00:03:11,398
+Gradient descent compresses similar contexts into nearby vectors.
+
+43
+00:03:11,648 --> 00:03:16,265
+Nobody told the model that cats and dogs are animals; the structure grew.
+
+44
+00:03:16,515 --> 00:03:21,206
+That is representation learning: no hand-built features, the model learns.
+
+45
+00:03:23,856 --> 00:03:27,100
+One prerequisite remains: who decides what a word is?
+
+46
+00:03:27,350 --> 00:03:32,336
+Split on spaces? Chinese has none, and English inflects one word many ways.
+
+47
+00:03:32,586 --> 00:03:36,430
+The modern answer is subwords: cut words into smaller pieces.
+
+48
+00:03:36,680 --> 00:03:42,312
+BPE works like compression: start from characters, merge the most frequent pair.
+
+49
+00:03:42,562 --> 00:03:47,050
+Keep merging until the vocabulary hits a target, say fifty thousand or 128k.
+
+50
+00:03:47,300 --> 00:03:51,942
+Frequent chunks become tokens early; rare words split into common pieces.
+
+51
+00:03:52,192 --> 00:03:56,530
+Byte-level BPE uses bytes, so any text encodes and nothing is OOV.
+
+52
+00:03:59,180 --> 00:04:03,502
+word2vec has a fundamental limit: one vector per word.
+
+53
+00:04:03,752 --> 00:04:07,397
+Apple the fruit and Apple the company are different meanings.
+
+54
+00:04:07,647 --> 00:04:10,981
+Bank by a river and bank for money are two senses as well.
+
+55
+00:04:11,231 --> 00:04:15,140
+A static vector can only compromise and average them.
+
+56
+00:04:15,390 --> 00:04:19,273
+Contextual representations pass the whole sentence through a network.
+
+57
+00:04:19,523 --> 00:04:24,778
+ELMo used a bidirectional LSTM in 2018; BERT used a Transformer.
+
+58
+00:04:25,028 --> 00:04:28,876
+Representation is no longer looked up. It is computed.
+
+59
+00:04:31,526 --> 00:04:34,192
+In engineering, an embedding is just a matrix.
+
+60
+00:04:34,442 --> 00:04:38,486
+One row per token; lookup takes a row.
+
+61
+00:04:38,736 --> 00:04:43,950
+V is vocabulary size, d is hidden size, and the matrix is trained.
+
+62
+00:04:44,200 --> 00:04:48,230
+Many models tie the input embedding to the output layer.
+
+63
+00:04:48,480 --> 00:04:53,733
+GPT-3 uses d equal to 12,288, about 620 million parameters.
+
+64
+00:04:53,983 --> 00:04:58,744
+This lookup layer alone is bigger than all of AlexNet in 2012.
+
+65
+00:05:01,394 --> 00:05:04,364
+One dimension is still missing from the bag of words: order.
+
+66
+00:05:04,614 --> 00:05:08,305
+Cat chases dog and dog chases cat use the same words, opposite meaning.
+
+67
+00:05:08,555 --> 00:05:12,618
+Average the word vectors and both sentences become identical.
+
+68
+00:05:12,868 --> 00:05:17,580
+The fix is positional encoding: turn the position into a vector too.
+
+69
+00:05:17,830 --> 00:05:21,663
+The earliest version used sine and cosine functions of different frequencies.
+
+70
+00:05:21,913 --> 00:05:27,053
+Relative positions become computable, so the model can look three words right.
+
+71
+00:05:27,303 --> 00:05:31,439
+Later came learned positions and RoPE; details wait for Chapter 5.
+
+72
+00:05:34,089 --> 00:05:37,765
+Representation learning left a legacy, and also traps.
+
+73
+00:05:38,015 --> 00:05:43,386
+First, similar is not synonymous: doctor and nurse are close but different.
+
+74
+00:05:43,636 --> 00:05:49,043
+Second, bias gets encoded and amplified from the corpus.
+
+75
+00:05:49,293 --> 00:05:54,818
+Third, anisotropy: real vectors crowd a cone, so cosine similarity misleads.
+
+76
+00:05:55,068 --> 00:06:00,548
+Fourth, keep static and dynamic apart: a lookup vector is not an activation.
+
+77
+00:06:00,798 --> 00:06:04,759
+So when you see the word vector, first ask: which kind?
+
+78
+00:06:07,409 --> 00:06:11,399
+After this chapter, words are vectors, and they carry position.
+
+79
+00:06:11,649 --> 00:06:14,763
+But the vectors still do not look at each other.
+
+80
+00:06:15,013 --> 00:06:17,982
+Next: from recurrent networks to attention.
+
+81
+00:06:18,232 --> 00:06:21,343
+How a model remembers context and chooses what matters.
+
+82
+00:06:21,593 --> 00:06:25,279
+That is the step you must cross before the Transformer.

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "Course",
+  "chapterLabel": "第 1 章 · 示例",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "COURSE 01",
+      "title": "示例课程",
+      "highlight": "示例",
+      "subtitle": "先跑通，再替换内容",
+      "pills": ["研究", "课程", "视频"]
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+1
+00:00:01,600 --> 00:00:06,544
+In 2017, eight authors published a paper whose title was the argument.
+
+2
+00:00:06,794 --> 00:00:10,815
+Its title translates to: attention is all you need.
+
+3
+00:00:11,065 --> 00:00:14,478
+They removed recurrence entirely, leaving not a single loop.
+
+4
+00:00:14,728 --> 00:00:19,439
+The result was better quality, and training could run in parallel.
+
+5
+00:00:19,689 --> 00:00:24,024
+This chapter takes the structure apart: old parts, new combination.
+
+6
+00:00:24,274 --> 00:00:28,727
+What remains is one scoring step and one weighted sum.
+
+7
+00:00:31,377 --> 00:00:36,210
+Chapter 4's attention had the decoder look at the encoder.
+
+8
+00:00:36,460 --> 00:00:40,361
+The Transformer turns it inward: one sequence looks at itself.
+
+9
+00:00:40,611 --> 00:00:44,920
+This is self-attention: every word looks at every word.
+
+10
+00:00:45,170 --> 00:00:49,619
+Each word answers three questions. First: what am I looking for?
+
+11
+00:00:49,869 --> 00:00:55,459
+Second: what can be found in me? Third: what do I hand over?
+
+12
+00:00:55,709 --> 00:01:00,776
+Query, key and value all come from the same word vector.
+
+13
+00:01:01,026 --> 00:01:05,652
+All three matrices are trained; none is hand-set.
+
+14
+00:01:08,302 --> 00:01:14,174
+Xiaoming put the book on the table because it was heavy. Which one?
+
+15
+00:01:14,424 --> 00:01:18,719
+The query at it scores against every key in the sentence.
+
+16
+00:01:18,969 --> 00:01:23,309
+If the book's key scores higher, it absorbs more of the book.
+
+17
+00:01:23,559 --> 00:01:27,746
+Later layers conclude that heavy is about the book.
+
+18
+00:01:27,996 --> 00:01:31,951
+That is coreference resolution, grown at the mechanism level.
+
+19
+00:01:32,201 --> 00:01:35,806
+Not by grammar rules, but by learned matching.
+
+20
+00:01:36,056 --> 00:01:41,163
+Same structure; only the two ends now live in one sequence.
+
+21
+00:01:43,813 --> 00:01:48,856
+Replace the small scoring network with a plain dot product.
+
+22
+00:01:49,106 --> 00:01:54,127
+Multiply queries by transposed keys to get a score table.
+
+23
+00:01:54,377 --> 00:01:57,969
+The table is n by n, where n is the sequence length.
+
+24
+00:01:58,219 --> 00:02:03,054
+A dot product measures alignment: same direction, higher score.
+
+25
+00:02:03,304 --> 00:02:08,206
+Then softmax each row into weights that sum to one.
+
+26
+00:02:08,456 --> 00:02:13,548
+Finally multiply by values and add them up by weight.
+
+27
+00:02:13,798 --> 00:02:17,938
+That is scaled dot-product attention: retrieval in one line.
+
+28
+00:02:18,188 --> 00:02:22,503
+Note the scaling happens before softmax, not after.
+
+29
+00:02:25,153 --> 00:02:29,419
+What is that square root for? Start with a hand-checkable case.
+
+30
+00:02:29,669 --> 00:02:34,308
+Assume every component of query and key has mean 0, variance 1.
+
+31
+00:02:34,558 --> 00:02:39,283
+The dot product sums 64 terms, so its variance is 64.
+
+32
+00:02:39,533 --> 00:02:43,926
+Take the square root: the standard deviation is about 8.
+
+33
+00:02:44,176 --> 00:02:48,448
+So scores scatter across roughly minus 24 to plus 24.
+
+34
+00:02:48,698 --> 00:02:53,624
+Fed such large numbers, softmax pins weights to 0 or 1.
+
+35
+00:02:53,874 --> 00:02:57,562
+And in the saturated region its gradient is nearly zero.
+
+36
+00:03:00,212 --> 00:03:05,816
+No gradient, no learning: Chapter 4's vanishing problem returns.
+
+37
+00:03:06,066 --> 00:03:10,150
+Dividing by the square root of dk pulls variance back to 1.
+
+38
+00:03:10,400 --> 00:03:15,249
+Scores return to a normal range, so softmax keeps its gradient.
+
+39
+00:03:15,499 --> 00:03:21,252
+The scaling is not about stability; it keeps softmax unsaturated.
+
+40
+00:03:21,502 --> 00:03:27,487
+Remove that root and training gets noticeably worse.
+
+41
+00:03:27,737 --> 00:03:32,907
+Scale first, then softmax; do not let attention lock up early.
+
+42
+00:03:35,557 --> 00:03:39,694
+One set of queries, keys and values learns one kind of relation.
+
+43
+00:03:39,944 --> 00:03:45,433
+Language has many: subject-verb, reference, similarity, proximity.
+
+44
+00:03:45,683 --> 00:03:50,708
+Multi-head attention splits 512 dimensions into 8 heads of 64.
+
+45
+00:03:50,958 --> 00:03:54,972
+Each head runs its own attention in its own subspace.
+
+46
+00:03:55,222 --> 00:04:00,061
+Concatenate the 8 heads; one linear layer merges them.
+
+47
+00:04:00,311 --> 00:04:05,603
+Total compute is about that of one 512-wide head, but richer.
+
+48
+00:04:05,853 --> 00:04:09,813
+Nobody assigns the roles; they emerge after training.
+
+49
+00:04:12,463 --> 00:04:16,491
+One constraint remains: a language model may not see the future.
+
+50
+00:04:16,741 --> 00:04:20,480
+If position 3 could see position 4, that would be cheating.
+
+51
+00:04:20,730 --> 00:04:26,414
+The fix is a causal mask: set the upper triangle to minus infinity.
+
+52
+00:04:26,664 --> 00:04:30,446
+Then position t can only attend to positions up to t.
+
+53
+00:04:30,696 --> 00:04:35,013
+So in training, all positions of a sentence are computed at once.
+
+54
+00:04:35,263 --> 00:04:40,167
+One forward pass gives n predictions and n losses.
+
+55
+00:04:40,417 --> 00:04:45,060
+An RNN cannot: state two has to wait for state one.
+
+56
+00:04:45,310 --> 00:04:48,677
+The same GPU can work on many positions at once.
+
+57
+00:04:51,327 --> 00:04:55,982
+Self-attention is permutation equivariant: order does not enter.
+
+58
+00:04:56,232 --> 00:05:01,241
+Shuffle the sentence; the weighted sums themselves do not change.
+
+59
+00:05:01,491 --> 00:05:06,191
+A dot product sees direction, not who comes first.
+
+60
+00:05:06,441 --> 00:05:11,286
+So position must be added explicitly, as Chapter 3 explained.
+
+61
+00:05:11,536 --> 00:05:17,082
+The paper adds sine-cosine codes to the word vectors.
+
+62
+00:05:17,332 --> 00:05:22,195
+We will not repeat it: without position, word order is gone.
+
+63
+00:05:24,845 --> 00:05:29,917
+Now assemble. One Transformer layer has just two sublayers.
+
+64
+00:05:30,167 --> 00:05:35,258
+The first is multi-head attention: exchange across positions.
+
+65
+00:05:35,508 --> 00:05:40,914
+The second is a feed-forward net, applied per position.
+
+66
+00:05:41,164 --> 00:05:45,611
+It expands to four times the width, then projects back.
+
+67
+00:05:45,861 --> 00:05:50,556
+Both sublayers wear a residual: add the input back to the output.
+
+68
+00:05:50,806 --> 00:05:55,818
+The paper normalizes after each sublayer: Post-LN.
+
+69
+00:05:56,068 --> 00:06:01,474
+Later models mostly switch to Pre-LN: normalize first.
+
+70
+00:06:01,724 --> 00:06:07,543
+The residual path stays unnormalized, so deep layers train better.
+
+71
+00:06:10,193 --> 00:06:14,180
+The structure is clean, but the price is explicit.
+
+72
+00:06:14,430 --> 00:06:19,333
+Attention builds an n by n table: entries grow as n squared.
+
+73
+00:06:19,583 --> 00:06:23,636
+So self-attention costs n squared times d.
+
+74
+00:06:23,886 --> 00:06:28,131
+Double the length and both compute and memory quadruple.
+
+75
+00:06:28,381 --> 00:06:33,006
+The feed-forward net costs n times d squared: linear in length.
+
+76
+00:06:33,256 --> 00:06:37,078
+For short sequences, the feed-forward net dominates.
+
+77
+00:06:37,328 --> 00:06:42,754
+For long ones attention is the bottleneck, so long context is costly.
+
+78
+00:06:45,404 --> 00:06:48,992
+Two common misunderstandings are worth clearing up.
+
+79
+00:06:49,242 --> 00:06:54,050
+First: attention weights look intuitive, but they are not explanation.
+
+80
+00:06:54,300 --> 00:06:59,810
+Some heads do learn syntax; many others remain unexplained.
+
+81
+00:07:00,060 --> 00:07:03,829
+Second: multi-head is not an ensemble of models voting.
+
+82
+00:07:04,079 --> 00:07:08,853
+They share one input, concatenate, then project: one whole.
+
+83
+00:07:09,103 --> 00:07:13,033
+The division of labour emerges in training, it is not designed.
+
+84
+00:07:13,283 --> 00:07:17,332
+So do not read an attention heat map as an explanation.
+
+85
+00:07:19,982 --> 00:07:25,890
+The architecture is in place: attention, heads, residuals, FFN.
+
+86
+00:07:26,140 --> 00:07:30,122
+But in 2017 it was only a translation model.
+
+87
+00:07:30,372 --> 00:07:34,497
+What made it a general foundation was a change of paradigm.
+
+88
+00:07:34,747 --> 00:07:39,600
+Pretrain on huge unlabeled text, then adapt to specific tasks.
+
+89
+00:07:39,850 --> 00:07:43,554
+Next chapter: pretraining, the story of GPT and BERT.
+
+90
+00:07:43,804 --> 00:07:47,496
+That is the step from translation model to general foundation.

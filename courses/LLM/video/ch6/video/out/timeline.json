@@ -1,0 +1,651 @@
+{
+  "total": 450.765,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "06.0",
+      "zh": "先读万卷书",
+      "en": "READ FIRST, ANSWER LATER",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "先看一个荒唐的比喻：每招一个岗位，就重办一所大学。",
+          "en": "A job opening, and we build a whole university for it.",
+          "start": 1.6,
+          "end": 6.232
+        },
+        {
+          "zh": "2017 年之前，自然语言处理差不多就是这样。",
+          "en": "Before 2017, natural language processing mostly looked like that.",
+          "start": 6.732,
+          "end": 10.804
+        },
+        {
+          "zh": "每个任务收一份标注数据，训一个模型，只解决这一件事。",
+          "en": "One labelled set, one model, one task, and nothing more.",
+          "start": 11.304,
+          "end": 16.189
+        },
+        {
+          "zh": "换任务就得重训，学到的语言知识一点也带不走。",
+          "en": "Change the task, retrain, and none of the language knowledge follows.",
+          "start": 16.689,
+          "end": 20.854
+        },
+        {
+          "zh": "标注还是最贵的一环：一条数据要人读、人判、人填。",
+          "en": "Labels cost the most: a human reads, judges and fills each one in.",
+          "start": 21.354,
+          "end": 26.276
+        },
+        {
+          "zh": "这一章讲：怎么绕开标注，先读书，再做题。",
+          "en": "This chapter: skip the labels, read first, then do the exercises.",
+          "start": 26.776,
+          "end": 30.803
+        }
+      ],
+      "end": 31.803
+    },
+    {
+      "id": "bottleneck",
+      "code": "06.1",
+      "zh": "瓶颈在数据",
+      "en": "THE LABEL BOTTLENECK",
+      "start": 31.803,
+      "lines": [
+        {
+          "zh": "所以瓶颈不在模型，而在数据：标注太贵了。",
+          "en": "So the bottleneck is not the model. It is the labels.",
+          "start": 33.703,
+          "end": 37.96
+        },
+        {
+          "zh": "几万条标注听着不少，其实只够一个很窄的任务。",
+          "en": "Tens of thousands of labels still cover only one narrow task.",
+          "start": 38.46,
+          "end": 42.575
+        },
+        {
+          "zh": "任务一换，这份数据就作废，模型也要跟着重训。",
+          "en": "Switch the task and the data is dead; the model is retrained.",
+          "start": 43.075,
+          "end": 47.584
+        },
+        {
+          "zh": "情感分析、命名实体、问答、翻译，各要一套。",
+          "en": "Sentiment, entities, question answering, translation: one set each.",
+          "start": 48.084,
+          "end": 52.576
+        },
+        {
+          "zh": "但另一边，无标注的文本是取之不尽的。",
+          "en": "Meanwhile, unlabelled text never runs out.",
+          "start": 53.076,
+          "end": 56.515
+        },
+        {
+          "zh": "互联网上有几万亿 token，它们本身就是答案。",
+          "en": "Trillions of tokens on the web are already their own answers.",
+          "start": 57.015,
+          "end": 60.791
+        }
+      ],
+      "end": 61.791
+    },
+    {
+      "id": "selfsup",
+      "code": "06.2",
+      "zh": "让文本自己出题",
+      "en": "LET THE TEXT SET THE QUIZ",
+      "start": 61.791,
+      "lines": [
+        {
+          "zh": "自监督的想法很朴素：从文本里挖掉一部分。",
+          "en": "Self-supervision starts simply: remove part of a text.",
+          "start": 63.691,
+          "end": 67.574
+        },
+        {
+          "zh": "让模型去补，补对了算对，补错了就改参数。",
+          "en": "Let the model fill it back; right answers keep it, wrong ones move weights.",
+          "start": 68.074,
+          "end": 71.941
+        },
+        {
+          "zh": "因为原文就是标准答案，一个标注工都不用请。",
+          "en": "The original text is the answer key, so no labeller is ever hired.",
+          "start": 72.441,
+          "end": 76.17
+        },
+        {
+          "zh": "这一招有两个版本，分歧决定了后来五年的走向。",
+          "en": "Two versions emerged, and their split shaped the next five years.",
+          "start": 76.67,
+          "end": 80.609
+        },
+        {
+          "zh": "版本 A 是自回归：给定前面的词，预测下一个词。",
+          "en": "Version A is autoregressive: given the words before, predict the next.",
+          "start": 81.109,
+          "end": 85.462
+        },
+        {
+          "zh": "这就是第 1 章的语言模型目标，一字未改。",
+          "en": "That is the language model objective from Chapter 1, unchanged.",
+          "start": 85.962,
+          "end": 89.376
+        },
+        {
+          "zh": "它天然从左到右，只能看见已经写出来的部分。",
+          "en": "It reads left to right, seeing only what has already been written.",
+          "start": 89.876,
+          "end": 93.649
+        }
+      ],
+      "end": 94.649
+    },
+    {
+      "id": "paths",
+      "code": "06.3",
+      "zh": "两条路线",
+      "en": "TWO ROUTES",
+      "start": 94.649,
+      "lines": [
+        {
+          "zh": "版本 B 是掩码：随机挖掉句子里百分之十五的词。",
+          "en": "Version B is masking: hide fifteen percent of the words at random.",
+          "start": 96.549,
+          "end": 100.82
+        },
+        {
+          "zh": "让模型根据左右两边，把它们填回原来的位置。",
+          "en": "The model fills them back using both sides of the sentence.",
+          "start": 101.32,
+          "end": 105.268
+        },
+        {
+          "zh": "这叫掩码语言模型，本质上是一道完形填空题。",
+          "en": "This is the masked language model, a cloze test at scale.",
+          "start": 105.768,
+          "end": 109.889
+        },
+        {
+          "zh": "两条路线看的方向不同，训练信号也不同。",
+          "en": "The two routes differ in what they see and what trains them.",
+          "start": 110.389,
+          "end": 113.996
+        },
+        {
+          "zh": "自回归只看左边，每个位置都要预测下一个词。",
+          "en": "Autoregression sees only the left, and predicts at every position.",
+          "start": 114.496,
+          "end": 118.487
+        },
+        {
+          "zh": "掩码左右都看，但只有百分之十五的位置有信号。",
+          "en": "Masking sees both sides, but only fifteen percent of positions signal.",
+          "start": 118.987,
+          "end": 122.921
+        }
+      ],
+      "end": 123.921
+    },
+    {
+      "id": "gpt1",
+      "code": "06.4",
+      "zh": "先预训练，再微调",
+      "en": "PRE-TRAIN, THEN FINE-TUNE",
+      "start": 123.921,
+      "lines": [
+        {
+          "zh": "2018 年 6 月，OpenAI 的 GPT-1 给出了完整配方。",
+          "en": "In June 2018, OpenAI's GPT-1 published a complete recipe.",
+          "start": 125.821,
+          "end": 130.833
+        },
+        {
+          "zh": "第一步，生成式预训练：十二层 Transformer 解码器。",
+          "en": "Step one, generative pre-training: a twelve-layer Transformer decoder.",
+          "start": 131.333,
+          "end": 135.837
+        },
+        {
+          "zh": "约一点一七亿参数，在七千本未出版的书上做下一词预测。",
+          "en": "About 117 million parameters, predicting the next word in 7000 books.",
+          "start": 136.337,
+          "end": 141.521
+        },
+        {
+          "zh": "第二步，判别式微调：接一个小分类头，用少量标注数据。",
+          "en": "Step two, discriminative fine-tuning: a small head and a little labelled data.",
+          "start": 142.021,
+          "end": 147.189
+        },
+        {
+          "zh": "在蕴含、问答、情感分类这些任务上，分别微调一遍。",
+          "en": "Entailment, question answering, sentiment: one pass of tuning each.",
+          "start": 147.689,
+          "end": 152.486
+        },
+        {
+          "zh": "十二个任务里，有九个刷新了当时的纪录。",
+          "en": "It beat the record on nine of twelve tasks.",
+          "start": 152.986,
+          "end": 156.319
+        },
+        {
+          "zh": "更重要的是它证明：语言知识是可以迁移的。",
+          "en": "More important, it showed that language knowledge can be transferred.",
+          "start": 156.819,
+          "end": 160.523
+        }
+      ],
+      "end": 161.523
+    },
+    {
+      "id": "bert",
+      "code": "06.5",
+      "zh": "BERT 的配方",
+      "en": "BERT: BOTH DIRECTIONS",
+      "start": 161.523,
+      "lines": [
+        {
+          "zh": "四个月后，2018 年 10 月，Google 的 BERT 登场。",
+          "en": "Four months later, in October 2018, Google's BERT arrived.",
+          "start": 163.423,
+          "end": 167.621
+        },
+        {
+          "zh": "结构换成编码器，没有因果掩码，可以看全句。",
+          "en": "The structure is an encoder, no causal mask, so it sees the whole sentence.",
+          "start": 168.121,
+          "end": 172.162
+        },
+        {
+          "zh": "目标有两个：挖掉百分之十五的词来填，再判断两句是否连续。",
+          "en": "Two goals: fill in fifteen percent of words, and tell if two sentences connect.",
+          "start": 172.662,
+          "end": 178.153
+        },
+        {
+          "zh": "数据是书籍语料加英文维基百科，约三十三亿词。",
+          "en": "Training data: book corpus plus English Wikipedia, about 3.3 billion words.",
+          "start": 178.653,
+          "end": 183.211
+        },
+        {
+          "zh": "Base 一点一亿参数，Large 三点四亿参数。",
+          "en": "Base has 110 million parameters; Large has 340 million.",
+          "start": 183.711,
+          "end": 187.199
+        },
+        {
+          "zh": "它在十一个自然语言处理任务上全面刷新了最好成绩。",
+          "en": "It set a new state of the art on eleven NLP tasks.",
+          "start": 187.699,
+          "end": 192.067
+        }
+      ],
+      "end": 193.067
+    },
+    {
+      "id": "bidir",
+      "code": "06.6",
+      "zh": "双向的强与弱",
+      "en": "STRONG AT READING, WEAK AT WRITING",
+      "start": 193.067,
+      "lines": [
+        {
+          "zh": "双向的好处，在理解类任务上表现得最明显。",
+          "en": "The gain from both directions shows up in understanding tasks.",
+          "start": 194.967,
+          "end": 198.982
+        },
+        {
+          "zh": "判断 bank 是河岸还是银行，左右两边都用得上。",
+          "en": "Telling river bank from money bank uses words on both sides.",
+          "start": 199.482,
+          "end": 203.598
+        },
+        {
+          "zh": "被训练成一台上下文填空机，它自然擅长分类和抽取。",
+          "en": "Trained as a context-filling machine, it is good at classification and extraction.",
+          "start": 204.098,
+          "end": 208.923
+        },
+        {
+          "zh": "但它的训练目标和生成不匹配，这是个结构性缺陷。",
+          "en": "But its objective does not match generation. That is a structural flaw.",
+          "start": 209.423,
+          "end": 213.763
+        },
+        {
+          "zh": "它见过的是被挖了洞的句子，擅长填空，不擅长写文章。",
+          "en": "It has only seen sentences with holes: good at filling, bad at writing.",
+          "start": 214.263,
+          "end": 219.308
+        },
+        {
+          "zh": "你可以用它做分类，但不能拿它来聊天。",
+          "en": "You can classify with it, but you cannot chat with it.",
+          "start": 219.808,
+          "end": 222.929
+        },
+        {
+          "zh": "一条路线擅长理解，另一条路线擅长生成。",
+          "en": "One route is strong at reading, the other at writing.",
+          "start": 223.429,
+          "end": 227.274
+        }
+      ],
+      "end": 228.274
+    },
+    {
+      "id": "gpt2",
+      "code": "06.7",
+      "zh": "只写提示",
+      "en": "JUST WRITE A PROMPT",
+      "start": 228.274,
+      "lines": [
+        {
+          "zh": "2019 年 2 月，OpenAI 发布 GPT-2，十五亿参数。",
+          "en": "In February 2019, OpenAI released GPT-2 with 1.5 billion parameters.",
+          "start": 230.174,
+          "end": 235.446
+        },
+        {
+          "zh": "大约是 GPT-1 的十三倍，数据是四十 GB 的网页文本。",
+          "en": "About thirteen times GPT-1, trained on 40 GB of web text.",
+          "start": 235.946,
+          "end": 241.079
+        },
+        {
+          "zh": "论文标题说：语言模型是无监督的多任务学习器。",
+          "en": "The paper's title: language models are unsupervised multitask learners.",
+          "start": 241.579,
+          "end": 245.869
+        },
+        {
+          "zh": "意思是，训练数据里本来就有翻译、问答、摘要和代码。",
+          "en": "The training text already holds translation, QA, summaries and code.",
+          "start": 246.369,
+          "end": 251.401
+        },
+        {
+          "zh": "一个足够大的模型，可能没针对任何任务训练过。",
+          "en": "A large enough model may never have been trained on any task.",
+          "start": 251.901,
+          "end": 255.662
+        },
+        {
+          "zh": "把任务写成一段提示，让它接着写，这叫零样本。",
+          "en": "Write the task as a prompt and let it continue. That is zero-shot.",
+          "start": 256.162,
+          "end": 260.362
+        },
+        {
+          "zh": "不改架构，不加任务头，续写这一个接口吃掉所有任务。",
+          "en": "Same architecture, no task head: one interface eats all tasks.",
+          "start": 260.862,
+          "end": 265.66
+        }
+      ],
+      "end": 266.66
+    },
+    {
+      "id": "paradigm",
+      "code": "06.8",
+      "zh": "通识与职业培训",
+      "en": "LIBERAL ARTS, THEN VOCATIONAL",
+      "start": 266.66,
+      "lines": [
+        {
+          "zh": "这个两段式，可以用一个古老的教育模型来理解。",
+          "en": "This two-stage recipe maps onto an old model of education.",
+          "start": 268.56,
+          "end": 272.271
+        },
+        {
+          "zh": "预训练像通识教育，学语言的一般规律和世界知识。",
+          "en": "Pre-training is liberal arts: general patterns of language and the world.",
+          "start": 272.771,
+          "end": 277.482
+        },
+        {
+          "zh": "数据海量、无标注、便宜，目标是学会世界如何运转。",
+          "en": "Data is huge, unlabelled and cheap; the goal is how the world works.",
+          "start": 277.982,
+          "end": 282.994
+        },
+        {
+          "zh": "微调像职业培训，学具体任务的输入输出格式。",
+          "en": "Fine-tuning is vocational training: the input-output format of one job.",
+          "start": 283.494,
+          "end": 287.62
+        },
+        {
+          "zh": "数据少量、有标注、很贵，目标是学会这个岗位怎么做。",
+          "en": "Data is small, labelled and costly; the goal is how this job is done.",
+          "start": 288.12,
+          "end": 292.984
+        },
+        {
+          "zh": "通用机床加专用夹具，也比每个零件造一台机床便宜。",
+          "en": "A general machine tool plus a jig beats one machine per part.",
+          "start": 293.484,
+          "end": 298.308
+        },
+        {
+          "zh": "类比失效的地方在于：通识毕业并不能直接上岗。",
+          "en": "The analogy breaks where a graduate still cannot start the job.",
+          "start": 298.808,
+          "end": 303.209
+        },
+        {
+          "zh": "但模型足够大时，提示里给几个例子就能现学，微调被跳过。",
+          "en": "But a big enough model learns from examples in the prompt, skipping tuning.",
+          "start": 303.709,
+          "end": 309.092
+        }
+      ],
+      "end": 310.092
+    },
+    {
+      "id": "whyautoregressive",
+      "code": "06.9",
+      "zh": "为什么是自回归",
+      "en": "WHY AUTOREGRESSION WON",
+      "start": 310.092,
+      "lines": [
+        {
+          "zh": "到 2019 年底，BERT 如日中天，GPT-2 只是有趣。",
+          "en": "By late 2019 BERT was dominant and GPT-2 merely interesting.",
+          "start": 311.992,
+          "end": 316.905
+        },
+        {
+          "zh": "但从 2020 年起，天平彻底倒向自回归这一边。",
+          "en": "From 2020 on, the balance tipped fully to autoregression.",
+          "start": 317.405,
+          "end": 321.679
+        },
+        {
+          "zh": "第一个原因：接口统一，任何任务都能写成给上文、续写。",
+          "en": "First reason: one interface. Any task is context in, continuation out.",
+          "start": 322.179,
+          "end": 327.496
+        },
+        {
+          "zh": "分类、翻译、写代码、做数学题，都是同一句话。",
+          "en": "Classification, translation, code, maths: all the same sentence.",
+          "start": 327.996,
+          "end": 332.652
+        },
+        {
+          "zh": "而填空的接口，很难覆盖生成类的任务。",
+          "en": "A fill-in-the-blank interface struggles to cover generation.",
+          "start": 333.152,
+          "end": 336.591
+        },
+        {
+          "zh": "第二个原因：可扩展，自回归每个位置都有训练信号。",
+          "en": "Second reason: scalability. Autoregression signals at every position.",
+          "start": 337.091,
+          "end": 341.773
+        },
+        {
+          "zh": "掩码只有百分之十五的位置有信号，数据利用率差近七倍。",
+          "en": "Masking signals only fifteen percent, nearly seven times less use of data.",
+          "start": 342.273,
+          "end": 347.269
+        },
+        {
+          "zh": "第三个原因：规模一大，通用目标开始逼出任务能力。",
+          "en": "Third reason: at scale, the general objective forces out task ability.",
+          "start": 347.769,
+          "end": 352.339
+        }
+      ],
+      "end": 353.339
+    },
+    {
+      "id": "cost",
+      "code": "06.10",
+      "zh": "范式的代价",
+      "en": "THE PRICE OF PRE-TRAINING",
+      "start": 353.339,
+      "lines": [
+        {
+          "zh": "预训练不是免费的午餐，它带来三个新问题。",
+          "en": "Pre-training is not a free lunch. It brings three new problems.",
+          "start": 355.239,
+          "end": 358.946
+        },
+        {
+          "zh": "第一，数据截止：模型只知道截止日期前的世界。",
+          "en": "First, knowledge cutoff: it knows only the world before its data ends.",
+          "start": 359.446,
+          "end": 363.988
+        },
+        {
+          "zh": "第二，分布偏移：语料是平均的互联网，你的任务可能很窄。",
+          "en": "Second, distribution shift: the corpus is the average web, your task narrow.",
+          "start": 364.488,
+          "end": 369.726
+        },
+        {
+          "zh": "第三，无法追溯：很难知道某个事实是从哪段文本学来的。",
+          "en": "Third, no provenance: you cannot tell which text taught it a fact.",
+          "start": 370.226,
+          "end": 375.526
+        },
+        {
+          "zh": "这既是版权问题，也是模型的可解释性问题。",
+          "en": "That is both a copyright problem and an explainability problem.",
+          "start": 376.026,
+          "end": 379.804
+        },
+        {
+          "zh": "模型足够大时，微调会变得不必要，范式转向提示。",
+          "en": "When models get big enough, tuning fades and the paradigm turns to prompts.",
+          "start": 380.304,
+          "end": 385.01
+        }
+      ],
+      "end": 386.01
+    },
+    {
+      "id": "summary",
+      "code": "06.11",
+      "zh": "一个转向",
+      "en": "THE TURN",
+      "start": 386.01,
+      "lines": [
+        {
+          "zh": "把三次发布排成一条线，转向就看清楚了。",
+          "en": "Line up the three releases and the turn becomes visible.",
+          "start": 387.91,
+          "end": 391.369
+        },
+        {
+          "zh": "2018 年 6 月，GPT-1 把预训练和微调接了起来。",
+          "en": "June 2018: GPT-1 joined pre-training to fine-tuning.",
+          "start": 391.869,
+          "end": 396.522
+        },
+        {
+          "zh": "同年 10 月，BERT 用双向掩码在理解任务上全面领先。",
+          "en": "October 2018: BERT led on understanding with bidirectional masking.",
+          "start": 397.022,
+          "end": 401.931
+        },
+        {
+          "zh": "2019 年 2 月，GPT-2 押注零样本，当时并不起眼。",
+          "en": "February 2019: GPT-2 bet on zero-shot, and looked unremarkable.",
+          "start": 402.431,
+          "end": 407.527
+        },
+        {
+          "zh": "监督的瓶颈是标注，自监督用文本自身绕开了它。",
+          "en": "Supervision was bottlenecked by labels; self-supervision used the text.",
+          "start": 408.027,
+          "end": 412.316
+        },
+        {
+          "zh": "预训练加微调，等于通识加职业培训，知识可以迁移。",
+          "en": "Pre-train then fine-tune: liberal arts then vocational, knowledge transfers.",
+          "start": 412.816,
+          "end": 417.643
+        },
+        {
+          "zh": "胜负手不是谁更聪明，而是谁更容易规模化。",
+          "en": "The winner was not the smarter one, but the one easier to scale.",
+          "start": 418.143,
+          "end": 422.151
+        }
+      ],
+      "end": 423.151
+    },
+    {
+      "id": "outro",
+      "code": "06.12",
+      "zh": "下一站：规模定律",
+      "en": "NEXT: SCALING LAWS",
+      "start": 423.151,
+      "lines": [
+        {
+          "zh": "这一章留下的问题很直接：规模一大，能力为什么冒出来。",
+          "en": "The question left open is direct: why does ability appear as scale grows?",
+          "start": 425.051,
+          "end": 429.723
+        },
+        {
+          "zh": "GPT-2 之后，OpenAI 把同样的配方放大了约一百倍。",
+          "en": "After GPT-2, OpenAI scaled the same recipe about a hundredfold.",
+          "start": 430.223,
+          "end": 435.147
+        },
+        {
+          "zh": "结果不只是更好，还出现了没人训练过的能力。",
+          "en": "The result was not just better: abilities nobody trained appeared.",
+          "start": 435.647,
+          "end": 439.385
+        },
+        {
+          "zh": "下一章讲规模定律，以及它划出的边界。",
+          "en": "Next chapter: scaling laws, and the limits they draw.",
+          "start": 439.885,
+          "end": 443.161
+        },
+        {
+          "zh": "先读书，再做题；下一步，是把书读得更大。",
+          "en": "Read first, then practise. Next, read on a much larger scale.",
+          "start": 443.661,
+          "end": 447.765
+        }
+      ],
+      "end": 450.765
+    }
+  ]
+}

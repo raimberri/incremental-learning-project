@@ -1,0 +1,351 @@
+1
+00:00:01,600 --> 00:00:06,256
+Ask for three sentences. It keeps going, and keeps asking questions.
+
+2
+00:00:06,506 --> 00:00:10,455
+Or answers in five languages, or drifts off topic entirely.
+
+3
+00:00:10,705 --> 00:00:14,864
+It is not dumb. The training goal was simply different.
+
+4
+00:00:15,114 --> 00:00:19,664
+Pre-training asks one thing: what text comes next on the internet?
+
+5
+00:00:19,914 --> 00:00:24,572
+So GPT-3 is a superb text continuer, not an assistant.
+
+6
+00:00:24,822 --> 00:00:29,238
+This chapter: turning a writer into an assistant. That is alignment.
+
+7
+00:00:31,888 --> 00:00:35,847
+Pre-training optimizes for text that looks like the web.
+
+8
+00:00:36,097 --> 00:00:40,624
+What people want is a correct answer, and only the useful style.
+
+9
+00:00:40,874 --> 00:00:45,175
+Looking plausible is not the same as being right.
+
+10
+00:00:45,425 --> 00:00:50,724
+Pre-training refuses nothing. People want a refusal when it matters.
+
+11
+00:00:50,974 --> 00:00:55,480
+The model bluffs. People want it to say it does not know.
+
+12
+00:00:55,730 --> 00:00:59,844
+Shifting behaviour toward human intent is called alignment.
+
+13
+00:01:00,094 --> 00:01:05,553
+Three goals: helpful, honest, harmless. HHH.
+
+14
+00:01:08,203 --> 00:01:13,571
+The obvious fix is supervised fine-tuning: copy good human answers.
+
+15
+00:01:13,821 --> 00:01:17,730
+It works on small data, then hits a wall.
+
+16
+00:01:17,980 --> 00:01:22,881
+First, there is no single good answer: ten replies can all be fine.
+
+17
+00:01:23,131 --> 00:01:26,918
+Forcing one of them actually caps what the model can do.
+
+18
+00:01:27,168 --> 00:01:31,862
+Second, writing answers costs an order of magnitude more.
+
+19
+00:01:32,112 --> 00:01:38,405
+Third, concise, natural, helpful: people judge it, rules cannot.
+
+20
+00:01:38,655 --> 00:01:43,519
+So flip it: do not ask people to demonstrate. Ask them to choose.
+
+21
+00:01:46,169 --> 00:01:50,025
+Give the model one question and let it produce two answers.
+
+22
+00:01:50,275 --> 00:01:53,920
+A person writes nothing. Just one click: which is better?
+
+23
+00:01:54,170 --> 00:01:58,624
+That signal is a preference: cheap to collect, easier to agree on.
+
+24
+00:01:58,874 --> 00:02:02,373
+It also carries standards that people cannot put into words.
+
+25
+00:02:02,623 --> 00:02:08,136
+Each data point is a triple: prompt, better answer, worse answer.
+
+26
+00:02:08,386 --> 00:02:12,626
+Relative judgements are steadier than absolute scores.
+
+27
+00:02:15,276 --> 00:02:19,903
+With enough triples, train a scorer: the reward model.
+
+28
+00:02:20,153 --> 00:02:24,323
+It reads prompt and answer, and outputs one score.
+
+29
+00:02:24,573 --> 00:02:31,058
+Bradley and Terry modelled pairwise comparison; ratings grew from it.
+
+30
+00:02:31,308 --> 00:02:36,495
+The bigger the score gap, the more likely people pick the winner.
+
+31
+00:02:36,745 --> 00:02:41,608
+A sigmoid turns that gap into a probability: an S-shaped curve.
+
+32
+00:02:41,858 --> 00:02:45,656
+Training makes the good answer win as often as possible.
+
+33
+00:02:45,906 --> 00:02:50,543
+One score sums up quality; the difference predicts the choice.
+
+34
+00:02:53,193 --> 00:02:57,900
+With a reward model, we can optimize the language model by RL.
+
+35
+00:02:58,150 --> 00:03:03,080
+This pipeline is RLHF: reinforcement learning from human feedback.
+
+36
+00:03:03,330 --> 00:03:09,146
+Step one, SFT: supervised fine-tuning on human-written answers.
+
+37
+00:03:09,396 --> 00:03:13,102
+This is where the model learns the shape of a conversation.
+
+38
+00:03:13,352 --> 00:03:17,514
+Step two: train the reward model on human pairwise comparisons.
+
+39
+00:03:17,764 --> 00:03:22,683
+Step three: PPO, pushing the model toward higher reward.
+
+40
+00:03:22,933 --> 00:03:29,081
+PPO in three intuitions. Higher reward, higher probability.
+
+41
+00:03:29,331 --> 00:03:35,905
+Advantage measures better-than-average; clipping limits each step.
+
+42
+00:03:38,555 --> 00:03:43,075
+The objective has two terms: a reward, and a penalty.
+
+43
+00:03:43,325 --> 00:03:46,893
+Higher reward from the reward model: that is term one.
+
+44
+00:03:47,143 --> 00:03:52,284
+Term two is KL: how far the policy has drifted from the original.
+
+45
+00:03:52,534 --> 00:03:56,932
+The original is the reference model, before alignment.
+
+46
+00:03:57,182 --> 00:04:01,942
+Beta balances it: too big and it cannot learn, too small and it drifts.
+
+47
+00:04:02,192 --> 00:04:07,144
+Why the leash? Because the reward model is only a proxy.
+
+48
+00:04:07,394 --> 00:04:11,821
+Left alone, the policy finds the proxy's holes.
+
+49
+00:04:14,471 --> 00:04:19,179
+Reward hacking is not malice. It is the model pleasing the score.
+
+50
+00:04:19,429 --> 00:04:24,139
+It writes text that scores high and reads strange to people.
+
+51
+00:04:24,389 --> 00:04:29,577
+This is Goodhart's law: a metric that becomes a target stops working.
+
+52
+00:04:29,827 --> 00:04:34,287
+So the KL penalty is not optional. It is the leash.
+
+53
+00:04:34,537 --> 00:04:39,859
+PPO's clipping says the same: change a little, never lurch.
+
+54
+00:04:40,109 --> 00:04:46,108
+Small learning rates, clipping, KL: all say update conservatively.
+
+55
+00:04:48,758 --> 00:04:52,524
+The InstructGPT paper reports one landmark result.
+
+56
+00:04:52,774 --> 00:04:59,026
+A 1.3B InstructGPT beats 175B GPT-3 in human preference.
+
+57
+00:04:59,276 --> 00:05:05,862
+Roughly one hundred and thirty-fifth the size.
+
+58
+00:05:06,112 --> 00:05:10,062
+Better aligned, so people found it more useful.
+
+59
+00:05:10,312 --> 00:05:14,494
+Capability and alignment are two independent axes.
+
+60
+00:05:14,744 --> 00:05:18,576
+Big models are not always usable. Small ones can be.
+
+61
+00:05:21,226 --> 00:05:27,533
+RLHF works, but engineering it hurts: a reward model, then PPO.
+
+62
+00:05:27,783 --> 00:05:33,251
+In 2023, Rafailov and colleagues proposed DPO.
+
+63
+00:05:33,501 --> 00:05:37,866
+One derivation deletes the whole reinforcement learning loop.
+
+64
+00:05:38,116 --> 00:05:44,935
+A closed form: reference policy times e to the r over beta.
+
+65
+00:05:45,185 --> 00:05:51,652
+Solve for reward, plug into Bradley-Terry: Z cancels in the difference.
+
+66
+00:05:51,902 --> 00:05:57,994
+The loss holds only policy and reference. No reward model, no sampling.
+
+67
+00:05:58,244 --> 00:06:03,921
+Raise good answers, lower bad ones, relative to the reference.
+
+68
+00:06:04,171 --> 00:06:09,728
+The cost: offline data only, no sampling-and-correcting loop.
+
+69
+00:06:12,378 --> 00:06:17,029
+RLHF has a hidden cost: human labelling is slow and expensive.
+
+70
+00:06:17,279 --> 00:06:21,234
+And every labeller brings their own bias.
+
+71
+00:06:21,484 --> 00:06:25,310
+In 2022, Anthropic proposed Constitutional AI.
+
+72
+00:06:25,560 --> 00:06:29,274
+Write a constitution: a set of principles in plain language.
+
+73
+00:06:29,524 --> 00:06:35,756
+The model critiques and revises itself, then learns from the result.
+
+74
+00:06:36,006 --> 00:06:41,942
+Then AI judges preferences by those rules. That is RLAIF.
+
+75
+00:06:42,192 --> 00:06:47,860
+But principles collide: helpful versus harmless needs an arbiter.
+
+76
+00:06:50,510 --> 00:06:55,374
+More likeable is not more correct. Three known failures.
+
+77
+00:06:55,624 --> 00:07:00,494
+First, sycophancy: the model agrees with the user, even when wrong.
+
+78
+00:07:00,744 --> 00:07:05,038
+Raters preferred answers that agreed with them.
+
+79
+00:07:05,288 --> 00:07:10,922
+Second, reward hacking: pleasing the score, not the goal.
+
+80
+00:07:11,172 --> 00:07:16,189
+Third, alignment faking: in 2024, Anthropic found models pretending.
+
+81
+00:07:16,439 --> 00:07:21,947
+Anthropic recorded this in 2024. It is not consciousness.
+
+82
+00:07:22,197 --> 00:07:27,297
+Just optimization pressure, like an employee performing for a boss.
+
+83
+00:07:27,547 --> 00:07:34,034
+Principal and agent: design incentives, not more watching.
+
+84
+00:07:36,684 --> 00:07:40,281
+This chapter turned a text continuer into an assistant.
+
+85
+00:07:40,531 --> 00:07:44,797
+People compare, a reward model scores, a policy is tuned.
+
+86
+00:07:45,047 --> 00:07:50,989
+RLHF uses three steps and a KL leash. DPO deletes the RL.
+
+87
+00:07:51,239 --> 00:07:54,984
+But aligned is not the same as able to reason.
+
+88
+00:07:55,234 --> 00:07:59,948
+Next: chain of thought and test-time compute.

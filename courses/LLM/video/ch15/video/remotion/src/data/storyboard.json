@@ -1,0 +1,367 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 15 章 · 智能体与前沿",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 15 · AGENTS",
+      "title": "模型不是智能体",
+      "highlight": "智能体",
+      "subtitle": "从一次输出，到一圈循环",
+      "pills": [
+        "工具调用",
+        "MCP",
+        "记忆",
+        "复合误差"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 15 章"
+    },
+    {
+      "id": "loop",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "OBSERVE · THINK · ACT",
+      "title": "四拍循环",
+      "highlight": "循环",
+      "steps": [
+        {
+          "title": "观察",
+          "sub": "读进环境与工具返回"
+        },
+        {
+          "title": "思考",
+          "sub": "推理下一步做什么"
+        },
+        {
+          "title": "行动",
+          "sub": "调工具、写文件、发请求"
+        },
+        {
+          "title": "再看一眼",
+          "sub": "结果回填，循环继续"
+        }
+      ],
+      "stamp": "OODA：转得更快的人先修正"
+    },
+    {
+      "id": "tools",
+      "type": "photo",
+      "accent": "teal",
+      "kicker": "TOOLS · THE MODEL'S HANDS",
+      "title": "工具是模型的手",
+      "highlight": "手",
+      "image": "img/tools.jpg",
+      "pills": [
+        "搜索",
+        "代码执行",
+        "数据库",
+        "浏览器"
+      ],
+      "subtitle": "模型只发出请求，真正动手的是外面的程序。",
+      "bullets": [
+        "模型不执行工具，只请求执行",
+        "参数不合法，运行时直接拒绝",
+        "工具越多，权限面越大"
+      ],
+      "caption": "示意图"
+    },
+    {
+      "id": "callflow",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "FUNCTION CALLING",
+      "title": "函数调用四步",
+      "highlight": "四步",
+      "steps": [
+        {
+          "title": "写进上下文",
+          "sub": "工具名称、参数、用途"
+        },
+        {
+          "title": "模型发请求",
+          "sub": "一段结构化 JSON"
+        },
+        {
+          "title": "运行时执行",
+          "sub": "先校验参数，再动手"
+        },
+        {
+          "title": "结果回填",
+          "sub": "作为新消息，模型继续"
+        }
+      ],
+      "stamp": "模型只请求，不执行"
+    },
+    {
+      "id": "protocol",
+      "type": "compare",
+      "accent": "blue",
+      "kicker": "MCP · 2024",
+      "title": "把接工具标准化",
+      "highlight": "标准化",
+      "center": "→",
+      "left": {
+        "title": "各家私有格式",
+        "sub": "接一个工具改一次",
+        "items": [
+          {
+            "title": "格式各异",
+            "sub": "框架与 API 各写一套"
+          },
+          {
+            "title": "适配成本高",
+            "sub": "每接一个都要重写"
+          }
+        ]
+      },
+      "right": {
+        "title": "统一协议",
+        "sub": "像 USB，插上就能用",
+        "items": [
+          {
+            "title": "降低适配成本",
+            "sub": "不是降低计算成本"
+          },
+          {
+            "title": "边界一起定",
+            "sub": "能接什么，能改什么"
+          }
+        ]
+      }
+    },
+    {
+      "id": "memory",
+      "type": "bullets",
+      "accent": "green",
+      "kicker": "THREE LAYERS",
+      "title": "记忆分三层",
+      "highlight": "三层",
+      "items": [
+        {
+          "icon": "①",
+          "title": "短期",
+          "sub": "上下文窗口，一次会话",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "长期",
+          "sub": "向量库或文件，跨会话",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "程序性",
+          "sub": "权重里，改起来最贵",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "multi",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "DIVISION OF LABOUR",
+      "title": "分工还是传话",
+      "highlight": "传话",
+      "center": "vs",
+      "left": {
+        "title": "分工",
+        "sub": "可并行的子任务",
+        "items": [
+          {
+            "title": "同时开十条线",
+            "sub": "十个方向一起调研"
+          },
+          {
+            "title": "各有角色",
+            "sub": "规划、编码、审查、测试"
+          }
+        ]
+      },
+      "right": {
+        "title": "传话游戏",
+        "sub": "每次交接都有损",
+        "items": [
+          {
+            "title": "保真九成",
+            "sub": "传十次只剩三成半"
+          },
+          {
+            "title": "瓶颈在协议",
+            "sub": "不在智能体数量"
+          }
+        ]
+      }
+    },
+    {
+      "id": "compound",
+      "type": "formula",
+      "accent": "red",
+      "kicker": "COMPOUNDING ERROR",
+      "title": "复合误差",
+      "highlight": "误差",
+      "formula": "0.95^20 ≈ 0.36\n0.95^100 ≈ 0.006",
+      "note": "计算值：假设每步独立，单步成功率均为 95%；20 步与 100 步。",
+      "bullets": [
+        "20 步 36%，100 步仅 0.6%",
+        "对策：提可靠性、缩链条、加检查点"
+      ],
+      "stamp": "计算值 · 独立假设"
+    },
+    {
+      "id": "remedies",
+      "type": "bullets",
+      "accent": "green",
+      "kicker": "THREE WAYS OUT",
+      "title": "三条对策",
+      "highlight": "对策",
+      "items": [
+        {
+          "icon": "①",
+          "title": "提高单步",
+          "sub": "更好的模型与工具返回",
+          "color": "green"
+        },
+        {
+          "icon": "②",
+          "title": "缩短链条",
+          "sub": "拆成可并行的子任务",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "检查点",
+          "sub": "每步验证，失败可回滚",
+          "color": "orange"
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "type": "steps",
+      "accent": "red",
+      "kicker": "PROMPT INJECTION",
+      "title": "提示注入",
+      "highlight": "注入",
+      "steps": [
+        {
+          "title": "最小权限",
+          "sub": "只给当前任务要用的"
+        },
+        {
+          "title": "沙箱",
+          "sub": "代码与文件访问隔离"
+        },
+        {
+          "title": "人类确认",
+          "sub": "转账删除先批准"
+        },
+        {
+          "title": "输出审查",
+          "sub": "调用参数做规则校验"
+        }
+      ],
+      "stamp": "三条件同时成立，就难根治"
+    },
+    {
+      "id": "frontier",
+      "type": "timeline",
+      "accent": "teal",
+      "kicker": "SNAPSHOT · 2025–2026",
+      "title": "前沿几条线",
+      "highlight": "几条线",
+      "events": [
+        {
+          "year": "2023",
+          "title": "ReAct",
+          "sub": "推理与行动交替",
+          "color": "orange"
+        },
+        {
+          "year": "2024",
+          "title": "MCP",
+          "sub": "工具接口统一",
+          "color": "blue"
+        },
+        {
+          "year": "2024",
+          "title": "软件智能体",
+          "sub": "SWE-agent，接上代码库",
+          "color": "teal"
+        },
+        {
+          "year": "2024",
+          "title": "对齐伪装",
+          "sub": "评测的边界",
+          "color": "red"
+        },
+        {
+          "year": "2025–2026",
+          "title": "六条线",
+          "sub": "快照，不是定论",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "summary",
+      "type": "bullets",
+      "accent": "orange",
+      "kicker": "TAKEAWAYS",
+      "title": "本章小结",
+      "highlight": "小结",
+      "items": [
+        {
+          "icon": "①",
+          "title": "模型 ≠ 智能体",
+          "sub": "差别在反馈回路",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "请求与执行",
+          "sub": "分开，才有安全边界",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "复合误差",
+          "sub": "长任务的头号敌人",
+          "color": "red"
+        },
+        {
+          "icon": "④",
+          "title": "提示注入",
+          "sub": "只能限制爆炸半径",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 16",
+      "title": "下一站：结课",
+      "highlight": "结课",
+      "subtitle": "把十五章，压成一张图",
+      "next": {
+        "code": "16",
+        "title": "结课",
+        "sub": "一张图 · 十条定律 · 一份地图"
+      },
+      "pills": [
+        "第 16 章",
+        "全课收尾",
+        "继续深入"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

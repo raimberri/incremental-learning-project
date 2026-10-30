@@ -1,0 +1,430 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "16.0",
+      "zh": "山顶上的图",
+      "en": "THE VIEW FROM THE TOP",
+      "lines": [
+        [
+          "十七章走完，这一集不引入新论文，只做收束。",
+          "Seventeen chapters done. This finale adds no new papers."
+        ],
+        [
+          "先用一张图，把前面所有章节串成一条链。",
+          "First, one map that strings every chapter into a chain."
+        ],
+        [
+          "再用十条定律，讲清这条链上反复出现的模式。",
+          "Then ten laws that keep recurring along that chain."
+        ],
+        [
+          "最后是下一步：读什么，做什么，还有什么没答案。",
+          "Then what to read, what to build, what stays open."
+        ],
+        [
+          "这一章没有新知识，只有重新排列过的旧知识。",
+          "No new knowledge here, only old knowledge rearranged."
+        ],
+        [
+          "如果只记一句话：能力来自规模，可用性来自对齐，边界来自评测与可解释性。",
+          "One sentence: ability from scale, usability from alignment, limits from testing."
+        ]
+      ]
+    },
+    {
+      "id": "map",
+      "code": "16.1",
+      "zh": "从词到智能体",
+      "en": "ONE CHAIN",
+      "lines": [
+        [
+          "整门课只有一个目标：给定上下文，预测下一个词。",
+          "The whole course has one goal: predict the next token."
+        ],
+        [
+          "手段也只有一个：梯度下降加反向传播，把损失压下去。",
+          "One method: gradient descent plus backprop, pushing loss down."
+        ],
+        [
+          "围绕这个目标，长出三根支柱：表示、架构、数据。",
+          "Three pillars grow around it: representation, architecture, data."
+        ],
+        [
+          "表示把词变成向量，架构用注意力，数据来自互联网。",
+          "Vectors, attention, and text from the internet."
+        ],
+        [
+          "三根支柱合起来，才有规模化：损失按幂律下降。",
+          "Together they scale: loss falls as a power law."
+        ],
+        [
+          "规模之后分出三个方向：对齐、推理、效率。",
+          "Then three branches: alignment, reasoning, efficiency."
+        ],
+        [
+          "对齐让它可用，推理让它多想几步，效率让它跑得起。",
+          "Alignment makes it usable; reasoning makes it think longer."
+        ],
+        [
+          "最后接到外部世界：检索、工具、评测，直到智能体。",
+          "Finally it meets the world: retrieval, tools, evaluation, agents."
+        ]
+      ]
+    },
+    {
+      "id": "laws-a",
+      "code": "16.2",
+      "zh": "定律一二三",
+      "en": "LAWS ONE TO THREE",
+      "lines": [
+        [
+          "十条定律不是物理定律，而是贯穿全课的模式。",
+          "These are not physics laws, but patterns that recur."
+        ],
+        [
+          "第一条：目标越简单，就越容易规模化。",
+          "Law one: the simpler the target, the easier to scale."
+        ],
+        [
+          "简单目标加海量数据，胜过精巧目标加少量数据。",
+          "Simple targets with massive data beat clever targets with little data."
+        ],
+        [
+          "第二条：表示决定上限，模型学不到表示之外。",
+          "Law two: representation sets the ceiling."
+        ],
+        [
+          "只给词编号学不到相似，静态词向量学不到语境。",
+          "Raw IDs cannot see similarity; static vectors cannot see context."
+        ],
+        [
+          "所以每次架构革命，本质上都是一次表示革命。",
+          "Every architecture revolution was a representation revolution."
+        ],
+        [
+          "第三条：注意力是可微检索，深度是串行计算。",
+          "Law three: attention is differentiable retrieval, depth is serial compute."
+        ],
+        [
+          "自回归把时间变成计算，三件事拼成会思考的近似。",
+          "Autoregression turns time into compute: an engineering approximation of thought."
+        ]
+      ]
+    },
+    {
+      "id": "laws-b",
+      "code": "16.3",
+      "zh": "定律四五六",
+      "en": "LAWS FOUR TO SIX",
+      "lines": [
+        [
+          "第四条：规模有定律，但定律也有边界。",
+          "Law four: scaling has laws, and the laws have limits."
+        ],
+        [
+          "损失随规模按幂律下降，可预测，也可规划。",
+          "Loss falls as a power law, predictable and plannable."
+        ],
+        [
+          "但数据会枯竭，推理成本上升，收益递减。",
+          "But data runs dry, inference costs rise, returns diminish."
+        ],
+        [
+          "第五条：对齐是分布偏移，不是知识注入。",
+          "Law five: alignment shifts a distribution, it does not inject knowledge."
+        ],
+        [
+          "它只把概率质量，从人类不喜欢挪到人类喜欢。",
+          "It moves probability mass from disliked to liked."
+        ],
+        [
+          "所以对齐改得了风格行为，改不了知识边界。",
+          "So alignment changes style and behavior, not the knowledge boundary."
+        ],
+        [
+          "第六条：推理可以写进权重，也可以花在推理时。",
+          "Law six: reasoning can live in weights, or be spent at inference."
+        ],
+        [
+          "给定预算，要在训练更久和想更久之间分配。",
+          "Given a budget, choose between training longer and thinking longer."
+        ]
+      ]
+    },
+    {
+      "id": "laws-c",
+      "code": "16.4",
+      "zh": "定律七八九",
+      "en": "LAWS SEVEN TO NINE",
+      "lines": [
+        [
+          "第七条：稀疏是效率问题最通用的解法。",
+          "Law seven: sparsity is the general answer for efficiency."
+        ],
+        [
+          "混合专家、稀疏缓存、稀疏特征，大脑也稀疏放电。",
+          "Mixture of experts, sparse caches, sparse features, even neurons."
+        ],
+        [
+          "用结构化的稀疏，逼近稠密计算的效果。",
+          "Structured sparsity approximates dense compute."
+        ],
+        [
+          "第八条：记忆必须分层，而且要分得清楚。",
+          "Law eight: memory must be layered."
+        ],
+        [
+          "权重是长期，上下文是短期，外部库无限可溯源。",
+          "Weights are long-term, context is short-term, external stores are unbounded."
+        ],
+        [
+          "第九条：评测是能力的代理，代理会被优化。",
+          "Law nine: evaluation is a proxy, and proxies get optimized."
+        ],
+        [
+          "基准会污染，评审会带偏见，榜单会谄媚。",
+          "Benchmarks leak, judges are biased, leaderboards flatter."
+        ],
+        [
+          "唯一可靠的评测，是持续更新题目、多指标、真实任务。",
+          "Only refreshed tasks, many metrics, and real work stay honest."
+        ]
+      ]
+    },
+    {
+      "id": "law-ten",
+      "code": "16.5",
+      "zh": "可靠性是乘法",
+      "en": "RELIABILITY IS A PRODUCT",
+      "lines": [
+        [
+          "第十条：可靠性等于单步可靠，乘上步数。",
+          "Law ten: reliability is single-step reliability times steps."
+        ],
+        [
+          "单步零点九五，走二十步，只剩约百分之三十六。",
+          "0.95 per step, twenty steps, about 36 percent left."
+        ],
+        [
+          "长链条的可靠性，由最弱环节和长度共同决定。",
+          "Long chains fail at the weakest link and the length."
+        ],
+        [
+          "不要追求永不犯错，要设计成错了能发现。",
+          "Do not aim for never wrong; design for detection."
+        ],
+        [
+          "发现之后，还要能回滚到一个安全的状态。",
+          "Detection, and rollback."
+        ]
+      ]
+    },
+    {
+      "id": "three",
+      "code": "16.6",
+      "zh": "只记三件事",
+      "en": "IF YOU KEEP THREE",
+      "lines": [
+        [
+          "如果十条定律还是太重，那就只记三件事。",
+          "If ten laws are still too much, keep three things."
+        ],
+        [
+          "第一，它是一个概率模型，不是一个知识库。",
+          "One: it is a probability model, not a knowledge base."
+        ],
+        [
+          "它的能力与缺陷，都来自根据上文预测下一个词。",
+          "Its powers and flaws come from predicting the next token."
+        ],
+        [
+          "第二，能力来自规模，可用性来自对齐。",
+          "Two: capability from scale, usability from alignment."
+        ],
+        [
+          "产品化的关键，常是把任务拆对，把上下文给对。",
+          "Ship by splitting tasks well and feeding context well."
+        ],
+        [
+          "第三，它没有理解的保证，只有表现的证据。",
+          "Three: no guarantee of understanding, only evidence of behavior."
+        ],
+        [
+          "思维链可能不忠实，注意力图可能不解释，要验证。",
+          "Chains of thought may be unfaithful; verify, do not trust."
+        ]
+      ]
+    },
+    {
+      "id": "read",
+      "code": "16.7",
+      "zh": "入门五篇",
+      "en": "FIVE PAPERS",
+      "lines": [
+        [
+          "想读论文，从入门五篇开始，按这个顺序。",
+          "To read papers, start with five, in this order."
+        ],
+        [
+          "二零一七年 Transformer 架构，二零二零年 GPT-3 规模。",
+          "2017, Transformer, architecture; 2020, GPT-3, scale."
+        ],
+        [
+          "二零二二年有两篇：一篇讲对齐，一篇讲思维链。",
+          "2022 brought two: alignment, and chain of thought."
+        ],
+        [
+          "二零二五年的 DeepSeek-R1，讲用强化学习换推理。",
+          "2025, DeepSeek-R1, trading reinforcement learning for reasoning."
+        ],
+        [
+          "读法是先摘要、图一、结论，再方法，最后实验。",
+          "Read abstract, figure one, conclusion; then method; then experiments."
+        ],
+        [
+          "不要从头读到尾，那是审稿人的读法，不是学习者的。",
+          "Not cover to cover. That is a reviewer's habit, not a learner's."
+        ]
+      ]
+    },
+    {
+      "id": "build",
+      "code": "16.8",
+      "zh": "动手五件事",
+      "en": "FIVE EXERCISES",
+      "lines": [
+        [
+          "想动手的话，有五件事，都从小模型开始。",
+          "To build, five exercises, all on small models."
+        ],
+        [
+          "先用十亿参数以下的模型，跑通分词、前向、采样。",
+          "First, run tokenize, forward, sample under one billion parameters."
+        ],
+        [
+          "再写二十行最小的注意力，确认缩放点积。",
+          "Then write twenty lines of attention and check the scaled dot product."
+        ],
+        [
+          "用 LoRA 微调一个分类任务，感受预训练加微调。",
+          "Fine-tune a classifier with LoRA to feel pretraining plus tuning."
+        ],
+        [
+          "搭一个最小 RAG：切块、嵌入、检索、拼提示。",
+          "Build a minimal RAG: chunk, embed, retrieve, prompt."
+        ],
+        [
+          "最后用 ReAct 写个会查天气的智能体，看它怎么失败。",
+          "Then a ReAct agent that checks weather, and watch it fail."
+        ]
+      ]
+    },
+    {
+      "id": "openq",
+      "code": "16.9",
+      "zh": "还没有答案",
+      "en": "OPEN QUESTIONS",
+      "lines": [
+        [
+          "最后是开放问题，它们目前都没有答案。",
+          "Finally, open questions, all without answers."
+        ],
+        [
+          "第一，规模还会继续有效吗，数据墙之后靠什么。",
+          "One: does scale keep working after the data wall?"
+        ],
+        [
+          "第二，推理的本质是什么，思维链是真的在想吗。",
+          "Two: what is reasoning, and is a chain of thought really thinking?"
+        ],
+        [
+          "第三，如何保证对齐，模型能假装对齐怎么办。",
+          "Three: how to ensure alignment when a model can fake it?"
+        ],
+        [
+          "第四，智能体可靠吗，复合误差能不能压下去。",
+          "Four: are agents reliable, can compound error be pressed down?"
+        ],
+        [
+          "还有理解与预测的边界，以及能源与算力的极限。",
+          "Also the boundary of understanding, and the limits of energy and compute."
+        ],
+        [
+          "历史上，我们总是先有工程近似，再用它定义问题。",
+          "History shows we build an approximation, then let it define the question."
+        ],
+        [
+          "模型可能不是智能的答案，但它是目前最好的探针。",
+          "A model may not be the answer to intelligence, but it is the best probe."
+        ]
+      ]
+    },
+    {
+      "id": "closing",
+      "code": "16.10",
+      "zh": "同一件事",
+      "en": "THE SAME THING",
+      "lines": [
+        [
+          "回到第 1 章那个四词表：猫零点六，狗零点三。",
+          "Back to chapter one: cat 0.6, dog 0.3."
+        ],
+        [
+          "它和今天几千亿参数的模型，在数学上是同一件事。",
+          "Today's hundred-billion-parameter models do the same math."
+        ],
+        [
+          "说到底，就是先给一个分布，然后再采样。",
+          "Give a distribution, then sample."
+        ],
+        [
+          "差别只在规模、数据、对齐，和我们围绕它建的工程。",
+          "Only scale, data, alignment, and the engineering around it differ."
+        ],
+        [
+          "一个简单到能写进一行的目标，长出了没人能完全解释的能力。",
+          "A target one line long grew abilities nobody fully explains."
+        ],
+        [
+          "理解它这件事，不需要膜拜，也不需要恐惧。",
+          "Understanding it needs neither worship nor fear."
+        ],
+        [
+          "你只需要一层层拆开，再一层层装回去。",
+          "Just take it apart layer by layer, and put it back."
+        ]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "16.11",
+      "zh": "现在，轮到你了",
+      "en": "YOUR TURN",
+      "lines": [
+        [
+          "这门课讲到这里，就真的走到最后一页了。",
+          "This course ends here."
+        ],
+        [
+          "你带走的不该是结论，而是一套拆装的工具。",
+          "What you take is not conclusions, but a set of tools."
+        ],
+        [
+          "下一步：读一篇论文，跑一次前向，写一个智能体。",
+          "Next: read a paper, run a forward pass, build an agent."
+        ],
+        [
+          "保持怀疑：分数是代理，解释是证据，不是保证。",
+          "Stay skeptical: scores are proxies, explanations are evidence, not guarantees."
+        ],
+        [
+          "剩下的那些问题，就是你自己的问题了。",
+          "The rest is your own question now."
+        ]
+      ]
+    }
+  ]
+}

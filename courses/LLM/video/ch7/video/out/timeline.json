@@ -1,0 +1,621 @@
+{
+  "total": 408.72,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "07.0",
+      "zh": "大力出奇迹",
+      "en": "WHY SCALE WORKS",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "2020 年，OpenAI 做了一个很笨的实验。",
+          "en": "In 2020, OpenAI ran a deliberately dumb experiment.",
+          "start": 1.6,
+          "end": 5.233
+        },
+        {
+          "zh": "架构没换，还是 Transformer 解码器，目标也没换。",
+          "en": "Same architecture, same decoder, same objective.",
+          "start": 5.733,
+          "end": 9.876
+        },
+        {
+          "zh": "他们几乎只做一件事：把参数、数据、算力一起加大。",
+          "en": "They did one thing: make parameters, data and compute bigger.",
+          "start": 10.376,
+          "end": 15.524
+        },
+        {
+          "zh": "参数扩大约一百倍，从十五亿加到一千七百五十亿。",
+          "en": "Parameters grew about a hundredfold, from 1.5B to 175B.",
+          "start": 16.024,
+          "end": 20.706
+        },
+        {
+          "zh": "结果不只是错误率降低，它会写文章、翻译、写代码。",
+          "en": "The result was not just lower error: it wrote, translated and coded.",
+          "start": 21.206,
+          "end": 26.011
+        },
+        {
+          "zh": "这一章要问：大为什么有用，又为什么不够。",
+          "en": "This chapter asks why size helps, and why it is not enough.",
+          "start": 26.511,
+          "end": 30.052
+        }
+      ],
+      "end": 31.052
+    },
+    {
+      "id": "gpt3",
+      "code": "07.1",
+      "zh": "一千七百五十亿",
+      "en": "GPT-3 AT SCALE",
+      "start": 31.052,
+      "lines": [
+        {
+          "zh": "GPT-3 有一千七百五十亿参数，九十六层。",
+          "en": "GPT-3 has 175 billion parameters and 96 layers.",
+          "start": 32.952,
+          "end": 36.956
+        },
+        {
+          "zh": "隐藏维度一万二千二百八十八，训练数据约三千亿 token。",
+          "en": "Hidden size 12,288; training data about 300 billion tokens.",
+          "start": 37.456,
+          "end": 42.456
+        },
+        {
+          "zh": "它从来没有专门为翻译或写代码训练过。",
+          "en": "It was never trained specifically for translation or code.",
+          "start": 42.956,
+          "end": 46.396
+        },
+        {
+          "zh": "但它能写文章、翻译、写代码，还多出一种能力。",
+          "en": "Yet it wrote, translated, coded, and showed one new ability.",
+          "start": 46.896,
+          "end": 51.272
+        },
+        {
+          "zh": "只要在提示里给几个例子，它就能照着做。",
+          "en": "Give it a few examples in the prompt, and it follows along.",
+          "start": 51.772,
+          "end": 55.195
+        },
+        {
+          "zh": "窗对应 window，模型一个参数都没更新。",
+          "en": "Window comes out; not a single parameter was updated.",
+          "start": 55.695,
+          "end": 59.168
+        }
+      ],
+      "end": 60.168
+    },
+    {
+      "id": "icl",
+      "code": "07.2",
+      "zh": "上下文学习",
+      "en": "LEARNING WITHOUT GRADIENTS",
+      "start": 60.168,
+      "lines": [
+        {
+          "zh": "这种做法叫上下文学习，例子放进上下文，模型照着做。",
+          "en": "This is in-context learning: examples go into the context.",
+          "start": 62.068,
+          "end": 67.249
+        },
+        {
+          "zh": "没有梯度下降，没有微调，参数一个都没变。",
+          "en": "No gradient descent, no fine-tuning, no weight change.",
+          "start": 67.749,
+          "end": 71.406
+        },
+        {
+          "zh": "传统微调把学到的东西写进权重，是永久的。",
+          "en": "Fine-tuning writes what it learns into the weights, permanently.",
+          "start": 71.906,
+          "end": 75.906
+        },
+        {
+          "zh": "上下文学习把例子放在激活里，会话结束就没了。",
+          "en": "In-context learning keeps examples in activations, gone with the session.",
+          "start": 76.406,
+          "end": 80.689
+        },
+        {
+          "zh": "所以上下文是临时记忆，权重是长期记忆。",
+          "en": "So context is temporary memory; weights are long-term memory.",
+          "start": 81.189,
+          "end": 85.199
+        },
+        {
+          "zh": "临时记忆灵活、可撤销，但容量受窗口限制。",
+          "en": "Temporary memory is flexible and undoable, but the window bounds it.",
+          "start": 85.699,
+          "end": 89.915
+        }
+      ],
+      "end": 90.915
+    },
+    {
+      "id": "powerlaw",
+      "code": "07.3",
+      "zh": "把大写成幂律",
+      "en": "POWER LAWS",
+      "start": 90.915,
+      "lines": [
+        {
+          "zh": "2020 年，Kaplan 等人把更大更好写成了公式。",
+          "en": "In 2020, Kaplan and colleagues turned bigger-is-better into a formula.",
+          "start": 92.815,
+          "end": 97.093
+        },
+        {
+          "zh": "测试集上的交叉熵损失，随参数量呈幂律下降。",
+          "en": "Test cross-entropy falls as a power law in parameter count.",
+          "start": 97.593,
+          "end": 102.031
+        },
+        {
+          "zh": "随训练 token 数、随训练算力，也都是幂律。",
+          "en": "The same holds for training tokens and for training compute.",
+          "start": 102.531,
+          "end": 106.37
+        },
+        {
+          "zh": "三个指数分别约零点零七六、零点零九五、零点零五。",
+          "en": "The exponents are about 0.076, 0.095 and 0.050.",
+          "start": 106.87,
+          "end": 111.753
+        },
+        {
+          "zh": "幂律的意思是，取对数之后，它是一条直线。",
+          "en": "A power law means a straight line once you take logs.",
+          "start": 112.253,
+          "end": 115.982
+        },
+        {
+          "zh": "指数很小，损失下降得慢，但十倍规模带来可观改善。",
+          "en": "Small exponents mean slow decline, yet ten times scale still helps.",
+          "start": 116.482,
+          "end": 121.644
+        },
+        {
+          "zh": "这条直线跨越了七个数量级，还能继续外推。",
+          "en": "That line spans seven orders of magnitude, and it extrapolates.",
+          "start": 122.144,
+          "end": 125.927
+        }
+      ],
+      "end": 126.927
+    },
+    {
+      "id": "loglog",
+      "code": "07.4",
+      "zh": "双对数直线",
+      "en": "A STRAIGHT LINE ON LOG-LOG",
+      "start": 126.927,
+      "lines": [
+        {
+          "zh": "幂律直接画在普通坐标上，形状会骗人。",
+          "en": "A power law drawn on ordinary axes can mislead.",
+          "start": 128.827,
+          "end": 132.425
+        },
+        {
+          "zh": "横轴从十亿到千亿，前段很陡，后段几乎压平。",
+          "en": "From a billion to a hundred billion: steep, then almost flat.",
+          "start": 132.925,
+          "end": 137.29
+        },
+        {
+          "zh": "把横轴和纵轴都取对数，幂律才露出原形。",
+          "en": "Take the log of both axes, and the power law shows its shape.",
+          "start": 137.79,
+          "end": 141.482
+        },
+        {
+          "zh": "一条笔直的下降线，斜率就是负的幂指数。",
+          "en": "A straight descending line whose slope is the negative exponent.",
+          "start": 141.982,
+          "end": 145.747
+        },
+        {
+          "zh": "这条线让外推成为可能：小模型能预测大模型。",
+          "en": "That line makes extrapolation possible: small models predict large ones.",
+          "start": 146.247,
+          "end": 150.705
+        },
+        {
+          "zh": "所以往规模里投钱，才谈得上是估算，不是赌博。",
+          "en": "So spending on scale becomes an estimate, not a gamble.",
+          "start": 151.205,
+          "end": 155.429
+        }
+      ],
+      "end": 156.429
+    },
+    {
+      "id": "estimate",
+      "code": "07.5",
+      "zh": "从赌博到估算",
+      "en": "FROM BET TO BUDGET",
+      "start": 156.429,
+      "lines": [
+        {
+          "zh": "这条线为什么重要？它把一次豪赌变成了工程估算。",
+          "en": "Why does it matter? It turns a gamble into an engineering estimate.",
+          "start": 158.329,
+          "end": 162.944
+        },
+        {
+          "zh": "第一步，先用几百万美元，训几个小模型。",
+          "en": "Step one: train a few small models for a few million dollars.",
+          "start": 163.444,
+          "end": 167.063
+        },
+        {
+          "zh": "第二步，把这些小模型的点，拟合成一条直线。",
+          "en": "Step two: fit those points with a straight line.",
+          "start": 167.563,
+          "end": 171.426
+        },
+        {
+          "zh": "第三步，外推到目标规模，预测它能到什么水平。",
+          "en": "Step three: extrapolate to the target scale and predict its level.",
+          "start": 171.926,
+          "end": 176.241
+        },
+        {
+          "zh": "第四步，再决定这一亿美元到底要不要投。",
+          "en": "Step four: decide whether the hundred million is worth spending.",
+          "start": 176.741,
+          "end": 180.417
+        },
+        {
+          "zh": "在科学方法上，这是一次从定性到定量的跃迁。",
+          "en": "Methodologically, this is a leap from qualitative to quantitative.",
+          "start": 180.917,
+          "end": 185.056
+        }
+      ],
+      "end": 186.056
+    },
+    {
+      "id": "chinchilla",
+      "code": "07.6",
+      "zh": "配比被改写",
+      "en": "THE CHINCHILLA CORRECTION",
+      "start": 186.056,
+      "lines": [
+        {
+          "zh": "Kaplan 的结论之一是，给定算力，优先加参数。",
+          "en": "One Kaplan conclusion: with fixed compute, add parameters first.",
+          "start": 187.956,
+          "end": 191.975
+        },
+        {
+          "zh": "2022 年，DeepMind 的 Chinchilla 论文推翻了它。",
+          "en": "In 2022, DeepMind's Chinchilla paper overturned that advice.",
+          "start": 192.475,
+          "end": 196.232
+        },
+        {
+          "zh": "Hoffmann 等人重做实验，发现原设定有偏差。",
+          "en": "Hoffmann and colleagues redid the experiments and found a bias.",
+          "start": 196.732,
+          "end": 200.369
+        },
+        {
+          "zh": "学习率调度没有随训练长度调整，结论因此偏了。",
+          "en": "The learning-rate schedule did not scale with run length.",
+          "start": 200.869,
+          "end": 205.185
+        },
+        {
+          "zh": "修正后，计算最优是每个参数配二十个 token。",
+          "en": "Corrected, compute-optimal means about twenty tokens per parameter.",
+          "start": 205.685,
+          "end": 209.91
+        },
+        {
+          "zh": "七百亿参数的 Chinchilla，配一点四万亿 token。",
+          "en": "Chinchilla has 70 billion parameters and 1.4 trillion tokens.",
+          "start": 210.41,
+          "end": 214.171
+        },
+        {
+          "zh": "在几乎所有基准上，它超过了更大的 Gopher。",
+          "en": "On nearly every benchmark it beat the larger Gopher.",
+          "start": 214.671,
+          "end": 218.278
+        },
+        {
+          "zh": "也超过了一千七百五十亿参数的 GPT-3。",
+          "en": "It also beat GPT-3 at 175 billion parameters.",
+          "start": 218.778,
+          "end": 222.36
+        }
+      ],
+      "end": 223.36
+    },
+    {
+      "id": "handcalc",
+      "code": "07.7",
+      "zh": "一次手算",
+      "en": "DO THE MATH",
+      "start": 223.36,
+      "lines": [
+        {
+          "zh": "就用正文里的数字，把这个配比手算一遍。",
+          "en": "Let us do that ratio by hand, with numbers from the text.",
+          "start": 225.26,
+          "end": 228.648
+        },
+        {
+          "zh": "GPT-3 有一千七百五十亿参数，按二十倍配数据。",
+          "en": "GPT-3 has 175 billion parameters; twenty tokens each.",
+          "start": 229.148,
+          "end": 233.739
+        },
+        {
+          "zh": "需要三点五万亿个 token，比实际数据多得多。",
+          "en": "That asks for 3.5 trillion tokens, far more than it saw.",
+          "start": 234.239,
+          "end": 237.932
+        },
+        {
+          "zh": "它实际只训练了约三千亿个 token。",
+          "en": "In practice it trained on about 300 billion tokens.",
+          "start": 238.432,
+          "end": 241.34
+        },
+        {
+          "zh": "三千亿除以三点五万亿，大约是十二分之一。",
+          "en": "300 billion over 3.5 trillion is about one twelfth.",
+          "start": 241.84,
+          "end": 245.889
+        },
+        {
+          "zh": "所以当时的大模型，普遍参数过剩、数据不足。",
+          "en": "So models then were parameter-rich and data-poor.",
+          "start": 246.389,
+          "end": 250.805
+        }
+      ],
+      "end": 251.805
+    },
+    {
+      "id": "emergent",
+      "code": "07.8",
+      "zh": "突然会了",
+      "en": "SUDDENLY ABLE",
+      "start": 251.805,
+      "lines": [
+        {
+          "zh": "规模变大，不只是错误率降低，有些能力像突然出现。",
+          "en": "Scaling does more than cut errors: some abilities seem to appear.",
+          "start": 253.705,
+          "end": 258.32
+        },
+        {
+          "zh": "2022 年，Wei 等人系统记录了这类现象。",
+          "en": "In 2022, Wei and colleagues systematically documented this.",
+          "start": 258.82,
+          "end": 262.346
+        },
+        {
+          "zh": "三位数加减法，小模型几乎靠猜，准确率接近零。",
+          "en": "On three-digit arithmetic, small models guess: accuracy near zero.",
+          "start": 262.846,
+          "end": 267.536
+        },
+        {
+          "zh": "模型大到某个规模，准确率突然跳到很高。",
+          "en": "Past some size, accuracy suddenly jumps very high.",
+          "start": 268.036,
+          "end": 271.775
+        },
+        {
+          "zh": "他们把这种能力叫涌现能力，小模型没有，大模型才有。",
+          "en": "They call these emergent abilities: absent small, present large.",
+          "start": 272.275,
+          "end": 277.222
+        },
+        {
+          "zh": "这个说法很符合直觉，也很像物理学里的相变。",
+          "en": "It fits intuition, and it looks like a phase transition in physics.",
+          "start": 277.722,
+          "end": 281.634
+        },
+        {
+          "zh": "水到零度突然结冰，微观参数连续，宏观性质突变。",
+          "en": "Water freezes at zero: continuous micro-parameters, abrupt macro-change.",
+          "start": 282.134,
+          "end": 286.872
+        }
+      ],
+      "end": 287.872
+    },
+    {
+      "id": "mirage",
+      "code": "07.9",
+      "zh": "突然被测出来",
+      "en": "MEASURED, NOT BORN",
+      "start": 287.872,
+      "lines": [
+        {
+          "zh": "但 2023 年，Schaeffer 等人提出了一个尖锐的反驳。",
+          "en": "But in 2023, Schaeffer and colleagues pushed back sharply.",
+          "start": 289.772,
+          "end": 293.978
+        },
+        {
+          "zh": "他们指出，所谓涌现，很可能是指标选择造成的假象。",
+          "en": "They argue emergence may be a mirage created by the metric.",
+          "start": 294.478,
+          "end": 299.111
+        },
+        {
+          "zh": "用完全答对才算对的不连续指标，曲线就会突然跃起。",
+          "en": "An all-or-nothing metric makes the curve leap suddenly.",
+          "start": 299.611,
+          "end": 304.303
+        },
+        {
+          "zh": "换成对数概率这种连续指标，同一次提升是平滑的。",
+          "en": "Switch to a continuous metric, and the same gain looks smooth.",
+          "start": 304.803,
+          "end": 309.165
+        },
+        {
+          "zh": "能力可能一直在连续增长，只是我们的尺子刻度跳跃。",
+          "en": "Ability may grow continuously; our ruler has coarse ticks.",
+          "start": 309.665,
+          "end": 314.046
+        },
+        {
+          "zh": "他们换了几种指标重测，涌现就消失了。",
+          "en": "Re-measure with several metrics, and the emergence vanishes.",
+          "start": 314.546,
+          "end": 317.903
+        },
+        {
+          "zh": "稳妥的说法是，能力连续提升，外部表现可能非线性。",
+          "en": "The safe claim: ability rises smoothly, behaviour may not.",
+          "start": 318.403,
+          "end": 323.207
+        }
+      ],
+      "end": 324.207
+    },
+    {
+      "id": "ceiling",
+      "code": "07.10",
+      "zh": "四个天花板",
+      "en": "FOUR CEILINGS",
+      "start": 324.207,
+      "lines": [
+        {
+          "zh": "第一是数据墙，公开的高质量文本是有限的。",
+          "en": "First, the data wall: high-quality text is finite.",
+          "start": 326.107,
+          "end": 329.908
+        },
+        {
+          "zh": "有估算认为它可能在几年内用尽，这是预测不是定论。",
+          "en": "Some estimates say it runs out within years; that is a forecast.",
+          "start": 330.408,
+          "end": 335.105
+        },
+        {
+          "zh": "第二是算力与电力，前沿模型成本已达数亿美元量级。",
+          "en": "Second, compute and power: frontier training costs hundreds of millions.",
+          "start": 335.605,
+          "end": 340.261
+        },
+        {
+          "zh": "第三是推理成本，模型越大，每次调用越贵。",
+          "en": "Third, inference cost: bigger models cost more per call.",
+          "start": 340.761,
+          "end": 344.805
+        },
+        {
+          "zh": "第四是收益递减，指数很小，再提升要付指数级代价。",
+          "en": "Fourth, diminishing returns: small exponents mean steep prices.",
+          "start": 345.305,
+          "end": 350.365
+        },
+        {
+          "zh": "于是行业分流，小模型超额训练，或者稀疏激活，还有合成数据。",
+          "en": "So the field split: overtrained small models, sparse activation, synthetic data.",
+          "start": 350.865,
+          "end": 356.772
+        }
+      ],
+      "end": 357.772
+    },
+    {
+      "id": "traps",
+      "code": "07.11",
+      "zh": "两个不等于",
+      "en": "TWO NON-EQUATIONS",
+      "start": 357.772,
+      "lines": [
+        {
+          "zh": "最后说两个大家常踩的误解，都跟规模有关。",
+          "en": "Two common mistakes, both about scale.",
+          "start": 359.672,
+          "end": 363.491
+        },
+        {
+          "zh": "第一，参数量大，绝不等于这个模型能力就强。",
+          "en": "First, many parameters never meant strong ability.",
+          "start": 363.991,
+          "end": 367.935
+        },
+        {
+          "zh": "Chinchilla 用七百亿，超过了二千八百亿的 Gopher。",
+          "en": "Chinchilla at 70 billion beat Gopher at 280 billion.",
+          "start": 368.435,
+          "end": 372.497
+        },
+        {
+          "zh": "第二，榜单分数高，也不等于在你的场景里可用。",
+          "en": "Second, a high benchmark score is not usability in your setting.",
+          "start": 372.997,
+          "end": 377.088
+        },
+        {
+          "zh": "榜单是固定题集，分数高不代表延迟低、成本低。",
+          "en": "Benchmarks are fixed sets; high scores say nothing about latency or cost.",
+          "start": 377.588,
+          "end": 382.145
+        }
+      ],
+      "end": 383.145
+    },
+    {
+      "id": "outro",
+      "code": "07.12",
+      "zh": "下一站：对齐",
+      "en": "NEXT: ALIGNMENT",
+      "start": 383.145,
+      "lines": [
+        {
+          "zh": "这一章的一句话：损失随规模按幂律下降。",
+          "en": "In one sentence: loss falls as a power law with scale.",
+          "start": 385.045,
+          "end": 388.659
+        },
+        {
+          "zh": "但配比怎么定、天花板在哪，和参数一样重要。",
+          "en": "But the ratio and the ceilings matter as much as parameters.",
+          "start": 389.159,
+          "end": 393.149
+        },
+        {
+          "zh": "模型现在很会接着往下写，却还不太听话。",
+          "en": "The model is good at continuing text, but not at obeying.",
+          "start": 393.649,
+          "end": 397.494
+        },
+        {
+          "zh": "你让它写一首诗，它可能给你写一篇论文。",
+          "en": "Ask for a poem and you may get a paper instead.",
+          "start": 397.994,
+          "end": 401.279
+        },
+        {
+          "zh": "下一章讲对齐，怎么把文本预测器变成助手。",
+          "en": "Next chapter: alignment, turning a predictor into an assistant.",
+          "start": 401.779,
+          "end": 405.72
+        }
+      ],
+      "end": 408.72
+    }
+  ]
+}

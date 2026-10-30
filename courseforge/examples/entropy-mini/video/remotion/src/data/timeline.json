@@ -1,0 +1,139 @@
+{
+  "total": 82.416,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "00",
+      "zh": "开场",
+      "en": "INTRO",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "如果我问你：明天会下雨吗？你心里其实有一个模糊的把握。",
+          "en": "If I ask whether it will rain tomorrow, you already have a vague sense of it.",
+          "start": 1.6,
+          "end": 6.78
+        },
+        {
+          "zh": "这种把握有多确定？这一期，我们用一个数把它量出来：熵。",
+          "en": "How certain is that sense? This episode measures it with one number: entropy.",
+          "start": 7.28,
+          "end": 12.898
+        }
+      ],
+      "end": 13.898
+    },
+    {
+      "id": "idea",
+      "code": "01",
+      "zh": "三个关键词",
+      "en": "THREE WORDS",
+      "start": 13.898,
+      "lines": [
+        {
+          "zh": "先记住一句话：熵，是一个分布平均有多意外。",
+          "en": "Start with one sentence: entropy is how surprised a distribution is on average.",
+          "start": 15.798,
+          "end": 19.689
+        },
+        {
+          "zh": "第一个关键词，不确定性。结果越分散，越难猜。",
+          "en": "The first word is uncertainty: the more spread out the outcomes, the harder to guess.",
+          "start": 20.189,
+          "end": 25.014
+        },
+        {
+          "zh": "第二个关键词，平均。不是某一次，而是长期平均。",
+          "en": "The second word is average: not one draw, but the long-run average.",
+          "start": 25.514,
+          "end": 30.426
+        },
+        {
+          "zh": "第三个关键词，下界。它决定了编码一个结果，平均至少要多少比特。",
+          "en": "The third word is lower bound: the minimum average bits needed to encode an outcome.",
+          "start": 30.926,
+          "end": 37.449
+        }
+      ],
+      "end": 38.449
+    },
+    {
+      "id": "math",
+      "code": "02",
+      "zh": "写成公式",
+      "en": "THE FORMULA",
+      "start": 38.449,
+      "lines": [
+        {
+          "zh": "把一个分布写成概率 p。",
+          "en": "Write a distribution as probabilities p.",
+          "start": 40.349,
+          "end": 42.484
+        },
+        {
+          "zh": "信息量是负 log p：概率越小，意外越大。",
+          "en": "Information is negative log p: the smaller the probability, the bigger the surprise.",
+          "start": 42.984,
+          "end": 46.69
+        },
+        {
+          "zh": "按概率加权平均，就得到熵的公式。",
+          "en": "Average it with the probabilities, and you get the entropy formula.",
+          "start": 47.19,
+          "end": 50.296
+        }
+      ],
+      "end": 51.296
+    },
+    {
+      "id": "curve",
+      "code": "03",
+      "zh": "画成曲线",
+      "en": "THE CURVE",
+      "start": 51.296,
+      "lines": [
+        {
+          "zh": "画出来看：横轴是概率 p，纵轴是负 log p。",
+          "en": "Plot it: probability p on the x-axis, negative log p on the y-axis.",
+          "start": 53.196,
+          "end": 57.224
+        },
+        {
+          "zh": "p 接近 1，信息量接近 0；p 接近 0，曲线陡峭上升。",
+          "en": "As p approaches 1, information approaches 0; as p approaches 0, the curve climbs steeply.",
+          "start": 57.724,
+          "end": 63.009
+        },
+        {
+          "zh": "把这条曲线按 p 加权平均，就是熵。",
+          "en": "Average this curve with weights p, and you get entropy.",
+          "start": 63.509,
+          "end": 66.85
+        }
+      ],
+      "end": 67.85
+    },
+    {
+      "id": "outro",
+      "code": "04",
+      "zh": "下一站",
+      "en": "NEXT",
+      "start": 67.85,
+      "lines": [
+        {
+          "zh": "这一期，我们把熵拆成三个词、一个公式、一条曲线。",
+          "en": "This episode reduced entropy to three words, one formula, and one curve.",
+          "start": 69.75,
+          "end": 74.43
+        },
+        {
+          "zh": "下一章，我们用它来衡量语言模型。我们下期见。",
+          "en": "Next chapter, we use it to measure language models. See you next time.",
+          "start": 74.93,
+          "end": 79.416
+        }
+      ],
+      "end": 82.416
+    }
+  ]
+}

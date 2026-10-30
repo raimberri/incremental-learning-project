@@ -1,0 +1,434 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "07.0",
+      "zh": "大力出奇迹",
+      "en": "WHY SCALE WORKS",
+      "lines": [
+        [
+          "2020 年，OpenAI 做了一个很笨的实验。",
+          "In 2020, OpenAI ran a deliberately dumb experiment."
+        ],
+        [
+          "架构没换，还是 Transformer 解码器，目标也没换。",
+          "Same architecture, same decoder, same objective."
+        ],
+        [
+          "他们几乎只做一件事：把参数、数据、算力一起加大。",
+          "They did one thing: make parameters, data and compute bigger."
+        ],
+        [
+          "参数扩大约一百倍，从十五亿加到一千七百五十亿。",
+          "Parameters grew about a hundredfold, from 1.5B to 175B."
+        ],
+        [
+          "结果不只是错误率降低，它会写文章、翻译、写代码。",
+          "The result was not just lower error: it wrote, translated and coded."
+        ],
+        [
+          "这一章要问：大为什么有用，又为什么不够。",
+          "This chapter asks why size helps, and why it is not enough."
+        ]
+      ]
+    },
+    {
+      "id": "gpt3",
+      "code": "07.1",
+      "zh": "一千七百五十亿",
+      "en": "GPT-3 AT SCALE",
+      "lines": [
+        [
+          "GPT-3 有一千七百五十亿参数，九十六层。",
+          "GPT-3 has 175 billion parameters and 96 layers."
+        ],
+        [
+          "隐藏维度一万二千二百八十八，训练数据约三千亿 token。",
+          "Hidden size 12,288; training data about 300 billion tokens."
+        ],
+        [
+          "它从来没有专门为翻译或写代码训练过。",
+          "It was never trained specifically for translation or code."
+        ],
+        [
+          "但它能写文章、翻译、写代码，还多出一种能力。",
+          "Yet it wrote, translated, coded, and showed one new ability."
+        ],
+        [
+          "只要在提示里给几个例子，它就能照着做。",
+          "Give it a few examples in the prompt, and it follows along."
+        ],
+        [
+          "窗对应 window，模型一个参数都没更新。",
+          "Window comes out; not a single parameter was updated."
+        ]
+      ]
+    },
+    {
+      "id": "icl",
+      "code": "07.2",
+      "zh": "上下文学习",
+      "en": "LEARNING WITHOUT GRADIENTS",
+      "lines": [
+        [
+          "这种做法叫上下文学习，例子放进上下文，模型照着做。",
+          "This is in-context learning: examples go into the context."
+        ],
+        [
+          "没有梯度下降，没有微调，参数一个都没变。",
+          "No gradient descent, no fine-tuning, no weight change."
+        ],
+        [
+          "传统微调把学到的东西写进权重，是永久的。",
+          "Fine-tuning writes what it learns into the weights, permanently."
+        ],
+        [
+          "上下文学习把例子放在激活里，会话结束就没了。",
+          "In-context learning keeps examples in activations, gone with the session."
+        ],
+        [
+          "所以上下文是临时记忆，权重是长期记忆。",
+          "So context is temporary memory; weights are long-term memory."
+        ],
+        [
+          "临时记忆灵活、可撤销，但容量受窗口限制。",
+          "Temporary memory is flexible and undoable, but the window bounds it."
+        ]
+      ]
+    },
+    {
+      "id": "powerlaw",
+      "code": "07.3",
+      "zh": "把大写成幂律",
+      "en": "POWER LAWS",
+      "lines": [
+        [
+          "2020 年，Kaplan 等人把更大更好写成了公式。",
+          "In 2020, Kaplan and colleagues turned bigger-is-better into a formula."
+        ],
+        [
+          "测试集上的交叉熵损失，随参数量呈幂律下降。",
+          "Test cross-entropy falls as a power law in parameter count."
+        ],
+        [
+          "随训练 token 数、随训练算力，也都是幂律。",
+          "The same holds for training tokens and for training compute."
+        ],
+        [
+          "三个指数分别约零点零七六、零点零九五、零点零五。",
+          "The exponents are about 0.076, 0.095 and 0.050."
+        ],
+        [
+          "幂律的意思是，取对数之后，它是一条直线。",
+          "A power law means a straight line once you take logs."
+        ],
+        [
+          "指数很小，损失下降得慢，但十倍规模带来可观改善。",
+          "Small exponents mean slow decline, yet ten times scale still helps."
+        ],
+        [
+          "这条直线跨越了七个数量级，还能继续外推。",
+          "That line spans seven orders of magnitude, and it extrapolates."
+        ]
+      ]
+    },
+    {
+      "id": "loglog",
+      "code": "07.4",
+      "zh": "双对数直线",
+      "en": "A STRAIGHT LINE ON LOG-LOG",
+      "lines": [
+        [
+          "幂律直接画在普通坐标上，形状会骗人。",
+          "A power law drawn on ordinary axes can mislead."
+        ],
+        [
+          "横轴从十亿到千亿，前段很陡，后段几乎压平。",
+          "From a billion to a hundred billion: steep, then almost flat."
+        ],
+        [
+          "把横轴和纵轴都取对数，幂律才露出原形。",
+          "Take the log of both axes, and the power law shows its shape."
+        ],
+        [
+          "一条笔直的下降线，斜率就是负的幂指数。",
+          "A straight descending line whose slope is the negative exponent."
+        ],
+        [
+          "这条线让外推成为可能：小模型能预测大模型。",
+          "That line makes extrapolation possible: small models predict large ones."
+        ],
+        [
+          "所以往规模里投钱，才谈得上是估算，不是赌博。",
+          "So spending on scale becomes an estimate, not a gamble."
+        ]
+      ]
+    },
+    {
+      "id": "estimate",
+      "code": "07.5",
+      "zh": "从赌博到估算",
+      "en": "FROM BET TO BUDGET",
+      "lines": [
+        [
+          "这条线为什么重要？它把一次豪赌变成了工程估算。",
+          "Why does it matter? It turns a gamble into an engineering estimate."
+        ],
+        [
+          "第一步，先用几百万美元，训几个小模型。",
+          "Step one: train a few small models for a few million dollars."
+        ],
+        [
+          "第二步，把这些小模型的点，拟合成一条直线。",
+          "Step two: fit those points with a straight line."
+        ],
+        [
+          "第三步，外推到目标规模，预测它能到什么水平。",
+          "Step three: extrapolate to the target scale and predict its level."
+        ],
+        [
+          "第四步，再决定这一亿美元到底要不要投。",
+          "Step four: decide whether the hundred million is worth spending."
+        ],
+        [
+          "在科学方法上，这是一次从定性到定量的跃迁。",
+          "Methodologically, this is a leap from qualitative to quantitative."
+        ]
+      ]
+    },
+    {
+      "id": "chinchilla",
+      "code": "07.6",
+      "zh": "配比被改写",
+      "en": "THE CHINCHILLA CORRECTION",
+      "lines": [
+        [
+          "Kaplan 的结论之一是，给定算力，优先加参数。",
+          "One Kaplan conclusion: with fixed compute, add parameters first."
+        ],
+        [
+          "2022 年，DeepMind 的 Chinchilla 论文推翻了它。",
+          "In 2022, DeepMind's Chinchilla paper overturned that advice."
+        ],
+        [
+          "Hoffmann 等人重做实验，发现原设定有偏差。",
+          "Hoffmann and colleagues redid the experiments and found a bias."
+        ],
+        [
+          "学习率调度没有随训练长度调整，结论因此偏了。",
+          "The learning-rate schedule did not scale with run length."
+        ],
+        [
+          "修正后，计算最优是每个参数配二十个 token。",
+          "Corrected, compute-optimal means about twenty tokens per parameter."
+        ],
+        [
+          "七百亿参数的 Chinchilla，配一点四万亿 token。",
+          "Chinchilla has 70 billion parameters and 1.4 trillion tokens."
+        ],
+        [
+          "在几乎所有基准上，它超过了更大的 Gopher。",
+          "On nearly every benchmark it beat the larger Gopher."
+        ],
+        [
+          "也超过了一千七百五十亿参数的 GPT-3。",
+          "It also beat GPT-3 at 175 billion parameters."
+        ]
+      ]
+    },
+    {
+      "id": "handcalc",
+      "code": "07.7",
+      "zh": "一次手算",
+      "en": "DO THE MATH",
+      "lines": [
+        [
+          "就用正文里的数字，把这个配比手算一遍。",
+          "Let us do that ratio by hand, with numbers from the text."
+        ],
+        [
+          "GPT-3 有一千七百五十亿参数，按二十倍配数据。",
+          "GPT-3 has 175 billion parameters; twenty tokens each."
+        ],
+        [
+          "需要三点五万亿个 token，比实际数据多得多。",
+          "That asks for 3.5 trillion tokens, far more than it saw."
+        ],
+        [
+          "它实际只训练了约三千亿个 token。",
+          "In practice it trained on about 300 billion tokens."
+        ],
+        [
+          "三千亿除以三点五万亿，大约是十二分之一。",
+          "300 billion over 3.5 trillion is about one twelfth."
+        ],
+        [
+          "所以当时的大模型，普遍参数过剩、数据不足。",
+          "So models then were parameter-rich and data-poor."
+        ]
+      ]
+    },
+    {
+      "id": "emergent",
+      "code": "07.8",
+      "zh": "突然会了",
+      "en": "SUDDENLY ABLE",
+      "lines": [
+        [
+          "规模变大，不只是错误率降低，有些能力像突然出现。",
+          "Scaling does more than cut errors: some abilities seem to appear."
+        ],
+        [
+          "2022 年，Wei 等人系统记录了这类现象。",
+          "In 2022, Wei and colleagues systematically documented this."
+        ],
+        [
+          "三位数加减法，小模型几乎靠猜，准确率接近零。",
+          "On three-digit arithmetic, small models guess: accuracy near zero."
+        ],
+        [
+          "模型大到某个规模，准确率突然跳到很高。",
+          "Past some size, accuracy suddenly jumps very high."
+        ],
+        [
+          "他们把这种能力叫涌现能力，小模型没有，大模型才有。",
+          "They call these emergent abilities: absent small, present large."
+        ],
+        [
+          "这个说法很符合直觉，也很像物理学里的相变。",
+          "It fits intuition, and it looks like a phase transition in physics."
+        ],
+        [
+          "水到零度突然结冰，微观参数连续，宏观性质突变。",
+          "Water freezes at zero: continuous micro-parameters, abrupt macro-change."
+        ]
+      ]
+    },
+    {
+      "id": "mirage",
+      "code": "07.9",
+      "zh": "突然被测出来",
+      "en": "MEASURED, NOT BORN",
+      "lines": [
+        [
+          "但 2023 年，Schaeffer 等人提出了一个尖锐的反驳。",
+          "But in 2023, Schaeffer and colleagues pushed back sharply."
+        ],
+        [
+          "他们指出，所谓涌现，很可能是指标选择造成的假象。",
+          "They argue emergence may be a mirage created by the metric."
+        ],
+        [
+          "用完全答对才算对的不连续指标，曲线就会突然跃起。",
+          "An all-or-nothing metric makes the curve leap suddenly."
+        ],
+        [
+          "换成对数概率这种连续指标，同一次提升是平滑的。",
+          "Switch to a continuous metric, and the same gain looks smooth."
+        ],
+        [
+          "能力可能一直在连续增长，只是我们的尺子刻度跳跃。",
+          "Ability may grow continuously; our ruler has coarse ticks."
+        ],
+        [
+          "他们换了几种指标重测，涌现就消失了。",
+          "Re-measure with several metrics, and the emergence vanishes."
+        ],
+        [
+          "稳妥的说法是，能力连续提升，外部表现可能非线性。",
+          "The safe claim: ability rises smoothly, behaviour may not."
+        ]
+      ]
+    },
+    {
+      "id": "ceiling",
+      "code": "07.10",
+      "zh": "四个天花板",
+      "en": "FOUR CEILINGS",
+      "lines": [
+        [
+          "第一是数据墙，公开的高质量文本是有限的。",
+          "First, the data wall: high-quality text is finite."
+        ],
+        [
+          "有估算认为它可能在几年内用尽，这是预测不是定论。",
+          "Some estimates say it runs out within years; that is a forecast."
+        ],
+        [
+          "第二是算力与电力，前沿模型成本已达数亿美元量级。",
+          "Second, compute and power: frontier training costs hundreds of millions."
+        ],
+        [
+          "第三是推理成本，模型越大，每次调用越贵。",
+          "Third, inference cost: bigger models cost more per call."
+        ],
+        [
+          "第四是收益递减，指数很小，再提升要付指数级代价。",
+          "Fourth, diminishing returns: small exponents mean steep prices."
+        ],
+        [
+          "于是行业分流，小模型超额训练，或者稀疏激活，还有合成数据。",
+          "So the field split: overtrained small models, sparse activation, synthetic data."
+        ]
+      ]
+    },
+    {
+      "id": "traps",
+      "code": "07.11",
+      "zh": "两个不等于",
+      "en": "TWO NON-EQUATIONS",
+      "lines": [
+        [
+          "最后说两个大家常踩的误解，都跟规模有关。",
+          "Two common mistakes, both about scale."
+        ],
+        [
+          "第一，参数量大，绝不等于这个模型能力就强。",
+          "First, many parameters never meant strong ability."
+        ],
+        [
+          "Chinchilla 用七百亿，超过了二千八百亿的 Gopher。",
+          "Chinchilla at 70 billion beat Gopher at 280 billion."
+        ],
+        [
+          "第二，榜单分数高，也不等于在你的场景里可用。",
+          "Second, a high benchmark score is not usability in your setting."
+        ],
+        [
+          "榜单是固定题集，分数高不代表延迟低、成本低。",
+          "Benchmarks are fixed sets; high scores say nothing about latency or cost."
+        ]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "07.12",
+      "zh": "下一站：对齐",
+      "en": "NEXT: ALIGNMENT",
+      "lines": [
+        [
+          "这一章的一句话：损失随规模按幂律下降。",
+          "In one sentence: loss falls as a power law with scale."
+        ],
+        [
+          "但配比怎么定、天花板在哪，和参数一样重要。",
+          "But the ratio and the ceilings matter as much as parameters."
+        ],
+        [
+          "模型现在很会接着往下写，却还不太听话。",
+          "The model is good at continuing text, but not at obeying."
+        ],
+        [
+          "你让它写一首诗，它可能给你写一篇论文。",
+          "Ask for a poem and you may get a paper instead."
+        ],
+        [
+          "下一章讲对齐，怎么把文本预测器变成助手。",
+          "Next chapter: alignment, turning a predictor into an assistant."
+        ]
+      ]
+    }
+  ]
+}

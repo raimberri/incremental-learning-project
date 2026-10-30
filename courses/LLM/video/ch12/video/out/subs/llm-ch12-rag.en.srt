@@ -1,0 +1,343 @@
+1
+00:00:01,600 --> 00:00:06,389
+First question: does the model know the doc your company updated yesterday?
+
+2
+00:00:06,639 --> 00:00:12,139
+No. Not because it is slow, but because its knowledge froze on one date.
+
+3
+00:00:12,389 --> 00:00:17,953
+LLMs have three blind spots: new knowledge, private data, and sources.
+
+4
+00:00:18,203 --> 00:00:22,930
+This chapter covers two paths: retrieval-augmented generation, and long context.
+
+5
+00:00:23,180 --> 00:00:27,114
+Both are worth knowing, because their costs and traps differ.
+
+6
+00:00:29,764 --> 00:00:35,257
+Blind spot one: it cannot know yesterday. Training data has a cutoff.
+
+7
+00:00:35,507 --> 00:00:40,617
+Two: it has never read your company docs, notes, or codebase.
+
+8
+00:00:40,867 --> 00:00:44,504
+Three is subtler: it does not know where it is wrong.
+
+9
+00:00:44,754 --> 00:00:49,996
+When it invents a fact, it never checks. It just keeps talking.
+
+10
+00:00:50,246 --> 00:00:54,033
+The first two are missing information. The third is no traceability.
+
+11
+00:00:54,283 --> 00:00:58,766
+All three point to one fix: stop making it remember; make it look up.
+
+12
+00:01:01,416 --> 00:01:06,702
+In 2020, Lewis and colleagues proposed RAG: retrieval-augmented generation.
+
+13
+00:01:06,952 --> 00:01:12,030
+The idea splits knowledge in two: parametric and non-parametric memory.
+
+14
+00:01:12,280 --> 00:01:16,951
+Parametric memory lives in the weights; writing it means training: slow and costly.
+
+15
+00:01:17,201 --> 00:01:23,079
+Non-parametric memory lives in an external store: fast edits, always current.
+
+16
+00:01:23,329 --> 00:01:28,526
+Traceability differs too: weights cite nothing; an external store gives the passage.
+
+17
+00:01:28,776 --> 00:01:33,704
+Capacity too: one is bounded by parameters, the other is nearly unbounded.
+
+18
+00:01:33,954 --> 00:01:39,317
+On three open-domain QA tasks, the paper reported a new state of the art.
+
+19
+00:01:41,967 --> 00:01:46,290
+Think of it as open-book versus closed-book exams.
+
+20
+00:01:46,540 --> 00:01:51,482
+Closed book tests memory; open book tests whether you can look things up.
+
+21
+00:01:51,732 --> 00:01:57,156
+Humans long ago moved memory outside the head: knots, clay, bamboo, paper.
+
+22
+00:01:57,406 --> 00:02:03,023
+In 1945, Vannevar Bush described a device called the Memex.
+
+23
+00:02:03,273 --> 00:02:08,022
+It could store all of one person's books and records, searched by trails.
+
+24
+00:02:08,272 --> 00:02:12,128
+That eighty-year-old vision is now called retrieval-augmented generation.
+
+25
+00:02:14,778 --> 00:02:19,493
+The RAG pipeline has six steps: four to retrieve, two to generate.
+
+26
+00:02:19,743 --> 00:02:24,242
+Step one, chunking: cut long documents into passages of a few hundred tokens.
+
+27
+00:02:24,492 --> 00:02:29,484
+Step two, embedding: turn each passage into a vector and store it.
+
+28
+00:02:29,734 --> 00:02:34,611
+Step three, retrieval: embed the question and fetch the top K passages.
+
+29
+00:02:34,861 --> 00:02:39,424
+Step four, reranking: reorder those candidates by true relevance.
+
+30
+00:02:39,674 --> 00:02:44,460
+Step five, assembly: put the question and passages into one prompt.
+
+31
+00:02:44,710 --> 00:02:48,647
+Step six, generation: the model answers from the given material only.
+
+32
+00:02:51,297 --> 00:02:54,956
+Start with chunking. It is far fussier than it sounds.
+
+33
+00:02:55,206 --> 00:02:59,608
+A document is too long to paste whole, so it must be cut.
+
+34
+00:02:59,858 --> 00:03:04,891
+A common choice is 500 to 1,000 tokens per chunk, with a little overlap.
+
+35
+00:03:05,141 --> 00:03:09,075
+The overlap keeps a sentence from being cut in half.
+
+36
+00:03:09,325 --> 00:03:14,048
+Too large, and precision drops; too small, and context runs out.
+
+37
+00:03:14,298 --> 00:03:18,675
+There is no right answer here, only tradeoffs, like an editor taking notes.
+
+38
+00:03:21,325 --> 00:03:26,148
+Step two is embedding. Chapter 3 covered vectors, so we only borrow the result.
+
+39
+00:03:26,398 --> 00:03:30,358
+A sentence-embedding model encodes each chunk as a dense vector.
+
+40
+00:03:30,608 --> 00:03:35,221
+At query time the question is encoded too, then compared.
+
+41
+00:03:35,471 --> 00:03:39,664
+The usual measure is cosine similarity: the angle between two vectors.
+
+42
+00:03:39,914 --> 00:03:43,766
+Dot product divided by the product of the two vector lengths.
+
+43
+00:03:44,016 --> 00:03:48,827
+Note this is not a static word vector, but a sentence-embedding model.
+
+44
+00:03:49,077 --> 00:03:55,582
+At scale we use approximate nearest neighbours, such as HNSW, trading recall for speed.
+
+45
+00:03:58,232 --> 00:04:03,299
+But pure vector search has a weakness: semantic yes, exact match no.
+
+46
+00:04:03,549 --> 00:04:08,369
+Search a specific error code and you may get pages about permission errors.
+
+47
+00:04:08,619 --> 00:04:12,666
+The one page that really contains that code gets missed.
+
+48
+00:04:12,916 --> 00:04:18,886
+So practice uses hybrid retrieval: keywords plus vectors, recalled together.
+
+49
+00:04:19,136 --> 00:04:25,070
+The keyword side often uses BM25, strong on names, code and numbers.
+
+50
+00:04:25,320 --> 00:04:29,482
+The two result sets are merged, then a reranker refines them.
+
+51
+00:04:29,732 --> 00:04:35,938
+A reranker is often a cross-encoder that scores question and passage as a pair.
+
+52
+00:04:36,188 --> 00:04:40,680
+That is why reranking matters: recall casts wide, reranking aims true.
+
+53
+00:04:43,330 --> 00:04:48,654
+The other path is direct: widen the window and let attention search.
+
+54
+00:04:48,904 --> 00:04:54,607
+Windows grew from GPT-3's 2,048 tokens to well over a hundred thousand.
+
+55
+00:04:54,857 --> 00:04:59,877
+Llama 3.1, for instance, opens the window to 128K tokens.
+
+56
+00:05:00,127 --> 00:05:05,485
+One pillar is position extrapolation: compress unseen positions into the seen range.
+
+57
+00:05:05,735 --> 00:05:10,793
+Another is attention efficiency: FlashAttention, GQA, sparse attention.
+
+58
+00:05:11,043 --> 00:05:15,640
+Finally you need long training documents; changing encodings is not enough.
+
+59
+00:05:18,290 --> 00:05:22,128
+But fitting it in is not the same as using it well.
+
+60
+00:05:22,378 --> 00:05:27,054
+In 2023, Liu and colleagues reported a counter-intuitive finding.
+
+61
+00:05:27,304 --> 00:05:32,243
+Put the key fact near the start or the end and the model finds it.
+
+62
+00:05:32,493 --> 00:05:37,641
+Put it in the middle and accuracy drops, tracing a U-shaped curve.
+
+63
+00:05:37,891 --> 00:05:41,820
+Models do not use context evenly. They lean toward both ends.
+
+64
+00:05:42,070 --> 00:05:47,978
+Psychology calls this the serial position effect: ends stick, middles fade.
+
+65
+00:05:48,228 --> 00:05:53,266
+So a one-million-token window is not the same as using one million tokens.
+
+66
+00:05:55,916 --> 00:06:01,024
+So RAG or long context? The answer is not either-or.
+
+67
+00:06:01,274 --> 00:06:06,456
+RAG suits large, fast-changing knowledge bases that need auditability.
+
+68
+00:06:06,706 --> 00:06:11,350
+Long context suits reading a whole book, or a whole codebase, at once.
+
+69
+00:06:11,600 --> 00:06:18,573
+Two cost structures: cheap search and short prompts, versus paying for KV cache.
+
+70
+00:06:18,823 --> 00:06:24,082
+Latency too: RAG adds a search step; long context slows the first token.
+
+71
+00:06:24,332 --> 00:06:29,420
+Updates differ: change a document for RAG; refeed everything for long context.
+
+72
+00:06:29,670 --> 00:06:35,735
+A common mix: RAG narrows the field, then long context reads it closely.
+
+73
+00:06:35,985 --> 00:06:42,174
+By 2025 the word is context engineering: designing the right information structure.
+
+74
+00:06:44,824 --> 00:06:49,604
+Now the traps. RAG looks simple, but implementation is full of holes.
+
+75
+00:06:49,854 --> 00:06:54,348
+Wrong retrieval means wrong generation: garbage in, garbage out.
+
+76
+00:06:54,598 --> 00:06:59,511
+Trap one, chunk boundaries: the answer spans two chunks, each incomplete.
+
+77
+00:06:59,761 --> 00:07:05,156
+Trap two: the passage is retrieved and then ignored; prompts are not guarantees.
+
+78
+00:07:05,406 --> 00:07:10,937
+Trap three, citation drift: a plausible number points to the wrong passage.
+
+79
+00:07:11,187 --> 00:07:16,952
+Trap four, context pollution: two conflicting documents, half-believed each.
+
+80
+00:07:17,202 --> 00:07:22,061
+Multi-hop questions need two lookups; single-pass retrieval is not enough.
+
+81
+00:07:22,311 --> 00:07:29,067
+Legal and medical search already require logged strategy, evidence trails, uncertainty.
+
+82
+00:07:31,717 --> 00:07:35,785
+Two words remain from this chapter: retrieval, and context.
+
+83
+00:07:36,035 --> 00:07:40,334
+What it does not know, let it look up; what will not fit, help it choose.
+
+84
+00:07:40,584 --> 00:07:44,167
+But did it use those retrieved materials correctly?
+
+85
+00:07:44,417 --> 00:07:48,195
+Next chapter: evaluation and hallucination, and how we know it works.
+
+86
+00:07:48,445 --> 00:07:52,168
+Between a test score and real ability there is still a gap.

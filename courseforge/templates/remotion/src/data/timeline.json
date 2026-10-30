@@ -1,0 +1,16 @@
+{
+  "total": 20,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "00",
+      "zh": "开场",
+      "en": "INTRO",
+      "start": 0,
+      "end": 20,
+      "lines": [
+        {"zh": "这是一条占位字幕。", "en": "This is a placeholder subtitle.", "start": 1.6, "end": 5.2}
+      ]
+    }
+  ]
+}

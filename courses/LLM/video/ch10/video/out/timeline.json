@@ -1,0 +1,657 @@
+{
+  "total": 441.494,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "10.0",
+      "zh": "不教，也能会想",
+      "en": "DON'T TEACH, JUST REWARD",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "2025 年 1 月，DeepSeek 发布了 R1。",
+          "en": "In January 2025, DeepSeek released R1.",
+          "start": 1.6,
+          "end": 4.78
+        },
+        {
+          "zh": "论文里有个实验，几乎不教模型怎么推理。",
+          "en": "One experiment in the paper barely teaches reasoning at all.",
+          "start": 5.28,
+          "end": 8.685
+        },
+        {
+          "zh": "只给两种奖励：答案对不对，格式合不合规。",
+          "en": "Only two rewards: is the answer right, is the format valid.",
+          "start": 9.185,
+          "end": 13.064
+        },
+        {
+          "zh": "结果它自己学会了长篇思考、检查、回头重算。",
+          "en": "It taught itself long thinking, checking and rewinding.",
+          "start": 13.564,
+          "end": 17.771
+        },
+        {
+          "zh": "这一章要问：推理能力能不能被奖励逼出来。",
+          "en": "This chapter asks: can rewards force reasoning to appear?",
+          "start": 18.271,
+          "end": 22.035
+        },
+        {
+          "zh": "以及它要付出什么代价，边界又卡在哪里。",
+          "en": "And what it costs, and where it stops working.",
+          "start": 22.535,
+          "end": 26.015
+        }
+      ],
+      "end": 27.015
+    },
+    {
+      "id": "reward",
+      "code": "10.1",
+      "zh": "换一种奖励",
+      "en": "A DIFFERENT REWARD",
+      "start": 27.015,
+      "lines": [
+        {
+          "zh": "第 8 章的 RLHF，用学出来的奖励模型打分。",
+          "en": "Chapter 8's RLHF scored outputs with a learned reward model.",
+          "start": 28.915,
+          "end": 33.131
+        },
+        {
+          "zh": "奖励模型自己会错，也会被模型钻空子。",
+          "en": "That model makes mistakes, and the policy learns to game it.",
+          "start": 33.631,
+          "end": 37.077
+        },
+        {
+          "zh": "可如果题目本身有标准答案，就不需要它。",
+          "en": "But when a task has a known answer, we do not need it.",
+          "start": 37.577,
+          "end": 40.949
+        },
+        {
+          "zh": "数学题可以比对答案，代码可以跑单元测试。",
+          "en": "Math answers can be compared; code can run unit tests.",
+          "start": 41.449,
+          "end": 45.309
+        },
+        {
+          "zh": "这种由确定性程序给出的奖励，叫可验证奖励。",
+          "en": "A reward from a deterministic program is a verifiable reward.",
+          "start": 45.809,
+          "end": 49.883
+        },
+        {
+          "zh": "用这种奖励做强化学习，就叫 RLVR。",
+          "en": "Reinforcement learning with it is called RLVR.",
+          "start": 50.383,
+          "end": 54.256
+        },
+        {
+          "zh": "信号稀疏但可靠：答对给一，答错给零，没有中间地带。",
+          "en": "Sparse but reliable: one for right, zero for wrong, no middle.",
+          "start": 54.756,
+          "end": 59.808
+        }
+      ],
+      "end": 60.808
+    },
+    {
+      "id": "verifier",
+      "code": "10.2",
+      "zh": "验证器不讨好",
+      "en": "THE VERIFIER",
+      "start": 60.808,
+      "lines": [
+        {
+          "zh": "为什么推理能力，最先在数学和代码上突破？",
+          "en": "Why did reasoning break through in math and code first?",
+          "start": 62.708,
+          "end": 66.493
+        },
+        {
+          "zh": "不是这两件事更高级，而是它们更容易自动打分。",
+          "en": "Not because they are nobler, but because they grade themselves.",
+          "start": 66.993,
+          "end": 70.97
+        },
+        {
+          "zh": "人类教育也一样：练习册能自学，作文要找老师。",
+          "en": "Same in school: workbooks self-check, essays need a teacher.",
+          "start": 71.47,
+          "end": 75.886
+        },
+        {
+          "zh": "验证器像一把卡尺，只量长度，不夸你聪明。",
+          "en": "A verifier is a caliper: it measures length, it does not flatter.",
+          "start": 76.386,
+          "end": 80.357
+        },
+        {
+          "zh": "所以它给出的分数，不会被一段漂亮话骗过去。",
+          "en": "So its score cannot be talked up by a confident paragraph.",
+          "start": 80.857,
+          "end": 84.905
+        },
+        {
+          "zh": "奖励可以很简单，简单到只剩下对和错。",
+          "en": "The reward can be simple, simple enough to be right or wrong.",
+          "start": 85.405,
+          "end": 88.935
+        }
+      ],
+      "end": 89.935
+    },
+    {
+      "id": "zero",
+      "code": "10.3",
+      "zh": "几乎不教",
+      "en": "ALMOST NO TEACHING",
+      "start": 89.935,
+      "lines": [
+        {
+          "zh": "R1-Zero 的实验，大胆到有点不讲道理：什么都不教。",
+          "en": "The R1-Zero experiment was bold to the point of being reckless.",
+          "start": 91.835,
+          "end": 96.521
+        },
+        {
+          "zh": "拿一个没做过任何监督微调的基座模型。",
+          "en": "Take a base model that never had any supervised fine-tuning.",
+          "start": 97.021,
+          "end": 100.142
+        },
+        {
+          "zh": "直接上强化学习，只保留两条最简单的奖励。",
+          "en": "Put it straight into reinforcement learning with two rewards.",
+          "start": 100.642,
+          "end": 104.561
+        },
+        {
+          "zh": "一条看答案对不对，一条看格式合不合规。",
+          "en": "One checks the answer, one checks the format.",
+          "start": 105.061,
+          "end": 108.59
+        },
+        {
+          "zh": "不告诉它要一步步想，也不给任何推理范例。",
+          "en": "Never say think step by step, never show a worked example.",
+          "start": 109.09,
+          "end": 112.443
+        },
+        {
+          "zh": "连一句提示都没有，只等它自己把答案算对。",
+          "en": "Not even a hint; it just waits for the model to get answers right.",
+          "start": 112.943,
+          "end": 116.66
+        },
+        {
+          "zh": "这是把教推理，换成了奖励推理的结果。",
+          "en": "Teaching reasoning was replaced by rewarding its result.",
+          "start": 117.16,
+          "end": 120.488
+        }
+      ],
+      "end": 121.488
+    },
+    {
+      "id": "aha",
+      "code": "10.4",
+      "zh": "顿悟时刻",
+      "en": "THE AHA MOMENT",
+      "start": 121.488,
+      "lines": [
+        {
+          "zh": "训练一开始，它的回答只有几百个 token。",
+          "en": "At the start, its answers were only a few hundred tokens long.",
+          "start": 123.388,
+          "end": 126.89
+        },
+        {
+          "zh": "后来涨到几千个，而且训练中还在继续变长。",
+          "en": "Later they grew to several thousand, and kept growing.",
+          "start": 127.39,
+          "end": 131.399
+        },
+        {
+          "zh": "它开始自己检查、回头改、换一种解法重新试一遍。",
+          "en": "It began to check itself, go back, and retry with another method.",
+          "start": 131.899,
+          "end": 136.599
+        },
+        {
+          "zh": "论文记下某个时刻：它停下来说，等等，让我重新想想。",
+          "en": "The paper records a moment: it stops and says, wait, let me rethink.",
+          "start": 137.099,
+          "end": 141.982
+        },
+        {
+          "zh": "论文把这个瞬间，叫作模型的顿悟时刻。",
+          "en": "The paper calls this instant the model's aha moment.",
+          "start": 142.482,
+          "end": 145.805
+        },
+        {
+          "zh": "AIME 2024 上，基座约 15.6%，Zero 到 71.0%。",
+          "en": "On AIME 2024, the base sat near 15.6%; Zero reached 71.0%.",
+          "start": 146.305,
+          "end": 152.356
+        },
+        {
+          "zh": "正式版 R1 是 79.8%，多数投票能到 86.7%。",
+          "en": "The full R1 reached 79.8%, and 86.7% with majority voting.",
+          "start": 152.856,
+          "end": 158.856
+        }
+      ],
+      "end": 159.856
+    },
+    {
+      "id": "grpo",
+      "code": "10.5",
+      "zh": "省掉评论家",
+      "en": "DROP THE CRITIC",
+      "start": 159.856,
+      "lines": [
+        {
+          "zh": "RLHF 常用 PPO，PPO 需要一个价值网络当评论家。",
+          "en": "RLHF usually uses PPO, and PPO needs a value network as critic.",
+          "start": 161.756,
+          "end": 167.129
+        },
+        {
+          "zh": "评论家和策略模型一样大，显存开销几乎直接翻倍。",
+          "en": "That critic is as large as the policy, so memory roughly doubles.",
+          "start": 167.629,
+          "end": 172.302
+        },
+        {
+          "zh": "GRPO 说：不要评论家，看同一组答案里的排名。",
+          "en": "GRPO says: drop the critic, rank answers inside one group.",
+          "start": 172.802,
+          "end": 177.156
+        },
+        {
+          "zh": "同一个问题采样八个答案，用组内的相对排名算优势。",
+          "en": "Sample eight answers to one question, then measure relative advantage.",
+          "start": 177.656,
+          "end": 182.334
+        },
+        {
+          "zh": "减去组内均值，再除以标准差，就是优势。",
+          "en": "Subtract the group mean, divide by the standard deviation.",
+          "start": 182.834,
+          "end": 186.669
+        },
+        {
+          "zh": "减去均值不改变梯度的期望，却能把方差大幅降低。",
+          "en": "Subtracting the mean keeps the gradient unbiased and cuts variance.",
+          "start": 187.169,
+          "end": 191.849
+        },
+        {
+          "zh": "全对或全错时，优势全零；题目要略高于模型水平。",
+          "en": "All right or all wrong means zero advantage; match the difficulty.",
+          "start": 192.349,
+          "end": 197.295
+        },
+        {
+          "zh": "这和教育学里的最近发展区，是同一个道理。",
+          "en": "This is the zone of proximal development, in another guise.",
+          "start": 197.795,
+          "end": 201.323
+        }
+      ],
+      "end": 202.323
+    },
+    {
+      "id": "recipe",
+      "code": "10.6",
+      "zh": "四阶段配方",
+      "en": "THE FOUR STAGES",
+      "start": 202.323,
+      "lines": [
+        {
+          "zh": "R1-Zero 有两个毛病：中英混杂，可读性差。",
+          "en": "R1-Zero had two flaws: mixed languages and poor readability.",
+          "start": 204.223,
+          "end": 208.57
+        },
+        {
+          "zh": "所以正式版 R1 没有直接用它，加了四个阶段。",
+          "en": "So the released R1 did not use it directly, but added four stages.",
+          "start": 209.07,
+          "end": 213.258
+        },
+        {
+          "zh": "第一阶段冷启动：几千条长思维链，先教格式。",
+          "en": "Stage one, cold start: a few thousand long chains, teaching format.",
+          "start": 213.758,
+          "end": 218.034
+        },
+        {
+          "zh": "第二阶段推理 RL：还是准确性和格式奖励。",
+          "en": "Stage two, reasoning RL: the same accuracy and format rewards.",
+          "start": 218.534,
+          "end": 222.59
+        },
+        {
+          "zh": "第三阶段拒绝采样：只留验证器判对的答案，再做微调。",
+          "en": "Stage three, rejection sampling: keep verified answers, then fine-tune.",
+          "start": 223.09,
+          "end": 228.023
+        },
+        {
+          "zh": "第四阶段全场景 RL：加上有用、无害这些通用奖励。",
+          "en": "Stage four, general RL: add helpfulness and harmlessness rewards.",
+          "start": 228.523,
+          "end": 233.541
+        },
+        {
+          "zh": "冷启动不是教推理，是给 RL 一个稳定的起点。",
+          "en": "Cold start does not teach reasoning; it gives RL a stable start.",
+          "start": 234.041,
+          "end": 238.18
+        }
+      ],
+      "end": 239.18
+    },
+    {
+      "id": "rejection",
+      "code": "10.7",
+      "zh": "冷启动与拒绝采样",
+      "en": "COLD START AND FILTERING",
+      "start": 239.18,
+      "lines": [
+        {
+          "zh": "拒绝采样，本质是让模型用自己的成功案例来教自己。",
+          "en": "Rejection sampling lets the model teach itself with its own successes.",
+          "start": 241.08,
+          "end": 245.775
+        },
+        {
+          "zh": "这也叫自我蒸馏：先大量采样，再由验证器筛选，最后保留。",
+          "en": "This is self-distillation: sample widely, filter hard, keep the winners.",
+          "start": 246.275,
+          "end": 251.741
+        },
+        {
+          "zh": "为什么不直接用 Zero？因为它虽然强，但不好用。",
+          "en": "Why not use Zero directly? Because it is strong but hard to ship.",
+          "start": 252.241,
+          "end": 256.625
+        },
+        {
+          "zh": "语言混杂、格式散乱，产品里没法直接交付。",
+          "en": "Mixed languages and messy format cannot be delivered as a product.",
+          "start": 257.125,
+          "end": 261.304
+        },
+        {
+          "zh": "冷启动补上格式，拒绝采样补上数据，RL 补上能力。",
+          "en": "Cold start fixes format, rejection sampling fixes data, RL fixes ability.",
+          "start": 261.804,
+          "end": 266.712
+        },
+        {
+          "zh": "四步走完，能力才变成可以交付的产品。",
+          "en": "After four stages, ability becomes something you can ship.",
+          "start": 267.212,
+          "end": 270.71
+        }
+      ],
+      "end": 271.71
+    },
+    {
+      "id": "distill",
+      "code": "10.8",
+      "zh": "把想的能力传下去",
+      "en": "PASS ON THE THINKING",
+      "start": 271.71,
+      "lines": [
+        {
+          "zh": "R1 的论文里，还有一个反直觉的发现。",
+          "en": "The R1 paper reports one more counterintuitive finding.",
+          "start": 273.61,
+          "end": 276.784
+        },
+        {
+          "zh": "让小模型直接做 RLVR，效果远不如蒸馏大模型的轨迹。",
+          "en": "Direct RLVR on a small model works far worse than distillation.",
+          "start": 277.284,
+          "end": 282.659
+        },
+        {
+          "zh": "做法是用 R1 生成大量带推理过程的答案。",
+          "en": "The recipe: let R1 generate many answers with reasoning traces.",
+          "start": 283.159,
+          "end": 286.866
+        },
+        {
+          "zh": "拿这些轨迹去微调 Qwen、Llama 这些小模型。",
+          "en": "Then fine-tune small Qwen and Llama models on those traces.",
+          "start": 287.366,
+          "end": 291.016
+        },
+        {
+          "zh": "得到的 R1-Distill，从 15 亿到 700 亿参数。",
+          "en": "The R1-Distill family runs from 1.5B to 70B parameters.",
+          "start": 291.516,
+          "end": 295.395
+        },
+        {
+          "zh": "在数学基准上，它们远超同尺寸的原始模型。",
+          "en": "On math benchmarks they far outperform same-size originals.",
+          "start": 295.895,
+          "end": 299.93
+        },
+        {
+          "zh": "蒸馏是把想的过程当成知识来复制，RL 是让它自己试。",
+          "en": "Distillation copies the process; RL makes the model discover it.",
+          "start": 300.43,
+          "end": 305.59
+        }
+      ],
+      "end": 306.59
+    },
+    {
+      "id": "misread",
+      "code": "10.9",
+      "zh": "不是突然觉醒",
+      "en": "NOT SUDDEN ENLIGHTENMENT",
+      "start": 306.59,
+      "lines": [
+        {
+          "zh": "很多人把那个顿悟时刻，读成一个突然觉醒的故事。",
+          "en": "Many people read that aha moment as a story of sudden awakening.",
+          "start": 308.49,
+          "end": 312.546
+        },
+        {
+          "zh": "但机制上，它仍然是奖励塑造出来的长期累积。",
+          "en": "But mechanically it is still long accumulation shaped by reward.",
+          "start": 313.046,
+          "end": 317.101
+        },
+        {
+          "zh": "桑代克在 1911 年就说过：好结果会强化行为。",
+          "en": "Thorndike said it in 1911: behavior with good results gets reinforced.",
+          "start": 317.601,
+          "end": 322.007
+        },
+        {
+          "zh": "苛勒研究的顿悟，看起来很像，但不是同一回事。",
+          "en": "Kohler's chimpanzee insight looks alike but is not the same thing.",
+          "start": 322.507,
+          "end": 326.559
+        },
+        {
+          "zh": "它看起来像顿悟，但不等于它不是试错。",
+          "en": "Looking like insight does not mean it is not trial and error.",
+          "start": 327.059,
+          "end": 330.609
+        },
+        {
+          "zh": "奖励设计与规模，才是这件事的两个前提。",
+          "en": "Reward design and scale are the two real preconditions.",
+          "start": 331.109,
+          "end": 334.642
+        }
+      ],
+      "end": 335.642
+    },
+    {
+      "id": "limits",
+      "code": "10.10",
+      "zh": "代价与边界",
+      "en": "COSTS AND LIMITS",
+      "start": 335.642,
+      "lines": [
+        {
+          "zh": "RLVR 有一条很硬的边界：只在能验证的地方有效。",
+          "en": "RLVR has a hard boundary: it works only where you can verify.",
+          "start": 337.542,
+          "end": 342.039
+        },
+        {
+          "zh": "写小说、做战略、安慰朋友，都没有自动验证器。",
+          "en": "Novels, strategy, comforting a friend: no automatic verifier.",
+          "start": 342.539,
+          "end": 346.915
+        },
+        {
+          "zh": "验证器本身也会被 hack：奖励只看格式，模型就只做格式。",
+          "en": "The verifier can be hacked: check format only, get format only.",
+          "start": 347.415,
+          "end": 353.001
+        },
+        {
+          "zh": "如果测试用例太少，模型就会过拟合这套测试。",
+          "en": "Too few test cases, and the model overfits the tests.",
+          "start": 353.501,
+          "end": 357.714
+        },
+        {
+          "zh": "还有长度膨胀：写得越长，越容易碰对答案。",
+          "en": "Then length inflation: write longer, hit the answer by luck.",
+          "start": 358.214,
+          "end": 362.044
+        },
+        {
+          "zh": "过度优化数学，可能损害通用对话，这叫对齐税。",
+          "en": "Over-optimizing math can hurt general chat; that is the alignment tax.",
+          "start": 362.544,
+          "end": 366.955
+        },
+        {
+          "zh": "还有可读性下降：纯 RL 的推理，人可能看不懂。",
+          "en": "Then readability: pure-RL reasoning may be unreadable to us.",
+          "start": 367.455,
+          "end": 371.66
+        },
+        {
+          "zh": "古德哈特定律说：一个指标一旦成为目标，就不再是好指标。",
+          "en": "Goodhart's law: once a metric becomes a target, it stops being good.",
+          "start": 372.16,
+          "end": 377.143
+        }
+      ],
+      "end": 378.143
+    },
+    {
+      "id": "routes",
+      "code": "10.11",
+      "zh": "三条路线",
+      "en": "THREE ROUTES",
+      "start": 378.143,
+      "lines": [
+        {
+          "zh": "把第 9 章和第 10 章放在一起看，有三条路线。",
+          "en": "Put chapters 9 and 10 together, and three routes appear.",
+          "start": 380.043,
+          "end": 383.852
+        },
+        {
+          "zh": "第一条是提示：在输入里要求它一步步想，成本最低。",
+          "en": "Route one, prompting: ask it in the input to think step by step.",
+          "start": 384.352,
+          "end": 388.968
+        },
+        {
+          "zh": "第二条是搜索：采样多条、投票、做树搜索，花推理算力。",
+          "en": "Route two, search: sample many, vote, or run tree search.",
+          "start": 389.468,
+          "end": 394.878
+        },
+        {
+          "zh": "第三条是训练：用 RL 把推理策略写进权重。",
+          "en": "Route three, training: write the reasoning policy into the weights.",
+          "start": 395.378,
+          "end": 399.622
+        },
+        {
+          "zh": "训练贵在前，搜索贵在后；训练定下限，搜索定上限。",
+          "en": "Training pays up front, search pays per use: one floor, one ceiling.",
+          "start": 400.122,
+          "end": 405.316
+        },
+        {
+          "zh": "三者可以叠加，不是非此即彼的替代关系。",
+          "en": "The three stack; they do not replace each other.",
+          "start": 405.816,
+          "end": 409.325
+        }
+      ],
+      "end": 410.325
+    },
+    {
+      "id": "outro",
+      "code": "10.12",
+      "zh": "下一站：效率",
+      "en": "NEXT: EFFICIENCY",
+      "start": 410.325,
+      "lines": [
+        {
+          "zh": "这一章的主线，其实是一次奖励的替换。",
+          "en": "The throughline of this chapter is a single swap of reward.",
+          "start": 412.225,
+          "end": 415.523
+        },
+        {
+          "zh": "从人类觉得好，换成答案可验证地正确。",
+          "en": "From humans liking it, to answers being verifiably right.",
+          "start": 416.023,
+          "end": 419.733
+        },
+        {
+          "zh": "R1-Zero 证明它有效，GRPO 让它更便宜。",
+          "en": "R1-Zero proved it works; GRPO made it cheaper.",
+          "start": 420.233,
+          "end": 424.466
+        },
+        {
+          "zh": "配方和蒸馏，把它变成可以交付的产品。",
+          "en": "The pipeline and distillation made it shippable.",
+          "start": 424.966,
+          "end": 428.268
+        },
+        {
+          "zh": "但推理模型很贵：6710 亿参数，每次都要全激活吗？",
+          "en": "But reasoning models are costly: must all 671B parameters fire?",
+          "start": 428.768,
+          "end": 433.97
+        },
+        {
+          "zh": "下一章讲效率：MoE、注意力压缩、线性架构。",
+          "en": "Next: efficiency, MoE, attention compression, linear architectures.",
+          "start": 434.47,
+          "end": 438.494
+        }
+      ],
+      "end": 441.494
+    }
+  ]
+}

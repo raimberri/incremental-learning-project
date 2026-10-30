@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 2 章 · 梯度与反向传播",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "custom",
+      "component": "IntroScene",
+      "images": [
+        "img/mountain.jpg"
+      ],
+      "beat": "盲下山：局部坡度 → 梯度下降"
+    },
+    {
+      "id": "gradient",
+      "type": "custom",
+      "component": "GradientScene",
+      "images": [
+        "img/contours.jpg"
+      ],
+      "beat": "偏导数向量 / 更新规则 / 一阶信息"
+    },
+    {
+      "id": "learningrate",
+      "type": "custom",
+      "component": "LearningRateScene",
+      "images": [
+        "img/steps.jpg"
+      ],
+      "beat": "三种步长：小步 / 合适 / 发散"
+    },
+    {
+      "id": "sgd",
+      "type": "custom",
+      "component": "SgdScene",
+      "images": [
+        "img/bacteria.jpg"
+      ],
+      "beat": "mini-batch 抽样 / 噪声 / 趋化性"
+    },
+    {
+      "id": "backprop",
+      "type": "custom",
+      "component": "BackpropScene",
+      "images": [
+        "img/gears.jpg"
+      ],
+      "beat": "一次前向 + 一次反向 / 链式法则 + DP"
+    },
+    {
+      "id": "handcalc",
+      "type": "custom",
+      "component": "HandCalcScene",
+      "images": [
+        "img/notebook-desk.jpg"
+      ],
+      "beat": "ŷ=wx+b 手算 / η=0.1 vs 0.02"
+    },
+    {
+      "id": "aliases",
+      "type": "custom",
+      "component": "AliasesScene",
+      "images": [
+        "img/weather.jpg"
+      ],
+      "beat": "伴随法 / 4D-Var / 反向 AD / 影子价格"
+    },
+    {
+      "id": "tricks",
+      "type": "custom",
+      "component": "TricksScene",
+      "images": [
+        "img/tools.jpg"
+      ],
+      "beat": "Adam / Dropout / 归一化 / 残差"
+    },
+    {
+      "id": "overfit",
+      "type": "custom",
+      "component": "OverfitScene",
+      "images": [
+        "img/flashcards.jpg"
+      ],
+      "beat": "记住 vs 理解 / 训练与验证曲线 / 正则化"
+    },
+    {
+      "id": "outro",
+      "type": "custom",
+      "component": "OutroScene",
+      "images": [
+        "img/cover.jpg"
+      ],
+      "beat": "下一站：表示学习"
+    }
+  ]
+}

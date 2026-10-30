@@ -1,0 +1,663 @@
+{
+  "total": 456.654,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "09.0",
+      "zh": "让模型慢下来想",
+      "en": "MAKE THE MODEL THINK SLOWER",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "一加一和黎曼猜想，对模型来说，计算量是一样的。",
+          "en": "One plus one and the Riemann hypothesis cost the model the same.",
+          "start": 1.6,
+          "end": 6.092
+        },
+        {
+          "zh": "因为它每吐一个 token，都只穿过同样多的层。",
+          "en": "Every token it emits passes through the same number of layers.",
+          "start": 6.592,
+          "end": 10.41
+        },
+        {
+          "zh": "人不是这样：算 347 乘 829，你会去找张纸。",
+          "en": "Humans are different: to multiply 347 by 829, you reach for paper.",
+          "start": 10.91,
+          "end": 15.974
+        },
+        {
+          "zh": "难问题需要更多步骤，这是智能的基本特征。",
+          "en": "Hard problems need more steps. That is basic to intelligence.",
+          "start": 16.474,
+          "end": 20.229
+        },
+        {
+          "zh": "那怎么让一个深度固定的网络，多想几步？",
+          "en": "So how do we make a fixed-depth network think longer?",
+          "start": 20.729,
+          "end": 24.01
+        },
+        {
+          "zh": "这一章讲：思维链，和把算力花在推理时。",
+          "en": "This chapter: chain of thought, and spending compute at inference.",
+          "start": 24.51,
+          "end": 28.272
+        }
+      ],
+      "end": 29.272
+    },
+    {
+      "id": "fixed",
+      "code": "09.1",
+      "zh": "深度是固定的",
+      "en": "FIXED DEPTH PER TOKEN",
+      "start": 29.272,
+      "lines": [
+        {
+          "zh": "生成一个 token，计算量约等于 L 层矩阵乘法。",
+          "en": "One token costs roughly L layers of matrix multiplies.",
+          "start": 31.172,
+          "end": 35.208
+        },
+        {
+          "zh": "L 是层数，训练时就定死了，推理时不会变。",
+          "en": "L is fixed at training time; inference cannot change it.",
+          "start": 35.708,
+          "end": 39.869
+        },
+        {
+          "zh": "所以模型的思考深度是固定的，问题再难也只走 L 层。",
+          "en": "So thinking depth is fixed, however hard the question.",
+          "start": 40.369,
+          "end": 45.401
+        },
+        {
+          "zh": "想让它多想，只有一个办法：让它多写。",
+          "en": "The only way to think more is to write more.",
+          "start": 45.901,
+          "end": 49.261
+        },
+        {
+          "zh": "每多写一个 token，就多一次前向传播，多 L 层计算。",
+          "en": "Each extra token is another forward pass, another L layers.",
+          "start": 49.761,
+          "end": 54.226
+        },
+        {
+          "zh": "自回归把时间变成了计算，这是理解思维链的第一把钥匙。",
+          "en": "Autoregression turns time into compute. That is the first key.",
+          "start": 54.726,
+          "end": 59.475
+        }
+      ],
+      "end": 60.475
+    },
+    {
+      "id": "cot",
+      "code": "09.2",
+      "zh": "把草稿纸给模型",
+      "en": "SCRATCH PAPER FOR THE MODEL",
+      "start": 60.475,
+      "lines": [
+        {
+          "zh": "2022 年，Wei 等人在 PaLM 540B 上看到一个现象。",
+          "en": "In 2022, Wei and colleagues saw this on PaLM 540B.",
+          "start": 62.375,
+          "end": 67.095
+        },
+        {
+          "zh": "给模型看几个带解题步骤的例子，数学准确率大幅提升。",
+          "en": "Showing a few worked examples sharply raised math accuracy.",
+          "start": 67.595,
+          "end": 72.673
+        },
+        {
+          "zh": "比如：小明有 5 个苹果，吃了 2 个，又买了 3 个。",
+          "en": "For example: five apples, eat two, then buy three more.",
+          "start": 73.173,
+          "end": 77.234
+        },
+        {
+          "zh": "模型先写 5 减 2 等于 3，再写 3 加 3 等于 6。",
+          "en": "The model writes five minus two is three, then three plus three is six.",
+          "start": 77.734,
+          "end": 81.858
+        },
+        {
+          "zh": "中间步骤写出来，最后答案就跟着出来了。",
+          "en": "Write the middle steps, and the final answer follows.",
+          "start": 82.358,
+          "end": 85.714
+        },
+        {
+          "zh": "遇到新题，它也会先写步骤，再给出答案。",
+          "en": "On a new problem, it writes steps first, then answers.",
+          "start": 86.214,
+          "end": 89.81
+        },
+        {
+          "zh": "这个格式叫思维链，等于把草稿纸递给了模型。",
+          "en": "This format is chain of thought: handing the model scratch paper.",
+          "start": 90.31,
+          "end": 94.36
+        }
+      ],
+      "end": 95.36
+    },
+    {
+      "id": "why",
+      "code": "09.3",
+      "zh": "多写几步为什么准",
+      "en": "WHY MORE STEPS HELP",
+      "start": 95.36,
+      "lines": [
+        {
+          "zh": "为什么多写几步就变准了？有三层原因。",
+          "en": "Why does writing more steps help? Three reasons.",
+          "start": 97.26,
+          "end": 100.893
+        },
+        {
+          "zh": "第一层是计算：每个中间 token 都是一次完整前向。",
+          "en": "First, compute: every middle token is a full forward pass.",
+          "start": 101.393,
+          "end": 105.871
+        },
+        {
+          "zh": "写一百个 token，等于做了约一百次前向传播。",
+          "en": "A hundred tokens means about a hundred forward passes.",
+          "start": 106.371,
+          "end": 110.265
+        },
+        {
+          "zh": "第二层是表示：中间结果写进上下文，成了下一步输入。",
+          "en": "Second, representation: middle results enter the context.",
+          "start": 110.765,
+          "end": 115.627
+        },
+        {
+          "zh": "工作记忆被外置了，不用一直压在隐状态里。",
+          "en": "Working memory is externalized, not held in hidden states.",
+          "start": 116.127,
+          "end": 119.726
+        },
+        {
+          "zh": "第三层是分布：网上的解题文本本来就是步骤加答案。",
+          "en": "Third, distribution: web solutions already look like steps plus answers.",
+          "start": 120.226,
+          "end": 124.878
+        },
+        {
+          "zh": "但这是涌现能力：模型太小，写了步骤也写不对。",
+          "en": "But this is emergent: small models write steps and still fail.",
+          "start": 125.378,
+          "end": 129.515
+        }
+      ],
+      "end": 130.515
+    },
+    {
+      "id": "zeroshot",
+      "code": "09.4",
+      "zh": "一句话点火",
+      "en": "ONE SENTENCE IS ENOUGH",
+      "start": 130.515,
+      "lines": [
+        {
+          "zh": "同年，Kojima 等人发现，连例子都可以不要。",
+          "en": "The same year, Kojima and colleagues dropped the examples.",
+          "start": 132.415,
+          "end": 136.405
+        },
+        {
+          "zh": "只要在问题后面补一句：让我们一步步思考。",
+          "en": "Just add: let's think step by step.",
+          "start": 136.905,
+          "end": 140.287
+        },
+        {
+          "zh": "模型就会自己展开推理，不需要任何示范。",
+          "en": "The model unfolds its own reasoning, with no demonstration.",
+          "start": 140.787,
+          "end": 144.519
+        },
+        {
+          "zh": "这句提示就是零样本思维链，一句就够。",
+          "en": "This is zero-shot chain of thought: one sentence is enough.",
+          "start": 145.019,
+          "end": 148.493
+        },
+        {
+          "zh": "但它仍然是一条直线，写错了就回不了头。",
+          "en": "But it is still a straight line. A wrong step cannot be undone.",
+          "start": 148.993,
+          "end": 152.428
+        }
+      ],
+      "end": 153.428
+    },
+    {
+      "id": "vote",
+      "code": "09.5",
+      "zh": "多问几遍，投票",
+      "en": "SAMPLE, THEN VOTE",
+      "start": 153.428,
+      "lines": [
+        {
+          "zh": "思维链是采样出来的，同一道题，每次路径可能不同。",
+          "en": "Chain of thought is sampled, so each run may take a different path.",
+          "start": 155.328,
+          "end": 159.973
+        },
+        {
+          "zh": "有的路径对，有的错。那就多采几条，让答案投票。",
+          "en": "Some paths are right, some wrong. So sample more and vote.",
+          "start": 160.473,
+          "end": 165.312
+        },
+        {
+          "zh": "做法三步：高温采样多条路径，提取答案，取多数。",
+          "en": "Three steps: sample hot, extract answers, take the majority.",
+          "start": 165.812,
+          "end": 170.563
+        },
+        {
+          "zh": "在 GSM8K 上，自洽性比单条思维链高约 17.9 个百分点。",
+          "en": "On GSM8K, self-consistency beats single CoT by about 17.9 points.",
+          "start": 171.063,
+          "end": 177.017
+        },
+        {
+          "zh": "为什么有效？错误是分散的，正确是收敛的。",
+          "en": "Why does voting work? Errors scatter; correct answers converge.",
+          "start": 177.517,
+          "end": 181.686
+        },
+        {
+          "zh": "错误路径有很多种走法，正确路径只有少数几种。",
+          "en": "Wrong paths take many forms; the right path takes few.",
+          "start": 182.186,
+          "end": 186.718
+        },
+        {
+          "zh": "但这有前提：每个投票者正确率过半，错误还要相互独立。",
+          "en": "But it needs voters above fifty percent, with independent errors.",
+          "start": 187.218,
+          "end": 192.444
+        },
+        {
+          "zh": "多条采样共享同一个模型，系统性的错误，投票也救不了。",
+          "en": "Samples share one model. A systematic error survives any vote.",
+          "start": 192.944,
+          "end": 198.029
+        },
+        {
+          "zh": "代价也很直接：采 k 条，生成算力就是 k 倍。",
+          "en": "The cost is direct: k samples means k times the generation compute.",
+          "start": 198.529,
+          "end": 202.7
+        }
+      ],
+      "end": 203.7
+    },
+    {
+      "id": "tot",
+      "code": "09.6",
+      "zh": "从一条链到一棵树",
+      "en": "FROM A CHAIN TO A TREE",
+      "start": 203.7,
+      "lines": [
+        {
+          "zh": "思维链是一条线：走错了，也回不了头。",
+          "en": "Chain of thought is a line: a wrong step cannot be undone.",
+          "start": 205.6,
+          "end": 209.14
+        },
+        {
+          "zh": "思维树把它变成搜索：每一步先生成几个候选想法。",
+          "en": "Tree of thoughts turns it into search: propose several ideas per step.",
+          "start": 209.64,
+          "end": 214.101
+        },
+        {
+          "zh": "再让评估器给每个想法打分，只留最好的几个继续展开。",
+          "en": "An evaluator scores each idea; only the best few expand.",
+          "start": 214.601,
+          "end": 219.261
+        },
+        {
+          "zh": "必要时还能回溯，退回去换一条分支重走。",
+          "en": "When needed, it backtracks to another branch.",
+          "start": 219.761,
+          "end": 223.417
+        },
+        {
+          "zh": "这就像下棋：先算几步对手怎么应，再落子。",
+          "en": "Like chess: look a few moves ahead, then commit.",
+          "start": 223.917,
+          "end": 227.857
+        },
+        {
+          "zh": "代价是计算量爆炸：分支因子 b、深度 d，节点数是 b 的 d 次方。",
+          "en": "The cost explodes: branching b and depth d give b to the d nodes.",
+          "start": 228.357,
+          "end": 234.436
+        },
+        {
+          "zh": "所以思维树只在少数高价值任务上才划算。",
+          "en": "So tree search pays off only on a few high-value tasks.",
+          "start": 234.936,
+          "end": 238.767
+        }
+      ],
+      "end": 239.767
+    },
+    {
+      "id": "react",
+      "code": "09.7",
+      "zh": "会想，也会动手",
+      "en": "REASON AND ACT",
+      "start": 239.767,
+      "lines": [
+        {
+          "zh": "到目前为止，模型只能在自己的脑子里推理。",
+          "en": "So far, the model reasons only inside its own head.",
+          "start": 241.667,
+          "end": 245.474
+        },
+        {
+          "zh": "但很多问题需要外部信息：今天天气、接口返回、文件内容。",
+          "en": "But many questions need outside information: weather, APIs, files.",
+          "start": 245.974,
+          "end": 251.493
+        },
+        {
+          "zh": "ReAct 让模型交替输出三类内容：想法、行动、观察。",
+          "en": "ReAct alternates three kinds of output: thought, action, observation.",
+          "start": 251.993,
+          "end": 257.284
+        },
+        {
+          "zh": "想法是内部推理，行动是调用搜索或计算器。",
+          "en": "Thought is internal reasoning; action calls a search or calculator.",
+          "start": 257.784,
+          "end": 261.914
+        },
+        {
+          "zh": "观察是工具返回的结果，会被写回上下文。",
+          "en": "Observation is the tool's result, written back into context.",
+          "start": 262.414,
+          "end": 266.196
+        },
+        {
+          "zh": "关键在于，下一轮推理能看到上一轮的现实反馈。",
+          "en": "The next round of reasoning can see the last round's reality.",
+          "start": 266.696,
+          "end": 270.883
+        },
+        {
+          "zh": "模型因此能根据现实修正想法，这是智能体的雏形。",
+          "en": "So the model corrects itself against the world. This is the agent prototype.",
+          "start": 271.383,
+          "end": 276.011
+        }
+      ],
+      "end": 277.011
+    },
+    {
+      "id": "toolformer",
+      "code": "09.8",
+      "zh": "自己学会用工具",
+      "en": "LEARNING WHEN TO CALL",
+      "start": 277.011,
+      "lines": [
+        {
+          "zh": "ReAct 的工具调用是提示出来的，格式写在提示里。",
+          "en": "In ReAct, tool use is prompted: the format sits in the prompt.",
+          "start": 278.911,
+          "end": 283.347
+        },
+        {
+          "zh": "更彻底的做法是训练它，自己决定什么时候调用。",
+          "en": "A more radical approach trains the model to decide when to call.",
+          "start": 283.847,
+          "end": 287.73
+        },
+        {
+          "zh": "Toolformer 的做法：在大量文本里，试着插入 API 调用。",
+          "en": "Toolformer tries inserting API calls throughout a large corpus.",
+          "start": 288.23,
+          "end": 293.042
+        },
+        {
+          "zh": "执行调用，把结果填回去，看后续预测有没有变好。",
+          "en": "It executes them, fills in results, and checks the next-token prediction.",
+          "start": 293.542,
+          "end": 297.964
+        },
+        {
+          "zh": "只保留让预测变好的那些调用，用它们微调模型。",
+          "en": "Only calls that improve prediction are kept, then used to fine-tune.",
+          "start": 298.464,
+          "end": 302.712
+        },
+        {
+          "zh": "于是它学会了：在什么位置、调什么工具、能帮上忙。",
+          "en": "So it learns where to call, which tool, and when it helps.",
+          "start": 303.212,
+          "end": 307.895
+        }
+      ],
+      "end": 308.895
+    },
+    {
+      "id": "testtime",
+      "code": "09.9",
+      "zh": "把算力花在想上",
+      "en": "SPEND COMPUTE ON THINKING",
+      "start": 308.895,
+      "lines": [
+        {
+          "zh": "讲到这里，一个很自然的问题就出现了。",
+          "en": "Here a natural question appears.",
+          "start": 310.795,
+          "end": 313.912
+        },
+        {
+          "zh": "给定固定的推理预算，是训练更大的模型，还是让它多想一会儿？",
+          "en": "Given a fixed budget, train a bigger model or let it think longer?",
+          "start": 314.412,
+          "end": 319.421
+        },
+        {
+          "zh": "2024 年，Snell 等人的回答是：测试时计算可能更划算。",
+          "en": "In 2024, Snell and colleagues answered: test-time compute can pay off more.",
+          "start": 319.921,
+          "end": 325.128
+        },
+        {
+          "zh": "在固定算力预算下，小模型多想一会儿，能胜过大 14 倍的模型。",
+          "en": "At fixed compute, a small model thinking longer can beat one 14 times larger.",
+          "start": 325.628,
+          "end": 331.007
+        },
+        {
+          "zh": "多出来的算力，可以花在多次采样，用验证器挑最好的。",
+          "en": "That compute can go to many samples, with a verifier picking the best.",
+          "start": 331.507,
+          "end": 336.14
+        },
+        {
+          "zh": "也可以花在更长的思维链、树搜索，或者自我修正。",
+          "en": "Or to longer chains, tree search, or self-correction.",
+          "start": 336.64,
+          "end": 341.159
+        },
+        {
+          "zh": "没有普适答案，只有给定预算下的最优分配。",
+          "en": "No universal answer, only the best split for a given budget.",
+          "start": 341.659,
+          "end": 345.187
+        }
+      ],
+      "end": 346.187
+    },
+    {
+      "id": "prm",
+      "code": "09.10",
+      "zh": "每一步都打分",
+      "en": "SCORE EVERY STEP",
+      "start": 346.187,
+      "lines": [
+        {
+          "zh": "训练模型做数学题，有两种给奖励的方式。",
+          "en": "Training a model on math offers two kinds of reward.",
+          "start": 348.087,
+          "end": 351.876
+        },
+        {
+          "zh": "结果奖励只看最终答案对不对，过程奖励给每一步打分。",
+          "en": "Outcome reward checks the final answer; process reward scores each step.",
+          "start": 352.376,
+          "end": 357.415
+        },
+        {
+          "zh": "2024 年，OpenAI 的论文系统比较了两者。",
+          "en": "In 2024, a paper from OpenAI compared the two approaches.",
+          "start": 357.915,
+          "end": 361.944
+        },
+        {
+          "zh": "在 MATH 的一个子集上，用过程奖励重排，准确率约 78%。",
+          "en": "On a MATH subset, reranking with a process reward reached about 78 percent.",
+          "start": 362.444,
+          "end": 367.987
+        },
+        {
+          "zh": "他们同时发布了 PRM800K，约 80 万步的人工标注。",
+          "en": "They also released PRM800K: about 800,000 human step labels.",
+          "start": 368.487,
+          "end": 373.251
+        },
+        {
+          "zh": "过程奖励好在信号更密：一道题一个答案，却有十步推理。",
+          "en": "Process reward has denser signal: one answer, but ten reasoning steps.",
+          "start": 373.751,
+          "end": 378.75
+        },
+        {
+          "zh": "它还能定位错在第几步，也让蒙对答案更难。",
+          "en": "It can locate the bad step, and it is harder to guess past.",
+          "start": 379.25,
+          "end": 382.951
+        },
+        {
+          "zh": "代价是标注更贵：每一步都得有人来看。",
+          "en": "The price is annotation: every step needs a human.",
+          "start": 383.451,
+          "end": 387.01
+        }
+      ],
+      "end": 388.01
+    },
+    {
+      "id": "faithful",
+      "code": "09.11",
+      "zh": "写的不等于想的",
+      "en": "WRITTEN IS NOT ALWAYS THOUGHT",
+      "start": 388.01,
+      "lines": [
+        {
+          "zh": "最后是一个必须知道的警告：思维链不一定忠实。",
+          "en": "One warning you must know: chain of thought is not always faithful.",
+          "start": 389.91,
+          "end": 394.2
+        },
+        {
+          "zh": "我们很容易把它当成真实思考过程，但它不一定是。",
+          "en": "We treat it as the model's real thinking. It may not be.",
+          "start": 394.7,
+          "end": 398.864
+        },
+        {
+          "zh": "模型给出的步骤，有时是事后编出来的理由。",
+          "en": "The steps given are sometimes reasons invented after the fact.",
+          "start": 399.364,
+          "end": 403.231
+        },
+        {
+          "zh": "真实决策可能由别的因素驱动，解释只是补上的。",
+          "en": "The real decision may come from elsewhere; the explanation is patched on.",
+          "start": 403.731,
+          "end": 407.989
+        },
+        {
+          "zh": "换个无关的提示，它可能给出完全不同的推理，答案却不变。",
+          "en": "Change an irrelevant prompt and the reasoning changes, the answer does not.",
+          "start": 408.489,
+          "end": 413.371
+        },
+        {
+          "zh": "所以思维链是提高准确率的工具，不是审计动机的证据。",
+          "en": "So CoT is a tool for accuracy, not evidence of motive.",
+          "start": 413.871,
+          "end": 418.777
+        },
+        {
+          "zh": "要判断可信，得看输出在外部世界能不能被验证。",
+          "en": "To judge trust, check whether the output is verifiable in the world.",
+          "start": 419.277,
+          "end": 423.702
+        }
+      ],
+      "end": 424.702
+    },
+    {
+      "id": "outro",
+      "code": "09.12",
+      "zh": "下一站：RLVR",
+      "en": "NEXT: RLVR",
+      "start": 424.702,
+      "lines": [
+        {
+          "zh": "这一章的主线，其实只有一句：多写，就是多算。",
+          "en": "The through line is one sentence: writing more is computing more.",
+          "start": 426.602,
+          "end": 430.824
+        },
+        {
+          "zh": "思维链、自洽性、思维树、ReAct，都是这一族方法。",
+          "en": "CoT, self-consistency, tree search, ReAct: all are variants.",
+          "start": 431.324,
+          "end": 436.172
+        },
+        {
+          "zh": "一边是提示，另一边是把算力花在推理时。",
+          "en": "One side is prompting; the other is compute at inference time.",
+          "start": 436.672,
+          "end": 440.44
+        },
+        {
+          "zh": "思维链，说到底是用提示诱导出来的推理。",
+          "en": "Chain of thought is, after all, reasoning induced by prompting.",
+          "start": 440.94,
+          "end": 444.703
+        },
+        {
+          "zh": "下一章，第 10 章：RLVR 与推理模型。",
+          "en": "Next, Chapter 10: RLVR and reasoning models.",
+          "start": 445.203,
+          "end": 449.018
+        },
+        {
+          "zh": "不用教它怎么想，只用奖励答对，让它自己长出来。",
+          "en": "Do not teach it how to think; reward correct answers and let it grow.",
+          "start": 449.518,
+          "end": 453.654
+        }
+      ],
+      "end": 456.654
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "beds": [
+    {
+      "id": "calm-pad-76",
+      "bpm": 76,
+      "seed": 7,
+      "description": "Soft Cmaj9-Am7-Fmaj7-G6 pad, piano arpeggio, whoosh on scene cuts.",
+      "generator": "courseforge music --bpm 76 --seed 7",
+      "use": "teaching explainer, voice-first mix at -34 dB"
+    },
+    {
+      "id": "calm-pad-68",
+      "bpm": 68,
+      "seed": 11,
+      "description": "Slower variant for reflective or historical chapters.",
+      "generator": "courseforge music --bpm 68 --seed 11",
+      "use": "documentary or history sections"
+    }
+  ]
+}

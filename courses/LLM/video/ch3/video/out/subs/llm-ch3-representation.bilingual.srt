@@ -1,0 +1,409 @@
+1
+00:00:01,600 --> 00:00:05,276
+计算机不认识猫这个字，它只认识数字。
+A computer does not know the word cat. It only knows numbers.
+
+2
+00:00:05,526 --> 00:00:10,108
+所以表示学习的第一步，是给每个词一个数字分身。
+So the first step in representation learning is a numeric stand-in for every word.
+
+3
+00:00:10,358 --> 00:00:14,129
+最直接的做法：给词表里的每个词编一个号。
+The simplest approach: assign an index to every word in the vocabulary.
+
+4
+00:00:14,379 --> 00:00:17,714
+编号展开成向量，就是 one-hot 编码。
+Unfold that index into a vector and you have one-hot encoding.
+
+5
+00:00:17,964 --> 00:00:22,603
+这一章讲：词怎么变成向量，又从静态走向动态。
+This chapter covers how words become vectors, and how vectors became dynamic.
+
+6
+00:00:22,853 --> 00:00:26,236
+它决定了大模型第一层能看到什么。
+It decides what the first layer of a large model can see.
+
+7
+00:00:28,886 --> 00:00:32,886
+先看最笨的办法：五万个词，就编五万个号。
+Start with the dumbest method: fifty thousand words, fifty thousand IDs.
+
+8
+00:00:33,136 --> 00:00:36,837
+每个词是一个五万维向量，只有一位是一。
+Each word becomes a fifty-thousand-dimensional vector with a single one.
+
+9
+00:00:37,087 --> 00:00:40,645
+第一个毛病：维度爆炸，几乎全是零。
+Problem one: the dimension explodes, and almost every entry is zero.
+
+10
+00:00:40,895 --> 00:00:44,921
+第二个毛病更致命：任意两个词的内积都是零。
+Problem two is worse: the dot product of any two words is zero.
+
+11
+00:00:45,171 --> 00:00:49,746
+在模型眼里，猫和狗的差距，等于猫和车的差距。
+To the model, cat-to-dog equals cat-to-car.
+
+12
+00:00:49,996 --> 00:00:54,152
+第 1 章的 n-gram 就死在这里：它表达不了相似。
+The n-grams of Chapter 1 died here: they cannot express similarity.
+
+13
+00:00:56,802 --> 00:01:01,471
+那怎么定义意义？语言学家弗斯给了一句座右铭。
+So how do we define meaning? The linguist Firth left a motto.
+
+14
+00:01:01,721 --> 00:01:05,656
+观其伴，知其义：看它常和谁一起出现。
+You shall know a word by the company it keeps.
+
+15
+00:01:05,906 --> 00:01:11,459
+猫常和喵、鱼、毛一起出现，车常和油、轮胎一起出现。
+Cat appears with meow, fish and fur; car with fuel and tires.
+
+16
+00:01:11,709 --> 00:01:15,996
+没有词典，只看朋友圈，也能猜个八九不离十。
+Without a dictionary, its circle of companions gives it away.
+
+17
+00:01:16,246 --> 00:01:21,330
+更早的说法是分布式假设：上下文相似，意义相似。
+The earlier claim is the distributional hypothesis: similar contexts, similar meaning.
+
+18
+00:01:21,580 --> 00:01:24,840
+注意这只是统计倾向，不是定义。
+This is a statistical tendency, not a definition.
+
+19
+00:01:27,490 --> 00:01:32,045
+既然意义等于上下文，就训练模型去预测上下文。
+If meaning equals context, train a model to predict context.
+
+20
+00:01:32,295 --> 00:01:37,032
+2013 年，米科洛夫等人在谷歌提出 word2vec。
+In 2013, Mikolov and colleagues at Google proposed word2vec.
+
+21
+00:01:37,282 --> 00:01:42,539
+两种玩法：CBOW 看周围猜中间，Skip-gram 反过来。
+Two variants: CBOW predicts the center, Skip-gram goes the other way.
+
+22
+00:01:42,789 --> 00:01:46,956
+训练完成后，中间那层词向量，就是词义。
+After training, the vectors in the middle layer are the meanings.
+
+23
+00:01:47,206 --> 00:01:51,342
+目标函数让窗口内邻居的对数概率之和最大。
+The objective maximizes the log probability of neighbors in the window.
+
+24
+00:01:51,592 --> 00:01:55,586
+每个词最后得到一个一百到三百维的稠密向量。
+Each word ends up with a dense vector of one to three hundred dimensions.
+
+25
+00:01:55,836 --> 00:01:59,265
+比五万维稀疏向量，小了两个数量级。
+That is two orders of magnitude smaller than a fifty-thousand-dimensional vector.
+
+26
+00:02:01,915 --> 00:02:04,748
+训练好之后，神奇的事发生了。
+After training, something remarkable happens.
+
+27
+00:02:04,998 --> 00:02:08,637
+国王减去男人，加上女人，最接近女王。
+King minus man plus woman lands closest to queen.
+
+28
+00:02:08,887 --> 00:02:12,359
+巴黎减法国加意大利，最接近罗马。
+Paris minus France plus Italy lands closest to Rome.
+
+29
+00:02:12,609 --> 00:02:15,897
+性别是一个方向，国别是另一个方向。
+Gender is one direction; nationality is another.
+
+30
+00:02:16,147 --> 00:02:19,453
+语义关系，变成了向量空间里的位移。
+Semantic relations become displacements in vector space.
+
+31
+00:02:19,703 --> 00:02:23,519
+但这是近似，不是定律，依赖训练细节。
+But this is approximate, not a law, and it depends on training details.
+
+32
+00:02:26,169 --> 00:02:29,928
+可 softmax 要对整个词表求和，太慢了。
+But softmax sums over the whole vocabulary, which is far too slow.
+
+33
+00:02:30,178 --> 00:02:33,117
+负采样把多分类，改成二分类。
+Negative sampling turns the multiclass problem into binary classification.
+
+34
+00:02:33,367 --> 00:02:36,652
+正样本是真实出现的词对，标签一。
+Positive pairs really co-occurred; they get label one.
+
+35
+00:02:36,902 --> 00:02:39,973
+负样本是随机抽的词，标签零。
+Negatives are random words; they get label zero.
+
+36
+00:02:40,223 --> 00:02:43,840
+计算量从词表大小 V，降到采样数 k。
+Compute drops from vocabulary size V to k samples.
+
+37
+00:02:44,090 --> 00:02:48,278
+不追求精确，追求足够好，再加上十倍速度。
+Not exact, just good enough, at ten times the speed.
+
+38
+00:02:50,928 --> 00:02:53,833
+为什么预测上下文，能学到语义？
+Why does predicting context teach meaning?
+
+39
+00:02:54,083 --> 00:02:56,151
+把它想成一个约束系统。
+Picture it as a constraint system.
+
+40
+00:02:56,401 --> 00:03:01,258
+猫和狗的上下文高度重叠，模型必须给相似的向量。
+Cat and dog share contexts, so their vectors must be close.
+
+41
+00:03:01,508 --> 00:03:06,563
+否则同一套参数没法预测相似上下文，损失会变大。
+Otherwise one parameter set cannot predict both, and the loss grows.
+
+42
+00:03:06,813 --> 00:03:11,398
+于是梯度下降，把上下文相似压成了向量相近。
+Gradient descent compresses similar contexts into nearby vectors.
+
+43
+00:03:11,648 --> 00:03:16,265
+没人告诉模型猫和狗是动物，结构是自己长出来的。
+Nobody told the model that cats and dogs are animals; the structure grew.
+
+44
+00:03:16,515 --> 00:03:21,206
+这就是表示学习：不手工设计特征，让模型自己学。
+That is representation learning: no hand-built features, the model learns.
+
+45
+00:03:23,856 --> 00:03:27,100
+还有个前置问题：词到底是谁定的？
+One prerequisite remains: who decides what a word is?
+
+46
+00:03:27,350 --> 00:03:32,336
+按空格切？中文没空格，英文一个词变几种形式。
+Split on spaces? Chinese has none, and English inflects one word many ways.
+
+47
+00:03:32,586 --> 00:03:36,430
+现代方案是子词：把词切成更小的片段。
+The modern answer is subwords: cut words into smaller pieces.
+
+48
+00:03:36,680 --> 00:03:42,312
+BPE 像压缩：初始拆成字符，反复合并最高频的相邻对。
+BPE works like compression: start from characters, merge the most frequent pair.
+
+49
+00:03:42,562 --> 00:03:47,050
+合并到目标词表大小，比如五万或十二万八千。
+Keep merging until the vocabulary hits a target, say fifty thousand or 128k.
+
+50
+00:03:47,300 --> 00:03:51,942
+高频片段早早成为 token，罕见词被拆成几段。
+Frequent chunks become tokens early; rare words split into common pieces.
+
+51
+00:03:52,192 --> 00:03:56,530
+字节级 BPE 以字节为单位，永不 OOV。
+Byte-level BPE uses bytes, so any text encodes and nothing is OOV.
+
+52
+00:03:59,180 --> 00:04:03,502
+word2vec 有个根本局限：每个词只有一个向量。
+word2vec has a fundamental limit: one vector per word.
+
+53
+00:04:03,752 --> 00:04:07,397
+吃苹果和苹果发布会，苹果的意思不同。
+Apple the fruit and Apple the company are different meanings.
+
+54
+00:04:07,647 --> 00:04:10,981
+bank 在河岸和银行里，也是两个意思。
+Bank by a river and bank for money are two senses as well.
+
+55
+00:04:11,231 --> 00:04:15,140
+静态向量只能取折中，把两个意思平均掉。
+A static vector can only compromise and average them.
+
+56
+00:04:15,390 --> 00:04:19,273
+上下文相关表示，让整个句子过一遍网络。
+Contextual representations pass the whole sentence through a network.
+
+57
+00:04:19,523 --> 00:04:24,778
+2018 年 ELMo 用双向 LSTM，BERT 用 Transformer。
+ELMo used a bidirectional LSTM in 2018; BERT used a Transformer.
+
+58
+00:04:25,028 --> 00:04:28,876
+表示不再是从词典查出来的，而是算出来的。
+Representation is no longer looked up. It is computed.
+
+59
+00:04:31,526 --> 00:04:34,192
+工程上，嵌入就是一个矩阵。
+In engineering, an embedding is just a matrix.
+
+60
+00:04:34,442 --> 00:04:38,486
+每一行是一个 token 的向量，查表就是取一行。
+One row per token; lookup takes a row.
+
+61
+00:04:38,736 --> 00:04:43,950
+V 是词表大小，d 是隐藏维度，矩阵是可训练参数。
+V is vocabulary size, d is hidden size, and the matrix is trained.
+
+62
+00:04:44,200 --> 00:04:48,230
+很多模型让输入嵌入和输出层共享权重。
+Many models tie the input embedding to the output layer.
+
+63
+00:04:48,480 --> 00:04:53,733
+GPT-3 的 d 是一万二千二百八十八，约六点二亿参数。
+GPT-3 uses d equal to 12,288, about 620 million parameters.
+
+64
+00:04:53,983 --> 00:04:58,744
+光查字典这一层，就比 2012 年的整个 AlexNet 大。
+This lookup layer alone is bigger than all of AlexNet in 2012.
+
+65
+00:05:01,394 --> 00:05:04,364
+还有一维被词袋丢掉了：顺序。
+One dimension is still missing from the bag of words: order.
+
+66
+00:05:04,614 --> 00:05:08,305
+猫追狗和狗追猫，词一样，意思相反。
+Cat chases dog and dog chases cat use the same words, opposite meaning.
+
+67
+00:05:08,555 --> 00:05:12,618
+把词向量求平均，两句话的表示完全相同。
+Average the word vectors and both sentences become identical.
+
+68
+00:05:12,868 --> 00:05:17,580
+解决办法是位置编码：把第几个词也变成向量。
+The fix is positional encoding: turn the position into a vector too.
+
+69
+00:05:17,830 --> 00:05:21,663
+最早用不同频率的正弦、余弦函数生成。
+The earliest version used sine and cosine functions of different frequencies.
+
+70
+00:05:21,913 --> 00:05:27,053
+好处是相对位置能算出来，模型能学会往右看三个词。
+Relative positions become computable, so the model can look three words right.
+
+71
+00:05:27,303 --> 00:05:31,439
+后来有可学习位置和 RoPE，细节留到第 5 章。
+Later came learned positions and RoPE; details wait for Chapter 5.
+
+72
+00:05:34,089 --> 00:05:37,765
+表示学习留下了遗产，也留下了陷阱。
+Representation learning left a legacy, and also traps.
+
+73
+00:05:38,015 --> 00:05:43,386
+第一，相似不等于同义：医生和护士向量近，角色不同。
+First, similar is not synonymous: doctor and nurse are close but different.
+
+74
+00:05:43,636 --> 00:05:49,043
+第二，偏见会被编码：语料的性别倾向会被继承和放大。
+Second, bias gets encoded and amplified from the corpus.
+
+75
+00:05:49,293 --> 00:05:54,818
+第三，各向异性：真实向量挤在锥形区域，余弦不可靠。
+Third, anisotropy: real vectors crowd a cone, so cosine similarity misleads.
+
+76
+00:05:55,068 --> 00:06:00,548
+第四，静态和动态要分清：查表向量不是某一层的激活。
+Fourth, keep static and dynamic apart: a lookup vector is not an activation.
+
+77
+00:06:00,798 --> 00:06:04,759
+所以看到词向量三个字，先问：哪一种？
+So when you see the word vector, first ask: which kind?
+
+78
+00:06:07,409 --> 00:06:11,399
+这一章之后，词已经是向量，还带上了位置。
+After this chapter, words are vectors, and they carry position.
+
+79
+00:06:11,649 --> 00:06:14,763
+但向量之间，还没有互相看的关系。
+But the vectors still do not look at each other.
+
+80
+00:06:15,013 --> 00:06:17,982
+下一章从循环网络讲到注意力。
+Next: from recurrent networks to attention.
+
+81
+00:06:18,232 --> 00:06:21,343
+模型怎么记住前文，又怎么挑重点。
+How a model remembers context and chooses what matters.
+
+82
+00:06:21,593 --> 00:06:25,279
+那是 Transformer 之前必须跨过的一道坎。
+That is the step you must cross before the Transformer.

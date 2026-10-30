@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 16 章 · 结课",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 16 · FINALE",
+      "title": "山顶上的图",
+      "highlight": "图",
+      "subtitle": "一张图，十条定律，下一步",
+      "pills": [
+        "一张图",
+        "十条定律",
+        "下一步",
+        "全课完"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 16 章 · 全课完"
+    },
+    {
+      "id": "map",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "§16.1 · ONE MAP",
+      "title": "从词到智能体",
+      "highlight": "智能体",
+      "steps": [
+        {
+          "title": "一个目标",
+          "sub": "给定上下文，预测下一个词"
+        },
+        {
+          "title": "三根支柱",
+          "sub": "表示、架构、数据"
+        },
+        {
+          "title": "规模化",
+          "sub": "损失按幂律下降"
+        },
+        {
+          "title": "三个方向",
+          "sub": "对齐、推理、效率"
+        }
+      ],
+      "stamp": "§12–15：检索、工具、评测、智能体"
+    },
+    {
+      "id": "laws-a",
+      "type": "bullets",
+      "accent": "purple",
+      "kicker": "§16.2 · LAWS 1–3",
+      "title": "定律一二三",
+      "highlight": "定律",
+      "items": [
+        {
+          "icon": "①",
+          "title": "目标要简单",
+          "sub": "能复制到任何文本",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "表示定上限",
+          "sub": "架构革命即表示革命",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "注意力加深度",
+          "sub": "可微检索，串行计算",
+          "color": "green"
+        }
+      ]
+    },
+    {
+      "id": "laws-b",
+      "type": "bullets",
+      "accent": "teal",
+      "kicker": "§16.2 · LAWS 4–6",
+      "title": "定律四五六",
+      "highlight": "四五六",
+      "items": [
+        {
+          "icon": "④",
+          "title": "规模有边界",
+          "sub": "数据枯竭，收益递减",
+          "color": "red"
+        },
+        {
+          "icon": "⑤",
+          "title": "对齐挪分布",
+          "sub": "改风格，不改知识",
+          "color": "orange"
+        },
+        {
+          "icon": "⑥",
+          "title": "推理两处花",
+          "sub": "训练更久，或想更久",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "laws-c",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "§16.2 · LAWS 7–9",
+      "title": "定律七八九",
+      "highlight": "七八九",
+      "items": [
+        {
+          "icon": "⑦",
+          "title": "稀疏换效率",
+          "sub": "混合专家与稀疏缓存",
+          "color": "teal"
+        },
+        {
+          "icon": "⑧",
+          "title": "记忆分三层",
+          "sub": "权重、上下文、外部库",
+          "color": "blue"
+        },
+        {
+          "icon": "⑨",
+          "title": "评测是代理",
+          "sub": "成为目标就会被优化",
+          "color": "green"
+        }
+      ]
+    },
+    {
+      "id": "law-ten",
+      "type": "formula",
+      "accent": "orange",
+      "kicker": "§16.2 · LAW 10",
+      "title": "可靠性是乘法",
+      "highlight": "乘法",
+      "formula": "0.95^20 ≈ 36%",
+      "note": "读作：零点九五的二十次方，约等于百分之三十六。",
+      "bullets": [
+        "单步可靠，乘上链条长度",
+        "错了能发现，也能回滚"
+      ],
+      "stamp": "示意：单步 0.95，二十步"
+    },
+    {
+      "id": "three",
+      "type": "steps",
+      "accent": "green",
+      "kicker": "§16.3 · THREE THINGS",
+      "title": "只记三件事",
+      "highlight": "三件",
+      "steps": [
+        {
+          "title": "是概率模型",
+          "sub": "不是知识库"
+        },
+        {
+          "title": "规模与对齐",
+          "sub": "能力与可用性"
+        },
+        {
+          "title": "只有表现证据",
+          "sub": "要验证，不要相信"
+        }
+      ],
+      "stamp": "一个分布，然后采样"
+    },
+    {
+      "id": "read",
+      "type": "timeline",
+      "accent": "blue",
+      "kicker": "§16.4 · READ",
+      "title": "入门五篇",
+      "highlight": "五篇",
+      "events": [
+        {
+          "year": "2017",
+          "title": "Transformer",
+          "sub": "架构",
+          "color": "orange"
+        },
+        {
+          "year": "2020",
+          "title": "GPT-3",
+          "sub": "规模",
+          "color": "blue"
+        },
+        {
+          "year": "2022",
+          "title": "InstructGPT",
+          "sub": "对齐",
+          "color": "teal"
+        },
+        {
+          "year": "2022",
+          "title": "思维链",
+          "sub": "推理",
+          "color": "purple"
+        },
+        {
+          "year": "2025",
+          "title": "DeepSeek-R1",
+          "sub": "强化学习推理",
+          "color": "green"
+        }
+      ]
+    },
+    {
+      "id": "build",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "§16.4 · BUILD",
+      "title": "动手五件事",
+      "highlight": "五件",
+      "steps": [
+        {
+          "title": "跑通前向",
+          "sub": "分词、前向、采样"
+        },
+        {
+          "title": "写注意力",
+          "sub": "二十行，缩放点积"
+        },
+        {
+          "title": "LoRA 微调",
+          "sub": "做一次分类"
+        },
+        {
+          "title": "搭 RAG",
+          "sub": "再写查天气的智能体"
+        }
+      ],
+      "stamp": "从小模型开始，允许它失败"
+    },
+    {
+      "id": "openq",
+      "type": "bullets",
+      "accent": "teal",
+      "kicker": "§16.5 · OPEN QUESTIONS",
+      "title": "还没有答案",
+      "highlight": "答案",
+      "items": [
+        {
+          "icon": "①",
+          "title": "规模还灵吗",
+          "sub": "数据墙之后靠什么",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "推理是什么",
+          "sub": "真的在想，还是匹配",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "对齐可信吗",
+          "sub": "假装对齐怎么分辨",
+          "color": "red"
+        },
+        {
+          "icon": "④",
+          "title": "边界在哪里",
+          "sub": "理解、能源与算力",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "closing",
+      "type": "photo",
+      "accent": "orange",
+      "kicker": "§16.6 · THE SAME THING",
+      "title": "同一件事",
+      "highlight": "同一件",
+      "image": "img/mountain-ridge.jpg",
+      "pills": [
+        "猫 0.6",
+        "狗 0.3",
+        "几千亿参数"
+      ],
+      "subtitle": "给一个分布，然后采样。",
+      "bullets": [
+        "第 1 章的四词表，今天依然成立",
+        "差别在规模、数据、对齐与工程",
+        "拆开，再一层层装回去"
+      ],
+      "caption": "示意图，非真实数据"
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "COURSE COMPLETE",
+      "title": "现在，轮到你了",
+      "highlight": "你",
+      "subtitle": "地图给你了，边界也给你了",
+      "pills": [
+        "全课完",
+        "下一步：读论文",
+        "保持怀疑"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "00",
+      "zh": "开场",
+      "en": "INTRO",
+      "lines": [
+        ["如果我问你：明天会下雨吗？你心里其实有一个模糊的把握。", "If I ask whether it will rain tomorrow, you already have a vague sense of it."],
+        ["这种把握有多确定？这一期，我们用一个数把它量出来：熵。", "How certain is that sense? This episode measures it with one number: entropy."]
+      ]
+    },
+    {
+      "id": "idea",
+      "code": "01",
+      "zh": "三个关键词",
+      "en": "THREE WORDS",
+      "lines": [
+        ["先记住一句话：熵，是一个分布平均有多意外。", "Start with one sentence: entropy is how surprised a distribution is on average."],
+        ["第一个关键词，不确定性。结果越分散，越难猜。", "The first word is uncertainty: the more spread out the outcomes, the harder to guess."],
+        ["第二个关键词，平均。不是某一次，而是长期平均。", "The second word is average: not one draw, but the long-run average."],
+        ["第三个关键词，下界。它决定了编码一个结果，平均至少要多少比特。", "The third word is lower bound: the minimum average bits needed to encode an outcome."]
+      ]
+    },
+    {
+      "id": "math",
+      "code": "02",
+      "zh": "写成公式",
+      "en": "THE FORMULA",
+      "lines": [
+        ["把一个分布写成概率 p。", "Write a distribution as probabilities p."],
+        ["信息量是负 log p：概率越小，意外越大。", "Information is negative log p: the smaller the probability, the bigger the surprise."],
+        ["按概率加权平均，就得到熵的公式。", "Average it with the probabilities, and you get the entropy formula."]
+      ]
+    },
+    {
+      "id": "curve",
+      "code": "03",
+      "zh": "画成曲线",
+      "en": "THE CURVE",
+      "lines": [
+        ["画出来看：横轴是概率 p，纵轴是负 log p。", "Plot it: probability p on the x-axis, negative log p on the y-axis."],
+        ["p 接近 1，信息量接近 0；p 接近 0，曲线陡峭上升。", "As p approaches 1, information approaches 0; as p approaches 0, the curve climbs steeply."],
+        ["把这条曲线按 p 加权平均，就是熵。", "Average this curve with weights p, and you get entropy."]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "04",
+      "zh": "下一站",
+      "en": "NEXT",
+      "lines": [
+        ["这一期，我们把熵拆成三个词、一个公式、一条曲线。", "This episode reduced entropy to three words, one formula, and one curve."],
+        ["下一章，我们用它来衡量语言模型。我们下期见。", "Next chapter, we use it to measure language models. See you next time."]
+      ]
+    }
+  ]
+}

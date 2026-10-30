@@ -1,0 +1,364 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 13 章 · 评测与幻觉",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 13 · EVALUATION",
+      "title": "评测与幻觉",
+      "highlight": "幻觉",
+      "subtitle": "分数是代理，不是能力",
+      "pills": [
+        "基准",
+        "污染",
+        "幻觉",
+        "校准"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 13 章"
+    },
+    {
+      "id": "scoregap",
+      "type": "photo",
+      "accent": "blue",
+      "kicker": "THE GAP",
+      "title": "分数的鸿沟",
+      "highlight": "鸿沟",
+      "image": "img/flashcards.jpg",
+      "pills": [
+        "损失 −0.1？",
+        "MMLU +2 分？"
+      ],
+      "subtitle": "损失很低，不等于好用。",
+      "bullets": [
+        "损失只问下一个词准不准",
+        "榜单强，不等于能解决问题",
+        "分数是代理，不是能力"
+      ],
+      "caption": "示意图，非真实评测数据"
+    },
+    {
+      "id": "benchmark",
+      "type": "timeline",
+      "accent": "teal",
+      "kicker": "BENCHMARK ARMS RACE",
+      "title": "基准的军备竞赛",
+      "highlight": "军备竞赛",
+      "events": [
+        {
+          "year": "2018",
+          "title": "GLUE",
+          "sub": "句子级理解，9 个任务",
+          "color": "orange"
+        },
+        {
+          "year": "2021",
+          "title": "MMLU",
+          "sub": "57 学科，约 1.4 万题",
+          "color": "blue"
+        },
+        {
+          "year": "2021",
+          "title": "GSM8K 与 HumanEval",
+          "sub": "小学算术，手写代码",
+          "color": "purple"
+        },
+        {
+          "year": "2025",
+          "title": "HLE",
+          "sub": "2500 题，准确率个位数",
+          "color": "red"
+        }
+      ]
+    },
+    {
+      "id": "threeways",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THREE PARADIGMS",
+      "title": "三种评测范式",
+      "highlight": "范式",
+      "items": [
+        {
+          "icon": "①",
+          "title": "静态基准",
+          "sub": "便宜、可猜、可污染",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "人类盲评",
+          "sub": "接近偏好，不等于正确",
+          "color": "green"
+        },
+        {
+          "icon": "③",
+          "title": "机器裁判",
+          "sub": "可扩展，自带偏好",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "judge",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "LLM AS JUDGE",
+      "title": "裁判也有偏好",
+      "highlight": "偏好",
+      "center": "→",
+      "left": {
+        "title": "单一裁判",
+        "sub": "四种偏好",
+        "items": [
+          {
+            "title": "位置偏好",
+            "sub": "总选第一个"
+          },
+          {
+            "title": "长度偏好",
+            "sub": "越长越像好答案"
+          },
+          {
+            "title": "自我偏好",
+            "sub": "偏爱同家族输出"
+          }
+        ]
+      },
+      "right": {
+        "title": "制度设计",
+        "sub": "照搬人类盲评",
+        "items": [
+          {
+            "title": "随机换序",
+            "sub": "打掉位置偏好"
+          },
+          {
+            "title": "隐藏身份",
+            "sub": "打掉自我偏好"
+          },
+          {
+            "title": "多裁判投票",
+            "sub": "再用人类校准"
+          }
+        ]
+      }
+    },
+    {
+      "id": "contamination",
+      "type": "steps",
+      "accent": "red",
+      "kicker": "DATA CONTAMINATION",
+      "title": "考试泄题",
+      "highlight": "泄题",
+      "steps": [
+        {
+          "title": "查重叠",
+          "sub": "题目与语料片段重合"
+        },
+        {
+          "title": "埋标记",
+          "sub": "canary 字符串"
+        },
+        {
+          "title": "改题目",
+          "sub": "换数字、换名字再问"
+        }
+      ],
+      "stamp": "会做，还是记得？"
+    },
+    {
+      "id": "construct",
+      "type": "bullets",
+      "accent": "green",
+      "kicker": "PSYCHOMETRICS",
+      "title": "构念效度",
+      "highlight": "效度",
+      "items": [
+        {
+          "icon": "①",
+          "title": "信度",
+          "sub": "多测几次，分数稳吗",
+          "color": "blue"
+        },
+        {
+          "icon": "②",
+          "title": "效度",
+          "sub": "测到声称的能力吗",
+          "color": "orange"
+        },
+        {
+          "icon": "③",
+          "title": "生态效度",
+          "sub": "能代表真实使用吗",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "halluc",
+      "type": "compare",
+      "accent": "red",
+      "kicker": "TWO KINDS, ONE ROOT",
+      "title": "一本正经地胡说",
+      "highlight": "胡说",
+      "center": "vs",
+      "left": {
+        "title": "事实性幻觉",
+        "sub": "把世界说错了",
+        "items": [
+          {
+            "title": "年份错位",
+            "sub": "爱因斯坦 1955 年出生"
+          },
+          {
+            "title": "细节编造",
+            "sub": "时间、地点、数字"
+          }
+        ]
+      },
+      "right": {
+        "title": "忠实性幻觉",
+        "sub": "偏离给定输入",
+        "items": [
+          {
+            "title": "总结加料",
+            "sub": "原文没有的内容"
+          },
+          {
+            "title": "偏离材料",
+            "sub": "答的不是给的文"
+          }
+        ]
+      }
+    },
+    {
+      "id": "causes",
+      "type": "bullets",
+      "accent": "orange",
+      "kicker": "WHY IT HAPPENS",
+      "title": "为什么会编",
+      "highlight": "编",
+      "items": [
+        {
+          "icon": "①",
+          "title": "目标不匹配",
+          "sub": "只奖励下一个词",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "数据有错",
+          "sub": "错误与过时信息",
+          "color": "red"
+        },
+        {
+          "icon": "③",
+          "title": "解码随机",
+          "sub": "采样偶尔选到低概率",
+          "color": "blue"
+        },
+        {
+          "icon": "④",
+          "title": "奖励副作用",
+          "sub": "评分者偏爱有问必答",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "calibrate",
+      "type": "formula",
+      "accent": "blue",
+      "kicker": "CALIBRATION",
+      "title": "自信是否可信",
+      "highlight": "可信",
+      "formula": "ECE = Σ w_b · |acc_b − conf_b|",
+      "note": "w_b = n_b / N 是桶权重，按桶内样本量加权。",
+      "bullets": [
+        "对角线：置信度等于准确率",
+        "说九成五只对七成，就是过度自信"
+      ],
+      "stamp": "示意：95% 对 70%"
+    },
+    {
+      "id": "goodhart",
+      "type": "bullets",
+      "accent": "purple",
+      "kicker": "GOODHART'S LAW",
+      "title": "指标成了目标",
+      "highlight": "目标",
+      "items": [
+        {
+          "icon": "①",
+          "title": "应试教育",
+          "sub": "考试成目标，教学变刷题",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "基准刷分",
+          "sub": "分数不再代表能力",
+          "color": "red"
+        },
+        {
+          "icon": "③",
+          "title": "可优化",
+          "sub": "指标一旦可刷就失真",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "newscheck",
+      "type": "steps",
+      "accent": "teal",
+      "kicker": "READ THE HEADLINE",
+      "title": "四问一条新闻",
+      "highlight": "四问",
+      "steps": [
+        {
+          "title": "测的是什么",
+          "sub": "知识回忆，不是推理"
+        },
+        {
+          "title": "有没有污染",
+          "sub": "大概率有"
+        },
+        {
+          "title": "人类基线",
+          "sub": "MMLU 专家约 89.8%"
+        },
+        {
+          "title": "真实改善",
+          "sub": "多数时候不知道"
+        }
+      ],
+      "stamp": "问完再决定转不转发"
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 14",
+      "title": "下一站：打开模型",
+      "highlight": "打开模型",
+      "subtitle": "从外部行为，到内部计算",
+      "next": {
+        "code": "14",
+        "title": "机制可解释性",
+        "sub": "把模型打开，看它内部在算什么"
+      },
+      "pills": [
+        "第 14 章",
+        "分数是代理",
+        "See you next time"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

@@ -1,0 +1,537 @@
+{
+  "version": 1,
+  "style": "warm-paper",
+  "aspect": "3:2",
+  "generator": "image_generate (gpt-image-2)",
+  "images": [
+    {
+      "id": "bacteria",
+      "file": "images/bacteria.jpg",
+      "tags": [
+        "bacteria",
+        "biology",
+        "gradient",
+        "movement",
+        "microscope"
+      ],
+      "description": "Bacteria moving toward nutrients, used as an analogy for gradient descent.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Bacteria moving toward nutrients, used as an analogy for gradient descent. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "99017137acf628cb3de9f19c59696355d68a696609c0dfb8f1deb466c5869c58"
+    },
+    {
+      "id": "catalog",
+      "file": "images/catalog.jpg",
+      "tags": [
+        "archive",
+        "index",
+        "counting",
+        "library",
+        "records"
+      ],
+      "description": "An open wooden card catalog drawer full of index cards.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. An open wooden card catalog drawer full of index cards. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6ccbe41dcb1bffb1da3a74256502c119bb535b17bbfc6f572b49d729e0b25467"
+    },
+    {
+      "id": "chat",
+      "file": "images/chat.jpg",
+      "tags": [
+        "chat",
+        "conversation",
+        "ai",
+        "assistant",
+        "screen"
+      ],
+      "description": "A person chatting with an AI assistant on a laptop, warm editorial light.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A person chatting with an AI assistant on a laptop, warm editorial light. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "636871ae1f88aab762d990828b018676b4c49bcbd0d3926cec2a087e45aac1cb"
+    },
+    {
+      "id": "coin",
+      "file": "images/coin.jpg",
+      "tags": [
+        "coin",
+        "probability",
+        "entropy",
+        "chance",
+        "air"
+      ],
+      "description": "A silver coin frozen mid-air above a pale wooden table.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A silver coin frozen mid-air above a pale wooden table. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "aab93fb11c4b9b5f458b6790446a71482570f9740d1723dfb90b2edc8debb4f3"
+    },
+    {
+      "id": "contours",
+      "file": "images/contours.jpg",
+      "tags": [
+        "terrain",
+        "map",
+        "relief",
+        "model",
+        "gradient",
+        "descent"
+      ],
+      "description": "A plaster relief model of a mountain valley with contour-like terraces on a wooden desk, a brass compass beside it.",
+      "prompt": "Warm editorial photograph of a three-dimensional plaster relief model of a mountain valley on a wooden desk, soft raking morning light casting long shadows that reveal stepped contour terraces, a brass drafting compass lying beside it, cream and terracotta palette, shallow depth of field. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "da48384112cbacb050c95693e15830a7067f0a638e07534641d9f3154b18aa26"
+    },
+    {
+      "id": "cover-cat",
+      "file": "images/cover-cat.jpg",
+      "tags": [
+        "cat",
+        "laptop",
+        "cover",
+        "learning",
+        "home"
+      ],
+      "description": "A tabby cat sitting on a laptop keyboard in warm morning light.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A tabby cat sitting on a laptop keyboard in warm morning light. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "37b584ecac898f54dc289222c76a2b01f9abec9d3ffb40413f440c1ac4b4d04f"
+    },
+    {
+      "id": "cover-terrain",
+      "file": "images/cover-terrain.jpg",
+      "tags": [
+        "cover",
+        "desk",
+        "terrain",
+        "mountain",
+        "morning",
+        "compass"
+      ],
+      "description": "A desk at dawn with a plaster terrain model, compass, pencil and coffee, mountains through the window.",
+      "prompt": "Warm editorial photograph of a wooden desk at dawn: a three-dimensional plaster relief model of a mountain valley with stepped contour terraces, a brass compass, a pencil and a cup of coffee, a window behind showing soft mountain silhouettes in morning haze, cream and terracotta palette. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f31baaa01d8d09d813067099e2de55a1503fe314fbf6f8f804887331efec274a"
+    },
+    {
+      "id": "datacenter",
+      "file": "images/datacenter.jpg",
+      "tags": [
+        "datacenter",
+        "compute",
+        "gpu",
+        "scale",
+        "infrastructure"
+      ],
+      "description": "Rows of servers in a warm-lit data center.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Rows of servers in a warm-lit data center. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "67c0a7730ac53a20920de01aea1c067886167a3288d81891577e27c30104cdb3"
+    },
+    {
+      "id": "dominoes",
+      "file": "images/dominoes.jpg",
+      "tags": [
+        "sequence",
+        "dominoes",
+        "chain",
+        "causality",
+        "one-step"
+      ],
+      "description": "A line of dominoes falling on a wooden table.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A line of dominoes falling on a wooden table. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "7d7f03dd125b38d514aac6dfef1a9f78bec4dcee5fbb8a864e33eb7ef1b7c422"
+    },
+    {
+      "id": "feather",
+      "file": "images/feather.jpg",
+      "tags": [
+        "feather",
+        "biology",
+        "exaptation",
+        "flight",
+        "evolution"
+      ],
+      "description": "A feather in soft light, used for the exaptation analogy.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A feather in soft light, used for the exaptation analogy. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "5f3e8d64fe578fbeb27744f1b9f49c8feb4d1c4a08496f14c5d99e1fb2c4f955"
+    },
+    {
+      "id": "flashcards",
+      "file": "images/flashcards.jpg",
+      "tags": [
+        "cards",
+        "study",
+        "memorization",
+        "notes",
+        "desk",
+        "learning"
+      ],
+      "description": "A thick stack of blank index cards fanned out on a wooden desk with coffee and a pencil.",
+      "prompt": "Warm editorial photograph of a thick stack of blank cream index cards fanned out on a wooden desk beside a mug of coffee and a pencil, soft morning light, cream and amber palette, shallow depth of field. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "3fce948414676935d018d3233c957e7e1974c9f259dbeb4edeaa27e249f069f0"
+    },
+    {
+      "id": "gears",
+      "file": "images/gears.jpg",
+      "tags": [
+        "gears",
+        "mechanism",
+        "machine",
+        "brass",
+        "engineering",
+        "workbench"
+      ],
+      "description": "Interlocking brass and steel gears on a workbench, one large gear driving smaller ones.",
+      "prompt": "Warm editorial close-up photograph of interlocking brass and steel gears on a wooden workbench, one large gear driving several smaller ones, soft window light, fine dust in the air, cream and amber palette, shallow depth of field. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "bd35b7200d1e8b3b20aede17660f2bb4ac71d85a2affb9a01bf5804f43f5a0e6"
+    },
+    {
+      "id": "jars",
+      "file": "images/jars.jpg",
+      "tags": [
+        "probability",
+        "distribution",
+        "beads",
+        "mass",
+        "four"
+      ],
+      "description": "Four glass jars holding decreasing amounts of amber and blue beads.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Four glass jars holding decreasing amounts of amber and blue beads. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "5190e75b7253fe06ea87397fe893cd4e8e0d06b117152374157e590eb8fd45ea"
+    },
+    {
+      "id": "keyboard",
+      "file": "images/keyboard.jpg",
+      "tags": [
+        "typing",
+        "keyboard",
+        "input",
+        "computer",
+        "work"
+      ],
+      "description": "Close-up of a mechanical keyboard under warm window light.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Close-up of a mechanical keyboard under warm window light. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "271ebb7b42c8014e8d12b271fc363244b523d7340078eb829b4c1d1bf6d31a88"
+    },
+    {
+      "id": "library",
+      "file": "images/library.jpg",
+      "tags": [
+        "books",
+        "knowledge",
+        "library",
+        "institution",
+        "depth"
+      ],
+      "description": "Long sunlit library aisle with tall shelves and a bright arched window at the end.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Long sunlit library aisle with tall shelves and a bright arched window at the end. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8e6ece6b47fd6ad428a0145a31c48b381f2e38a7af5e77034194eea8fb3c18b6"
+    },
+    {
+      "id": "mixer",
+      "file": "images/mixer.jpg",
+      "tags": [
+        "mixer",
+        "knob",
+        "temperature",
+        "control",
+        "analog"
+      ],
+      "description": "A vintage analog audio mixer with illuminated knobs and faders.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A vintage analog audio mixer with illuminated knobs and faders. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a7ccdbcb0198e99f77baf02ea1dbb2cfeb87ac05618413083f9d05c7d79af389"
+    },
+    {
+      "id": "mountain-ridge",
+      "file": "images/mountain-ridge.jpg",
+      "tags": [
+        "mountain",
+        "summit",
+        "ceiling",
+        "scale",
+        "clouds"
+      ],
+      "description": "A lone hiker on a ridge above a sea of clouds at sunrise.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A lone hiker on a ridge above a sea of clouds at sunrise. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "d906cfc31d36f94589b6e78d6363617f5f645426d68f07448b0c4fd3aba17540"
+    },
+    {
+      "id": "mountain",
+      "file": "images/mountain.jpg",
+      "tags": [
+        "mountain",
+        "climb",
+        "effort",
+        "journey",
+        "nature"
+      ],
+      "description": "A hiker on a mountain path at dawn, used for steep learning curves.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A hiker on a mountain path at dawn, used for steep learning curves. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6c7e713ac22944dcb8fd61a2ae2e62d58f445788d6e79ae0b36fec30ba25c1ee"
+    },
+    {
+      "id": "notebook-desk",
+      "file": "images/notebook-desk.jpg",
+      "tags": [
+        "notes",
+        "equations",
+        "study",
+        "writing",
+        "desk"
+      ],
+      "description": "A hand writing equations in a notebook beside a coffee cup.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A hand writing equations in a notebook beside a coffee cup. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "9a62058498f834c7aa247080320c418da344d86b7f64537960e6014c6c071fb0"
+    },
+    {
+      "id": "notebook",
+      "file": "images/notebook.jpg",
+      "tags": [
+        "notes",
+        "notebook",
+        "writing",
+        "study",
+        "desk"
+      ],
+      "description": "An open notebook with handwriting, a pen and coffee on a wooden desk.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. An open notebook with handwriting, a pen and coffee on a wooden desk. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "850d42a43ac2173b2e3a81a97ec23be4e78bab14ff6c4f19de5f4ec853d207d8"
+    },
+    {
+      "id": "pets",
+      "file": "images/pets.jpg",
+      "tags": [
+        "cat",
+        "dog",
+        "pet",
+        "home",
+        "expectation"
+      ],
+      "description": "A ginger cat and a golden retriever on a sunlit linen sofa.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A ginger cat and a golden retriever on a sunlit linen sofa. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "618b9a9fac8facf575c84ecdcdeff831594ae1ed9c2f523d3b76d4b3fa9a56f8"
+    },
+    {
+      "id": "pinfactory",
+      "file": "images/pinfactory.jpg",
+      "tags": [
+        "factory",
+        "division-of-labor",
+        "economics",
+        "pins",
+        "workshop"
+      ],
+      "description": "A pin factory workshop, evoking Adam Smith's division of labor.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A pin factory workshop, evoking Adam Smith's division of labor. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "46a8652dbf357f3bb60ac4f5f9f667e044442bab267bc491aff092ce23ddfd05"
+    },
+    {
+      "id": "rain",
+      "file": "images/rain.jpg",
+      "tags": [
+        "rain",
+        "window",
+        "weather",
+        "probability",
+        "dusk"
+      ],
+      "description": "Raindrops on a window at dusk with warm city lights behind.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Raindrops on a window at dusk with warm city lights behind. No text, no watermark, no logos.",
+      "source": "llm-ch1-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "22bfcdc204562436110d02eae831e4ccb866a4cf13148f6545ea420cbf86754f"
+    },
+    {
+      "id": "steam",
+      "file": "images/steam.jpg",
+      "tags": [
+        "steam",
+        "thermodynamics",
+        "engine",
+        "history",
+        "energy"
+      ],
+      "description": "Steam and brass machinery, evoking thermodynamics and the industrial age.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. Steam and brass machinery, evoking thermodynamics and the industrial age. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a6a92f7ad1ce6f58517a7b98a075ab397dc606c956fe1e4df1d47d6acb7ebf56"
+    },
+    {
+      "id": "steps",
+      "file": "images/steps.jpg",
+      "tags": [
+        "steps",
+        "stairs",
+        "descent",
+        "hill",
+        "path",
+        "dawn"
+      ],
+      "description": "Old stone steps descending a green hillside at dawn.",
+      "prompt": "Warm editorial photograph of old stone steps descending a green hillside at dawn, most steps wide and gentle but one gap conspicuously large and steep, soft mist in the valley, cream and sage palette. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e05bc895e1591aaa0c7535cb4d61347facbbb56fb31db2ff047a4324b14f93ff"
+    },
+    {
+      "id": "teleprinter",
+      "file": "images/teleprinter.jpg",
+      "tags": [
+        "teleprinter",
+        "telegraph",
+        "information",
+        "history",
+        "shannon"
+      ],
+      "description": "A vintage teleprinter, evoking Shannon-era information theory.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A vintage teleprinter, evoking Shannon-era information theory. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f463242336b5ab3ed4c9b6dcda25b0754b34eedb489b06fb19380b7b54faea53"
+    },
+    {
+      "id": "tools",
+      "file": "images/tools.jpg",
+      "tags": [
+        "tools",
+        "workshop",
+        "craft",
+        "engineering",
+        "wall",
+        "wood"
+      ],
+      "description": "Four well-used hand tools hanging on a workshop wall: oil can, plane, caliper, copper wire.",
+      "prompt": "Warm editorial photograph of a workshop wall with four well-used hand tools hanging on wooden pegs: a brass oil can, a wooden hand plane, a steel caliper, and a coil of copper wire, warm side light, cream and walnut palette. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "d3c20b2aa8e499a15fecb09547d7654a964cd689630ad8610b45a8cd0ac8de3e"
+    },
+    {
+      "id": "umbrella",
+      "file": "images/umbrella.jpg",
+      "tags": [
+        "rain",
+        "umbrella",
+        "weather",
+        "protection",
+        "object"
+      ],
+      "description": "A warm-toned umbrella still life, used for the 'next word' example.",
+      "prompt": "Warm editorial photograph, soft natural light, cream and oatmeal palette, muted colors, shallow depth of field, 35mm film look. A warm-toned umbrella still life, used for the 'next word' example. No text, no watermark, no logos.",
+      "source": "llm-ch0-bili",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1a505bc63f13bcd972f348f404af6fb991bddaaba962d519a16cee4a1787ed0f"
+    },
+    {
+      "id": "weather-map",
+      "file": "images/weather-map.jpg",
+      "tags": [
+        "weather",
+        "map",
+        "contours",
+        "meteorology",
+        "forecast",
+        "paper"
+      ],
+      "description": "A hand-drawn weather chart with flowing contour lines on a wooden desk, barometer and ruler beside it.",
+      "prompt": "Warm editorial photograph of an abstract hand-drawn weather chart on a wooden desk, only flowing pencil contour lines with no labels or numbers, a brass ruler, a round barometer and a cup of coffee beside it, morning window light, cream and slate palette. No text, no watermark, no logos.",
+      "source": "llm-ch2-backprop",
+      "license": "Generated with image_generate; no third-party rights. See asset-library/README.md.",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "70ae737af0a46654a0774d95655c10d3074821f7f60592e7c776f6b88ab51db4"
+    }
+  ]
+}

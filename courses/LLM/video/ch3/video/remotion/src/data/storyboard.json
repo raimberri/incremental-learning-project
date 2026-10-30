@@ -1,0 +1,319 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 3 章 · 词的数字分身",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 03 · REPRESENTATION",
+      "title": "词的数字分身",
+      "highlight": "数字分身",
+      "subtitle": "从编号，到意义",
+      "pills": [
+        "one-hot",
+        "word2vec",
+        "BPE",
+        "位置编码"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 3 章"
+    },
+    {
+      "id": "onehot",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "ONE-HOT",
+      "title": "编号的代价",
+      "highlight": "代价",
+      "items": [
+        {
+          "icon": "①",
+          "title": "维度爆炸",
+          "sub": "5 万词 = 5 万维，几乎全是 0",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "没有相似性",
+          "sub": "任意两词正交，距离相等",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "无法外推",
+          "sub": "没见过的组合，概率为零",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "firth",
+      "type": "photo",
+      "accent": "teal",
+      "kicker": "1957 · DISTRIBUTIONAL HYPOTHESIS",
+      "title": "观其伴，知其义",
+      "highlight": "伴",
+      "image": "img/library.jpg",
+      "pills": [
+        "Firth, 1957",
+        "上下文 = 意义",
+        "统计倾向"
+      ],
+      "subtitle": "一个词的意义，由它常一起出现的词决定。",
+      "bullets": [
+        "上下文相似的词，意义也相似",
+        "这是统计倾向，不是定义"
+      ],
+      "caption": "示意图，非真实语料统计"
+    },
+    {
+      "id": "word2vec",
+      "type": "steps",
+      "accent": "purple",
+      "kicker": "word2vec · 2013",
+      "title": "让模型猜上下文",
+      "highlight": "猜",
+      "steps": [
+        {
+          "title": "选一个窗口",
+          "sub": "中心词与前后各 c 个邻居"
+        },
+        {
+          "title": "预测邻居",
+          "sub": "CBOW 用周围猜中间；Skip-gram 反过来"
+        },
+        {
+          "title": "取中间层",
+          "sub": "训练完，向量就是词义"
+        }
+      ],
+      "stamp": "目标：邻居的对数概率之和最大"
+    },
+    {
+      "id": "vector",
+      "type": "formula",
+      "accent": "orange",
+      "kicker": "MEANING AS MOTION",
+      "title": "语义变成位移",
+      "highlight": "位移",
+      "formula": "vec(国王) − vec(男人) + vec(女人)\n≈ vec(女王)",
+      "note": "示意：近似成立，依赖训练细节；不是精确等式。",
+      "bullets": [
+        "性别是一个方向，国别是另一个方向",
+        "语义关系可以像箭头一样加减"
+      ],
+      "stamp": "近似，不是定律"
+    },
+    {
+      "id": "negative",
+      "type": "compare",
+      "accent": "teal",
+      "kicker": "NEGATIVE SAMPLING",
+      "title": "把多分类改成二分类",
+      "highlight": "二分类",
+      "center": "→",
+      "left": {
+        "title": "原始 softmax",
+        "sub": "每个样本都要归一化",
+        "items": [
+          {
+            "title": "O(V)",
+            "sub": "5 万次 exp 与求和"
+          },
+          {
+            "title": "慢",
+            "sub": "词表越大越贵"
+          }
+        ]
+      },
+      "right": {
+        "title": "负采样",
+        "sub": "判断词对是否真实",
+        "items": [
+          {
+            "title": "O(k)",
+            "sub": "k 通常 5–20"
+          },
+          {
+            "title": "快",
+            "sub": "足够好，快十倍"
+          }
+        ]
+      }
+    },
+    {
+      "id": "why",
+      "type": "steps",
+      "accent": "green",
+      "kicker": "WHY IT WORKS",
+      "title": "语义为什么长出来",
+      "highlight": "长出来",
+      "steps": [
+        {
+          "title": "上下文重叠",
+          "sub": "猫和狗都跟「养」「可爱」出现"
+        },
+        {
+          "title": "约束向量",
+          "sub": "要预测相似上下文，向量必须相近"
+        },
+        {
+          "title": "梯度下降",
+          "sub": "把上下文相似压成向量相近"
+        }
+      ],
+      "stamp": "没人教它「猫是动物」"
+    },
+    {
+      "id": "bpe",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "BPE · 1994 / 2016",
+      "title": "词怎么切",
+      "highlight": "切",
+      "steps": [
+        {
+          "title": "拆成字符",
+          "sub": "从最小单位开始"
+        },
+        {
+          "title": "数最高频对",
+          "sub": "统计相邻符号"
+        },
+        {
+          "title": "合并成一个",
+          "sub": "新符号进词表"
+        },
+        {
+          "title": "重复到目标大小",
+          "sub": "5 万或 12.8 万"
+        }
+      ],
+      "stamp": "字节级 BPE：永不 OOV"
+    },
+    {
+      "id": "contextual",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "STATIC VS CONTEXTUAL",
+      "title": "一个词，几个意思？",
+      "highlight": "几个意思",
+      "center": "vs",
+      "left": {
+        "title": "静态向量",
+        "sub": "word2vec",
+        "items": [
+          {
+            "title": "一词一向量",
+            "sub": "查表得到"
+          },
+          {
+            "title": "歧义取折中",
+            "sub": "苹果 = 水果 + 公司"
+          }
+        ]
+      },
+      "right": {
+        "title": "上下文相关",
+        "sub": "ELMo / BERT",
+        "items": [
+          {
+            "title": "一句一表示",
+            "sub": "每个位置重新计算"
+          },
+          {
+            "title": "歧义消解",
+            "sub": "看语境决定"
+          }
+        ]
+      }
+    },
+    {
+      "id": "embedding",
+      "type": "formula",
+      "accent": "orange",
+      "kicker": "THE LOOKUP TABLE",
+      "title": "嵌入就是一个矩阵",
+      "highlight": "矩阵",
+      "formula": "E ∈ ℝ^(V×d)      输入 = E[token]",
+      "note": "V = 128256，d = 4096（示例）；矩阵随网络一起训练。",
+      "bullets": [
+        "每行是一个 token 的向量",
+        "GPT-3：d = 12288，约 6.2 亿参数"
+      ],
+      "stamp": "查字典这一层，比 AlexNet 大"
+    },
+    {
+      "id": "position",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "POSITIONAL ENCODING",
+      "title": "缺了顺序",
+      "highlight": "顺序",
+      "formula": "输入_i = 词向量(w_i) + 位置向量(i)",
+      "note": "正弦版：PE(i,2k) = sin(i / 10000^(2k/d))",
+      "bullets": [
+        "词袋求平均，猫追狗 = 狗追猫",
+        "相对位置可由线性变换得到"
+      ],
+      "stamp": "细节留到第 5 章"
+    },
+    {
+      "id": "pitfalls",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "LEGACY AND TRAPS",
+      "title": "遗产与陷阱",
+      "highlight": "陷阱",
+      "items": [
+        {
+          "icon": "①",
+          "title": "相似 ≠ 同义",
+          "sub": "医生与护士接近，角色不同",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "偏见被编码",
+          "sub": "语料里的性别倾向会被放大",
+          "color": "red"
+        },
+        {
+          "icon": "③",
+          "title": "各向异性",
+          "sub": "向量挤在锥形区，余弦不可靠",
+          "color": "purple"
+        },
+        {
+          "icon": "④",
+          "title": "静态 ≠ 动态",
+          "sub": "查表向量不是某层激活",
+          "color": "blue"
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 04",
+      "title": "下一站：注意力",
+      "highlight": "注意力",
+      "subtitle": "从循环网络，到「看哪里」",
+      "next": {
+        "code": "04",
+        "title": "从 RNN 到注意力",
+        "sub": "记忆、瓶颈，以及一次关键的让位"
+      },
+      "pills": [
+        "第 4 章",
+        "表示已完成",
+        "顺序已补上"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

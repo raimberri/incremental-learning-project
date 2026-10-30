@@ -1,0 +1,355 @@
+1
+00:00:01,600 --> 00:00:04,949
+A model gets the answer right. Do you understand it?
+
+2
+00:00:05,199 --> 00:00:09,297
+It may truly compute, or it may have memorized the answer.
+
+3
+00:00:09,547 --> 00:00:13,944
+Behaviour tests tell you it worked, not why it worked.
+
+4
+00:00:14,194 --> 00:00:18,910
+Mechanistic interpretability reverse-engineers the network into an algorithm.
+
+5
+00:00:19,160 --> 00:00:23,828
+Not which input mattered, but what computation ran inside.
+
+6
+00:00:24,078 --> 00:00:28,141
+This chapter tries to crack the black box open, just a little.
+
+7
+00:00:30,791 --> 00:00:34,736
+Chapter 13 judged models from the outside.
+
+8
+00:00:34,986 --> 00:00:39,290
+But behaviour has a blind spot: you cannot see when it will fail.
+
+9
+00:00:39,540 --> 00:00:44,123
+The same right answer can come from computation or memory.
+
+10
+00:00:44,373 --> 00:00:48,087
+In safety-critical settings, that difference matters.
+
+11
+00:00:48,337 --> 00:00:52,485
+Evaluation gives a score; mechanistic insight gives the computation.
+
+12
+00:00:52,735 --> 00:00:56,648
+One asks whether it worked; the other asks how.
+
+13
+00:00:59,298 --> 00:01:04,047
+Where do we look? The simplest idea is a single neuron.
+
+14
+00:01:04,297 --> 00:01:08,471
+Level one: a neuron, one concept per neuron.
+
+15
+00:01:08,721 --> 00:01:12,780
+Level two: a feature, a direction in activation space.
+
+16
+00:01:13,030 --> 00:01:17,942
+A feature can be legal text or a noun, coarse or fine.
+
+17
+00:01:18,192 --> 00:01:22,009
+The linear representation hypothesis says concepts map to directions.
+
+18
+00:01:22,259 --> 00:01:26,991
+Level three: a circuit, features and heads wired into a subroutine.
+
+19
+00:01:27,241 --> 00:01:31,860
+The holy grail: break the model into nameable subroutines.
+
+20
+00:01:34,510 --> 00:01:38,052
+But treating a neuron as a concept soon breaks down.
+
+21
+00:01:38,302 --> 00:01:42,885
+One neuron responds to cats, Python code and Korean.
+
+22
+00:01:43,135 --> 00:01:48,151
+This is a polysemantic neuron, the rule rather than the exception.
+
+23
+00:01:48,401 --> 00:01:52,044
+The cause is not chaos but superposition.
+
+24
+00:01:52,294 --> 00:01:56,722
+Many features share one neuron, so reading it is unreliable.
+
+25
+00:01:56,972 --> 00:02:00,964
+So the better unit is a direction, not a neuron.
+
+26
+00:02:03,614 --> 00:02:08,202
+The activation space has only d dimensions, say 4,096.
+
+27
+00:02:08,452 --> 00:02:12,536
+But the features it must represent may number in the tens of thousands.
+
+28
+00:02:12,786 --> 00:02:16,632
+A d-dimensional space holds at most d orthogonal directions.
+
+29
+00:02:16,882 --> 00:02:20,431
+So where do the extra features go?
+
+30
+00:02:20,681 --> 00:02:24,828
+The answer: allow slight interference, as long as features are sparse.
+
+31
+00:02:25,078 --> 00:02:30,005
+Each input activates few features, so near-orthogonal directions fit.
+
+32
+00:02:30,255 --> 00:02:35,009
+The price is interference, which explains some odd model errors.
+
+33
+00:02:35,259 --> 00:02:39,554
+A 2022 toy-model experiment also showed a sudden phase transition.
+
+34
+00:02:42,204 --> 00:02:46,246
+If activations are superposed features, we need a demixer.
+
+35
+00:02:46,496 --> 00:02:51,539
+A sparse autoencoder does this: encode to a higher dimension first.
+
+36
+00:02:51,789 --> 00:02:55,843
+It yields sparse features, then decodes to reconstruct the activation.
+
+37
+00:02:56,093 --> 00:03:01,262
+Training has two goals: small reconstruction error, sparse features.
+
+38
+00:03:01,512 --> 00:03:05,684
+In a formula: reconstruction error plus an L1 penalty.
+
+39
+00:03:05,934 --> 00:03:10,658
+L1 punishes non-zero features, forcing the model to keep few.
+
+40
+00:03:10,908 --> 00:03:14,963
+Higher dimension, sparser features: the mixture comes apart.
+
+41
+00:03:17,613 --> 00:03:22,693
+In 2023, Bricken and colleagues tried this on a toy model.
+
+42
+00:03:22,943 --> 00:03:27,806
+That model had just 512 neurons and one Transformer layer.
+
+43
+00:03:28,056 --> 00:03:32,019
+The trained SAE produced thousands of interpretable features.
+
+44
+00:03:32,269 --> 00:03:37,956
+DNA sequences, Hebrew, HTTP requests, math symbols.
+
+45
+00:03:38,206 --> 00:03:42,205
+Crucially, these features are far more monosemantic than neurons.
+
+46
+00:03:42,455 --> 00:03:47,586
+Like chromatography: pass activations through a column and separate them.
+
+47
+00:03:50,236 --> 00:03:56,888
+A prettiest result: the induction head, explaining part of in-context learning.
+
+48
+00:03:57,138 --> 00:04:01,377
+The task is simple: give the model a repeated sequence to continue.
+
+49
+00:04:01,627 --> 00:04:05,746
+Four letters appeared before, then the first three repeat.
+
+50
+00:04:05,996 --> 00:04:10,490
+The model should predict the fourth; two attention heads do it.
+
+51
+00:04:10,740 --> 00:04:14,568
+The first is the previous-token head: it records what came before.
+
+52
+00:04:14,818 --> 00:04:19,067
+The second is the induction head; it matches that against history.
+
+53
+00:04:19,317 --> 00:04:23,199
+Once matched, it copies what followed that earlier position.
+
+54
+00:04:23,449 --> 00:04:27,261
+Together the two heads implement copying the earlier pattern.
+
+55
+00:04:27,511 --> 00:04:32,682
+The circuit is emergent, and its birth tracks a sudden loss drop.
+
+56
+00:04:35,332 --> 00:04:39,467
+Beyond SAEs and circuits, three tools are common.
+
+57
+00:04:39,717 --> 00:04:44,324
+First, a linear probe: train a classifier on one layer's activations.
+
+58
+00:04:44,574 --> 00:04:49,475
+If it decodes, the information is there, but not necessarily used.
+
+59
+00:04:49,725 --> 00:04:54,295
+Second, activation patching: swap one input's activations for another's.
+
+60
+00:04:54,545 --> 00:04:58,558
+That is causal evidence, not mere correlation.
+
+61
+00:04:58,808 --> 00:05:03,931
+Third, the logit lens: project mid-layer activations onto the vocabulary.
+
+62
+00:05:04,181 --> 00:05:07,902
+It shows the prediction being refined layer by layer.
+
+63
+00:05:10,552 --> 00:05:14,082
+ROME turns activation patching into precise surgery.
+
+64
+00:05:14,332 --> 00:05:18,160
+It first locates which MLP layers hold a factual association.
+
+65
+00:05:18,410 --> 00:05:21,984
+Then it edits the weights of that layer directly.
+
+66
+00:05:22,234 --> 00:05:25,878
+For example, moving the Eiffel Tower from Paris to Rome.
+
+67
+00:05:26,128 --> 00:05:30,453
+The model answers as edited, and it looks like success.
+
+68
+00:05:30,703 --> 00:05:34,123
+But editing one fact is not editing the reasoning.
+
+69
+00:05:34,373 --> 00:05:38,883
+Editing has limits: knowing the computation is not controlling it.
+
+70
+00:05:41,533 --> 00:05:45,710
+Mechanistic interpretability is fascinating, but far from full understanding.
+
+71
+00:05:45,960 --> 00:05:50,848
+First, scale: SAEs work on a toy model with 512 neurons.
+
+72
+00:05:51,098 --> 00:05:55,531
+At hundreds of billions of parameters, features and costs explode.
+
+73
+00:05:55,781 --> 00:06:00,490
+Second, features are incomplete: SAEs find the interpretable part.
+
+74
+00:06:00,740 --> 00:06:05,583
+Third, circuits explode combinatorially; connections form a dense graph.
+
+75
+00:06:05,833 --> 00:06:09,854
+Not every circuit can be named; much computation has no name yet.
+
+76
+00:06:10,104 --> 00:06:14,699
+Fourth, narrative bias: plausible is not the same as correct.
+
+77
+00:06:14,949 --> 00:06:18,632
+This is the same risk as unfaithful chain-of-thought.
+
+78
+00:06:21,282 --> 00:06:25,659
+One last question: can interpretability replace evaluation and alignment?
+
+79
+00:06:25,909 --> 00:06:29,582
+No. It offers evidence, not a guarantee.
+
+80
+00:06:29,832 --> 00:06:34,158
+Evaluation maps behaviour; alignment decides how to train.
+
+81
+00:06:34,408 --> 00:06:39,244
+Interpretability shows the computation; the three cannot replace each other.
+
+82
+00:06:39,494 --> 00:06:43,509
+And readable explanations are not causally complete.
+
+83
+00:06:43,759 --> 00:06:47,438
+A tidy story may only look like a mechanism.
+
+84
+00:06:50,088 --> 00:06:54,008
+In one sentence: reverse-engineer the network into an algorithm.
+
+85
+00:06:54,258 --> 00:06:59,147
+Neurons mislead, features are better units, circuits are subroutines.
+
+86
+00:06:59,397 --> 00:07:04,607
+Superposition explains polysemanticity; SAEs demix; induction heads show a circuit.
+
+87
+00:07:04,857 --> 00:07:08,596
+But the box is only slightly open, far from fully open.
+
+88
+00:07:08,846 --> 00:07:12,765
+Next, we assemble these parts into agents.
+
+89
+00:07:13,015 --> 00:07:16,384
+What they can do, and where the frontier lies.

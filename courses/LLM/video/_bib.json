@@ -1,0 +1,560 @@
+[
+ {
+  "key": "shannon1948",
+  "type": "article",
+  "title": "A Mathematical Theory of Communication",
+  "year": "1948",
+  "link": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x",
+  "doi": "10.1002/j.1538-7305.1948.tb01338.x",
+  "eprint": ""
+ },
+ {
+  "key": "turing1950",
+  "type": "article",
+  "title": "Computing Machinery and Intelligence",
+  "year": "1950",
+  "link": "https://doi.org/10.1093/mind/LIX.236.433",
+  "doi": "10.1093/mind/LIX.236.433",
+  "eprint": ""
+ },
+ {
+  "key": "rosenblatt1958",
+  "type": "article",
+  "title": "The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain",
+  "year": "1958",
+  "link": "https://doi.org/10.1037/h0042519",
+  "doi": "10.1037/h0042519",
+  "eprint": ""
+ },
+ {
+  "key": "minsky1969",
+  "type": "book",
+  "title": "Perceptrons: An Introduction to Computational Geometry",
+  "year": "1969",
+  "link": "",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "rumelhart1986",
+  "type": "article",
+  "title": "Learning Representations by Back-Propagating Errors",
+  "year": "1986",
+  "link": "https://doi.org/10.1038/323533a0",
+  "doi": "10.1038/323533a0",
+  "eprint": ""
+ },
+ {
+  "key": "hochreiter1997",
+  "type": "article",
+  "title": "Long Short-Term Memory",
+  "year": "1997",
+  "link": "https://doi.org/10.1162/neco.1997.9.8.1735",
+  "doi": "10.1162/neco.1997.9.8.1735",
+  "eprint": ""
+ },
+ {
+  "key": "bengio2003",
+  "type": "article",
+  "title": "A Neural Probabilistic Language Model",
+  "year": "2003",
+  "link": "https://www.jmlr.org/papers/v3/bengio03a.html",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "mikolov2013a",
+  "type": "misc",
+  "title": "Efficient Estimation of Word Representations in Vector Space",
+  "year": "2013",
+  "link": "https://arxiv.org/abs/1301.3781",
+  "doi": "",
+  "eprint": "1301.3781"
+ },
+ {
+  "key": "mikolov2013b",
+  "type": "inproceedings",
+  "title": "Distributed Representations of Words and Phrases and their Compositionality",
+  "year": "2013",
+  "link": "https://arxiv.org/abs/1310.4546",
+  "doi": "",
+  "eprint": "1310.4546"
+ },
+ {
+  "key": "sutskever2014",
+  "type": "inproceedings",
+  "title": "Sequence to Sequence Learning with Neural Networks",
+  "year": "2014",
+  "link": "https://arxiv.org/abs/1409.3215",
+  "doi": "",
+  "eprint": "1409.3215"
+ },
+ {
+  "key": "bahdanau2015",
+  "type": "inproceedings",
+  "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+  "year": "2015",
+  "link": "https://arxiv.org/abs/1409.0473",
+  "doi": "",
+  "eprint": "1409.0473"
+ },
+ {
+  "key": "kingma2015",
+  "type": "inproceedings",
+  "title": "Adam: A Method for Stochastic Optimization",
+  "year": "2015",
+  "link": "https://arxiv.org/abs/1412.6980",
+  "doi": "",
+  "eprint": "1412.6980"
+ },
+ {
+  "key": "srivastava2014",
+  "type": "article",
+  "title": "Dropout: A Simple Way to Prevent Neural Networks from Overfitting",
+  "year": "2014",
+  "link": "https://jmlr.org/papers/v15/srivastava14a.html",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "he2016",
+  "type": "inproceedings",
+  "title": "Deep Residual Learning for Image Recognition",
+  "year": "2016",
+  "link": "https://arxiv.org/abs/1512.03385",
+  "doi": "10.1109/CVPR.2016.90",
+  "eprint": "1512.03385"
+ },
+ {
+  "key": "sennrich2016",
+  "type": "inproceedings",
+  "title": "Neural Machine Translation of Rare Words with Subword Units",
+  "year": "2016",
+  "link": "https://arxiv.org/abs/1508.07909",
+  "doi": "",
+  "eprint": "1508.07909"
+ },
+ {
+  "key": "vaswani2017",
+  "type": "inproceedings",
+  "title": "Attention Is All You Need",
+  "year": "2017",
+  "link": "https://arxiv.org/abs/1706.03762",
+  "doi": "",
+  "eprint": "1706.03762"
+ },
+ {
+  "key": "radford2018gpt1",
+  "type": "misc",
+  "title": "Improving Language Understanding by Generative Pre-Training",
+  "year": "2018",
+  "link": "https://openai.com/research/language-unsupervised",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "devlin2019",
+  "type": "inproceedings",
+  "title": "{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+  "year": "2019",
+  "link": "https://arxiv.org/abs/1810.04805",
+  "doi": "10.18653/v1/N19-1423",
+  "eprint": "1810.04805"
+ },
+ {
+  "key": "radford2019gpt2",
+  "type": "misc",
+  "title": "Language Models are Unsupervised Multitask Learners",
+  "year": "2019",
+  "link": "https://openai.com/research/better-language-models",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "brown2020",
+  "type": "inproceedings",
+  "title": "Language Models are Few-Shot Learners",
+  "year": "2020",
+  "link": "https://arxiv.org/abs/2005.14165",
+  "doi": "",
+  "eprint": "2005.14165"
+ },
+ {
+  "key": "kaplan2020",
+  "type": "misc",
+  "title": "Scaling Laws for Neural Language Models",
+  "year": "2020",
+  "link": "https://arxiv.org/abs/2001.08361",
+  "doi": "",
+  "eprint": "2001.08361"
+ },
+ {
+  "key": "lewis2020",
+  "type": "inproceedings",
+  "title": "Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks",
+  "year": "2020",
+  "link": "https://arxiv.org/abs/2005.11401",
+  "doi": "",
+  "eprint": "2005.11401"
+ },
+ {
+  "key": "hoffmann2022",
+  "type": "inproceedings",
+  "title": "Training Compute-Optimal Large Language Models",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2203.15556",
+  "doi": "",
+  "eprint": "2203.15556"
+ },
+ {
+  "key": "christiano2017",
+  "type": "inproceedings",
+  "title": "Deep Reinforcement Learning from Human Preferences",
+  "year": "2017",
+  "link": "https://arxiv.org/abs/1706.03741",
+  "doi": "",
+  "eprint": "1706.03741"
+ },
+ {
+  "key": "ouyang2022",
+  "type": "inproceedings",
+  "title": "Training Language Models to Follow Instructions with Human Feedback",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2203.02155",
+  "doi": "",
+  "eprint": "2203.02155"
+ },
+ {
+  "key": "rafailov2023",
+  "type": "inproceedings",
+  "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2305.18290",
+  "doi": "",
+  "eprint": "2305.18290"
+ },
+ {
+  "key": "bai2022",
+  "type": "misc",
+  "title": "Constitutional {AI}: Harmlessness from {AI} Feedback",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2212.08073",
+  "doi": "",
+  "eprint": "2212.08073"
+ },
+ {
+  "key": "hu2021",
+  "type": "inproceedings",
+  "title": "{LoRA}: Low-Rank Adaptation of Large Language Models",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2106.09685",
+  "doi": "",
+  "eprint": "2106.09685"
+ },
+ {
+  "key": "wei2022cot",
+  "type": "inproceedings",
+  "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2201.11903",
+  "doi": "",
+  "eprint": "2201.11903"
+ },
+ {
+  "key": "wang2022sc",
+  "type": "inproceedings",
+  "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2203.11171",
+  "doi": "",
+  "eprint": "2203.11171"
+ },
+ {
+  "key": "yao2022react",
+  "type": "inproceedings",
+  "title": "{ReAct}: Synergizing Reasoning and Acting in Language Models",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2210.03629",
+  "doi": "",
+  "eprint": "2210.03629"
+ },
+ {
+  "key": "wei2022emergent",
+  "type": "article",
+  "title": "Emergent Abilities of Large Language Models",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2206.07682",
+  "doi": "",
+  "eprint": "2206.07682"
+ },
+ {
+  "key": "schaeffer2023",
+  "type": "inproceedings",
+  "title": "Are Emergent Abilities of Large Language Models a Mirage?",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2304.15004",
+  "doi": "",
+  "eprint": "2304.15004"
+ },
+ {
+  "key": "lightman2023",
+  "type": "inproceedings",
+  "title": "Let's Verify Step by Step",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2305.20050",
+  "doi": "",
+  "eprint": "2305.20050"
+ },
+ {
+  "key": "snell2024",
+  "type": "misc",
+  "title": "Scaling {LLM} Test-Time Compute Optimally Can Be More Effective than Scaling Model Parameters",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2408.03314",
+  "doi": "",
+  "eprint": "2408.03314"
+ },
+ {
+  "key": "guo2025r1",
+  "type": "misc",
+  "title": "{DeepSeek-R1}: Incentivizing Reasoning Capability in {LLMs} via Reinforcement Learning",
+  "year": "2025",
+  "link": "https://arxiv.org/abs/2501.12948",
+  "doi": "",
+  "eprint": "2501.12948"
+ },
+ {
+  "key": "deepseek2025nature",
+  "type": "article",
+  "title": "{DeepSeek-R1} Incentivizes Reasoning in {LLMs} through Reinforcement Learning",
+  "year": "2025",
+  "link": "https://doi.org/10.1038/s41586-025-09422-z",
+  "doi": "10.1038/s41586-025-09422-z",
+  "eprint": ""
+ },
+ {
+  "key": "schick2023",
+  "type": "inproceedings",
+  "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2302.04761",
+  "doi": "",
+  "eprint": "2302.04761"
+ },
+ {
+  "key": "kojima2022",
+  "type": "inproceedings",
+  "title": "Large Language Models are Zero-Shot Reasoners",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2205.11916",
+  "doi": "",
+  "eprint": "2205.11916"
+ },
+ {
+  "key": "shazeer2017",
+  "type": "inproceedings",
+  "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+  "year": "2017",
+  "link": "https://arxiv.org/abs/1701.06538",
+  "doi": "",
+  "eprint": "1701.06538"
+ },
+ {
+  "key": "fedus2022",
+  "type": "article",
+  "title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2101.03961",
+  "doi": "",
+  "eprint": "2101.03961"
+ },
+ {
+  "key": "ainslie2023",
+  "type": "inproceedings",
+  "title": "{GQA}: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2305.13245",
+  "doi": "",
+  "eprint": "2305.13245"
+ },
+ {
+  "key": "dao2022",
+  "type": "inproceedings",
+  "title": "{FlashAttention}: Fast and Memory-Efficient Exact Attention with {IO}-Awareness",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2205.14135",
+  "doi": "",
+  "eprint": "2205.14135"
+ },
+ {
+  "key": "gu2024mamba",
+  "type": "inproceedings",
+  "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2312.00752",
+  "doi": "",
+  "eprint": "2312.00752"
+ },
+ {
+  "key": "touvron2023",
+  "type": "misc",
+  "title": "{LLaMA}: Open and Efficient Foundation Language Models",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2302.13971",
+  "doi": "",
+  "eprint": "2302.13971"
+ },
+ {
+  "key": "jiang2023mistral",
+  "type": "misc",
+  "title": "Mistral 7B",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2310.06825",
+  "doi": "",
+  "eprint": "2310.06825"
+ },
+ {
+  "key": "deepseek2024v2",
+  "type": "misc",
+  "title": "{DeepSeek-V2}: A Strong, Economical, and Efficient Mixture-of-Experts Language Model",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2405.04434",
+  "doi": "",
+  "eprint": "2405.04434"
+ },
+ {
+  "key": "deepseek2024v3",
+  "type": "misc",
+  "title": "{DeepSeek-V3} Technical Report",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2412.19437",
+  "doi": "",
+  "eprint": "2412.19437"
+ },
+ {
+  "key": "elhage2022",
+  "type": "misc",
+  "title": "Toy Models of Superposition",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2209.10652",
+  "doi": "",
+  "eprint": "2209.10652"
+ },
+ {
+  "key": "bricken2023",
+  "type": "misc",
+  "title": "Towards Monosemanticity: Decomposing Language Models With Dictionary Learning",
+  "year": "2023",
+  "link": "https://transformer-circuits.pub/2023/monosemantic-features",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "olsson2022",
+  "type": "misc",
+  "title": "In-context Learning and Induction Heads",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2209.11895",
+  "doi": "",
+  "eprint": "2209.11895"
+ },
+ {
+  "key": "meng2022",
+  "type": "inproceedings",
+  "title": "Locating and Editing Factual Associations in {GPT}",
+  "year": "2022",
+  "link": "https://arxiv.org/abs/2202.05262",
+  "doi": "",
+  "eprint": "2202.05262"
+ },
+ {
+  "key": "yang2024",
+  "type": "inproceedings",
+  "title": "{SWE-agent}: Agent-Computer Interfaces Enable Automated Software Engineering",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2405.15793",
+  "doi": "",
+  "eprint": "2405.15793"
+ },
+ {
+  "key": "greenblatt2024",
+  "type": "misc",
+  "title": "Alignment Faking in Large Language Models",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2412.14093",
+  "doi": "",
+  "eprint": "2412.14093"
+ },
+ {
+  "key": "phan2025",
+  "type": "misc",
+  "title": "Humanity's Last Exam",
+  "year": "2025",
+  "link": "https://arxiv.org/abs/2501.14249",
+  "doi": "",
+  "eprint": "2501.14249"
+ },
+ {
+  "key": "openai2023gpt4",
+  "type": "misc",
+  "title": "{GPT-4} Technical Report",
+  "year": "2023",
+  "link": "https://arxiv.org/abs/2303.08774",
+  "doi": "",
+  "eprint": "2303.08774"
+ },
+ {
+  "key": "sutton2019",
+  "type": "misc",
+  "title": "The Bitter Lesson",
+  "year": "2019",
+  "link": "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
+  "doi": "",
+  "eprint": ""
+ },
+ {
+  "key": "liu2023lost",
+  "type": "article",
+  "title": "Lost in the Middle: How Language Models Use Long Contexts",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2307.03172",
+  "doi": "",
+  "eprint": "2307.03172"
+ },
+ {
+  "key": "hendrycks2021mmlu",
+  "type": "inproceedings",
+  "title": "Measuring Massive Multitask Language Understanding",
+  "year": "2021",
+  "link": "https://arxiv.org/abs/2009.03300",
+  "doi": "",
+  "eprint": "2009.03300"
+ },
+ {
+  "key": "cobbe2021gsm8k",
+  "type": "misc",
+  "title": "Training Verifiers to Solve Math Word Problems",
+  "year": "2021",
+  "link": "https://arxiv.org/abs/2110.14168",
+  "doi": "",
+  "eprint": "2110.14168"
+ },
+ {
+  "key": "chen2021humaneval",
+  "type": "misc",
+  "title": "Evaluating Large Language Models Trained on Code",
+  "year": "2021",
+  "link": "https://arxiv.org/abs/2107.03374",
+  "doi": "",
+  "eprint": "2107.03374"
+ },
+ {
+  "key": "jimenez2023",
+  "type": "inproceedings",
+  "title": "{SWE-bench}: Can Language Models Resolve Real-World {GitHub} Issues?",
+  "year": "2024",
+  "link": "https://arxiv.org/abs/2310.06770",
+  "doi": "",
+  "eprint": "2310.06770"
+ }
+]

@@ -1,0 +1,645 @@
+{
+  "total": 441.866,
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "15.0",
+      "zh": "模型不是智能体",
+      "en": "A MODEL IS NOT AN AGENT",
+      "start": 0.0,
+      "lines": [
+        {
+          "zh": "它能写诗、能改代码，却连一杯水都倒不了。",
+          "en": "It writes poems and fixes code, yet cannot pour a glass of water.",
+          "start": 1.6,
+          "end": 5.403
+        },
+        {
+          "zh": "因为模型只会输出 token，不会改变世界。",
+          "en": "A model only emits tokens. It cannot change the world.",
+          "start": 5.903,
+          "end": 9.454
+        },
+        {
+          "zh": "智能体的最小定义：在环境里循环观察、思考、行动。",
+          "en": "An agent loops observe, think, act inside an environment.",
+          "start": 9.954,
+          "end": 14.941
+        },
+        {
+          "zh": "不是更聪明的模型，而是接上了反馈回路。",
+          "en": "Not a smarter model, but a model wired to a feedback loop.",
+          "start": 15.441,
+          "end": 18.871
+        },
+        {
+          "zh": "这一章讲它怎么循环、怎么用工具、又怎么出错。",
+          "en": "This chapter: how it loops, uses tools, and still fails.",
+          "start": 19.371,
+          "end": 23.437
+        },
+        {
+          "zh": "最后看看 2025 到 2026 年，前沿在哪几条线上。",
+          "en": "Then a 2025 to 2026 snapshot of the frontier.",
+          "start": 23.937,
+          "end": 28.747
+        }
+      ],
+      "end": 29.747
+    },
+    {
+      "id": "loop",
+      "code": "15.1",
+      "zh": "四拍循环",
+      "en": "THE AGENT LOOP",
+      "start": 29.747,
+      "lines": [
+        {
+          "zh": "先看循环本身：目标在上面，环境在下面。",
+          "en": "Start with the loop: a goal on top, an environment below.",
+          "start": 31.647,
+          "end": 35.592
+        },
+        {
+          "zh": "第一步是观察：把环境与工具返回读进来。",
+          "en": "Step one, observe: read the environment and tool returns.",
+          "start": 36.092,
+          "end": 39.807
+        },
+        {
+          "zh": "第二步是思考：模型推理下一步该做什么。",
+          "en": "Step two, think: the model reasons about the next move.",
+          "start": 40.307,
+          "end": 43.724
+        },
+        {
+          "zh": "第三步是行动：调用工具、写文件、发请求。",
+          "en": "Step three, act: call a tool, write a file, send a request.",
+          "start": 44.224,
+          "end": 48.449
+        },
+        {
+          "zh": "行动改变环境，新的观察又回到第一步。",
+          "en": "The action changes the world; a new observation returns.",
+          "start": 48.949,
+          "end": 52.567
+        },
+        {
+          "zh": "这是 OODA 循环：转得更快的人，更早修正。",
+          "en": "This is the OODA loop: the faster turn corrects sooner.",
+          "start": 53.067,
+          "end": 57.281
+        },
+        {
+          "zh": "停下来的条件只有两个：任务完成，或预算耗尽。",
+          "en": "It stops for one of two reasons: done, or out of budget.",
+          "start": 57.781,
+          "end": 62.007
+        }
+      ],
+      "end": 63.007
+    },
+    {
+      "id": "tools",
+      "code": "15.2",
+      "zh": "工具是模型的手",
+      "en": "TOOLS: THE MODEL'S HANDS",
+      "start": 63.007,
+      "lines": [
+        {
+          "zh": "模型只能输出 token，要做事就得给它工具。",
+          "en": "A model only emits tokens, so give it tools to act.",
+          "start": 64.907,
+          "end": 68.819
+        },
+        {
+          "zh": "搜索查最新信息，代码执行算数、跑测试。",
+          "en": "Search for fresh facts; code execution to compute and test.",
+          "start": 69.319,
+          "end": 73.424
+        },
+        {
+          "zh": "数据库和接口能查订单、发邮件、改配置。",
+          "en": "Databases and APIs look up orders, send mail, change config.",
+          "start": 73.924,
+          "end": 78.027
+        },
+        {
+          "zh": "浏览器和电脑更进一步：点击、输入、读屏幕。",
+          "en": "Browsers and computers go further: click, type, read the screen.",
+          "start": 78.527,
+          "end": 82.973
+        },
+        {
+          "zh": "关键分工：模型只发出请求，不执行工具。",
+          "en": "The key split: the model requests, it never executes.",
+          "start": 83.473,
+          "end": 87.443
+        },
+        {
+          "zh": "真正动手的是外面的程序，模型收回结果。",
+          "en": "An outside program acts, then hands the result back.",
+          "start": 87.943,
+          "end": 91.452
+        },
+        {
+          "zh": "这个分工，决定了后面整个安全模型怎么写。",
+          "en": "That split decides how the security model is drawn.",
+          "start": 91.952,
+          "end": 95.691
+        }
+      ],
+      "end": 96.691
+    },
+    {
+      "id": "callflow",
+      "code": "15.3",
+      "zh": "函数调用四步",
+      "en": "FUNCTION CALLING IN FOUR STEPS",
+      "start": 96.691,
+      "lines": [
+        {
+          "zh": "实现方式叫函数调用，也叫工具调用，一共四步。",
+          "en": "The mechanism is function calling, or tool use, in four steps.",
+          "start": 98.591,
+          "end": 102.983
+        },
+        {
+          "zh": "第一步，把工具的名字、参数、用途写进上下文。",
+          "en": "One: put each tool's name, arguments and purpose into context.",
+          "start": 103.483,
+          "end": 108.213
+        },
+        {
+          "zh": "第二步，模型输出一段结构化的请求，通常是 JSON。",
+          "en": "Two: the model emits a structured request, usually JSON.",
+          "start": 108.713,
+          "end": 113.878
+        },
+        {
+          "zh": "第三步，外面的运行时执行它，先校验参数。",
+          "en": "Three: a runtime executes it, validating arguments first.",
+          "start": 114.378,
+          "end": 118.577
+        },
+        {
+          "zh": "参数不合法就报错，把错误信息原样回填。",
+          "en": "Bad arguments return an error, fed back verbatim.",
+          "start": 119.077,
+          "end": 122.832
+        },
+        {
+          "zh": "第四步，结果作为新消息回到上下文，模型继续。",
+          "en": "Four: the result returns as a new message; the model goes on.",
+          "start": 123.332,
+          "end": 128.019
+        }
+      ],
+      "end": 129.019
+    },
+    {
+      "id": "protocol",
+      "code": "15.4",
+      "zh": "把接工具标准化",
+      "en": "STANDARDIZING TOOL ACCESS",
+      "start": 129.019,
+      "lines": [
+        {
+          "zh": "2024 年，Anthropic 提出 MCP，想统一接工具的方式。",
+          "en": "In 2024 Anthropic proposed MCP to standardize tool access.",
+          "start": 130.919,
+          "end": 136.124
+        },
+        {
+          "zh": "在此之前，每个框架都有自己的工具格式，生态割裂。",
+          "en": "Before that, every framework had its own tool format.",
+          "start": 136.624,
+          "end": 141.362
+        },
+        {
+          "zh": "MCP 的野心像 USB：不管什么设备，插上就能用。",
+          "en": "Its ambition is USB: any device, plug in and it works.",
+          "start": 141.862,
+          "end": 146.519
+        },
+        {
+          "zh": "标准降低的不是计算成本，是适配成本。",
+          "en": "Standards cut adaptation cost, not compute cost.",
+          "start": 147.019,
+          "end": 150.652
+        },
+        {
+          "zh": "但接口统一了，权限也会跟着统一，边界要一起设计。",
+          "en": "A unified interface unifies permissions; design the boundary too.",
+          "start": 151.152,
+          "end": 156.122
+        },
+        {
+          "zh": "能接什么、能改什么，必须在协议层说清楚。",
+          "en": "What it may reach and change must be stated in the protocol.",
+          "start": 156.622,
+          "end": 160.471
+        }
+      ],
+      "end": 161.471
+    },
+    {
+      "id": "memory",
+      "code": "15.5",
+      "zh": "记忆分三层",
+      "en": "THREE LAYERS OF MEMORY",
+      "start": 161.471,
+      "lines": [
+        {
+          "zh": "模型本身没有记忆，只有这一次的上下文窗口。",
+          "en": "The model has no memory beyond this context window.",
+          "start": 163.371,
+          "end": 167.246
+        },
+        {
+          "zh": "短期记忆就是上下文，一次会话结束就没了。",
+          "en": "Short-term memory is context; it dies with the session.",
+          "start": 167.746,
+          "end": 171.514
+        },
+        {
+          "zh": "长期记忆存在向量库、文件或数据库里，跨会话还在。",
+          "en": "Long-term memory lives in vector stores or files, across sessions.",
+          "start": 172.014,
+          "end": 177.297
+        },
+        {
+          "zh": "做法很朴素：把重要信息写成文本、向量化、下次检索回来。",
+          "en": "Write it as text, embed it, retrieve it when needed.",
+          "start": 177.797,
+          "end": 183.436
+        },
+        {
+          "zh": "这就是第 12 章的 RAG，只是换了个使用场景。",
+          "en": "That is the RAG of Chapter 12, in a new setting.",
+          "start": 183.936,
+          "end": 187.569
+        },
+        {
+          "zh": "第三层是程序性记忆，也就是权重，改起来最贵。",
+          "en": "The third layer is procedural: the weights, costliest to change.",
+          "start": 188.069,
+          "end": 192.364
+        },
+        {
+          "zh": "写什么、怎么取回、过时的怎么清掉，都要设计。",
+          "en": "What to write, how to retrieve, when to drop: all designed.",
+          "start": 192.864,
+          "end": 197.162
+        }
+      ],
+      "end": 198.162
+    },
+    {
+      "id": "multi",
+      "code": "15.6",
+      "zh": "分工还是传话",
+      "en": "DIVISION OR TELEPHONE",
+      "start": 198.162,
+      "lines": [
+        {
+          "zh": "自然的想法：一个规划、一个写代码、一个审查。",
+          "en": "The natural idea: one plans, one codes, one reviews.",
+          "start": 200.062,
+          "end": 204.227
+        },
+        {
+          "zh": "在可并行的子任务上，这确实有效，比如同时调研十个方向。",
+          "en": "It works on parallel subtasks, like scouting ten directions at once.",
+          "start": 204.727,
+          "end": 209.999
+        },
+        {
+          "zh": "但每一次智能体之间传话，都是一次有损压缩。",
+          "en": "But every handoff between agents is lossy compression.",
+          "start": 210.499,
+          "end": 214.404
+        },
+        {
+          "zh": "如果每个环节保真九成，传十次只剩三成半。",
+          "en": "At ninety percent per hop, ten hops leave about a third.",
+          "start": 214.904,
+          "end": 219.18
+        },
+        {
+          "zh": "所以瓶颈不是智能体数量，是通信协议与共享状态。",
+          "en": "The bottleneck is protocol and shared state, not agent count.",
+          "start": 219.68,
+          "end": 224.454
+        },
+        {
+          "zh": "让一百个智能体投票，往往不如一个多想几轮加一个验证器。",
+          "en": "A hundred voters often lose to one thinker plus a verifier.",
+          "start": 224.954,
+          "end": 229.959
+        },
+        {
+          "zh": "好的组织用单一事实来源，好的智能体用共享黑板。",
+          "en": "Good teams share one source of truth; good agents share a blackboard.",
+          "start": 230.459,
+          "end": 234.89
+        }
+      ],
+      "end": 235.89
+    },
+    {
+      "id": "compound",
+      "code": "15.7",
+      "zh": "复合误差",
+      "en": "COMPOUNDING ERROR",
+      "start": 235.89,
+      "lines": [
+        {
+          "zh": "假设每一步有百分之九十五的概率做对，听起来不错。",
+          "en": "Suppose each step is right ninety-five percent of the time.",
+          "start": 237.79,
+          "end": 242.138
+        },
+        {
+          "zh": "但一个二十步的任务，成功率是零点九五的二十次方。",
+          "en": "A twenty-step task succeeds at 0.95 to the twentieth.",
+          "start": 242.638,
+          "end": 247.067
+        },
+        {
+          "zh": "算下来约等于零点三六，只有百分之三十六。",
+          "en": "That is about 0.36, or thirty-six percent.",
+          "start": 247.567,
+          "end": 251.426
+        },
+        {
+          "zh": "一百步呢？零点九五的一百次方，约等于零点零零六。",
+          "en": "A hundred steps: 0.95 to the hundredth, about 0.006.",
+          "start": 251.926,
+          "end": 256.886
+        },
+        {
+          "zh": "这就是复合误差：步骤越多，整体越接近必然失败。",
+          "en": "Compounding error: more steps, closer to certain failure.",
+          "start": 257.386,
+          "end": 262.034
+        },
+        {
+          "zh": "所以模型能写单个函数，却改不动一个大项目。",
+          "en": "So it writes one function but cannot refactor a project.",
+          "start": 262.534,
+          "end": 266.575
+        },
+        {
+          "zh": "演示很惊艳，产品化很难，差别就在这里。",
+          "en": "Demos dazzle; products stall. This is the gap.",
+          "start": 267.075,
+          "end": 270.85
+        }
+      ],
+      "end": 271.85
+    },
+    {
+      "id": "remedies",
+      "code": "15.8",
+      "zh": "三条对策",
+      "en": "THREE WAYS OUT",
+      "start": 271.85,
+      "lines": [
+        {
+          "zh": "对策只有三类，第一类是提高单步可靠性。",
+          "en": "There are three fixes. First, raise per-step reliability.",
+          "start": 273.75,
+          "end": 277.465
+        },
+        {
+          "zh": "更好的模型、更清楚的工具返回、更小的步骤。",
+          "en": "Better models, clearer tool returns, smaller steps.",
+          "start": 277.965,
+          "end": 281.912
+        },
+        {
+          "zh": "第二类是缩短链条：拆成可并行的子任务。",
+          "en": "Second, shorten the chain: split into parallel subtasks.",
+          "start": 282.412,
+          "end": 286.11
+        },
+        {
+          "zh": "或者让一次工具调用做更多事，少来回几趟。",
+          "en": "Or let one call do more, so fewer round trips.",
+          "start": 286.61,
+          "end": 290.48
+        },
+        {
+          "zh": "第三类是加检查点与回滚：每步验证、失败重试。",
+          "en": "Third, checkpoints and rollback: verify, retry, restore.",
+          "start": 290.98,
+          "end": 295.739
+        },
+        {
+          "zh": "可靠性工程的思路一样：不指望不出错，设计成能发现、能回滚。",
+          "en": "Reliability engineering: assume errors, make them visible and undoable.",
+          "start": 296.239,
+          "end": 301.924
+        }
+      ],
+      "end": 302.924
+    },
+    {
+      "id": "safety",
+      "code": "15.9",
+      "zh": "提示注入",
+      "en": "PROMPT INJECTION",
+      "start": 302.924,
+      "lines": [
+        {
+          "zh": "工具给了模型一双手，也给了攻击者一个入口。",
+          "en": "Tools give the model hands, and attackers a door.",
+          "start": 304.824,
+          "end": 308.519
+        },
+        {
+          "zh": "你让它总结网页，网页里写着：忽略之前的指令。",
+          "en": "Summarize this page; the page says: ignore prior instructions.",
+          "start": 309.019,
+          "end": 313.279
+        },
+        {
+          "zh": "对它来说，用户的指令和网页的文字，都是 token。",
+          "en": "To the model, user orders and page text are both tokens.",
+          "start": 313.779,
+          "end": 317.945
+        },
+        {
+          "zh": "这叫间接提示注入，是 RAG 与智能体的头号安全问题。",
+          "en": "Indirect prompt injection: the top security risk for agents.",
+          "start": 318.445,
+          "end": 322.895
+        },
+        {
+          "zh": "它和 SQL 注入同构：把数据当成代码执行了。",
+          "en": "It mirrors SQL injection: data executed as code.",
+          "start": 323.395,
+          "end": 327.568
+        },
+        {
+          "zh": "防御有四层：最小权限、沙箱、人类确认、输出审查。",
+          "en": "Four defenses: least privilege, sandbox, human sign-off, review.",
+          "start": 328.068,
+          "end": 333.392
+        },
+        {
+          "zh": "只要三个条件同时成立，它就没办法根治。",
+          "en": "When three conditions hold together, it cannot be cured.",
+          "start": 333.892,
+          "end": 337.349
+        },
+        {
+          "zh": "安全工程的做法不是消除风险，是限制爆炸半径。",
+          "en": "Security does not remove risk; it limits the blast radius.",
+          "start": 337.849,
+          "end": 342.357
+        }
+      ],
+      "end": 343.357
+    },
+    {
+      "id": "frontier",
+      "code": "15.10",
+      "zh": "前沿几条线",
+      "en": "THE 2025-2026 FRONTIER",
+      "start": 343.357,
+      "lines": [
+        {
+          "zh": "最后是前沿，这是一张快照，不是定论。",
+          "en": "Finally the frontier: a snapshot, not a verdict.",
+          "start": 345.257,
+          "end": 348.808
+        },
+        {
+          "zh": "2023 年，ReAct 把推理和行动交替起来，循环有了雏形。",
+          "en": "In 2023 ReAct alternated reasoning and acting.",
+          "start": 349.308,
+          "end": 354.728
+        },
+        {
+          "zh": "2024 年，MCP 试图统一接工具的接口，生态开始收拢。",
+          "en": "In 2024 MCP tried to unify tool interfaces.",
+          "start": 355.228,
+          "end": 360.815
+        },
+        {
+          "zh": "也是 2024 年，SWE-agent 让模型接上代码库与终端。",
+          "en": "Also 2024: SWE-agent wired models to repos and terminals.",
+          "start": 361.315,
+          "end": 366.176
+        },
+        {
+          "zh": "一条更激进的路，是让模型直接操作电脑，点击、输入、读屏幕。",
+          "en": "A bolder line: computer use, click, type, read the screen.",
+          "start": 366.676,
+          "end": 372.622
+        },
+        {
+          "zh": "对齐伪装提醒我们：模型可能学会在训练中表现得对齐。",
+          "en": "Alignment faking warns that models may perform alignment.",
+          "start": 373.122,
+          "end": 378.163
+        },
+        {
+          "zh": "所以评测不只是打分，它决定我们能不能相信交付。",
+          "en": "So evals are not scores; they decide what we can trust.",
+          "start": 378.663,
+          "end": 383.162
+        }
+      ],
+      "end": 384.162
+    },
+    {
+      "id": "summary",
+      "code": "15.11",
+      "zh": "本章小结",
+      "en": "TAKEAWAYS",
+      "start": 384.162,
+      "lines": [
+        {
+          "zh": "回到开头：智能体不是更聪明的模型，是接上回路的模型。",
+          "en": "Back to the start: an agent is a model wired into a loop.",
+          "start": 386.062,
+          "end": 391.204
+        },
+        {
+          "zh": "工具调用是模型请求、外部执行，安全边界就画在这里。",
+          "en": "Request here, execute there: that line is the security boundary.",
+          "start": 391.704,
+          "end": 396.895
+        },
+        {
+          "zh": "记忆分短期、长期、程序性三层，越往下越难改。",
+          "en": "Memory is short, long, procedural; deeper is harder to change.",
+          "start": 397.395,
+          "end": 402.069
+        },
+        {
+          "zh": "多智能体的瓶颈是通信损耗，不是数量。",
+          "en": "Multi-agent bottlenecks are handoffs, not headcount.",
+          "start": 402.569,
+          "end": 406.136
+        },
+        {
+          "zh": "复合误差与提示注入，是长任务绕不开的两堵墙。",
+          "en": "Compounding error and injection are the two walls.",
+          "start": 406.636,
+          "end": 410.992
+        },
+        {
+          "zh": "下一个问题不再是它有多聪明，而是它有多可靠。",
+          "en": "The next question is not how smart, but how reliable.",
+          "start": 411.492,
+          "end": 415.593
+        }
+      ],
+      "end": 416.593
+    },
+    {
+      "id": "outro",
+      "code": "15.12",
+      "zh": "下一站：结课",
+      "en": "NEXT: THE FINALE",
+      "start": 416.593,
+      "lines": [
+        {
+          "zh": "这一章把模型推进了环境：它会看、会想、会动手。",
+          "en": "This chapter pushed the model into the world: it sees, thinks, acts.",
+          "start": 418.493,
+          "end": 423.168
+        },
+        {
+          "zh": "但它越能干，越需要清晰的边界与检查。",
+          "en": "The more it can do, the more it needs boundaries and checks.",
+          "start": 423.668,
+          "end": 427.054
+        },
+        {
+          "zh": "下一章是最后一章，我们把十五章压成一张图。",
+          "en": "Next is the last chapter: fifteen chapters into one map.",
+          "start": 427.554,
+          "end": 431.369
+        },
+        {
+          "zh": "还有十条定律，和一份继续深入的地图。",
+          "en": "Ten laws, and a map for going deeper.",
+          "start": 431.869,
+          "end": 435.138
+        },
+        {
+          "zh": "第 16 章结课，我们把整门课收个尾。",
+          "en": "Chapter 16, the finale: we close the course.",
+          "start": 435.638,
+          "end": 438.866
+        }
+      ],
+      "end": 441.866
+    }
+  ]
+}

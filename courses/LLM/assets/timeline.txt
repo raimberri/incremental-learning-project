@@ -1,0 +1,79 @@
+========================================================================
+  LLM 思想与技术时间线（1948–2026）
+  横轴不是等距的：越到后面，事件越密集。
+========================================================================
+
+1948  │ Shannon《通信的数学理论》—— 熵、交叉熵、比特
+      │ Wiener《控制论》—— 反馈、状态、目的性行为
+1950  │ Turing《计算机器与智能》—— 模仿游戏
+1956  │ Miller 工作记忆 7±2；达特茅斯会议命名"人工智能"
+1957  │ Firth "观其伴，知其义"；Rosenblatt 感知机（1958）
+1969  │ Minsky & Papert《Perceptrons》—— 单层网络的局限
+      │ 神经网络第一次寒冬（约 1970s–1980s）
+1982  │ Gould & Vrba 预适应（exaptation）
+1986  │ Rumelhart, Hinton & Williams —— 反向传播
+      │ 神经网络第二次复兴
+1989  │ LeCun 卷积网络识别手写数字
+1997  │ Hochreiter & Schmidhuber —— LSTM
+      │ （同年，Deep Blue 击败卡斯帕罗夫）
+1998  │ LeCun LeNet-5；Bottou 推广 SGD
+2003  │ Bengio 等 —— 神经概率语言模型（词向量 + 预测下一词）
+2006  │ Hinton 深度信念网络，"深度学习"复兴
+2009  │ ImageNet 发布
+2012  │ AlexNet 夺冠 —— GPU + 深度学习 + 大数据
+2013  │ word2vec；VAE；DQN
+2014  │ seq2seq；Bahdanau 注意力；GAN；Adam；Dropout
+2015  │ ResNet；BatchNorm；OpenAI 成立
+2016  │ AlphaGo 击败李世石；BPE 进入 NLP
+2017  │ ★ Transformer《Attention Is All You Need》
+      │   —— 并行、短路径、弱归纳偏置、可扩展
+2018  │ GPT-1（预训练 + 微调）
+      │ BERT（双向掩码，刷榜 11 项任务）
+      │ ELMo；ULMFiT
+2019  │ GPT-2（15 亿，零样本多任务）
+      │ T5；RoBERTa；DistilBERT
+2020  │ ★ GPT-3（1750 亿，上下文学习）
+      │ Scaling Laws（幂律，7 个数量级）
+      │ RAG；Vision Transformer；AlphaFold 2
+2021  │ CLIP；DALL·E；Codex；LoRA
+      │ Switch Transformer（1.6 万亿，MoE）
+2022  │ ★ Chinchilla（20 token/参数，纠正参数过剩）
+      │ ★ InstructGPT（RLHF，1.3B 胜 175B）
+      │ ★ Chain-of-Thought（写步骤 = 多算）
+      │ Self-Consistency；ReAct；Constitutional AI
+      │ ★ ChatGPT 发布（11 月 30 日）—— 大众化拐点
+      │ Stable Diffusion；Midjourney
+2023  │ GPT-4；LLaMA；Llama 2；Mistral 7B
+      │ ★ DPO（把 RL 从对齐流程里删掉）
+      │ GQA；FlashAttention；Qwen；Claude 2
+      │ "涌现是海市蜃楼"（Schaeffer 等）
+      │ 机制可解释性：SAE、单义特征
+      │ 开源模型进入"可用"阶段
+2024  │ GPT-4o；Claude 3.5；Gemini 1.5（百万上下文）
+      │ DeepSeek-V2（MLA）/ V3（FP8，671B/37B）
+      │ Llama 3.1（128K）；Mamba（COLM 杰出论文）
+      │ OpenAI o1 —— 推理模型成为新品类
+      │ SWE-agent；MCP 协议；对齐伪装研究
+      │ 测试时计算缩放（Snell 等）
+2025  │ ★ DeepSeek-R1（纯 RL 逼出推理，Nature 发表）
+      │ o3 / o4-mini；Claude 4；Gemini 2.5
+      │ 推理模型 + 工具 + Agent 成为主线
+      │ HLE（2500 题，前沿模型个位数）
+      │ 长上下文、Agent 可靠性、可解释性持续推进
+2026  │ …… 你正在这里
+      │ 待观察：世界模型、持续学习、具身智能、
+      │         合成数据、推理规模化、Agent 安全
+========================================================================
+
+图例：
+  ★ = 本课程"主线 12 篇"中的论文
+  │ = 同一年内的其他事件
+  年份不是等距的：2017 年之后，事件密度急剧上升。
+
+一句话读法：
+  1948–2011：思想准备期（熵、反向传播、LSTM、词向量）
+  2012–2016：深度学习爆发期（GPU + 数据 + 更深网络）
+  2017–2019：架构与范式期（Transformer、预训练）
+  2020–2022：规模化期（GPT-3、Chinchilla、RLHF）
+  2023–2026：推理与 Agent 期（DPO、R1、工具、长上下文）
+========================================================================

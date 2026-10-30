@@ -1,0 +1,367 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 7 章 · 规模定律",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 07 · SCALING LAWS",
+      "title": "大力出奇迹的边界",
+      "highlight": "奇迹",
+      "subtitle": "规模定律：能外推的直线，也会撞墙",
+      "pills": [
+        "幂律",
+        "计算最优",
+        "涌现",
+        "数据墙"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 7 章"
+    },
+    {
+      "id": "gpt3",
+      "type": "photo",
+      "accent": "teal",
+      "kicker": "2020 · GPT-3",
+      "title": "一千七百五十亿",
+      "highlight": "一千七百五十亿",
+      "image": "img/datacenter.jpg",
+      "pills": [
+        "15 亿 → 1750 亿",
+        "3000 亿 token",
+        "96 层"
+      ],
+      "subtitle": "沿用 GPT-2 的配方，只把规模放大。",
+      "bullets": [
+        "参数扩大约一百倍",
+        "架构与目标都没动",
+        "多出的能力：上下文学习"
+      ],
+      "caption": "示意图，非 GPT-3 实拍机房"
+    },
+    {
+      "id": "icl",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "IN-CONTEXT LEARNING",
+      "title": "不更新参数的学习",
+      "highlight": "不更新参数",
+      "steps": [
+        {
+          "title": "给几个例子",
+          "sub": "猫、狗、书，翻成英文"
+        },
+        {
+          "title": "读进上下文",
+          "sub": "例子进激活，不进权重"
+        },
+        {
+          "title": "直接作答",
+          "sub": "填出 window，权重没变"
+        }
+      ],
+      "stamp": "临时记忆 vs 长期记忆"
+    },
+    {
+      "id": "powerlaw",
+      "type": "formula",
+      "accent": "purple",
+      "kicker": "KAPLAN ET AL. · 2020",
+      "title": "把大写成幂律",
+      "highlight": "幂律",
+      "formula": "L(N) ∝ N^(−α_N)\nL(D) ∝ D^(−α_D)\nL(C) ∝ C^(−α_C)",
+      "note": "α_N ≈ 0.076，α_D ≈ 0.095，α_C ≈ 0.050；N 参数，D token，C 算力。",
+      "bullets": [
+        "取对数后是一条直线",
+        "指数很小，下降很慢"
+      ],
+      "stamp": "缩放定律 scaling law"
+    },
+    {
+      "id": "loglog",
+      "type": "compare",
+      "accent": "orange",
+      "kicker": "LOG-LOG · 示意",
+      "title": "双对数是一条直线",
+      "highlight": "直线",
+      "center": "→",
+      "left": {
+        "title": "线性坐标",
+        "sub": "看起来像悬崖",
+        "items": [
+          {
+            "title": "前段陡",
+            "sub": "小模型涨得快"
+          },
+          {
+            "title": "后段平",
+            "sub": "大模型看不出差别"
+          }
+        ]
+      },
+      "right": {
+        "title": "双对数坐标",
+        "sub": "一条直线",
+        "items": [
+          {
+            "title": "斜率 = −α",
+            "sub": "α 就是幂指数"
+          },
+          {
+            "title": "可外推",
+            "sub": "小模型预测大模型"
+          }
+        ]
+      }
+    },
+    {
+      "id": "estimate",
+      "type": "steps",
+      "accent": "green",
+      "kicker": "WHY IT MATTERS",
+      "title": "从赌博到估算",
+      "highlight": "估算",
+      "steps": [
+        {
+          "title": "训几个小模型",
+          "sub": "几百万美元，几个点"
+        },
+        {
+          "title": "拟合成直线",
+          "sub": "把点连成一条线"
+        },
+        {
+          "title": "外推再决定",
+          "sub": "预测目标规模的损失"
+        }
+      ],
+      "stamp": "从定性，到定量"
+    },
+    {
+      "id": "chinchilla",
+      "type": "compare",
+      "accent": "teal",
+      "kicker": "2022 · COMPUTE-OPTIMAL",
+      "title": "配比被改写",
+      "highlight": "改写",
+      "center": "→",
+      "left": {
+        "title": "Kaplan 2020",
+        "sub": "参数优先，数据少一点",
+        "items": [
+          {
+            "title": "先加参数",
+            "sub": "给定算力堆参数"
+          },
+          {
+            "title": "后果",
+            "sub": "参数过剩，数据不足"
+          }
+        ]
+      },
+      "right": {
+        "title": "Chinchilla 2022",
+        "sub": "二十 token 每参数",
+        "items": [
+          {
+            "title": "同比增加",
+            "sub": "参数与数据一起加"
+          },
+          {
+            "title": "小模型反超",
+            "sub": "七百亿赢过二千八百亿"
+          }
+        ]
+      }
+    },
+    {
+      "id": "handcalc",
+      "type": "formula",
+      "accent": "orange",
+      "kicker": "DO THE MATH",
+      "title": "一次手算",
+      "highlight": "手算",
+      "formula": "1750 亿参数 × 20\n= 35000 亿 token\n实际：约 3000 亿 token",
+      "note": "3000 亿 ÷ 35000 亿 ≈ 0.086，约十二分之一。",
+      "bullets": [
+        "按配比该喂 3.5 万亿",
+        "实际只喂了十二分之一"
+      ],
+      "stamp": "算术，不是实测"
+    },
+    {
+      "id": "emergent",
+      "type": "curve",
+      "accent": "purple",
+      "kicker": "2022 · EMERGENT ABILITIES",
+      "title": "突然会了",
+      "highlight": "突然",
+      "formula": "准确率：完全答对才计分",
+      "bullets": [
+        "小模型接近零",
+        "某个规模后突然跳高"
+      ],
+      "stamp": "示意：只画形状，数值非实测",
+      "chart": {
+        "kind": "bars",
+        "xLabel": "模型规模（示意）→",
+        "yLabel": "准确率 ↑",
+        "yMax": 1,
+        "bars": [
+          {
+            "label": "10 亿",
+            "value": 0.02,
+            "color": "blue"
+          },
+          {
+            "label": "50 亿",
+            "value": 0.04,
+            "color": "blue"
+          },
+          {
+            "label": "100 亿",
+            "value": 0.06,
+            "color": "teal"
+          },
+          {
+            "label": "1000 亿",
+            "value": 0.92,
+            "color": "orange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mirage",
+      "type": "compare",
+      "accent": "red",
+      "kicker": "2023 · A MIRAGE?",
+      "title": "突然被测出来",
+      "highlight": "测出来",
+      "center": "vs",
+      "left": {
+        "title": "不连续指标",
+        "sub": "完全答对才算对",
+        "items": [
+          {
+            "title": "记分",
+            "sub": "零或者一"
+          },
+          {
+            "title": "曲线",
+            "sub": "突然跃起"
+          }
+        ]
+      },
+      "right": {
+        "title": "连续指标",
+        "sub": "对数概率、编辑距离",
+        "items": [
+          {
+            "title": "记分",
+            "sub": "一点一点涨"
+          },
+          {
+            "title": "曲线",
+            "sub": "平滑上升"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ceiling",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "FOUR CEILINGS",
+      "title": "四个天花板",
+      "highlight": "天花板",
+      "items": [
+        {
+          "icon": "①",
+          "title": "数据墙",
+          "sub": "高质量文本有限",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "算力电力",
+          "sub": "成本数亿美元量级",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "推理成本",
+          "sub": "越大，每次调用越贵",
+          "color": "purple"
+        },
+        {
+          "icon": "④",
+          "title": "收益递减",
+          "sub": "指数小，代价指数级",
+          "color": "red"
+        }
+      ],
+      "stamp": "出路：超额训练、稀疏激活、合成数据"
+    },
+    {
+      "id": "traps",
+      "type": "compare",
+      "accent": "blue",
+      "kicker": "TWO NON-EQUATIONS",
+      "title": "两个不等于",
+      "highlight": "不等于",
+      "center": "≠",
+      "left": {
+        "title": "参数量",
+        "sub": "好量，也好比较",
+        "items": [
+          {
+            "title": "1750 亿",
+            "sub": "只是规模，不是能力"
+          },
+          {
+            "title": "小模型反超",
+            "sub": "七百亿赢过二千八百亿"
+          }
+        ]
+      },
+      "right": {
+        "title": "榜单分数",
+        "sub": "固定题集，可以刷",
+        "items": [
+          {
+            "title": "高分",
+            "sub": "不等于延迟低"
+          },
+          {
+            "title": "真实场景",
+            "sub": "看成本、稳定、可控"
+          }
+        ]
+      }
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 08",
+      "title": "下一站：对齐",
+      "highlight": "对齐",
+      "subtitle": "从会续写，到听得懂人话",
+      "next": {
+        "code": "08",
+        "title": "RLHF 与对齐",
+        "sub": "把文本预测器，变成助手"
+      },
+      "pills": [
+        "第 7 章",
+        "规模已讲完",
+        "接下来：听话"
+      ],
+      "image": "img/mountain-ridge.jpg"
+    }
+  ]
+}

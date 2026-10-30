@@ -1,0 +1,392 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 12 章 · RAG 与长上下文",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "CHAPTER 12 · RETRIEVAL",
+      "title": "开卷与长记忆",
+      "highlight": "长记忆",
+      "subtitle": "模型不知道的，让它去查",
+      "pills": [
+        "RAG",
+        "长上下文",
+        "重排",
+        "上下文工程"
+      ],
+      "image": "img/cover.jpg",
+      "stamp": "第 12 章"
+    },
+    {
+      "id": "blind",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THREE BLIND SPOTS",
+      "title": "模型不知道的",
+      "highlight": "不知道",
+      "items": [
+        {
+          "icon": "①",
+          "title": "知识有截止",
+          "sub": "训练数据停在某个日期",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "私有数据空白",
+          "sub": "你的文档不在语料里",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "错了不自知",
+          "sub": "编造时不查证，只接着说",
+          "color": "purple"
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "2020 · RAG",
+      "title": "两种记忆",
+      "highlight": "记忆",
+      "center": "vs",
+      "left": {
+        "title": "参数记忆",
+        "sub": "存在权重里",
+        "items": [
+          {
+            "title": "写入靠训练",
+            "sub": "慢，而且贵"
+          },
+          {
+            "title": "容量有限",
+            "sub": "受参数量限制"
+          },
+          {
+            "title": "不能溯源",
+            "sub": "说不出来源"
+          }
+        ]
+      },
+      "right": {
+        "title": "非参数记忆",
+        "sub": "存在外部文档库",
+        "items": [
+          {
+            "title": "增删改查",
+            "sub": "快，而且便宜"
+          },
+          {
+            "title": "几乎无限",
+            "sub": "加文档就行"
+          },
+          {
+            "title": "可以溯源",
+            "sub": "能给出段落"
+          }
+        ]
+      }
+    },
+    {
+      "id": "openbook",
+      "type": "photo",
+      "accent": "teal",
+      "kicker": "1945 · MEMEX",
+      "title": "开卷与闭卷",
+      "highlight": "开卷",
+      "image": "img/library.jpg",
+      "pills": [
+        "Memex · 1945",
+        "记忆外置",
+        "开卷考试"
+      ],
+      "subtitle": "闭卷考记住多少，开卷考会不会查。",
+      "bullets": [
+        "结绳、泥板、竹简、纸张",
+        "图书馆、百科全书、搜索引擎",
+        "八十年前的愿景，今天叫 RAG"
+      ],
+      "caption": "示意图，非真实文献照片"
+    },
+    {
+      "id": "flow",
+      "type": "steps",
+      "accent": "blue",
+      "kicker": "RAG PIPELINE",
+      "title": "六个步骤",
+      "highlight": "六个",
+      "steps": [
+        {
+          "title": "切块",
+          "sub": "长文档切成小段"
+        },
+        {
+          "title": "嵌入",
+          "sub": "每段变成向量入库"
+        },
+        {
+          "title": "检索",
+          "sub": "问题向量找 K 个近邻"
+        },
+        {
+          "title": "重排",
+          "sub": "交叉编码器精排"
+        }
+      ],
+      "stamp": "再拼进提示词，交给生成器作答"
+    },
+    {
+      "id": "chunk",
+      "type": "photo",
+      "accent": "orange",
+      "kicker": "CHUNKING",
+      "title": "切块像摘录",
+      "highlight": "摘录",
+      "image": "img/notebook.jpg",
+      "pills": [
+        "500–1000 token",
+        "块间留重叠",
+        "没有标准答案"
+      ],
+      "subtitle": "切得太碎看不懂，切得太长重点被淹没。",
+      "bullets": [
+        "块太大，检索精度下降",
+        "块太小，上下文不足",
+        "重叠避免切断一句话"
+      ],
+      "caption": "示意图：摘录的粒度，就是检索的粒度"
+    },
+    {
+      "id": "cosine",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "COSINE SIMILARITY",
+      "title": "比一比夹角",
+      "highlight": "夹角",
+      "formula": "cos(q, d) =\n(q · d) / (‖q‖ ‖d‖)",
+      "note": "只借用第 3 章的结论：两个向量夹角越小，语义越近。",
+      "bullets": [
+        "查询向量与每个块各算一次",
+        "大规模检索用近似最近邻 HNSW"
+      ],
+      "stamp": "召回阶段：宁可多找，不可漏掉"
+    },
+    {
+      "id": "rerank",
+      "type": "compare",
+      "accent": "purple",
+      "kicker": "HYBRID RETRIEVAL",
+      "title": "为什么还要重排",
+      "highlight": "重排",
+      "center": "→",
+      "left": {
+        "title": "单路向量",
+        "sub": "只比语义",
+        "items": [
+          {
+            "title": "擅长语义",
+            "sub": "同义改写、跨语言"
+          },
+          {
+            "title": "弱在精确",
+            "sub": "错误码、专有名词"
+          },
+          {
+            "title": "分数不可比",
+            "sub": "两路各排各的"
+          }
+        ]
+      },
+      "right": {
+        "title": "混合加重排",
+        "sub": "BM25 + 向量 + 交叉编码器",
+        "items": [
+          {
+            "title": "两路召回",
+            "sub": "关键词补精确匹配"
+          },
+          {
+            "title": "合并候选",
+            "sub": "先求全，再求准"
+          },
+          {
+            "title": "逐对打分",
+            "sub": "交叉编码器精排"
+          }
+        ]
+      }
+    },
+    {
+      "id": "longctx",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "LONG CONTEXT",
+      "title": "把窗口开大",
+      "highlight": "窗口",
+      "items": [
+        {
+          "icon": "①",
+          "title": "位置外推",
+          "sub": "长位置压回见过范围",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "注意力效率",
+          "sub": "FlashAttention、GQA",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "长文本训练",
+          "sub": "光改位置编码不够",
+          "color": "green"
+        }
+      ]
+    },
+    {
+      "id": "lost",
+      "type": "curve",
+      "accent": "red",
+      "kicker": "LOST IN THE MIDDLE · 2023",
+      "title": "中间最容易丢",
+      "highlight": "中间",
+      "formula": "准确率 ≈ U 形曲线",
+      "bullets": [
+        "开头与结尾：基本找得到",
+        "中间：准确率明显下降",
+        "示意数据，非论文实测值"
+      ],
+      "chart": {
+        "kind": "bars",
+        "yMax": 1,
+        "xLabel": "关键信息在文档中的位置 →",
+        "yLabel": "准确率 ↑",
+        "bars": [
+          {
+            "label": "开头",
+            "value": 0.92,
+            "color": "green"
+          },
+          {
+            "label": "中间",
+            "value": 0.55,
+            "color": "red"
+          },
+          {
+            "label": "结尾",
+            "value": 0.88,
+            "color": "teal"
+          }
+        ]
+      },
+      "stamp": "形状照论文，数值为示意"
+    },
+    {
+      "id": "ragvsctx",
+      "type": "compare",
+      "accent": "green",
+      "kicker": "RAG VS LONG CONTEXT",
+      "title": "成本结构不同",
+      "highlight": "成本",
+      "center": "vs",
+      "left": {
+        "title": "RAG",
+        "sub": "外部检索",
+        "items": [
+          {
+            "title": "便宜，上下文短",
+            "sub": "多一次检索延迟"
+          },
+          {
+            "title": "改文档即更新",
+            "sub": "不用重训"
+          },
+          {
+            "title": "可审计",
+            "sub": "答案带出处"
+          }
+        ]
+      },
+      "right": {
+        "title": "长上下文",
+        "sub": "注意力自己找",
+        "items": [
+          {
+            "title": "全量可见",
+            "sub": "一次读整本书"
+          },
+          {
+            "title": "KV 缓存贵",
+            "sub": "首 token 延迟高"
+          },
+          {
+            "title": "更新要重喂",
+            "sub": "换材料得重来"
+          }
+        ]
+      }
+    },
+    {
+      "id": "traps",
+      "type": "bullets",
+      "accent": "red",
+      "kicker": "ENGINEERING TRAPS",
+      "title": "工程四个坑",
+      "highlight": "坑",
+      "items": [
+        {
+          "icon": "①",
+          "title": "切块边界",
+          "sub": "答案横跨两块，都不完整",
+          "color": "orange"
+        },
+        {
+          "icon": "②",
+          "title": "检索到不用",
+          "sub": "提示约束不是硬保证",
+          "color": "blue"
+        },
+        {
+          "icon": "③",
+          "title": "引用错位",
+          "sub": "编号像，指向错了",
+          "color": "purple"
+        },
+        {
+          "icon": "④",
+          "title": "上下文污染",
+          "sub": "矛盾文档，各信一半",
+          "color": "red"
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT · CHAPTER 13",
+      "title": "下一章：评测",
+      "highlight": "评测",
+      "subtitle": "怎么知道它真的行",
+      "next": {
+        "code": "13",
+        "title": "评测与幻觉",
+        "sub": "基准、涌现的真假，与幻觉的机制"
+      },
+      "pills": [
+        "检索",
+        "长上下文",
+        "下期见"
+      ],
+      "image": "img/cover.jpg"
+    }
+  ]
+}

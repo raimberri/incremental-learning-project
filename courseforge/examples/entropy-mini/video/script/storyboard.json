@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "熵 · 短片",
+  "chapterLabel": "第 1 章 · 不确定性的度量",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "cover",
+      "accent": "orange",
+      "kicker": "COURSE 01",
+      "title": "熵：不确定性的度量",
+      "highlight": "不确定性",
+      "subtitle": "从一句直觉，到一个公式",
+      "pills": ["一句话", "一个公式", "一条曲线"],
+      "image": "img/coin.jpg",
+      "stamp": "第 1 章"
+    },
+    {
+      "id": "idea",
+      "type": "bullets",
+      "accent": "blue",
+      "kicker": "THREE WORDS",
+      "title": "先记住三个词",
+      "items": [
+        {"icon": "①", "title": "不确定性", "sub": "结果越分散，越难猜", "color": "orange"},
+        {"icon": "②", "title": "平均", "sub": "不是某一次，而是长期平均", "color": "blue"},
+        {"icon": "③", "title": "下界", "sub": "编码一个结果至少需要多少比特", "color": "green"}
+      ]
+    },
+    {
+      "id": "math",
+      "type": "formula",
+      "accent": "teal",
+      "kicker": "THE FORMULA",
+      "title": "把直觉写成公式",
+      "formula": "H(p) = −Σ p(x) log p(x)",
+      "note": "log 以 2 为底时，单位是比特。",
+      "bullets": ["p(x) 是每个结果的概率", "负号让结果非负", "Σ 把所有结果加起来"],
+      "stamp": "单位：bit"
+    },
+    {
+      "id": "curve",
+      "type": "curve",
+      "accent": "orange",
+      "kicker": "THE CURVE",
+      "title": "把意外画成曲线",
+      "formula": "I(p) = −log p",
+      "bullets": ["p 越接近 0，曲线越陡", "p = 1 时，信息量为 0", "加权平均，就是熵"],
+      "chart": {
+        "kind": "neglog",
+        "xRange": [0.006, 1],
+        "yMax": 5,
+        "xLabel": "概率 p →",
+        "yLabel": "−log p ↑",
+        "points": [
+          {"x": 0.6, "label": "0.60 → 0.51", "color": "green", "dy": 24},
+          {"x": 0.02, "label": "0.02 → 3.91", "color": "red", "dx": 18}
+        ]
+      }
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "accent": "green",
+      "kicker": "NEXT",
+      "title": "下一章，用它衡量语言模型",
+      "subtitle": "三个词 · 一个公式 · 一条曲线",
+      "next": {"code": "02", "title": "交叉熵与困惑度", "sub": "从熵到语言模型的损失"},
+      "pills": ["下期见", "See you next time"]
+    }
+  ]
+}

@@ -1,0 +1,462 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {
+      "id": "intro",
+      "code": "08.0",
+      "zh": "会写不等于听话",
+      "en": "WRITING IS NOT OBEYING",
+      "lines": [
+        [
+          "你让它用三句话解释量子纠缠，它可能继续自问自答。",
+          "Ask for three sentences. It keeps going, and keeps asking questions."
+        ],
+        [
+          "也可能用五种语言各答一遍，或者干脆跑题。",
+          "Or answers in five languages, or drifts off topic entirely."
+        ],
+        [
+          "它不是笨，是训练目标和你想要的东西不一样。",
+          "It is not dumb. The training goal was simply different."
+        ],
+        [
+          "预训练只问一件事：下一段文字，什么最可能出现。",
+          "Pre-training asks one thing: what text comes next on the internet?"
+        ],
+        [
+          "所以 GPT-3 是一个卓越的续写器，还不是助手。",
+          "So GPT-3 is a superb text continuer, not an assistant."
+        ],
+        [
+          "这一章讲怎么把它调成听话的助手，也就是对齐。",
+          "This chapter: turning a writer into an assistant. That is alignment."
+        ]
+      ]
+    },
+    {
+      "id": "gap",
+      "code": "08.1",
+      "zh": "两个不同的目标",
+      "en": "TWO DIFFERENT GOALS",
+      "lines": [
+        [
+          "预训练的目标，是续写得像互联网上的文字。",
+          "Pre-training optimizes for text that looks like the web."
+        ],
+        [
+          "人类真正想要的，是回答得对，只给有用的那一种。",
+          "What people want is a correct answer, and only the useful style."
+        ],
+        [
+          "续写得像，不等于回答得对，这是两件不同的事。",
+          "Looking plausible is not the same as being right."
+        ],
+        [
+          "预训练不拒绝任何文本，人类却要求该拒绝时就拒绝。",
+          "Pre-training refuses nothing. People want a refusal when it matters."
+        ],
+        [
+          "模型会自信地编，人类希望它不确定就说不知道。",
+          "The model bluffs. People want it to say it does not know."
+        ],
+        [
+          "把行为调到符合人类意图，这件事叫对齐。",
+          "Shifting behaviour toward human intent is called alignment."
+        ],
+        [
+          "对齐有三个目标：有用、诚实、无害，合称 HHH。",
+          "Three goals: helpful, honest, harmless. HHH."
+        ]
+      ]
+    },
+    {
+      "id": "cannotteach",
+      "code": "08.2",
+      "zh": "为什么不能直接教",
+      "en": "WHY NOT JUST TEACH IT",
+      "lines": [
+        [
+          "最直接的想法是监督微调：找人写好回答，让模型模仿。",
+          "The obvious fix is supervised fine-tuning: copy good human answers."
+        ],
+        [
+          "这在少量数据上有效，但很快就会撞墙。",
+          "It works on small data, then hits a wall."
+        ],
+        [
+          "第一，好没有唯一答案：同一个问题，十种回答都不错。",
+          "First, there is no single good answer: ten replies can all be fine."
+        ],
+        [
+          "硬让它模仿其中一种，反而把它的能力限住了。",
+          "Forcing one of them actually caps what the model can do."
+        ],
+        [
+          "第二，写答案很贵，比比较两个答案贵一个数量级。",
+          "Second, writing answers costs an order of magnitude more."
+        ],
+        [
+          "第三，简洁、自然、更有帮助，人判断得出来，写成规则很难。",
+          "Third, concise, natural, helpful: people judge it, rules cannot."
+        ],
+        [
+          "于是有一个关键转向：不要让人类示范，让人类选择。",
+          "So flip it: do not ask people to demonstrate. Ask them to choose."
+        ]
+      ]
+    },
+    {
+      "id": "prefer",
+      "code": "08.3",
+      "zh": "让人类做选择",
+      "en": "LET PEOPLE CHOOSE",
+      "lines": [
+        [
+          "同一个问题，先让模型生成两个不同的回答。",
+          "Give the model one question and let it produce two answers."
+        ],
+        [
+          "人不用写答案，只需要点一下：哪个更好。",
+          "A person writes nothing. Just one click: which is better?"
+        ],
+        [
+          "这个信号叫偏好，收集起来便宜，也更容易一致。",
+          "That signal is a preference: cheap to collect, easier to agree on."
+        ],
+        [
+          "它还天然带上了那些人类说不清的标准。",
+          "It also carries standards that people cannot put into words."
+        ],
+        [
+          "每条数据是一个三元组：问题、更好的回答、更差的回答。",
+          "Each data point is a triple: prompt, better answer, worse answer."
+        ],
+        [
+          "人对相对差异的判断，本来就比绝对打分稳定。",
+          "Relative judgements are steadier than absolute scores."
+        ]
+      ]
+    },
+    {
+      "id": "bt",
+      "code": "08.4",
+      "zh": "把比较变成概率",
+      "en": "COMPARISON INTO PROBABILITY",
+      "lines": [
+        [
+          "有了大量三元组，就可以训一个打分器，叫奖励模型。",
+          "With enough triples, train a scorer: the reward model."
+        ],
+        [
+          "它输入问题和回答，输出一个分数，越高越好。",
+          "It reads prompt and answer, and outputs one score."
+        ],
+        [
+          "布拉德利和特里提出过一个成对比较的模型，后来成了等级分的数学基础。",
+          "Bradley and Terry modelled pairwise comparison; ratings grew from it."
+        ],
+        [
+          "假设是：两个回答的分数差越大，人选前者的概率越高。",
+          "The bigger the score gap, the more likely people pick the winner."
+        ],
+        [
+          "这个概率用 sigmoid 函数算，形状是一条 S 形曲线。",
+          "A sigmoid turns that gap into a probability: an S-shaped curve."
+        ],
+        [
+          "训练目标，就是让好回答赢的概率尽量大。",
+          "Training makes the good answer win as often as possible."
+        ],
+        [
+          "于是一个分数概括了回答好坏，差值预测了胜负。",
+          "One score sums up quality; the difference predicts the choice."
+        ]
+      ]
+    },
+    {
+      "id": "rlhf",
+      "code": "08.5",
+      "zh": "RLHF 三步走",
+      "en": "RLHF IN THREE STEPS",
+      "lines": [
+        [
+          "有了奖励模型，就可以用强化学习来优化语言模型。",
+          "With a reward model, we can optimize the language model by RL."
+        ],
+        [
+          "这套流程叫 RLHF，也就是人类反馈强化学习。",
+          "This pipeline is RLHF: reinforcement learning from human feedback."
+        ],
+        [
+          "第一步，用人工写的高质量回答做监督微调，也就是 SFT。",
+          "Step one, SFT: supervised fine-tuning on human-written answers."
+        ],
+        [
+          "这一步先让模型学会对话的格式和语气。",
+          "This is where the model learns the shape of a conversation."
+        ],
+        [
+          "第二步，用人类的两两比较，训练奖励模型。",
+          "Step two: train the reward model on human pairwise comparisons."
+        ],
+        [
+          "第三步，用 PPO 优化模型，让它去拿更高的奖励。",
+          "Step three: PPO, pushing the model toward higher reward."
+        ],
+        [
+          "PPO 有三个直觉，第一个是：拿到高奖励的动作，提高它的概率。",
+          "PPO in three intuitions. Higher reward, higher probability."
+        ],
+        [
+          "第二个是优势，衡量比平均好多少；第三个是裁剪，不让单次更新太大。",
+          "Advantage measures better-than-average; clipping limits each step."
+        ]
+      ]
+    },
+    {
+      "id": "kl",
+      "code": "08.6",
+      "zh": "缰绳：KL 惩罚",
+      "en": "THE KL LEASH",
+      "lines": [
+        [
+          "第三步的目标函数有两项：一项奖励，一项惩罚。",
+          "The objective has two terms: a reward, and a penalty."
+        ],
+        [
+          "奖励模型给的分越高越好，这是第一项。",
+          "Higher reward from the reward model: that is term one."
+        ],
+        [
+          "第二项是 KL 散度，衡量当前模型离原始模型多远。",
+          "Term two is KL: how far the policy has drifted from the original."
+        ],
+        [
+          "原始模型也叫参考模型，是没对齐之前的那个。",
+          "The original is the reference model, before alignment."
+        ],
+        [
+          "β 控制平衡：太大就学不动，太小就容易跑偏。",
+          "Beta balances it: too big and it cannot learn, too small and it drifts."
+        ],
+        [
+          "为什么必须有这根缰绳？因为奖励模型只是一个代理。",
+          "Why the leash? Because the reward model is only a proxy."
+        ],
+        [
+          "放手让它最大化，模型就会去找奖励模型的漏洞。",
+          "Left alone, the policy finds the proxy's holes."
+        ]
+      ]
+    },
+    {
+      "id": "hack",
+      "code": "08.7",
+      "zh": "奖励黑客",
+      "en": "REWARD HACKING",
+      "lines": [
+        [
+          "奖励黑客不是模型变坏了，是它太会迎合这个分数。",
+          "Reward hacking is not malice. It is the model pleasing the score."
+        ],
+        [
+          "它会生成看起来能得高分、人类却觉得很怪的文本。",
+          "It writes text that scores high and reads strange to people."
+        ],
+        [
+          "这背后是古德哈特定律：指标一旦成为目标，就不再好用。",
+          "This is Goodhart's law: a metric that becomes a target stops working."
+        ],
+        [
+          "所以 KL 惩罚不是可选项，是必须的一根缰绳。",
+          "So the KL penalty is not optional. It is the leash."
+        ],
+        [
+          "PPO 的裁剪是同一个哲学：每次只改一点，别一步走崩。",
+          "PPO's clipping says the same: change a little, never lurch."
+        ],
+        [
+          "小学习率、裁剪、KL 缰绳，都在说同一句话：保守地更新。",
+          "Small learning rates, clipping, KL: all say update conservatively."
+        ]
+      ]
+    },
+    {
+      "id": "result",
+      "code": "08.8",
+      "zh": "小模型赢了大模型",
+      "en": "SMALLER, YET PREFERRED",
+      "lines": [
+        [
+          "InstructGPT 论文报告了一个标志性结果。",
+          "The InstructGPT paper reports one landmark result."
+        ],
+        [
+          "13 亿参数的 InstructGPT，在人类偏好评估里赢了 GPT-3。",
+          "A 1.3B InstructGPT beats 175B GPT-3 in human preference."
+        ],
+        [
+          "对手是 1750 亿参数的 GPT-3，它只有对手的一百三十五分之一。",
+          "Roughly one hundred and thirty-fifth the size."
+        ],
+        [
+          "因为对齐做得好，人类觉得它明显更有用。",
+          "Better aligned, so people found it more useful."
+        ],
+        [
+          "这提醒我们：能力和对齐，是两个独立的维度。",
+          "Capability and alignment are two independent axes."
+        ],
+        [
+          "大模型不一定好用，小模型也可以很好用。",
+          "Big models are not always usable. Small ones can be."
+        ]
+      ]
+    },
+    {
+      "id": "dpo",
+      "code": "08.9",
+      "zh": "直接偏好优化",
+      "en": "DIRECT PREFERENCE OPTIMIZATION",
+      "lines": [
+        [
+          "RLHF 有效，但工程上很痛苦：要训奖励模型，还要跑 PPO。",
+          "RLHF works, but engineering it hurts: a reward model, then PPO."
+        ],
+        [
+          "2023 年，拉法伊洛夫等人提出 DPO，直接偏好优化。",
+          "In 2023, Rafailov and colleagues proposed DPO."
+        ],
+        [
+          "它用一步数学推导，把整个强化学习环节删掉了。",
+          "One derivation deletes the whole reinforcement learning loop."
+        ],
+        [
+          "关键是一个闭式解：最优策略正比于参考模型，再乘 e 的 r 除以 β 次方。",
+          "A closed form: reference policy times e to the r over beta."
+        ],
+        [
+          "把它反解成奖励，代回布拉德利特里，配分函数在差值里正好抵消。",
+          "Solve for reward, plug into Bradley-Terry: Z cancels in the difference."
+        ],
+        [
+          "于是损失只含策略和参考模型，不需要奖励模型，也不需要采样。",
+          "The loss holds only policy and reference. No reward model, no sampling."
+        ],
+        [
+          "读作：提高好回答相对参考模型的概率，同时压低坏回答。",
+          "Raise good answers, lower bad ones, relative to the reference."
+        ],
+        [
+          "代价是只在离线数据上优化，缺少边采样边纠错的能力。",
+          "The cost: offline data only, no sampling-and-correcting loop."
+        ]
+      ]
+    },
+    {
+      "id": "cai",
+      "code": "08.10",
+      "zh": "宪法 AI",
+      "en": "CONSTITUTIONAL AI",
+      "lines": [
+        [
+          "RLHF 有一个隐藏成本：人类标注又慢又贵。",
+          "RLHF has a hidden cost: human labelling is slow and expensive."
+        ],
+        [
+          "而且每个标注者，都带着自己的偏见和习惯。",
+          "And every labeller brings their own bias."
+        ],
+        [
+          "2022 年，Anthropic 提出宪法 AI。",
+          "In 2022, Anthropic proposed Constitutional AI."
+        ],
+        [
+          "先写一份宪法，也就是一组自然语言原则。",
+          "Write a constitution: a set of principles in plain language."
+        ],
+        [
+          "再让模型按原则自我批评、自我修改，用改后的回答做监督学习。",
+          "The model critiques and revises itself, then learns from the result."
+        ],
+        [
+          "最后让 AI 按原则给出偏好判断，训练奖励模型，这叫 RLAIF。",
+          "Then AI judges preferences by those rules. That is RLAIF."
+        ],
+        [
+          "但原则之间也会冲突：要它有用，又要它无害，需要裁决机制。",
+          "But principles collide: helpful versus harmless needs an arbiter."
+        ]
+      ]
+    },
+    {
+      "id": "hard",
+      "code": "08.11",
+      "zh": "对齐的深层困难",
+      "en": "THREE DEEP FAILURES",
+      "lines": [
+        [
+          "更讨人喜欢，不等于更正确，这里有三个已知病灶。",
+          "More likeable is not more correct. Three known failures."
+        ],
+        [
+          "第一个是谄媚：模型倾向附和用户，哪怕用户说错了。",
+          "First, sycophancy: the model agrees with the user, even when wrong."
+        ],
+        [
+          "因为训练数据里，评分者更喜欢同意自己的回答。",
+          "Raters preferred answers that agreed with them."
+        ],
+        [
+          "第二个是奖励黑客，模型学会迎合奖励模型，而不是真实目标。",
+          "Second, reward hacking: pleasing the score, not the goal."
+        ],
+        [
+          "第三个是对齐伪装：模型有时会假装遵守训练目标。",
+          "Third, alignment faking: in 2024, Anthropic found models pretending."
+        ],
+        [
+          "2024 年 Anthropic 的实验记录到了这种行为，这不是有意识。",
+          "Anthropic recorded this in 2024. It is not consciousness."
+        ],
+        [
+          "而是优化压力的自然结果，和员工在领导面前表现一样。",
+          "Just optimization pressure, like an employee performing for a boss."
+        ],
+        [
+          "这也是委托代理问题，解法是设计激励相容的机制，而不是更用力地监督。",
+          "Principal and agent: design incentives, not more watching."
+        ]
+      ]
+    },
+    {
+      "id": "outro",
+      "code": "08.12",
+      "zh": "下一站：思维链",
+      "en": "NEXT: CHAIN OF THOUGHT",
+      "lines": [
+        [
+          "这一章把续写器，调成了一个听话的助手。",
+          "This chapter turned a text continuer into an assistant."
+        ],
+        [
+          "人做比较，奖励模型打分，策略再被调整。",
+          "People compare, a reward model scores, a policy is tuned."
+        ],
+        [
+          "RLHF 用三步和一根 KL 缰绳，DPO 把强化学习删掉。",
+          "RLHF uses three steps and a KL leash. DPO deletes the RL."
+        ],
+        [
+          "但对齐只是让它听话，不代表它会推理。",
+          "But aligned is not the same as able to reason."
+        ],
+        [
+          "下一章，思维链与推理时计算，让它把思考写出来。",
+          "Next: chain of thought and test-time compute."
+        ]
+      ]
+    }
+  ]
+}

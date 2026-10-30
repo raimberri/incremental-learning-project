@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "theme": "warm-paper",
+  "courseTitle": "大语言模型教程",
+  "chapterLabel": "第 0 章 · 导读",
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "custom",
+      "component": "IntroScene",
+      "images": [
+        "img/intro-desk.jpg"
+      ],
+      "beat": "每天在用 → 内部发生了什么 → 标题"
+    },
+    {
+      "id": "sentence",
+      "type": "custom",
+      "component": "SentenceScene",
+      "images": [
+        "img/library.jpg",
+        "img/umbrella.jpg",
+        "img/candidates.jpg",
+        "img/why-scale.jpg"
+      ],
+      "beat": "一句话定义 → 雨伞例子 → 候选打分 → 副产品"
+    },
+    {
+      "id": "whys",
+      "type": "custom",
+      "component": "WhysScene",
+      "images": [
+        "img/why-reasoning.jpg",
+        "img/why-scale.jpg",
+        "img/why-understanding.jpg",
+        "img/why-hallucination.jpg"
+      ],
+      "beat": "四个为什么（各配一张概念图）→ 学完能做到的两件事"
+    },
+    {
+      "id": "map",
+      "type": "custom",
+      "component": "MapScene",
+      "images": [
+        "img/era-neural.jpg",
+        "img/era-transformer.jpg",
+        "img/library.jpg",
+        "img/era-scale.jpg",
+        "img/era-alignment.jpg"
+      ],
+      "beat": "五关键词节点图；每个节点用概念图做缩略图"
+    },
+    {
+      "id": "eras",
+      "type": "custom",
+      "component": "ErasScene",
+      "images": [
+        "img/era-statistical.jpg",
+        "img/era-neural.jpg",
+        "img/era-transformer.jpg",
+        "img/era-scale.jpg",
+        "img/era-alignment.jpg"
+      ],
+      "beat": "时间轴 + 五个时代的详情卡（各配一张图）"
+    },
+    {
+      "id": "pattern",
+      "type": "custom",
+      "component": "PatternScene",
+      "images": [
+        "img/pattern-hand.jpg",
+        "img/pattern-learned.jpg",
+        "img/feather.jpg"
+      ],
+      "beat": "三次换件（手工→数据）→ 规模质变曲线 → 预适应"
+    },
+    {
+      "id": "method",
+      "type": "custom",
+      "component": "MethodScene",
+      "images": [
+        "img/ledger.jpg",
+        "img/working-memory.jpg"
+      ],
+      "beat": "重复讲 softmax 的问题 → 三条增量规则 → 工作记忆"
+    },
+    {
+      "id": "bridges",
+      "type": "custom",
+      "component": "BridgesScene",
+      "images": [
+        "img/steam.jpg",
+        "img/bacteria.jpg",
+        "img/pinfactory.jpg",
+        "img/feather.jpg"
+      ],
+      "beat": "热力学 / 生物学 / 经济学 / 预适应 四张图 + 失效边界"
+    },
+    {
+      "id": "outro",
+      "type": "custom",
+      "component": "OutroScene",
+      "images": [
+        "img/mountain.jpg"
+      ],
+      "beat": "地图不等于地形 → 三样东西 → 下一章公式"
+    }
+  ]
+}
