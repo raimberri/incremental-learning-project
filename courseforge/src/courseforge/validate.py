@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import sys
@@ -96,6 +97,20 @@ def check_course(course: Course) -> Report:
     return r
 
 
+def _browser() -> str | None:
+    """Resolve the browser Remotion will use, honoring REMOTION_BROWSER."""
+    override = os.environ.get("REMOTION_BROWSER")
+    if override:
+        path = Path(override).expanduser()
+        return str(path) if path.is_file() else None
+    for name in ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser"):
+        found = which(name)
+        if found:
+            return found
+    mac = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+    return str(mac) if mac.exists() else None
+
+
 def doctor() -> int:
     print("courseforge doctor")
     checks = [
@@ -103,7 +118,7 @@ def doctor() -> int:
         ("node", which("node")),
         ("npm", which("npm")),
         ("npx", which("npx")),
-        ("chrome", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" if Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome").exists() else None),
+        ("chrome", _browser()),
     ]
     for name, path in checks:
         print(f"  {'✓' if path else '✗'} {name:<8} {path or '未找到'}")
