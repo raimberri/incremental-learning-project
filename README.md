@@ -81,9 +81,13 @@ $PY -m courseforge package courses/my-topic
 
 ## 用 AI 生成一门新课
 
-skill 已安装到 `~/.dsh/skills/incremental-course`（源文件在
-`skills/incremental-course/`）。如果当前会话看不到它，重启 DSH 或运行
-`./skills/install.sh`。
+skill 源文件在 `skills/incremental-course/`。安装或更新：
+
+```bash
+./skills/install.sh
+```
+
+它会复制到 `~/.dsh/skills/incremental-course`；如果当前会话看不到它，重启 DSH。
 
 在对话里直接说：
 
