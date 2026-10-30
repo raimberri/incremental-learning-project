@@ -49,7 +49,7 @@ courses/
 
 ## 新增课程
 
-先确认环境：
+先确认环境（完整说明见 [`docs/environment.md`](../docs/environment.md)）：
 
 ```bash
 make setup

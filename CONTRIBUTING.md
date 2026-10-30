@@ -11,7 +11,7 @@
 ```bash
 make test
 make links
-make check COURSE=courses/<COURSE>
+make check COURSE=courses/<COURSE>      # 多章课程改为 courses/<COURSE>/video/chN
 git status --short
 ```
 
